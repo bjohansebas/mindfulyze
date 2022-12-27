@@ -1,95 +1,26 @@
 {
-  "name": "alignmind_server",
+  "name": "alignmind",
   "version": "0.0.1",
   "description": "Alignmind is a web application for tracking emotions and thoughts. The application was created with the goal of helping you reflect on your emotions and thoughts, and keep a record of them in a simple and organized way.",
   "author": "bsebas <bjohansebas@gmail.com>",
-  "private": true,
   "license": "MPL V2",
   "scripts": {
     "co": "sui-mono commit",
-    "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
-    "start:dev": "NODE_ENV=development nest start --watch",
-    "start:debug": "NODE_ENV=development nest start --debug --watch",
-    "start:prod": "node dist/main",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
-    "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
-    "migrations:generate": "npm run typeorm migration:generate -- -d src/database/dataSource.ts",
-    "migrations:run": "npm run typeorm migration:run -- -d src/database/dataSource.ts",
-    "migrations:show": "npm run typeorm migration:show -- -d src/database/dataSource.ts",
-    "migrations:drop": "npm run typeorm migration:drop -- -d src/database/dataSource.ts"
+    "dev:web": "npm run start -w web",
+    "start:server": "npm run start:dev -w server",
+    "build:web": "npm run build -w web",
+    "build:server": "npm run build -w server",
+    "preview:web": "npm run preview -w web"
   },
-  "dependencies": {
-    "@nestjs/common": "9.3.9",
-    "@nestjs/config": "2.3.1",
-    "@nestjs/core": "9.3.9",
-    "@nestjs/jwt": "10.0.2",
-    "@nestjs/mapped-types": "1.2.2",
-    "@nestjs/passport": "9.0.3",
-    "@nestjs/platform-express": "9.3.9",
-    "@nestjs/typeorm": "9.0.1",
-    "bcrypt": "5.1.0",
-    "class-transformer": "0.5.1",
-    "class-validator": "0.14.0",
-    "dayjs": "1.11.7",
-    "joi": "17.8.3",
-    "passport": "0.6.0",
-    "passport-jwt": "4.0.1",
-    "passport-local": "1.0.0",
-    "pg": "8.9.0",
-    "reflect-metadata": "0.1.13",
-    "rxjs": "7.8.0",
-    "typeorm": "0.3.12"
-  },
+  "workspaces": [
+    "web",
+    "server"
+  ], 
   "devDependencies": {
-    "@nestjs/cli": "9.2.0",
-    "@nestjs/schematics": "9.0.4",
-    "@nestjs/testing": "9.3.9",
-    "@s-ui/mono": "2.34.0",
-    "@types/bcrypt": "5.0.0",
-    "@types/express": "4.17.17",
-    "@types/jest": "29.4.0",
-    "@types/node": "18.14.1",
-    "@types/passport-jwt": "3.0.8",
-    "@types/passport-local": "1.0.35",
-    "@types/pg": "8.6.6",
-    "@types/supertest": "2.0.12",
-    "@typescript-eslint/eslint-plugin": "5.53.0",
-    "@typescript-eslint/parser": "5.53.0",
-    "eslint": "8.34.0",
-    "eslint-config-prettier": "8.6.0",
-    "eslint-plugin-prettier": "4.2.1",
-    "jest": "29.4.3",
-    "prettier": "2.8.4",
-    "source-map-support": "0.5.21",
-    "supertest": "6.3.3",
-    "ts-jest": "29.0.5",
-    "ts-loader": "9.4.2",
-    "ts-node": "10.9.1",
-    "tsconfig-paths": "3.14.2",
-    "typescript": "4.9.5"
+    "@s-ui/mono": "2.34.0"
   },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "src",
-    "testRegex": ".*\\.spec\\.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "collectCoverageFrom": [
-      "**/*.(t|j)s"
-    ],
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bsebas/alignmind.git"
   }
 }
