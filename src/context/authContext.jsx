@@ -8,9 +8,8 @@ AuthProvider.propTypes = {
 }
 
 function AuthProvider ({ children }) {
-  const [user, setUser] = useState(null)
-  const auth = { user }
-  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>
+  const [auth, setAuth] = useState({})
+  return <AuthContext.Provider value={{ auth, setAuth }}>{children}</AuthContext.Provider>
 }
 
 function useAuth () {
