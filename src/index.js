@@ -7,9 +7,19 @@ import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 import { App } from './App'
+import { BrowserRouter } from 'react-router-dom'
+import PaletteProvider from './context/themeContext'
+import { AuthProvider } from './context/authContext'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App/>
-  </React.StrictMode>
+    <BrowserRouter>
+      <PaletteProvider>
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      </PaletteProvider>
+    </BrowserRouter >
+
+  </React.StrictMode >
 )

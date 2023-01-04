@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { Menu as MenuIcon, ArrowDropDown as ArrowDropDownIcon, Archive as ArchiveIcon, Delete as DeleteIcon, Dashboard as DashboardIcon, Add as AddIcon } from '@mui/icons-material'
 import { styled } from '@mui/material/styles'
 import { useState } from 'react'
+import { useAuth } from '../context/authContext'
 
 const StyledToolbar = styled(Toolbar)(() => ({
   boxSizing: 'border-box',
@@ -11,9 +12,12 @@ const StyledToolbar = styled(Toolbar)(() => ({
 }))
 
 function MenuNavUnLogin () {
+  const location = useLocation()
+  const pathNow = location.pathname
+
   const pages = [{ text: 'Iniciar sesión', route: 'login' }, { text: 'Crear una cuenta', route: 'signup' }]
   return (
-    <AppBar position="fixed" sx={{ top: 0, left: 0, backgroundColor: '#fcfcfc' }}>
+    <AppBar sx={{ backgroundColor: '#fcfcfc', boxShadow: 'none', borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}>
       <Container >
         <StyledToolbar disableGutters>
           <Typography
@@ -31,18 +35,20 @@ function MenuNavUnLogin () {
           >
             Align Mind
           </Typography>
-          <Box sx={{ display: 'flex', gap: 3 }}>
-            {pages.map((page) => (
-              <Button
-                key={page.route}
-                component={Link}
-                sx={{ display: 'block' }}
-                to={`${page.route}`}
-              >
-                {`${page.text}`}
-              </Button>
-            ))}
-          </Box>
+          {(pathNow === '/') &&
+            <Box sx={{ display: 'flex', gap: 3 }}>
+              {pages.map((page) => (
+                <Button
+                  key={page.route}
+                  component={Link}
+                  sx={{ display: { xs: page.route === 'signup' ? 'none' : 'block', sm: 'block' } }}
+                  to={`${page.route}`}
+                >
+                  {`${page.text}`}
+                </Button>
+              ))}
+            </Box>
+          }
         </StyledToolbar>
       </Container>
     </AppBar>
@@ -271,10 +277,11 @@ function MenuNavLogin () {
 }
 
 function MenuNav () {
+  const { user } = useAuth()
   return (
     <>
-      <MenuNavLogin />
-      {/*      <MenuNavUnLogin></MenuNavUnLogin > */}
+      {user && <MenuNavLogin />}
+      {!user && <MenuNavUnLogin />}
     </>
   )
 }
