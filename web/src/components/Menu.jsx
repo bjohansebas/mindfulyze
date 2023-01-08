@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { Menu as MenuIcon, ArrowDropDown as ArrowDropDownIcon, Archive as ArchiveIcon, Delete as DeleteIcon, Dashboard as DashboardIcon, Add as AddIcon } from '@mui/icons-material'
 import { styled } from '@mui/material/styles'
 import { useState } from 'react'
-import { useAuth } from '../context/authContext'
+import { useAuth } from '../hooks/useAuth'
 
 const StyledToolbar = styled(Toolbar)(() => ({
   boxSizing: 'border-box',
@@ -277,11 +277,11 @@ function MenuNavLogin () {
 }
 
 function MenuNav () {
-  const { user } = useAuth()
+  const { credentials } = useAuth()
   return (
     <>
-      {user && <MenuNavLogin />}
-      {!user && <MenuNavUnLogin />}
+      {credentials && <MenuNavLogin />}
+      {!credentials && <MenuNavUnLogin />}
     </>
   )
 }

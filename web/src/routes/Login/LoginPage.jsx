@@ -1,19 +1,17 @@
 import { Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, Toolbar, Typography, Box, TextField } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from '../../context/authContext'
-import axios from '../../api/axios'
+import { Link, Navigate } from 'react-router-dom'
+import { useAuth } from '../../hooks/useAuth'
 
 function LoginPage () {
-  const navigate = useNavigate()
-  const { setAuth } = useAuth()
+  const { loginPost, credentials } = useAuth()
 
   const [email, setEmail] = useState('')
   const [pwd, setPwd] = useState('')
 
   const [errMsg, setErrMsg] = useState('')
-  const [success, setSuccess] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const [showPassword, setShowPassword] = useState(false)
 
@@ -22,50 +20,27 @@ function LoginPage () {
   }, [email, pwd])
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault()
-  }
+  const handleMouseDownPassword = (event) => event.preventDefault()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setLoading(true)
     try {
-      const response = await axios.post('/auth/login',
-        JSON.stringify({
-          email,
-          password: pwd
-        }), {
-          headers: { 'Content-Type': 'application/json' }
-        }
-      )
-
-      setAuth({ email })
-      setEmail('')
-      setPwd('')
-      setSuccess(true)
-    } catch (err) {
-      if (!err?.response) {
-        setErrMsg('No server response')
-      } else if (err.response?.status === 400) {
-        setErrMsg('Missing Username or Password')
-      } else if (err.response?.status === 401) {
-        setErrMsg('Unauthorized')
-      } else {
-        setErrMsg('Login failed')
-      }
+      await loginPost(email, pwd)
+      setLoading(false)
+    } catch (e) {
+      setErrMsg(e)
+      setLoading(false)
     }
   }
 
-  useEffect(() => {
-    if (success) {
-      navigate('/home')
-    }
-  }, [success])
-
   return (<>
+    {credentials && <Navigate to="/dashboard" replace />}
     <Toolbar />
     <Box
       sx={{
         height: '100vh',
+        width: '100vw',
         display: 'flex',
         justifyContent: 'center',
         flexDirection: 'column',
@@ -123,7 +98,8 @@ function LoginPage () {
                 }
               />
             </FormControl>
-            <Button type='submit' variant='contained' size='large'>Inicia Sesión</Button>
+            <Button type='submit' variant='contained' size='large' disabled={loading}>Inicia Sesión</Button>
+            <Typography paragraph>{errMsg}</Typography>
           </Box>
         </Box>
         <Box sx={{

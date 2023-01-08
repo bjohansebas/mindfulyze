@@ -1,11 +1,14 @@
 import { Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, Toolbar, Typography, Box, TextField } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { EMAIL_REGEX, PWD_REGEX, USER_REGEX } from '../../utils/regex'
 import axios from '../../api/axios'
+import { useAuth } from '../../hooks/useAuth'
 
 function SignUpPage () {
+  const { credentials, loginPost } = useAuth()
+  const navigate = useNavigate()
   const [user, setUser] = useState('')
   const [validUser, setValidUser] = useState(false)
 
@@ -19,7 +22,7 @@ function SignUpPage () {
   const [validMatch, setValidMatch] = useState(false)
 
   const [errMsg, setErrMsg] = useState('')
-  const [success, setSuccess] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const [showPassword, setShowPassword] = useState(false)
 
@@ -41,12 +44,11 @@ function SignUpPage () {
   }, [email, pwd, matchPwd])
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault()
-  }
+  const handleMouseDownPassword = (e) => e.preventDefault()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setLoading(true)
 
     const testUser = USER_REGEX.test(user)
     const testEmail = EMAIL_REGEX.test(email)
@@ -54,9 +56,11 @@ function SignUpPage () {
 
     if (!testUser || !testEmail || !testPwd) {
       setErrMsg('Invalid Entry')
+      setLoading(false)
     }
+
     try {
-      const response = await axios.post('/auth/signup',
+      await axios.post('/auth/signup',
         JSON.stringify({
           username: user,
           password: pwd,
@@ -65,21 +69,29 @@ function SignUpPage () {
         {
           headers: { 'Content-Type': 'application/json' }
         })
-      console.log(response.data)
-      setSuccess(!!response.data)
+      try {
+        await loginPost(email, pwd)
+        setLoading(false)
+      } catch (e) {
+        navigate('/login')
+      }
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response')
+        setLoading(false)
       } else if (err.response?.status === 409) {
         setErrMsg('Username or Email taken')
+        setLoading(false)
       } else {
         setErrMsg('Registration failed')
+        setLoading(false)
       }
     }
   }
 
   return (
     <>
+      {credentials && <Navigate to="/dashboard" />}
       <Toolbar />
       <Box
         sx={{
@@ -176,7 +188,7 @@ function SignUpPage () {
                   }
                 />
               </FormControl>
-              <Button disabled={!!(!validPwd || !validEmail || !validMatch || !validUser)} type='submit' variant='contained' size='large'>Crear cuenta</Button>
+              <Button disabled={!!(!validPwd || !validEmail || !validMatch || !validUser) || loading} type='submit' variant='contained' size='large'>Crear cuenta</Button>
               <Typography paragraph>{errMsg}</Typography>
             </Box>
           </Box>
