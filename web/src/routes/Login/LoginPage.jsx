@@ -3,6 +3,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
+import { Helmet } from 'react-helmet-async'
 
 function LoginPage () {
   const { loginPost } = useAuth()
@@ -35,6 +36,9 @@ function LoginPage () {
   }
 
   return (<>
+    <Helmet>
+      <title>Log in | AlignMind</title>
+    </Helmet>
     <Toolbar />
     <Box
       sx={{

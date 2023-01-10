@@ -6,6 +6,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { useAuth } from '../../hooks/useAuth'
 import axios from '../../api/axios'
 import { GENDER_REGEX, NAMES_REGEX } from '../../utils/regex'
+import { Helmet } from 'react-helmet-async'
 
 function NewProfilePage () {
   const navigate = useNavigate()
@@ -95,87 +96,90 @@ function NewProfilePage () {
   }
 
   return (
-  <>
-    <Toolbar />
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        alignItems: 'center',
-        py: '20px',
-        width: '100%',
-        mx: { sm: '10px', md: 0 }
-      }}
-    >
-      <Box sx={{
-        background: '#ffffff',
-        display: 'flex',
-        justifyContent: ' center',
-        flexDirection: 'column',
-        width: { sm: '340px', md: '450px' },
-        gap: 3,
-        p: '30px',
-        borderRadius: '10px'
-      }}>
-        <Typography variant='h1' sx={{ fontSize: '1.4em', textAlign: 'center', mb: '10px' }}>Información basica personal</Typography>
-        <Box
-          component="form"
-          autoComplete="off"
-          onSubmit={handleSubmit}
-          sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <TextField
-              type="text"
-              id="outlined-required"
-              error={!validNames && names !== ''}
-              label="Nombre"
-              placeholder="Nombre"
-              onChange={(e) => setNames(e.target.value)}
-              required
-            />
-            <TextField
-              type="text"
-              id="outlined"
-              error={!validLastNames && lastNames !== ''}
-              label="Apellido (opcional)"
-              placeholder="Apellido (opcional)"
-              onChange={(e) => setLastNames(e.target.value)}
-            />
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                disableFuture
-                label="Fecha de nacimiento (opcional)"
-                openTo="year"
-                inputFormat="YYYY/MM/DD"
-                views={['year', 'month', 'day']}
-                value={years}
-                onChange={(newValue) => { setYears(newValue) }}
-                renderInput={(params) => <TextField {...params} />}
-              />
-            </LocalizationProvider>
-            <FormControl>
-              <FormLabel id="demo-controlled-radio-buttons-group">Gender</FormLabel>
-              <RadioGroup
-                row
-                aria-labelledby="demo-controlled-radio-buttons-group"
-                name="controlled-radio-buttons-group"
-                value={gender}
-                onChange={(e) => setGender(e.target.value)}
+    <>
+      <Helmet>
+        <title>Create profile | AlignMind</title>
+      </Helmet>
+      <Toolbar />
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          alignItems: 'center',
+          py: '20px',
+          width: '100%',
+          mx: { sm: '10px', md: 0 }
+        }}
+      >
+        <Box sx={{
+          background: '#ffffff',
+          display: 'flex',
+          justifyContent: ' center',
+          flexDirection: 'column',
+          width: { sm: '340px', md: '450px' },
+          gap: 3,
+          p: '30px',
+          borderRadius: '10px'
+        }}>
+          <Typography variant='h1' sx={{ fontSize: '1.4em', textAlign: 'center', mb: '10px' }}>Información basica personal</Typography>
+          <Box
+            component="form"
+            autoComplete="off"
+            onSubmit={handleSubmit}
+            sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              <TextField
+                type="text"
+                id="outlined-required"
+                error={!validNames && names !== ''}
+                label="Nombre"
+                placeholder="Nombre"
+                onChange={(e) => setNames(e.target.value)}
                 required
-              >
-                <FormControlLabel value="female" control={<Radio />} label="Female" />
-                <FormControlLabel value="male" control={<Radio />} label="Male" />
-                <FormControlLabel value="otro" control={<Radio />} label="Otro" />
-              </RadioGroup>
-            </FormControl>
-            <Button disabled={!!(!validNames || (!validLastNames && lastNames !== '') || !validGender) || loading} type='submit' variant='contained' size='large'>Crear cuenta</Button>
-            <Typography paragraph>{errMsg}</Typography>
+              />
+              <TextField
+                type="text"
+                id="outlined"
+                error={!validLastNames && lastNames !== ''}
+                label="Apellido (opcional)"
+                placeholder="Apellido (opcional)"
+                onChange={(e) => setLastNames(e.target.value)}
+              />
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  disableFuture
+                  label="Fecha de nacimiento (opcional)"
+                  openTo="year"
+                  inputFormat="YYYY/MM/DD"
+                  views={['year', 'month', 'day']}
+                  value={years}
+                  onChange={(newValue) => { setYears(newValue) }}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+              <FormControl>
+                <FormLabel id="demo-controlled-radio-buttons-group">Gender</FormLabel>
+                <RadioGroup
+                  row
+                  aria-labelledby="demo-controlled-radio-buttons-group"
+                  name="controlled-radio-buttons-group"
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                  required
+                >
+                  <FormControlLabel value="female" control={<Radio />} label="Female" />
+                  <FormControlLabel value="male" control={<Radio />} label="Male" />
+                  <FormControlLabel value="otro" control={<Radio />} label="Otro" />
+                </RadioGroup>
+              </FormControl>
+              <Button disabled={!!(!validNames || (!validLastNames && lastNames !== '') || !validGender) || loading} type='submit' variant='contained' size='large'>Crear cuenta</Button>
+              <Typography paragraph>{errMsg}</Typography>
+            </Box>
           </Box>
         </Box>
-      </Box>
-    </Box >
-  </>
+      </Box >
+    </>
   )
 }
 
