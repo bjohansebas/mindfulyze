@@ -9,14 +9,10 @@ import Paper from '@mui/material/Paper'
 import Popper from '@mui/material/Popper'
 import MenuItem from '@mui/material/MenuItem'
 import MenuList from '@mui/material/MenuList'
-import { useAuth } from '../../hooks/useAuth'
-import { Navigate } from 'react-router-dom'
 
 const options = ['Mi semana', 'Mi mes']
 
 function HomePage () {
-  const { credentials } = useAuth()
-
   const [open, setOpen] = React.useState(false)
   const anchorRef = React.useRef(null)
   const [selectedIndex, setSelectedIndex] = React.useState(0)
@@ -44,7 +40,6 @@ function HomePage () {
     <Box
       component="main"
       sx={{ width: '100%' }}>
-      {!credentials && <Navigate to="/login" />}
       <Box component="header" sx={{ my: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
         <Typography variant="h1" fontWeight="700" sx={{ fontSize: '1.4em', textAlign: 'center' }}>Hola, Martin</Typography>
         <Box sx={{ display: 'flex' }}>

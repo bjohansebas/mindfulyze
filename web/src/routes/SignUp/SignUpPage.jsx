@@ -1,13 +1,13 @@
 import { Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, Toolbar, Typography, Box, TextField } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { EMAIL_REGEX, PWD_REGEX, USER_REGEX } from '../../utils/regex'
 import axios from '../../api/axios'
 import { useAuth } from '../../hooks/useAuth'
 
 function SignUpPage () {
-  const { credentials, loginPost } = useAuth()
+  const { loginPost } = useAuth()
   const navigate = useNavigate()
   const [user, setUser] = useState('')
   const [validUser, setValidUser] = useState(false)
@@ -57,6 +57,7 @@ function SignUpPage () {
     if (!testUser || !testEmail || !testPwd) {
       setErrMsg('Invalid Entry')
       setLoading(false)
+      return
     }
 
     try {
@@ -91,7 +92,6 @@ function SignUpPage () {
 
   return (
     <>
-      {credentials && <Navigate to="/dashboard" />}
       <Toolbar />
       <Box
         sx={{

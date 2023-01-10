@@ -1,11 +1,11 @@
 import { Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, Toolbar, Typography, Box, TextField } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 
 function LoginPage () {
-  const { loginPost, credentials } = useAuth()
+  const { loginPost } = useAuth()
 
   const [email, setEmail] = useState('')
   const [pwd, setPwd] = useState('')
@@ -35,7 +35,6 @@ function LoginPage () {
   }
 
   return (<>
-    {credentials && <Navigate to="/dashboard" replace />}
     <Toolbar />
     <Box
       sx={{

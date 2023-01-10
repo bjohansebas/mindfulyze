@@ -15,30 +15,40 @@ import { ArchiveThinksPage } from './routes/Archive'
 import { MenuNav } from './components/Menu'
 import { Box } from '@mui/material'
 import { useAuth } from './hooks/useAuth'
+import { RequiredAuth } from './components/RequiredAuth'
+import { NoRequiredAuth } from './components/NoRequiredAuth'
+import { NewProfilePage } from './routes/SignUp/NewProfile'
 
 function App () {
-  const { credentials } = useAuth()
+  const { isLogin } = useAuth()
   return (
-    <Box sx={{ background: '#f6f6f6', display: credentials ? 'flex' : 'block', minHeight: '100vh' }}>
+    <Box sx={{ background: '#f6f6f6', display: isLogin ? 'flex' : 'block', minHeight: '100vh' }}>
       <MenuNav>
       </MenuNav>
       <Routes>
-        <Route path='/' element={<MainPage />} />
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/signup' element={<SignUpPage />} />
-        <Route path='/dashboard' element={<HomePage />} />
-        <Route path='/account' element={<AccountPage />} />
-        <Route path='/think/new' element={<NewThinkPage />} />
-        <Route path='/think/:id/' element={<EditThinkPage />} />
-        <Route path='/place/new' element={<NewPlacePage />} />
-        <Route path='/place/:id' element={<EditPlacePage />} />
-        <Route path='/trash' element={<ThinksTrashPage />} />
-        <Route path='/trash/:id' element={<ShowThinkTrashPage />} />
-        <Route path='/archive' element={<ArchiveThinksPage />} />
-        <Route path='/archive/:id' element={<EditThinkPage />} />
+        <Route element={<NoRequiredAuth />}>
+          <Route path='/' element={<MainPage />} />
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/signup' element={<SignUpPage />} />
+        </Route>
+        <Route element={<RequiredAuth requiredProfile={true} />}>
+          <Route path='/dashboard' element={<HomePage />} />
+          <Route path='/account' element={<AccountPage />} />
+          <Route path='/think/new' element={<NewThinkPage />} />
+          <Route path='/think/:id/' element={<EditThinkPage />} />
+          <Route path='/place/new' element={<NewPlacePage />} />
+          <Route path='/place/:id' element={<EditPlacePage />} />
+          <Route path='/trash' element={<ThinksTrashPage />} />
+          <Route path='/trash/:id' element={<ShowThinkTrashPage />} />
+          <Route path='/archive' element={<ArchiveThinksPage />} />
+          <Route path='/archive/:id' element={<EditThinkPage />} />
+        </Route>
+        <Route element={<RequiredAuth requiredProfile={false} />}>
+          <Route path='/account/new' element={<NewProfilePage />} />
+        </Route>
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
-    </Box>
+    </Box >
   )
 }
 

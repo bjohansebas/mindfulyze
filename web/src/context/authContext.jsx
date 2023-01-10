@@ -1,4 +1,4 @@
-import { createContext } from 'react'
+import { createContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import axios from '../api/axios'
 import { useLocalStorage } from '../hooks/useLocalStorage'
@@ -11,6 +11,8 @@ function AuthProvider ({ children }) {
   const { item: credentials, saveItem: setCredentials } = useLocalStorage('credentials_token', null)
   const { item: userId, saveItem: setUserId } = useLocalStorage('userInfo_userId', null)
   const { item: userInfo, saveItem: setUserInfo } = useLocalStorage('userInfo_userInfo', {})
+  const [isLogin, setIsLogin] = useState(false)
+  const [hasProfile, setHasProfile] = useState(false)
 
   const loginPost = async (email, password) => {
     try {
@@ -18,9 +20,7 @@ function AuthProvider ({ children }) {
         JSON.stringify({
           email,
           password
-        }), {
-          headers: { 'Content-Type': 'application/json' }
-        }
+        })
       )
 
       const accessToken = response?.data.data.login_session
@@ -44,7 +44,7 @@ function AuthProvider ({ children }) {
     }
   }
 
-  return <AuthContext.Provider value={{ credentials, userId, setUserInfo, userInfo, loginPost }}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={{ credentials, setCredentials, setUserId, userId, setUserInfo, hasProfile, setHasProfile, userInfo, loginPost, isLogin, setIsLogin }}>{children}</AuthContext.Provider>
 }
 
 AuthProvider.propTypes = {
