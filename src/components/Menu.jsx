@@ -96,7 +96,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 )
 
 const pageLogin = [
-  { text: 'Dashboard', route: '/home', icon: <DashboardIcon /> },
+  { text: 'Dashboard', route: '/dashboard', icon: <DashboardIcon /> },
   { text: 'Papelera', route: '/trash', icon: <DeleteIcon /> },
   { text: 'Archivados', route: '/archive', icon: <ArchiveIcon /> }
 ]
@@ -277,11 +277,11 @@ function MenuNavLogin () {
 }
 
 function MenuNav () {
-  const { credentials } = useAuth()
+  const { isLogin } = useAuth()
   return (
     <>
-      {credentials && <MenuNavLogin />}
-      {!credentials && <MenuNavUnLogin />}
+      {isLogin && <MenuNavLogin />}
+      {!isLogin && <MenuNavUnLogin />}
     </>
   )
 }
