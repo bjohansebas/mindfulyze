@@ -2,6 +2,7 @@ import { Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedIn
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 import { EMAIL_REGEX, PWD_REGEX, USER_REGEX } from '../../utils/regex'
 import axios from '../../api/axios'
 import { useAuth } from '../../hooks/useAuth'
@@ -92,6 +93,9 @@ function SignUpPage () {
 
   return (
     <>
+      <Helmet>
+        <title>Sign up | AlignMind</title>
+      </Helmet>
       <Toolbar />
       <Box
         sx={{

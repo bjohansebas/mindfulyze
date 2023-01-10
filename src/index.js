@@ -10,16 +10,18 @@ import { App } from './App'
 import { BrowserRouter } from 'react-router-dom'
 import PaletteProvider from './context/themeContext'
 import { AuthProvider } from './context/authContext'
+import { HelmetProvider } from 'react-helmet-async'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <PaletteProvider>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
+        <HelmetProvider>
+          <AuthProvider>
+            <App />
+          </AuthProvider>
+        </HelmetProvider>
       </PaletteProvider>
     </BrowserRouter >
-
   </React.StrictMode >
 )
