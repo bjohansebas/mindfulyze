@@ -1,6 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
 import { MainPage } from './routes/Main'
-import { HomePage } from './routes/Home'
 import { LoginPage } from './routes/Login'
 import { SignUpPage } from './routes/SignUp'
 import { AccountPage } from './routes/Account'
@@ -18,6 +17,7 @@ import { useAuth } from './hooks/useAuth'
 import { RequiredAuth } from './components/RequiredAuth'
 import { NoRequiredAuth } from './components/NoRequiredAuth'
 import { NewProfilePage } from './routes/SignUp/NewProfile'
+import { DashboardPage } from './routes/Dashboard'
 
 function App () {
   const { isLogin } = useAuth()
@@ -32,7 +32,7 @@ function App () {
           <Route path='/signup' element={<SignUpPage />} />
         </Route>
         <Route element={<RequiredAuth requiredProfile={true} />}>
-          <Route path='/dashboard' element={<HomePage />} />
+          <Route path='/dashboard' element={<DashboardPage />} />
           <Route path='/account' element={<AccountPage />} />
           <Route path='/think/new' element={<NewThinkPage />} />
           <Route path='/think/:id/' element={<EditThinkPage />} />

@@ -1,5 +1,4 @@
-function PlacesPage () {
-  return (<p>ALL Places</p>)
-}
+import { EditPlacePage } from './EditPlace'
+import { NewPlacePage } from './NewPlace'
 
-export { PlacesPage }
+export { EditPlacePage, NewPlacePage }
