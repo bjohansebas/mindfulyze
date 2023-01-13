@@ -10,14 +10,14 @@ import { Box } from '@mui/system'
 import { Button, ButtonGroup } from '@mui/material'
 import PropTypes from 'prop-types'
 
-function Combobox ({ options, setOptionSelect }) {
+function Combobox ({ options = [], setOptionSelect }) {
   const [open, setOpen] = useState(false)
   const anchorRef = useRef(null)
   const [selectedIndex, setSelectedIndex] = useState(0)
 
   useEffect(() => {
     setOptionSelect(options[selectedIndex])
-  }, [selectedIndex])
+  }, [selectedIndex, options])
 
   const handleMenuItemClick = (e, index) => {
     setSelectedIndex(index)
@@ -35,7 +35,7 @@ function Combobox ({ options, setOptionSelect }) {
   return (
     <Box>
       <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
-        <Button>{options[selectedIndex].text}</Button>
+        <Button>{options[selectedIndex]?.text}</Button>
         <Button
           size="small"
           aria-controls={open ? 'split-button-menu' : undefined}
@@ -68,11 +68,11 @@ function Combobox ({ options, setOptionSelect }) {
                 <MenuList id="split-button-menu" autoFocusItem>
                   {options.map((option, index) => (
                     <MenuItem
-                      key={option}
+                      key={index}
                       selected={index === selectedIndex}
                       onClick={(event) => handleMenuItemClick(event, index)}
                     >
-                      {option}
+                      {option?.text}
                     </MenuItem>
                   ))}
                 </MenuList>

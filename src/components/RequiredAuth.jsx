@@ -8,7 +8,7 @@ function RequiredAuth ({ requiredProfile }) {
   const navigate = useNavigate()
 
   const [loading, setLoading] = useState(true)
-  const { isLogin, setIsLogin, credentials, setCredentials, userId, setUserId, setUserInfo, userInfo, setHasProfile } = useAuth()
+  const { isLogin, setIsLogin, credentials, setCredentials, userId, setUserId, setUserInfo, setHasProfile } = useAuth()
 
   useEffect(() => {
     if (credentials && userId && !isLogin) {
@@ -17,20 +17,31 @@ function RequiredAuth ({ requiredProfile }) {
           const response = await axios.get(`/users/${userId}`, {
             headers: { Authorization: `Bearer ${credentials}` }
           })
-
+          let data = {
+            username: response?.data.data.username, email: response?.data.data.email
+          }
           if (requiredProfile) {
             try {
               const responseProfile = await axios.get(`/users/${userId}/profile`, {
                 headers: { Authorization: `Bearer ${credentials}` }
               })
-
+              const dataRequest = responseProfile?.data.data
+              if (dataRequest?.last_name) {
+                data = { lastName: dataRequest?.last_name }
+              }
+              data = {
+                firstName: dataRequest.first_name,
+                lang: dataRequest.preference_lang,
+                gender: dataRequest.gender,
+                ...data
+              }
               setHasProfile(true)
-              setUserInfo({ ...responseProfile?.data.data })
+              setUserInfo({ data })
             } catch (e) {
               navigate('/account/new')
             }
           }
-          setUserInfo({ username: response?.data.data.username, email: response?.data.data.email, ...userInfo })
+          setUserInfo(data)
           setIsLogin(true)
           setLoading(false)
         } catch (e) {

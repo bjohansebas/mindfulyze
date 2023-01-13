@@ -61,7 +61,7 @@ function NewPlacePage () {
 
     const testColor = HEXADECIMAL_REGEX.test(color)
 
-    if (!testColor || !textPlace.trimEnd().length > 5) {
+    if (!testColor || textPlace.trimEnd().length < 5) {
       setErrMsg('Invalid Entry')
       setLoading(false)
       return
@@ -75,12 +75,13 @@ function NewPlacePage () {
     }
 
     try {
-      await axios.post(`/places/${userId}`,
+      const response = await axios.post(`/places/${userId}`,
         JSON.stringify(request),
         {
           headers: { Authorization: `Bearer ${credentials}` }
         })
-      navigate('/dashboard')
+
+      navigate('/place/' + response.data.data.place_id)
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response')
