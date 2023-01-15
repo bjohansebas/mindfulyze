@@ -105,7 +105,7 @@ const settings = ['Profile', 'Logout']
 
 function MenuNavLogin () {
   const location = useLocation()
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   const [anchorElUser, setAnchorElUser] = useState(null)
   const [anchorElCreate, setAnchorElCreate] = useState(null)
   const pathNow = location.pathname

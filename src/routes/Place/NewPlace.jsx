@@ -99,10 +99,10 @@ function NewPlacePage () {
     <Box
       sx={{
         display: 'flex',
-        justifyContent: 'center',
+        justifyContent: 'normal',
         flexDirection: 'column',
         alignItems: 'center',
-        py: '20px',
+        py: '40px',
         width: '100%',
         mx: { sm: '10px', md: 0 }
       }}
@@ -111,10 +111,11 @@ function NewPlacePage () {
         display: 'flex',
         justifyContent: ' center',
         flexDirection: 'column',
-        width: '70%',
+        width: { xs: '100%', sm: '70%' },
         gap: 3,
-        p: '30px',
-        borderRadius: '10px'
+        p: '40px',
+        borderRadius: '10px',
+        background: '#ffffff'
       }}>
         <Forms title="Crea un nuevo lugar" disableSubmit={loading} isCancel={true} submitText="Crear lugar" handleSubmit={handleSubmit}>
           <TextField
@@ -125,15 +126,21 @@ function NewPlacePage () {
             required
           />
           <Box
-            sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: {
+                xs: 'start',
+                md: 'center'
+              },
+              flexDirection: { xs: 'column', md: 'row' },
+              gap: 2
+            }}>
             <Box
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'center',
-                '& > *': {
-                  m: 1
-                }
+                alignItems: 'center'
               }}
             >
               <ButtonGroup variant="text" aria-label="outlined button group">
@@ -165,9 +172,9 @@ function NewPlacePage () {
                 </div>
               }
             </Box>
-            <Box>
-              {!errMsg && <Typography>{errMsg}</Typography>}
-            </Box>
+          </Box>
+          <Box>
+            {!errMsg && <Typography>{errMsg}</Typography>}
           </Box>
         </Forms>
       </Box>

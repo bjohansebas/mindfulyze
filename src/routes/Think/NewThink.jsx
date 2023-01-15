@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, ButtonGroup, TextField, Typography } from '@mui/material'
+import { Autocomplete, Box, Button, ButtonGroup, TextareaAutosize, TextField, Typography } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
 import { Forms } from '../../components/Form'
 import { useEffect, useState } from 'react'
@@ -53,7 +53,6 @@ function NewThinkPage () {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
-    console.log('dd')
     if (textThink.trimEnd().length < 5) {
       setErrMsg('Invalid Entry')
       setLoading(false)
@@ -61,8 +60,6 @@ function NewThinkPage () {
     }
 
     try {
-      console.log('dd2')
-      console.log(place)
       const response = await axios.post(`/thinks/${userId}`,
         JSON.stringify({
           text_think: textThink.trimEnd(),
@@ -73,8 +70,6 @@ function NewThinkPage () {
         })
 
       const thinkId = response?.data.data.think_id
-
-      console.log('dd3')
 
       emotionsSelect.forEach(async (emotion) => {
         try {
@@ -108,10 +103,10 @@ function NewThinkPage () {
       <Box
         sx={{
           display: 'flex',
-          justifyContent: 'center',
+          justifyContent: 'normal',
           flexDirection: 'column',
           alignItems: 'center',
-          py: '20px',
+          py: '40px',
           width: '100%',
           mx: { sm: '10px', md: 0 }
         }}
@@ -120,35 +115,49 @@ function NewThinkPage () {
           display: 'flex',
           justifyContent: ' center',
           flexDirection: 'column',
-          width: '70%',
+          width: { sm: '100%', md: '70%' },
           gap: 3,
           p: '30px',
-          borderRadius: '10px'
+          borderRadius: '10px',
+          background: '#ffffff'
         }}>
-          <Forms title="Crea un nuevo pensamiento" isCancel={true} disableSubmit={loading} submitText="Crear lugar" handleSubmit={handleSubmit}>
-            <TextField
-              type="text"
-              variant='outlined'
+          <Forms title="Crea un nuevo pensamiento" isCancel={true} disableSubmit={loading || textThink.length < 5 || emotionsSelect.length < 1} submitText="Crear pensamiento" handleSubmit={handleSubmit}>
+            <TextareaAutosize
+              style={{ resize: 'none', minHeight: '56px', maxHeight: '200px', fontSize: '16px' }}
               value={textThink}
               onChange={(e) => setTextThink(e.target.value)}
               required
             />
             <Box
-              sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <Box sx={{ display: 'flex', gap: 3, alignItems: 'center' }}>
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: {
+                  xs: 'start',
+                  sm: 'center'
+                },
+                flexDirection: { xs: 'column', lg: 'row' },
+                gap: 2
+              }}>
+              <Box sx={{
+                display: 'flex',
+                gap: {
+                  xs: 1, sm: 3
+                },
+                alignItems: 'start',
+                flexDirection: { xs: 'column', sm: 'row' }
+              }
+              } >
                 <Box
                   sx={{
                     display: 'flex',
                     flexDirection: 'column',
-                    alignItems: 'center',
-                    '& > *': {
-                      m: 1
-                    }
+                    alignItems: 'center'
                   }}
                 >
                   <ButtonGroup variant="text" aria-label="outlined button group">
-                    <Button variant='contained'>Lugar</Button>
-                    <Button component={Link} to="/think/new">Think</Button>
+                    <Button variant='contained'>Pensamiento</Button>
+                    <Button component={Link} to="/place/new">Lugar</Button>
                   </ButtonGroup>
                 </Box>
                 <Combobox options={allPlaces} setOptionSelect={setPlace} />
@@ -174,13 +183,13 @@ function NewThinkPage () {
                     />
                   )} />
               </Box>
-              <Box>
-                {!errMsg && <Typography>{errMsg}</Typography>}
-              </Box>
+            </Box>
+            <Box>
+              {!errMsg && <Typography>{errMsg}</Typography>}
             </Box>
           </Forms>
         </Box>
-      </Box>
+      </Box >
     </>)
 }
 export { NewThinkPage }
