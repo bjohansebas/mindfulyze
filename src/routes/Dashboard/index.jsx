@@ -1,11 +1,12 @@
-import { Box, IconButton, Menu, MenuItem, Typography } from '@mui/material'
+import { Box, List, IconButton, Menu, MenuItem, Typography, ListItem, ListItemButton, ListItemText } from '@mui/material'
 import { useEffect, useState } from 'react'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import axios from '../../api/axios'
 import { useAuth } from '../../hooks/useAuth'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 function DashboardPage () {
+  const navigate = useNavigate()
   const { userInfo, userId, credentials } = useAuth()
   const [anchorEl, setAnchorEl] = useState(null)
   const [allPlaces, setAllPlaces] = useState([])
@@ -87,46 +88,46 @@ function DashboardPage () {
       </Box>
       <Box display="flex" flexDirection="column" gap={3}>
         <Typography variant="h2" fontWeight="600" sx={{ fontSize: '1.4em' }}>Tus lugares</Typography>
-        <Box sx={{
+        <List sx={{
           display: 'grid',
           gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
           gap: 2
         }}>
-          {allPlaces.map(data => (
-            <Box key={data.text} sx={{ height: '30px', py: '30px', px: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#ffffff', cursor: 'pointer', borderRadius: '10px', boxShadow: `0 0 10px #${data?.color}80` }} to={`/place/${data?.id}`}>
-              <Box component={Link} to={`/place/${data?.id}`} sx={{ width: '100%', color: '#000000', textDecoration: 'none' }}>
-                <p>{data.text}</p>
-              </Box>
-              <div>
-                <IconButton onClick={(e) => { handlePlaceMenu(e, data.id) }}
-                  aria-label="more"
-                  id="long-button"
-                >
+          {allPlaces.map((data, index) => (
+            <ListItem
+              sx={{ borderRadius: '10px', boxShadow: `0 0 10px #${data?.color}80`, background: '#ffffff' }}
+              key={index}
+              secondaryAction={
+                <IconButton edge="end" aria-label="comments" onClick={(e) => handlePlaceMenu(e, data.id)}>
                   <MoreVertIcon />
                 </IconButton>
-              </div>
-            </Box>)
-          )}
-          <Menu
-            sx={{ mt: '40px', zIndex: 1202 }}
-            id="menu-appbar"
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right'
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right'
-            }}
-            open={Boolean(anchorEl)}
-            onClose={handlePlaceMenu}
-          >
-            <MenuItem key="1" onClick={onDelete}>Eliminar lugar</MenuItem>
-            <MenuItem key="2" onClick={handlePlaceMenu}>Editar lugar</MenuItem>
-          </Menu>
-        </Box>
+              }
+              disablePadding>
+              <ListItemButton sx={{ py: '20px', borderRadius: '10px' }} role={undefined} dense onClick={() => { navigate(`/place/${data?.id}`) }}>
+                <ListItemText primary={`${data?.text}`} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+        <Menu
+          sx={{ mt: '40px', zIndex: 1202 }}
+          id="menu-appbar"
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right'
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right'
+          }}
+          open={Boolean(anchorEl)}
+          onClose={handlePlaceMenu}
+        >
+          <MenuItem key="1" onClick={onDelete}>Eliminar lugar</MenuItem>
+          <MenuItem key="2" onClick={() => navigate(`/place/${idSelect}/edit`)}>Editar lugar</MenuItem>
+        </Menu>
       </Box>
     </Box >)
 }

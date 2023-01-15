@@ -5,7 +5,7 @@ import SwapVertIcon from '@mui/icons-material/SwapVert'
 import { useEffect, useState } from 'react'
 import { useAuth } from '../../hooks/useAuth'
 import axios from '../../api/axios'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 function ShowPlacePage () {
   const { id } = useParams()
@@ -13,7 +13,7 @@ function ShowPlacePage () {
   const { credentials } = useAuth()
   const [anchorElPlace, setAnchorElPlace] = useState(null)
   const [anchorElThink, setAnchorElThink] = useState(null)
-
+  const [idSelect, setIdSelect] = useState('')
   const [namePlace, setNamePlace] = useState('')
   const [allThink, setAllThink] = useState([])
 
@@ -40,28 +40,28 @@ function ShowPlacePage () {
   }, [])
 
   useEffect(() => {
-    async function getThinks () {
-      try {
-        const response = await axios.get(`/places/${id}/thinks`, {
-          headers: {
-            Authorization: `Bearer ${credentials}`
-          }
-        })
-
-        setAllThink(response?.data.data.map(data => {
-          return { text: data.text_think, id: data.think_id }
-        }))
-      } catch (err) {
-        if (!err?.response) {
-          return 'No server response'
-        } else if (err.response?.status === 404) {
-          navigate('/dashboard')
-        }
-      }
-    }
-
     getThinks()
   }, [])
+
+  const getThinks = async () => {
+    try {
+      const response = await axios.get(`/places/${id}/thinks`, {
+        headers: {
+          Authorization: `Bearer ${credentials}`
+        }
+      })
+
+      setAllThink(response?.data.data.map(data => {
+        return { text: data.text_think, id: data.think_id }
+      }))
+    } catch (err) {
+      if (!err?.response) {
+        return 'No server response'
+      } else if (err.response?.status === 404) {
+        navigate('/dashboard')
+      }
+    }
+  }
 
   const handlePlaceMenu = (event) => {
     if (anchorElPlace) {
@@ -71,11 +71,61 @@ function ShowPlacePage () {
     }
   }
 
-  const handleThinkMenu = (event) => {
+  const handleThinkMenu = (event, id) => {
     if (anchorElThink) {
+      setIdSelect('')
       setAnchorElThink(null)
     } else {
+      setIdSelect(id)
       setAnchorElThink(event.currentTarget)
+    }
+  }
+
+  const onDelete = async () => {
+    setAnchorElThink(null)
+    try {
+      await axios.post(`/thinks/${idSelect}/trash`, {}, {
+        headers: {
+          Authorization: `Bearer ${credentials}`
+        }
+      })
+
+      await getThinks()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const onDeletePlace = async () => {
+    setAnchorElPlace(null)
+    try {
+      await axios.delete(`/places/${id}`, {
+        headers: {
+          Authorization: `Bearer ${credentials}`
+        }
+      })
+
+      navigate('/dashboard')
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const onArchive = async () => {
+    setAnchorElThink(null)
+    try {
+      await axios.put(`/thinks/${idSelect}/`,
+        JSON.stringify({
+          is_archive: true
+        }), {
+          headers: {
+            Authorization: `Bearer ${credentials}`
+          }
+        })
+
+      await getThinks()
+    } catch (err) {
+      console.log(err)
     }
   }
 
@@ -112,9 +162,8 @@ function ShowPlacePage () {
           open={Boolean(anchorElPlace)}
           onClose={handlePlaceMenu}
         >
-          <MenuItem component={Link} key="1" onClick={handlePlaceMenu} to={`/place/${id}/edit`}>Editar lugar</MenuItem>
-          <MenuItem component={Link} key="2" onClick={handlePlaceMenu} to={`/place/${id}/delete`}>Borrar lugar</MenuItem>
-          <MenuItem key="3" onClick={handlePlaceMenu}>Seleccionar todo</MenuItem>
+          <MenuItem key="1" onClick={() => navigate(`/place/${id}/edit`)}>Editar lugar</MenuItem>
+          <MenuItem key="2" onClick={onDeletePlace}>Borrar lugar</MenuItem>
         </Menu>
       </Toolbar>
       <Box sx={{ p: '30px' }}>
@@ -130,7 +179,7 @@ function ShowPlacePage () {
                   sx={{ height: '25', borderBottom: '1px solid rgba(0,0,0,0.12)' }}
                   key={index}
                   secondaryAction={
-                    <IconButton edge="end" aria-label="comments" onClick={handleThinkMenu}>
+                    <IconButton edge="end" aria-label="comments" onClick={(e) => handleThinkMenu(e, value.id)}>
                       <MoreVertIcon />
                     </IconButton>
                   }
@@ -159,9 +208,9 @@ function ShowPlacePage () {
           open={Boolean(anchorElThink)}
           onClose={handleThinkMenu}
         >
-          <MenuItem key="1" onClick={handleThinkMenu}>Ver pensamiento</MenuItem>
-          <MenuItem key="2" onClick={handleThinkMenu}>Mover a la papelera</MenuItem>
-          <MenuItem key="3" onClick={handleThinkMenu}>Archivar pensamiento</MenuItem>
+          <MenuItem key="1" onClick={() => navigate(`/think/${idSelect}`)}>Ver pensamiento</MenuItem>
+          <MenuItem key="2" onClick={onDelete}>Mover a la papelera</MenuItem>
+          <MenuItem key="3" onClick={onArchive}>Archivar pensamiento</MenuItem>
         </Menu>
       </Box>
     </Box >
