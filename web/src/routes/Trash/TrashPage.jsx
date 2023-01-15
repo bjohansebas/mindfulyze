@@ -57,6 +57,22 @@ function TrashPage () {
     }
   }
 
+  const onDeleteId = async () => {
+    try {
+      setAnchorElTrash(null)
+      await axios.delete(`/trash/${idSelect}`, {
+        headers: {
+          Authorization: `Bearer ${credentials}`
+        }
+      })
+
+      handleToggle(allTrash.findIndex(val => val.id === idSelect))
+      await getTrash()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   const onRestoreId = async () => {
     try {
       setAnchorElTrash(null)
@@ -65,8 +81,25 @@ function TrashPage () {
           Authorization: `Bearer ${credentials}`
         }
       })
-      console.log(allTrash.findIndex(val => val.id === idSelect))
+
       handleToggle(allTrash.findIndex(val => val.id === idSelect))
+      await getTrash()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const onDeleteSelect = async () => {
+    try {
+      for await (const value of checked) {
+        const trash = allTrash[value]
+        await axios.delete(`/trash/${trash.id}`, {
+          headers: {
+            Authorization: `Bearer ${credentials}`
+          }
+        })
+      }
+      setChecked([])
       await getTrash()
     } catch (err) {
       console.log(err)
@@ -75,18 +108,16 @@ function TrashPage () {
 
   const onRestoreSelect = async () => {
     try {
-      checked.forEach(async (value) => {
+      for await (const value of checked) {
         const trash = allTrash[value]
-        console.log(allTrash.findIndex(val => val.id === trash.id))
-        handleToggle(allTrash.findIndex(val => val.id === trash.id))
-
+        console.log({ trash, value })
         await axios.post(`/trash/${trash.id}`, {}, {
           headers: {
             Authorization: `Bearer ${credentials}`
           }
         })
-      })
-
+      }
+      setChecked([])
       await getTrash()
     } catch (err) {
       console.log(err)
@@ -107,7 +138,7 @@ function TrashPage () {
           <IconButton onClick={onRestoreSelect}>
             <RestoreIcon />
           </IconButton>
-          <IconButton>
+          <IconButton onClick={onDeleteSelect}>
             <DeleteIcon />
           </IconButton>
         </Box>
@@ -161,7 +192,7 @@ function TrashPage () {
         onClose={handleTrashMenu}
       >
         <MenuItem key="1" onClick={() => navigate(`/trash/${idSelect}`)}>Ver pensamiento</MenuItem>
-        <MenuItem key="2" onClick={handleTrashMenu}>Eliminar a la papelera</MenuItem>
+        <MenuItem key="2" onClick={onDeleteId}>Eliminar a la papelera</MenuItem>
         <MenuItem key="3" onClick={onRestoreId}>Restaurar pensamiento</MenuItem>
       </Menu>
     </Box >

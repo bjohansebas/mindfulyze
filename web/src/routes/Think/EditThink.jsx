@@ -1,4 +1,4 @@
-import { Box, Button, List, ListItem, ListItemButton, ListItemText, TextareaAutosize, Toolbar } from '@mui/material'
+import { Autocomplete, Box, Button, List, ListItem, ListItemButton, ListItemText, TextareaAutosize, TextField, Toolbar } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Delete as DeleteIcon, Archive as ArchiveIcon } from '@mui/icons-material'
@@ -13,6 +13,9 @@ function EditThinkPage () {
   const [think, setThink] = useState({})
   const [place, setPlace] = useState({})
   const [newTextThink, setNewTextThink] = useState('')
+  const [emotions, setEmotions] = useState([])
+  const [allEmotions, setAllEmotions] = useState([])
+  const [newEmotionsThink, setNewEmotionsThink] = useState([])
 
   useEffect(() => {
     async function getThink () {
@@ -34,6 +37,44 @@ function EditThinkPage () {
       }
     }
     getThink()
+  }, [])
+
+  useEffect(() => {
+    async function getEmotions () {
+      const response = await axios.get('/emotions/', {
+        headers: {
+          Authorization: `Bearer ${credentials}`
+        }
+      })
+      setAllEmotions(response?.data.data.map(data => {
+        return { text: data.name_emotion, id: data.emotion_id }
+      }))
+    }
+    getEmotions()
+  }, [])
+
+  useEffect(() => {
+    async function getEmotions () {
+      try {
+        const response = await axios.get(`/thinks/${id}/emotions`, {
+          headers: {
+            Authorization: `Bearer ${credentials}`
+          }
+        })
+        setEmotions(response?.data.data.map(data => {
+          return { text: data.name_emotion, id: data.emotion_id }
+        }))
+      } catch (err) {
+        if (!err?.response) {
+          console.log('Server not response')
+        } else if (err.response?.status === 404) {
+          navigate('/dashboard')
+        } else {
+          console.log('error aqui')
+        }
+      }
+    }
+    getEmotions()
   }, [])
 
   useEffect(() => {
@@ -73,6 +114,12 @@ function EditThinkPage () {
     }
   }, [think])
 
+  useEffect(() => {
+    if (emotions.length >= 1) {
+      setNewEmotionsThink(emotions)
+    }
+  }, [emotions])
+
   const onDelete = async () => {
     try {
       await axios.post(`/thinks/${id}/trash`, {}, {
@@ -104,6 +151,57 @@ function EditThinkPage () {
     }
   }
 
+  const onSave = async () => {
+    if (JSON.stringify(emotions) !== JSON.stringify(newEmotionsThink)) {
+      for await (const value of newEmotionsThink) {
+        if (!emotions.some(obj => obj.id === value.id)) {
+          try {
+            await axios.post(`/thinks/${id}/emotions`,
+              JSON.stringify({
+                emotion_id: value.id
+              }), {
+                headers: {
+                  Authorization: `Bearer ${credentials}`
+                }
+              })
+          } catch (err) {
+            console.log(err)
+          }
+        }
+      }
+      for await (const value of emotions) {
+        if (!newEmotionsThink.some(obj => obj.id === value.id)) {
+          try {
+            await axios.delete(`/thinks/${id}/${value.id}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${credentials}`
+                }
+              })
+          } catch (err) {
+            console.log(err)
+          }
+        }
+      }
+    }
+
+    if (think.text_think !== newTextThink.trimEnd()) {
+      try {
+        await axios.put(`/thinks/${id}/`,
+          JSON.stringify({
+            text_think: newTextThink.trimEnd()
+          }), {
+            headers: {
+              Authorization: `Bearer ${credentials}`
+            }
+          })
+        /// / navigate(`/place/${think.place_id}`)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  }
+
   return (
     <Box sx={{ p: '30px', height: { xs: '100%', md: '480px' }, width: '100%', display: 'flex', flexDirection: { xs: 'column', md: 'row' } }}>
       <Box sx={{ width: { xs: '100%', md: '60%' }, height: { xs: '300px', md: '100%' }, background: '#ffffff' }}>
@@ -132,7 +230,24 @@ function EditThinkPage () {
             <Button variant="text" startIcon={<DeleteIcon />} onClick={onDelete}>Papelera</Button>
             <Button variant="text" startIcon={<ArchiveIcon />} onClick={onArchive}>Archivar</Button>
           </Toolbar>
-          <Box>
+          <Box sx={{ pt: '10px' }}>
+            <Autocomplete multiple
+              id="tags-standard"
+              value={newEmotionsThink}
+              onChange={(event, newValue) => {
+                setNewEmotionsThink([
+                  ...newValue
+                ])
+              }}
+              options={allEmotions}
+              getOptionLabel={(option) => option.text}
+              renderInput={(params) => (
+                <TextField {...params}
+                  variant="standard"
+                  placeholder="Emociones"
+                />
+              )} />
+
             <List sx={{ width: '100%' }}>
               <ListItem
                 sx={{ height: '25', borderBottom: '1px solid rgba(0,0,0,0.12)' }}
@@ -155,7 +270,7 @@ function EditThinkPage () {
         </Box>
         <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center', gap: 2 }}>
           <Button variant="contained" size="large" onClick={() => navigate(`/place/${think.place_id}`)}>Volver</Button>
-          <Button variant="contained">Guardar</Button>
+          <Button variant="contained" onClick={onSave} disabled={!!(newTextThink === think?.text_think || newTextThink.trimEnd().length < 5) && !!(JSON.stringify(emotions) === JSON.stringify(newEmotionsThink))}>Guardar</Button>
         </Box>
       </Box>
     </Box >
