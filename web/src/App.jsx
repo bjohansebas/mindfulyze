@@ -5,11 +5,9 @@ import { SignUpPage } from './routes/SignUp'
 import { AccountPage } from './routes/Account'
 import { NotFoundPage } from './routes/NotFound'
 import { NewThinkPage } from './routes/Think/NewThink'
-import { NewPlacePage } from './routes/Place/NewPlace'
+import { NewPlacePage, ShowPlacePage, EditPlacePage } from './routes/Place'
 import { EditThinkPage } from './routes/Think/EditThink'
-import { EditPlacePage } from './routes/Place/EditPlace'
-import { ThinksTrashPage } from './routes/Trash'
-import { ShowThinkTrashPage } from './routes/Trash/ShowThinkTrash'
+import { TrashPage, ShowThinkTrashPage } from './routes/Trash'
 import { ArchiveThinksPage } from './routes/Archive'
 import { MenuNav } from './components/Menu'
 import { Box } from '@mui/material'
@@ -37,8 +35,9 @@ function App () {
           <Route path='/think/new' element={<NewThinkPage />} />
           <Route path='/think/:id/' element={<EditThinkPage />} />
           <Route path='/place/new' element={<NewPlacePage />} />
-          <Route path='/place/:id' element={<EditPlacePage />} />
-          <Route path='/trash' element={<ThinksTrashPage />} />
+          <Route path='/place/:id' element={<ShowPlacePage />} />
+           <Route path='/place/:id/edit' element={<EditPlacePage />} />
+          <Route path='/trash' element={<TrashPage />} />
           <Route path='/trash/:id' element={<ShowThinkTrashPage />} />
           <Route path='/archive' element={<ArchiveThinksPage />} />
           <Route path='/archive/:id' element={<EditThinkPage />} />

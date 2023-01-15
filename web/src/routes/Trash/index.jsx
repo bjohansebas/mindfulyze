@@ -1,5 +1,4 @@
-function ThinksTrashPage () {
-  return (<p>all thinks trash</p>)
-}
+import { TrashPage } from './TrashPage'
+import { ShowThinkTrashPage } from './ShowThinkTrash'
 
-export { ThinksTrashPage }
+export { TrashPage, ShowThinkTrashPage }
