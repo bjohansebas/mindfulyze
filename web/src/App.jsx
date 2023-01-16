@@ -8,7 +8,7 @@ import { NewThinkPage } from './routes/Think/NewThink'
 import { NewPlacePage, ShowPlacePage, EditPlacePage } from './routes/Place'
 import { EditThinkPage } from './routes/Think/EditThink'
 import { TrashPage, ShowThinkTrashPage } from './routes/Trash'
-import { ArchiveThinksPage } from './routes/Archive'
+import { ArchivePage } from './routes/Archive'
 import { MenuNav } from './components/Menu'
 import { Box } from '@mui/material'
 import { useAuth } from './hooks/useAuth'
@@ -36,11 +36,10 @@ function App () {
           <Route path='/think/:id/' element={<EditThinkPage />} />
           <Route path='/place/new' element={<NewPlacePage />} />
           <Route path='/place/:id' element={<ShowPlacePage />} />
-           <Route path='/place/:id/edit' element={<EditPlacePage />} />
+          <Route path='/place/:id/edit' element={<EditPlacePage />} />
           <Route path='/trash' element={<TrashPage />} />
           <Route path='/trash/:id' element={<ShowThinkTrashPage />} />
-          <Route path='/archive' element={<ArchiveThinksPage />} />
-          <Route path='/archive/:id' element={<EditThinkPage />} />
+          <Route path='/archive' element={<ArchivePage />} />
         </Route>
         <Route element={<RequiredAuth requiredProfile={false} />}>
           <Route path='/account/new' element={<NewProfilePage />} />

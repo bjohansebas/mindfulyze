@@ -1,5 +1,3 @@
-function ArchiveThinksPage () {
-  return (<p>ad</p>)
-}
+import { ArchivePage } from './ArchivePage'
 
-export { ArchiveThinksPage }
+export { ArchivePage }
