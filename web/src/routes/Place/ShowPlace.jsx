@@ -136,7 +136,6 @@ function ShowPlacePage () {
           variant="h6"
           noWrap
           component="div"
-          sx={{ display: { xs: 'none', sm: 'block' } }}
         >
           {namePlace}
         </Typography>
