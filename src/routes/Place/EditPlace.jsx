@@ -1,31 +1,40 @@
-import { Box, Button, List, ListItem, ListItemButton, ListItemText, TextareaAutosize, Toolbar } from '@mui/material'
+import { Avatar, Box, Button, Menu, TextField, Toolbar } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Delete as DeleteIcon, Archive as ArchiveIcon } from '@mui/icons-material'
+import { SketchPicker } from 'react-color'
+import { Delete as DeleteIcon } from '@mui/icons-material'
 import axios from '../../api/axios'
 import { useAuth } from '../../hooks/useAuth'
-import dayjs from 'dayjs'
 
 function EditPlacePage () {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { credentials } = useAuth()
-  const [think, setThink] = useState({})
+  const [anchorElColor, setAnchorElColor] = useState(null)
+  const { userId, credentials } = useAuth()
   const [place, setPlace] = useState({})
-  const [newTextThink, setNewTextThink] = useState('')
+  const [newTextPlace, setNewTextPlace] = useState('')
+  const [allColors, setAllColors] = useState([])
+  const [newColor, setNewColor] = useState('#00575C')
 
   useEffect(() => {
-    async function getThink () {
+    async function getPlace () {
       try {
-        const response = await axios.get(`/thinks/${id}`, {
+        const response = await axios.get(`/places/${id}`, {
           headers: {
             Authorization: `Bearer ${credentials}`
           }
         })
-        setThink(response.data.data)
+        const data = response?.data.data
+        const responseColor = await axios.get(`/colors/${data.color_id}`, {
+          headers: {
+            Authorization: `Bearer ${credentials}`
+          }
+        })
+
+        setPlace({ name: data.name_place, color: responseColor.data.data.code_color })
       } catch (err) {
         if (!err?.response) {
-          console.log('Server not response')
+          console.log(err)
         } else if (err.response?.status === 404) {
           navigate('/dashboard')
         } else {
@@ -33,53 +42,79 @@ function EditPlacePage () {
         }
       }
     }
-    getThink()
+    getPlace()
   }, [])
 
   useEffect(() => {
-    if (Object.entries(think).length >= 1) {
-      async function getPlace () {
-        try {
-          const response = await axios.get(`/places/${think.place_id}`, {
-            headers: {
-              Authorization: `Bearer ${credentials}`
-            }
-          })
-          const data = response?.data.data
-          const responseColor = await axios.get(`/colors/${data.color_id}`, {
-            headers: {
-              Authorization: `Bearer ${credentials}`
-            }
-          })
-
-          setPlace({ name: data.name_place, color: responseColor.data.data.code_color })
-        } catch (err) {
-          if (!err?.response) {
-            console.log(err)
-          } else if (err.response?.status === 404) {
-            navigate('/dashboard')
-          } else {
-            console.log('error aqui')
-          }
-        }
-      }
-      getPlace()
+    if (Object.entries(place).length >= 1) {
+      setNewTextPlace(place.name)
     }
-  }, [think])
+  }, [place])
 
   useEffect(() => {
-    if (Object.entries(think).length >= 1) {
-      setNewTextThink(think.text_think)
+    async function getColor () {
+      try {
+        const response = await axios.get(`/users/${userId}/colors`, {
+          headers: {
+            Authorization: `Bearer ${credentials}`
+          }
+        })
+        setAllColors(response?.data.data.map((data) => {
+          return { color: '#' + data.code_color, title: data.name_color, id: data.color_id }
+        }))
+      } catch (e) {
+        console.log(e)
+      }
     }
-  }, [think])
+    getColor()
+  }, [])
+
+  useEffect(() => {
+    if (Object.entries(place).length >= 1) {
+      setNewColor(`#${place.color}`)
+    }
+  }, [place])
+
+  const handleColorMenu = (event) => {
+    if (anchorElColor) {
+      setAnchorElColor(null)
+    } else {
+      setAnchorElColor(event.currentTarget)
+    }
+  }
+
+  const onSave = async () => {
+    let request = {}
+    if (newColor.slice(1) !== place.color) {
+      request = { code_color: newColor.slice(1) }
+    }
+
+    if (newTextPlace.trimEnd() !== place.name) {
+      request = { name_place: newTextPlace.trimEnd(), ...request }
+    }
+
+    if (Object.entries(request).length >= 1) {
+      try {
+        await axios.put(`/places/${id}/`,
+          JSON.stringify(request), {
+            headers: {
+              Authorization: `Bearer ${credentials}`
+            }
+          })
+        navigate(`/place/${id}`)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  }
 
   return (
-    <Box sx={{ p: '30px', height: { xs: '100%', md: '480px' }, width: '100%', display: 'flex', flexDirection: { xs: 'column', md: 'row' } }}>
-      <Box sx={{ width: { xs: '100%', md: '60%' }, height: { xs: '300px', md: '100%' }, background: '#ffffff' }}>
-        <TextareaAutosize
-          style={{ resize: 'none', height: '100%', fontSize: '16px', width: '100%', padding: '10px' }}
-          value={newTextThink}
-          onChange={(e) => setNewTextThink(e.target.value)}
+    <Box sx={{ p: '30px', height: '100%', width: '100%', display: 'flex', flexDirection: 'column', margin: { xs: '50px 0', sm: '50px' }, background: '#ffffff' }}>
+      <Box sx={{ width: '100%' }}>
+        <TextField
+          sx={{ width: '100%' }}
+          value={newTextPlace}
+          onChange={(e) => setNewTextPlace(e.target.value)}
         />
       </Box>
       <Box
@@ -87,44 +122,54 @@ function EditPlacePage () {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          width: { xs: '100%', md: '40%' },
+          width: '100%',
           background: '#ffffff',
           height: '100%',
           px: '10px',
-          pb: '10px'
+          pb: '10px',
+          gap: 3
         }}>
-        <Box sx={{
-          display: 'flex',
-          flexDirection: 'column'
+        <Toolbar sx={{
+          background: '#ffffff',
+          borderBottom: '1px solid rgba(0, 0 ,0, 0.12)',
+          gap: 1,
+          justifyContent: 'space-between'
         }}>
-          <Toolbar sx={{ background: '#ffffff', borderBottom: '1px solid rgba(0, 0 ,0, 0.12)', gap: 1, justifyContent: 'end' }}>
-            <Button variant="text" startIcon={<DeleteIcon />}>Papelera</Button>
-            <Button variant="text" startIcon={<ArchiveIcon />}>Archivar</Button>
-          </Toolbar>
           <Box>
-            <List sx={{ width: '100%' }}>
-              <ListItem
-                sx={{ height: '25', borderBottom: '1px solid rgba(0,0,0,0.12)' }}
-                key={1}
-              >
-                <ListItemButton role={undefined} dense>
-                  <ListItemText primary={`Lugar: ${place?.name}`} />
-                </ListItemButton>
-              </ListItem>
-              <ListItem
-                sx={{ height: '25', borderBottom: '1px solid rgba(0,0,0,0.12)' }}
-                key={2}
-              >
-                <ListItemButton role={undefined} dense gap={2}>
-                  <ListItemText primary={`Creado el ${dayjs(think?.created_at).format('YYYY-MM-DD')}`} />
-                </ListItemButton>
-              </ListItem>
-            </List>
+            <Button
+              variant='text'
+              onClick={handleColorMenu}
+              startIcon={<Avatar sx={{
+                background: `${newColor}`,
+                width: '22px',
+                height: '22px',
+                p: '0'
+              }}><></></Avatar>}>Color</Button>
+            <Menu
+              style={{ padding: '0' }}
+              sx={{ mt: '36px', zIndex: 1202 }}
+              anchorEl={anchorElColor}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right'
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right'
+              }}
+              open={Boolean(anchorElColor)}
+              onClose={handleColorMenu} >
+              <SketchPicker color={newColor} onChange={(col) => {
+                setNewColor(col.hex)
+              }} presetColors={allColors} />
+            </Menu>
           </Box>
-        </Box>
+          <Button variant="text" startIcon={<DeleteIcon />}>Eliminar</Button>
+        </Toolbar>
         <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center', gap: 2 }}>
-          <Button variant="contained" size="large" onClick={() => navigate(`/place/${think.place_id}`)}>Volver</Button>
-          <Button variant="contained">Guardar</Button>
+          <Button variant="contained" size="large" onClick={() => navigate(`/place/${id}`)}>Volver</Button>
+          <Button variant="contained" onClick={onSave} disabled={!!(newColor.slice(1) === place.color) && !!(newTextPlace === place.name || newTextPlace.length < 5)}>Guardar</Button>
         </Box>
       </Box>
     </Box >

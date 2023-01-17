@@ -1,4 +1,5 @@
-import { Box, Button, ButtonGroup, TextField, Typography } from '@mui/material'
+import { Avatar, Box, Button, ButtonGroup, Menu, TextField, Typography } from '@mui/material'
+
 import { Link, useNavigate } from 'react-router-dom'
 import { SketchPicker } from 'react-color'
 import { Forms } from '../../components/Form'
@@ -16,8 +17,7 @@ function NewPlacePage () {
   const [textColorName, setTextColorName] = useState('')
   const [errMsg, setErrMsg] = useState('')
   const [loading, setLoading] = useState(false)
-  const [displayPicker, setDisplayPicker] = useState(false)
-
+  const [anchorElColor, setAnchorElColor] = useState(null)
   const [allColors, setAllColors] = useState([])
 
   useEffect(() => {
@@ -39,14 +39,10 @@ function NewPlacePage () {
   }, [])
 
   useEffect(() => {
-    console.log('hey3')
-
     if (allColors.length >= 1) {
-      console.log('hey')
       const isExist = allColors.filter(col => {
         return col.color === color
       })
-      console.log(isExist)
 
       if (isExist.length >= 1) {
         setTextColorName(isExist[0].title)
@@ -92,6 +88,14 @@ function NewPlacePage () {
         setErrMsg('Create had been failed')
         setLoading(false)
       }
+    }
+  }
+
+  const handleColorMenu = (event) => {
+    if (anchorElColor) {
+      setAnchorElColor(null)
+    } else {
+      setAnchorElColor(event.currentTarget)
     }
   }
 
@@ -148,29 +152,27 @@ function NewPlacePage () {
                 <Button component={Link} to="/think/new">Think</Button>
               </ButtonGroup>
             </Box>
-            <Box sx={{ display: 'flex', width: '300px', position: 'relative', gap: 2 }}>
-              <Box sx={{
-                width: '36px',
-                height: '36px',
-                borderRadius: '2px',
-                background: color,
-                cursor: 'pointer'
-              }} onClick={() => setDisplayPicker(!displayPicker)} />
-              <TextField variant='standard' value={textColorName} onChange={(e) => { setTextColorName(e.target.value) }} placeholder="Nombre del color" />
-              {
-                displayPicker &&
-                <div style={{
-                  position: 'absolute',
-                  marginTop: '36px',
-                  top: '0',
-                  zIndex: '2'
-                }}>
-                  <SketchPicker color={color} onChange={(col) => {
-                    console.log(col)
-                    setColor(col.hex)
-                  }} presetColors={allColors} />
-                </div>
-              }
+            <Box sx={{ position: 'relative' }}>
+              <Button variant='text' onClick={handleColorMenu} startIcon={<Avatar sx={{ background: `${color}`, width: '22px', height: '22px', p: '0' }}><></></Avatar>}>Color</Button>
+              <Menu
+                style={{ padding: '0' }}
+                sx={{ mt: '36px', zIndex: 1202 }}
+                anchorEl={anchorElColor}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right'
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right'
+                }}
+                open={Boolean(anchorElColor)}
+                onClose={handleColorMenu} >
+                <SketchPicker color={color} onChange={(col) => {
+                  setColor(col.hex)
+                }} presetColors={allColors} />
+              </Menu>
             </Box>
           </Box>
           <Box>
