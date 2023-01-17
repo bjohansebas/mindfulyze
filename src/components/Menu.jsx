@@ -1,6 +1,6 @@
 import { AppBar, Box, Menu, MenuItem, Drawer as MuiDrawer, Container, Button, Toolbar, IconButton, Avatar, Fab, Typography, List, ListItem, ListItemIcon, ListItemButton, ListItemText } from '@mui/material'
-import { Link, useLocation } from 'react-router-dom'
-import { Menu as MenuIcon, ArrowDropDown as ArrowDropDownIcon, Archive as ArchiveIcon, Delete as DeleteIcon, Dashboard as DashboardIcon, Add as AddIcon } from '@mui/icons-material'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Menu as MenuIcon, ArrowDropDown as ArrowDropDownIcon, Archive as ArchiveIcon, Delete as DeleteIcon, Dashboard as DashboardIcon, Add as AddIcon, Logout as LogoutIcon } from '@mui/icons-material'
 import { styled } from '@mui/material/styles'
 import { useState } from 'react'
 import { useAuth } from '../hooks/useAuth'
@@ -55,7 +55,7 @@ function MenuNavUnLogin () {
   )
 }
 
-const drawerWidth = 240
+const drawerWidth = 210
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -101,9 +101,9 @@ const pageLogin = [
   { text: 'Archivados', route: '/archive', icon: <ArchiveIcon /> }
 ]
 
-const settings = ['Profile', 'Logout']
-
 function MenuNavLogin () {
+  const navigate = useNavigate()
+  const { logoutEvent } = useAuth()
   const location = useLocation()
   const [open, setOpen] = useState(false)
   const [anchorElUser, setAnchorElUser] = useState(null)
@@ -136,7 +136,7 @@ function MenuNavLogin () {
         <StyledToolbar sx={{
           px: 2.5
         }}>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <IconButton
               aria-label="open drawer"
               onClick={handleDrawer}
@@ -155,7 +155,7 @@ function MenuNavLogin () {
                 letterSpacing: '.2rem',
                 textDecoration: 'none'
               }}
-              to='/home'
+              to='/dashboard'
             >
               Align Mind
             </Typography>
@@ -167,13 +167,13 @@ function MenuNavLogin () {
               <Fab color="primary" aria-label="add" onClick={handleCreateMenu} sx={{ ...(open && { display: 'none' }) }}>
                 <AddIcon />
               </Fab>
-              <Fab variant='extended' color="primary" onClick={handleCreateMenu} sx={{ ...(!open && { display: 'none' }) }}>
+              <Fab variant='extended' color="primary" onClick={handleCreateMenu} sx={{ gap: 1, ...(!open && { display: 'none' }) }}>
                 <AddIcon />
                 Crear
                 <ArrowDropDownIcon />
               </Fab>
               <Menu
-                sx={{ mt: '40px', zIndex: 1202 }}
+                sx={{ ml: open ? '150px' : '48px', zIndex: 1202 }}
                 id="menu-appbar"
                 anchorEl={anchorElCreate}
                 anchorOrigin={{
@@ -246,9 +246,8 @@ function MenuNavLogin () {
                 </ListItemButton>
               </ListItem>
             </List>
-
             <Menu
-              sx={{ mb: '150px' }}
+              sx={{ ml: open ? '160px' : '44px' }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
@@ -263,11 +262,20 @@ function MenuNavLogin () {
               open={Boolean(anchorElUser)}
               onClose={handleUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem key={1} onClick={() => navigate('/account')}>
+                <ListItemIcon>
+
+                  <Avatar sx={{ width: '24px', height: '24px' }} />
+                </ListItemIcon>
+
+                Cuenta
+              </MenuItem>
+              <MenuItem key={2} onClick={logoutEvent}>
+                <ListItemIcon>
+                  <LogoutIcon fontSize="medium" />
+                </ListItemIcon>
+                <Typography textAlign="center">Cerrar sesión</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Box>

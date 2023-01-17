@@ -14,6 +14,15 @@ function AuthProvider ({ children }) {
   const [isLogin, setIsLogin] = useState(false)
   const [hasProfile, setHasProfile] = useState(false)
 
+  const logoutEvent = () => {
+    setIsLogin(false)
+    setCredentials(null)
+    setUserId(null)
+    setUserInfo({})
+    setHasProfile(false)
+    navigate('/login', { replace: true })
+  }
+
   const loginPost = async (email, password) => {
     try {
       const response = await axios.post('/auth/login',
@@ -44,7 +53,20 @@ function AuthProvider ({ children }) {
     }
   }
 
-  return <AuthContext.Provider value={{ credentials, setCredentials, setUserId, userId, setUserInfo, hasProfile, setHasProfile, userInfo, loginPost, isLogin, setIsLogin }}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={{
+    credentials,
+    setCredentials,
+    setUserId,
+    userId,
+    setUserInfo,
+    hasProfile,
+    setHasProfile,
+    userInfo,
+    loginPost,
+    isLogin,
+    setIsLogin,
+    logoutEvent
+  }}>{children}</AuthContext.Provider>
 }
 
 AuthProvider.propTypes = {
