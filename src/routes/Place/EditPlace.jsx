@@ -1,8 +1,11 @@
 import { Avatar, Box, Button, Menu, TextField, Toolbar } from '@mui/material'
+import { Delete as DeleteIcon } from '@mui/icons-material'
+
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { SketchPicker } from 'react-color'
-import { Delete as DeleteIcon } from '@mui/icons-material'
+import { FormattedMessage } from 'react-intl'
+
 import axios from '../../api/axios'
 import { useAuth } from '../../hooks/useAuth'
 
@@ -117,6 +120,7 @@ function EditPlacePage () {
           onChange={(e) => setNewTextPlace(e.target.value)}
         />
       </Box>
+
       <Box
         sx={{
           display: 'flex',
@@ -139,12 +143,18 @@ function EditPlacePage () {
             <Button
               variant='text'
               onClick={handleColorMenu}
-              startIcon={<Avatar sx={{
-                background: `${newColor}`,
-                width: '22px',
-                height: '22px',
-                p: '0'
-              }}><></></Avatar>}>Color</Button>
+              startIcon={
+                <Avatar sx={{
+                  background: `${newColor}`,
+                  width: '22px',
+                  height: '22px',
+                  p: '0'
+                }}>
+                  <></>
+                </Avatar>
+              }>
+              <FormattedMessage id="button.color" defaultMessage="Color" />
+            </Button>
             <Menu
               style={{ padding: '0' }}
               sx={{ mt: '36px', zIndex: 1202 }}
@@ -165,11 +175,23 @@ function EditPlacePage () {
               }} presetColors={allColors} />
             </Menu>
           </Box>
-          <Button variant="text" startIcon={<DeleteIcon />}>Eliminar</Button>
+          <Button variant="text" startIcon={<DeleteIcon />}>
+            <FormattedMessage id="button.delete" defaultMessage="Delete" />
+          </Button>
         </Toolbar>
+
         <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center', gap: 2 }}>
-          <Button variant="contained" size="large" onClick={() => navigate(`/place/${id}`)}>Volver</Button>
-          <Button variant="contained" onClick={onSave} disabled={!!(newColor.slice(1) === place.color) && !!(newTextPlace === place.name || newTextPlace.length < 5)}>Guardar</Button>
+          <Button
+            variant="contained"
+            size="large" onClick={() => navigate(`/place/${id}`)}>
+            <FormattedMessage id="button.back" defaultMessage="Back" />
+          </Button>
+          <Button
+            variant="contained"
+            onClick={onSave}
+            disabled={!!(newColor.slice(1) === place.color) && !!(newTextPlace === place.name || newTextPlace.length < 5)}>
+            <FormattedMessage id="button.save" defaultMessage="Save" />
+          </Button>
         </Box>
       </Box>
     </Box >

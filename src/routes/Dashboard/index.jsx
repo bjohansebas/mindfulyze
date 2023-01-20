@@ -4,10 +4,13 @@ import { useEffect, useState } from 'react'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import CircleIcon from '@mui/icons-material/Circle'
 import FilterListIcon from '@mui/icons-material/FilterList'
-import axios from '../../api/axios'
-import { useAuth } from '../../hooks/useAuth'
+
 import { useNavigate } from 'react-router-dom'
 import { Doughnut } from 'react-chartjs-2'
+import { FormattedMessage } from 'react-intl'
+
+import axios from '../../api/axios'
+import { useAuth } from '../../hooks/useAuth'
 
 function DashboardPage () {
   const navigate = useNavigate()
@@ -231,9 +234,19 @@ function DashboardPage () {
     <Box
       component="main"
       sx={{ width: '100%', px: { xs: '10px', sm: '50px', md: '100px' }, py: '20px' }}>
-
-      <Box component="header" sx={{ my: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 3 }}>
-        <Typography variant="h1" fontWeight="700" sx={{ fontSize: '1.7em', textAlign: 'center' }}>Bienvenido, {userInfo?.firstName} {userInfo?.lastName}</Typography>
+      <Box component="header" sx={{
+        my: '20px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        gap: 3
+      }}>
+        <Typography variant="h1" fontWeight="700" sx={{
+          fontSize: '1.7em',
+          textAlign: 'center'
+        }}>
+          <FormattedMessage id="dashboard.welcome" defaultMessage="Welcome" /> {userInfo?.firstName} {userInfo?.lastName}
+        </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Box sx={{
             display: 'flex',
@@ -248,18 +261,28 @@ function DashboardPage () {
               xs: 1, sm: 3
             }
           }}>
-            <Typography>Tus emociones</Typography>
+            <Typography>
+              <FormattedMessage id="dashboard.emotion" defaultMessage="Your emotions" />
+            </Typography>
             <Divider orientation='vertical' sx={{ display: { xs: 'none', sm: 'block' } }} />
             <Divider orientation='horizontal' sx={{ display: { xs: 'block', sm: 'none' }, width: '100%' }} />
             <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' } }}>
-              <Button startIcon={<CircleIcon sx={{ color: '#01FF45' }} />}>{emotions[0]} Emociones positivas</Button>
-              <Button startIcon={<CircleIcon sx={{ color: '#FE1808' }} />}>{emotions[1]} Emociones negativas</Button>
+              <Button startIcon={<CircleIcon sx={{ color: '#01FF45' }} />}>
+                {emotions[0]} <FormattedMessage id="dashboard.positive" defaultMessage="Positive emotions" />
+              </Button>
+              <Button startIcon={<CircleIcon sx={{ color: '#FE1808' }} />}>
+                {emotions[1]} <FormattedMessage id="dashboard.negative" defaultMessage="Negative emotions" />
+              </Button>
             </Box>
           </Box>
         </Box>
       </Box>
+
       <Box display="flex" flexDirection="column" gap={3}>
-        <Typography variant="h2" fontWeight="600" sx={{ fontSize: '1.4em' }}>Tus lugares</Typography>
+        <Typography variant="h2" fontWeight="600" sx={{ fontSize: '1.4em' }}>
+          <FormattedMessage id="dashboard.places" defaultMessage="Your places" />
+        </Typography>
+
         <List sx={{
           display: 'grid',
           gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
@@ -275,12 +298,17 @@ function DashboardPage () {
                 </IconButton>
               }
               disablePadding>
-              <ListItemButton sx={{ py: '20px', borderRadius: '10px' }} role={undefined} dense onClick={() => { navigate(`/place/${data?.id}`) }}>
+              <ListItemButton
+                sx={{ py: '20px', borderRadius: '10px' }}
+                role={undefined}
+                dense
+                onClick={() => { navigate(`/place/${data?.id}`) }}>
                 <ListItemText primary={`${data?.text}`} />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
+
         <Menu
           sx={{ mt: '40px', zIndex: 1202 }}
           id="menu-appbar"
@@ -297,15 +325,31 @@ function DashboardPage () {
           open={Boolean(anchorEl)}
           onClose={handlePlaceMenu}
         >
-          <MenuItem key="1" onClick={onDelete}>Eliminar lugar</MenuItem>
-          <MenuItem key="2" onClick={() => navigate(`/place/${idSelect}/edit`)}>Editar lugar</MenuItem>
+          <MenuItem key="1" onClick={onDelete}>
+            <FormattedMessage id="options.delete.place" defaultMessage="Delete place" />
+          </MenuItem>
+          <MenuItem key="2" onClick={() => navigate(`/place/${idSelect}/edit`)}>
+            <FormattedMessage id="options.edit.place" defaultMessage="Edit place" />
+          </MenuItem>
         </Menu>
       </Box>
-      <Box sx={{ my: '30px', background: '#ffffff', py: '20px', px: { xs: '0', sm: '20px' }, borderRadius: '10px' }}>
+
+      <Box sx={{
+        my: '30px',
+        background: '#ffffff',
+        py: '20px',
+        px: { xs: '0', sm: '20px' },
+        borderRadius: '10px'
+      }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', px: '10px' }}>
-          <Typography variant="h6">Tus estadisticas</Typography>
-          <Button variant="text" startIcon={<FilterListIcon />} onClick={handleStatisticsMenu}>Filtrar</Button>
+          <Typography variant="h6">
+            <FormattedMessage id="dashboard.statistics" defaultMessage="Statistics" />
+          </Typography>
+          <Button variant="text" startIcon={<FilterListIcon />} onClick={handleStatisticsMenu}>
+            <FormattedMessage id="options.filter.text" defaultMessage="Filter" />
+          </Button>
         </Box>
+
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Box sx={{ height: '100%' }}>
             <Doughnut data={data} options={{
@@ -323,7 +367,8 @@ function DashboardPage () {
             }} width={300} height={300} />
           </Box>
         </Box>
-      </Box >
+      </Box>
+
       <Menu
         sx={{ mt: '40px', zIndex: 1202 }}
         id="menu-appbar"
@@ -343,15 +388,21 @@ function DashboardPage () {
         <MenuItem key="1" onClick={() => {
           setFilter('all')
           setAnchorElStatistics(null)
-        }}>Todos tus emociones</MenuItem>
+        }}>
+          <FormattedMessage id="options.filter.statistics.all" defaultMessage="All your emotions" />
+        </MenuItem>
         <MenuItem key="2" onClick={() => {
           setFilter('negative')
           setAnchorElStatistics(null)
-        }}>Solo emociones negativas</MenuItem>
+        }}>
+          <FormattedMessage id="options.filter.statistics.negative" defaultMessage="Only negative emotions" />
+        </MenuItem>
         <MenuItem key="3" onClick={() => {
           setFilter('positive')
           setAnchorElStatistics(null)
-        }}>Solo emociones positivas</MenuItem>
+        }}>
+          <FormattedMessage id="options.filter.statistics.positive" defaultMessage="Only positive emotions" />
+        </MenuItem>
       </Menu>
     </Box >)
 }

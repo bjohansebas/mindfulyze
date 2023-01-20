@@ -2,11 +2,13 @@ import { Avatar, Box, Button, ButtonGroup, Menu, TextField, Typography } from '@
 
 import { Link, useNavigate } from 'react-router-dom'
 import { SketchPicker } from 'react-color'
-import { Forms } from '../../components/Form'
 import { useEffect, useState } from 'react'
+import { FormattedMessage } from 'react-intl'
+
 import { HEXADECIMAL_REGEX } from '../../utils/regex'
 import { useAuth } from '../../hooks/useAuth'
 import axios from '../../api/axios'
+import { Forms } from '../../components/Form'
 
 function NewPlacePage () {
   const navigate = useNavigate()
@@ -121,7 +123,12 @@ function NewPlacePage () {
         borderRadius: '10px',
         background: '#ffffff'
       }}>
-        <Forms title="Crea un nuevo lugar" disableSubmit={loading} isCancel={true} submitText="Crear lugar" handleSubmit={handleSubmit}>
+        <Forms
+          title={<FormattedMessage id='place.new.title' defaultMessage="Create a new place" />}
+          disableSubmit={loading}
+          isCancel={true}
+          submitText={<FormattedMessage id='place.new.submit' defaultMessage="Create a place" />}
+          handleSubmit={handleSubmit}>
           <TextField
             type="text"
             variant='outlined'
@@ -148,12 +155,30 @@ function NewPlacePage () {
               }}
             >
               <ButtonGroup variant="text" aria-label="outlined button group">
-                <Button variant='contained'>Lugar</Button>
-                <Button component={Link} to="/think/new">Think</Button>
+                <Button variant='contained'>
+                  <FormattedMessage id="select.new.place" defaultMessage="Place" />
+                </Button>
+                <Button component={Link} to="/think/new">
+                  <FormattedMessage id="select.new.think" defaultMessage="Think" />
+                </Button>
               </ButtonGroup>
             </Box>
             <Box sx={{ position: 'relative' }}>
-              <Button variant='text' onClick={handleColorMenu} startIcon={<Avatar sx={{ background: `${color}`, width: '22px', height: '22px', p: '0' }}><></></Avatar>}>Color</Button>
+              <Button
+                variant='text'
+                onClick={handleColorMenu}
+                startIcon={
+                  <Avatar sx={{
+                    background: `${color}`,
+                    width: '22px',
+                    height: '22px',
+                    p: '0'
+                  }}>
+                    <></>
+                  </Avatar>
+                }>
+                <FormattedMessage id="button.color" defaultMessage="Color" />
+              </Button>
               <Menu
                 style={{ padding: '0' }}
                 sx={{ mt: '36px', zIndex: 1202 }}

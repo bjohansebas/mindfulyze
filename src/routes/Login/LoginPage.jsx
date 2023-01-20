@@ -1,9 +1,12 @@
 import { Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, Toolbar, Typography, Box, TextField } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
+
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useAuth } from '../../hooks/useAuth'
 import { Helmet } from 'react-helmet-async'
+import { FormattedMessage } from 'react-intl'
+
+import { useAuth } from '../../hooks/useAuth'
 
 function LoginPage () {
   const { loginPost } = useAuth()
@@ -63,7 +66,17 @@ function LoginPage () {
         p: '30px',
         borderRadius: '10px'
       }}>
-        <Typography variant='h1' sx={{ fontSize: '1.4em', textAlign: 'center', mb: '10px' }}>Crear tu cuenta en AlingMind</Typography>
+        <Typography variant='h1' sx={{
+          fontFamily: 'roboto',
+          fontWeight: 700,
+          color: 'black',
+          letterSpacing: '.2rem',
+          fontSize: '1.4em',
+          textAlign: 'center',
+          mb: '10px'
+        }}>
+          AlignMind
+        </Typography>
         <Box
           component="form"
           autoComplete="off"
@@ -71,22 +84,24 @@ function LoginPage () {
           sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <TextField
-              id="outlined-required"
+              id="outlined"
               type="email"
               onChange={(e) => setEmail(e.target.value)}
               value={email}
-              label="Correo electronico"
-              placeholder="Correo electronico"
+              label={<FormattedMessage id='login.email' defaultMessage="Email" />}
               required
             />
             <FormControl variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-password">Contraseña</InputLabel>
+              <InputLabel htmlFor="outlined-adornment-password">
+                <FormattedMessage id="login.password" defaultMessage="Password" />
+              </InputLabel>
               <OutlinedInput
                 id="outlined-adornment-password"
                 type={showPassword ? 'text' : 'password'}
                 onChange={(e) => setPwd(e.target.value)}
                 value={pwd}
-                label="Contraseña"
+                label={<FormattedMessage id="login.password" defaultMessage="Password" />}
+                required
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -101,15 +116,19 @@ function LoginPage () {
                 }
               />
             </FormControl>
-            <Button type='submit' variant='contained' size='large' disabled={loading}>Inicia Sesión</Button>
+            <Button type='submit' variant='contained' size='large' disabled={loading}>
+              <FormattedMessage id="login.submit" defaultMessage="Log in" />
+            </Button>
             <Typography paragraph>{errMsg}</Typography>
           </Box>
         </Box>
-        <Box sx={{
-          display: 'flex', flexDirection: 'column', gap: 2
-        }}>
-          <Typography variant='h2' sx={{ fontSize: '18px', textAlign: 'center' }}>¿Aun no tienes cuenta?</Typography>
-          <Button component={Link} variant='outlined' size='large' to='/signup'>Registrate</Button>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <Typography variant='h2' sx={{ fontSize: '18px', textAlign: 'center' }}>
+            <FormattedMessage id="login.signup.info" defaultMessage="Don't have an account?" />
+          </Typography>
+          <Button component={Link} variant='outlined' size='large' to='/signup'>
+            <FormattedMessage id="login.signup.link" defaultMessage="Sign up" />
+          </Button>
         </Box>
       </Box>
     </Box >
