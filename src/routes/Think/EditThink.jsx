@@ -274,7 +274,7 @@ function EditThinkPage () {
               renderInput={(params) => (
                 <TextField {...params}
                   variant="standard"
-                  placeholder="Emociones"
+                  label={<FormattedMessage id="think.new.emotion" defaultMessage="Emotions" />}
                 />
               )} />
 
