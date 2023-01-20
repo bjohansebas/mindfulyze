@@ -2,10 +2,13 @@ import { Box, Checkbox, IconButton, List, ListItem, ListItemButton, ListItemIcon
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import DeleteIcon from '@mui/icons-material/Delete'
 import UnarchiveIcon from '@mui/icons-material/Unarchive'
+
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { FormattedMessage } from 'react-intl'
+
 import { useAuth } from '../../hooks/useAuth'
 import axios from '../../api/axios'
-import { useNavigate } from 'react-router-dom'
 
 function ArchivePage () {
   const navigate = useNavigate()
@@ -135,7 +138,7 @@ function ArchivePage () {
           noWrap
           component="div"
         >
-          Archivados
+          <FormattedMessage id="archive.title" defaultMessage="Archive" />
         </Typography>
         <Box>
           <IconButton onClick={onUnarchiveSelect}>
@@ -146,6 +149,7 @@ function ArchivePage () {
           </IconButton>
         </Box>
       </Toolbar>
+
       <Box>
         {allArchive.length >= 1 &&
           <List sx={{ width: '100%', bgcolor: 'background.paper', p: 0, pb: '10px' }}>
@@ -178,6 +182,7 @@ function ArchivePage () {
             })}
           </List>}
       </Box>
+
       <Menu
         sx={{ mt: '40px', zIndex: 1202 }}
         id="menu-appbar"
@@ -194,9 +199,21 @@ function ArchivePage () {
         open={Boolean(anchorElTrash)}
         onClose={handleTrashMenu}
       >
-        <MenuItem key="1" onClick={() => navigate(`/think/${idSelect}`)}>Ver pensamiento</MenuItem>
-        <MenuItem key="2" onClick={onDeleteId}>Mover a la papelera</MenuItem>
-        <MenuItem key="3" onClick={onUnarchiveId}>Desarchivar pensamiento</MenuItem>
+        <MenuItem
+          key="1"
+          onClick={() => navigate(`/think/${idSelect}`)}>
+          <FormattedMessage id="options.think.see" defaultMessage="See thought" />
+        </MenuItem>
+        <MenuItem
+          key="2"
+          onClick={onDeleteId}>
+          <FormattedMessage id="options.think.delete" defaultMessage="Delete thought" />
+        </MenuItem>
+        <MenuItem
+          key="3"
+          onClick={onUnarchiveId}>
+          <FormattedMessage id="options.think.unarchive" defaultMessage="Unarchive" />
+        </MenuItem>
       </Menu>
     </Box >
   )

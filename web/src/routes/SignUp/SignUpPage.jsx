@@ -1,8 +1,11 @@
 import { Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, Toolbar, Typography, Box, TextField } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
+
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
+import { FormattedMessage } from 'react-intl'
+
 import { EMAIL_REGEX, PWD_REGEX, USER_REGEX } from '../../utils/regex'
 import axios from '../../api/axios'
 import { useAuth } from '../../hooks/useAuth'
@@ -117,7 +120,9 @@ function SignUpPage () {
           p: '30px',
           borderRadius: '10px'
         }}>
-          <Typography variant='h1' sx={{ fontSize: '1.4em', textAlign: 'center', mb: '10px' }}>Crear tu cuenta en AlingMind</Typography>
+          <Typography variant='h1' sx={{ fontSize: '1.4em', textAlign: 'center', mb: '10px' }}>
+            <FormattedMessage id="signup.title" defaultMessage="Create your account on AlingMind" />
+          </Typography>
           <Box
             component="form"
             autoComplete="off"
@@ -128,8 +133,7 @@ function SignUpPage () {
                 type="text"
                 id="outlined-required"
                 error={!validUser && user !== ''}
-                label="Usuario"
-                placeholder="Usuario"
+                label={<FormattedMessage id="signup.username" defaultMessage="Username" />}
                 onChange={(e) => setUser(e.target.value)}
                 arial-invalid={validUser ? 'false' : 'true'}
                 required
@@ -138,21 +142,21 @@ function SignUpPage () {
                 type="email"
                 id="outlined-required"
                 error={!validEmail && email !== ''}
-                label="Correo electronico"
-                placeholder="Correo electronico"
+                label={<FormattedMessage id="signup.email" defaultMessage="Email" />}
                 onChange={(e) => setEmail(e.target.value)}
                 arial-invalid={validUser ? 'false' : 'true'}
                 required
               />
               <FormControl variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-password">Contraseña</InputLabel>
+                <InputLabel htmlFor="outlined-adornment-password">
+                  <FormattedMessage id="signup.password" defaultMessage="Password" />
+                </InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-password"
                   type={showPassword ? 'text' : 'password'}
                   error={!validPwd && pwd !== ''}
                   onChange={(e) => setPwd(e.target.value)}
-                  placeholder="Password"
-                  label="Contraseña"
+                  label={<FormattedMessage id="signup.password" defaultMessage="Password" />}
                   required
                   endAdornment={
                     <InputAdornment position="end">
@@ -169,14 +173,16 @@ function SignUpPage () {
                 />
               </FormControl>
               <FormControl variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-password">Repite la contraseña</InputLabel>
+                <InputLabel htmlFor="outlined-adornment-password">
+                  <FormattedMessage id="signup.confirm" defaultMessage="Confirm password" />
+                </InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-password"
                   type={showPassword ? 'text' : 'password'}
                   error={!validMatch && matchPwd !== ''}
                   disabled={!validPwd}
                   onChange={(e) => setMatchPwd(e.target.value)}
-                  label="Repite la contraseña"
+                  label={<FormattedMessage id="signup.confirm" defaultMessage="Confirm password" />}
                   required
                   endAdornment={
                     <InputAdornment position="end">
@@ -192,15 +198,23 @@ function SignUpPage () {
                   }
                 />
               </FormControl>
-              <Button disabled={!!(!validPwd || !validEmail || !validMatch || !validUser) || loading} type='submit' variant='contained' size='large'>Crear cuenta</Button>
+              <Button
+                disabled={!!(!validPwd || !validEmail || !validMatch || !validUser) || loading}
+                type='submit' variant='contained' size='large'>
+                <FormattedMessage id="signup.submit" defaultMessage="Sign up" />
+              </Button>
               <Typography paragraph>{errMsg}</Typography>
             </Box>
           </Box>
           <Box sx={{
             display: 'flex', flexDirection: 'column', gap: 2
           }}>
-            <Typography variant='h2' sx={{ fontSize: '18px', textAlign: 'center' }}>¿Ya tienes cuenta?</Typography>
-            <Button component={Link} variant='outlined' size='large' to='/login'>Iniciar sesión</Button>
+            <Typography variant='h2' sx={{ fontSize: '18px', textAlign: 'center' }}>
+              <FormattedMessage id="signup.login.info" defaultMessage="Have an account?" />
+            </Typography>
+            <Button component={Link} variant='outlined' size='large' to='/login'>
+              <FormattedMessage id="signup.login.link" defaultMessage="Log in" />
+            </Button>
           </Box>
         </Box>
       </Box >

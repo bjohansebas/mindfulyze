@@ -2,10 +2,13 @@ import { Box, Button, IconButton, List, ListItem, ListItemButton, ListItemText, 
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import SwapVertIcon from '@mui/icons-material/SwapVert'
+
+import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import { FormattedMessage } from 'react-intl'
+
 import { useAuth } from '../../hooks/useAuth'
 import axios from '../../api/axios'
-import { useNavigate, useParams } from 'react-router-dom'
 
 function ShowPlacePage () {
   const { id } = useParams()
@@ -161,14 +164,26 @@ function ShowPlacePage () {
           open={Boolean(anchorElPlace)}
           onClose={handlePlaceMenu}
         >
-          <MenuItem key="1" onClick={() => navigate(`/place/${id}/edit`)}>Editar lugar</MenuItem>
-          <MenuItem key="2" onClick={onDeletePlace}>Borrar lugar</MenuItem>
+          <MenuItem
+            key="1"
+            onClick={() => navigate(`/place/${id}/edit`)}>
+            <FormattedMessage id="options.edit.place" defaultMessage="Edit place" />
+          </MenuItem>
+          <MenuItem
+            key="2"
+            onClick={onDeletePlace}>
+            <FormattedMessage id="options.delete.place" defaultMessage="Delete place" />
+          </MenuItem>
         </Menu>
       </Toolbar>
       <Box sx={{ p: '30px' }}>
         <Toolbar sx={{ background: '#ffffff', borderBottom: '1px solid rgba(0, 0 ,0, 0.12)', gap: 1, borderRadius: '10px 10px 0 0' }}>
-          <Button variant="text" startIcon={<FilterListIcon />}>Filtros</Button>
-          <Button variant="text" startIcon={<SwapVertIcon />}>Ordenar</Button>
+          <Button variant="text" startIcon={<FilterListIcon />}>
+            <FormattedMessage id="options.filter.text" defaultMessage="Filter" />
+          </Button>
+          <Button variant="text" startIcon={<SwapVertIcon />}>
+            <FormattedMessage id="options.order.text" defaultMessage="Order" />
+          </Button>
         </Toolbar>
         {allThink.length >= 1 &&
           <List sx={{ width: '100%', bgcolor: 'background.paper', p: 0, pb: '10px' }}>
@@ -207,9 +222,19 @@ function ShowPlacePage () {
           open={Boolean(anchorElThink)}
           onClose={handleThinkMenu}
         >
-          <MenuItem key="1" onClick={() => navigate(`/think/${idSelect}`)}>Ver pensamiento</MenuItem>
-          <MenuItem key="2" onClick={onDelete}>Mover a la papelera</MenuItem>
-          <MenuItem key="3" onClick={onArchive}>Archivar pensamiento</MenuItem>
+          <MenuItem
+            key="1"
+            onClick={() => navigate(`/think/${idSelect}`)}>
+            <FormattedMessage id="options.think.see" defaultMessage="See thought" />
+          </MenuItem>
+          <MenuItem
+            key="2"
+            onClick={onDelete}>
+            <FormattedMessage id="options.think.delete" defaultMessage="Delete thought" />
+          </MenuItem>
+          <MenuItem key="3" onClick={onArchive}>
+            <FormattedMessage id="options.think.archive" defaultMessage="Archive" />
+          </MenuItem>
         </Menu>
       </Box>
     </Box >

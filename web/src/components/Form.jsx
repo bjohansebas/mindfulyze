@@ -1,5 +1,6 @@
 import { Box, Button, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import { FormattedMessage } from 'react-intl'
 import PropTypes from 'prop-types'
 
 function Forms ({ handleSubmit, title, submitText, children, disableSubmit, isCancel, cancelRoute }) {
@@ -19,7 +20,14 @@ function Forms ({ handleSubmit, title, submitText, children, disableSubmit, isCa
         </Box>
         <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', gap: 2 }}>
           {isCancel &&
-            <Button disabled={disableSubmit} type='submit' variant='contained' size='large' onClick={() => navigate(cancel)}>Cancelar</Button>
+            <Button
+              disabled={disableSubmit}
+              type='submit'
+              variant='contained'
+              size='large'
+              onClick={() => navigate(cancel)}>
+              <FormattedMessage id="button.cancel" defaultMessage="Cancel" />
+            </Button>
           }
           <Button disabled={disableSubmit} type='submit' variant='contained' size='large'>{submitText}</Button>
         </Box>
