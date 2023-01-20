@@ -1,10 +1,13 @@
 import { Autocomplete, Box, Button, List, ListItem, ListItemButton, ListItemText, TextareaAutosize, TextField, Toolbar } from '@mui/material'
+import { Delete as DeleteIcon, Archive as ArchiveIcon } from '@mui/icons-material'
+
+import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Delete as DeleteIcon, Archive as ArchiveIcon } from '@mui/icons-material'
+import { FormattedMessage } from 'react-intl'
+
 import axios from '../../api/axios'
 import { useAuth } from '../../hooks/useAuth'
-import dayjs from 'dayjs'
 
 function EditThinkPage () {
   const { id } = useParams()
@@ -195,16 +198,27 @@ function EditThinkPage () {
               Authorization: `Bearer ${credentials}`
             }
           })
-        /// / navigate(`/place/${think.place_id}`)
       } catch (err) {
         console.log(err)
       }
     }
+    navigate(`/place/${think.place_id}`)
   }
 
   return (
-    <Box sx={{ p: '30px', height: { xs: '100%', md: '480px' }, width: '100%', display: 'flex', flexDirection: { xs: 'column', md: 'row' } }}>
-      <Box sx={{ width: { xs: '100%', md: '60%' }, height: { xs: '300px', md: '100%' }, background: '#ffffff' }}>
+    <Box sx={{
+      p:
+        '30px',
+      height: { xs: '100%', md: '480px' },
+      width: '100%',
+      display: 'flex',
+      flexDirection: { xs: 'column', md: 'row' }
+    }}>
+      <Box sx={{
+        width: { xs: '100%', md: '60%' },
+        height: { xs: '300px', md: '100%' },
+        background: '#ffffff'
+      }}>
         <TextareaAutosize
           style={{ resize: 'none', height: '100%', fontSize: '16px', width: '100%', padding: '10px' }}
           value={newTextThink}
@@ -226,10 +240,26 @@ function EditThinkPage () {
           display: 'flex',
           flexDirection: 'column'
         }}>
-          <Toolbar sx={{ background: '#ffffff', borderBottom: '1px solid rgba(0, 0 ,0, 0.12)', gap: 1, justifyContent: 'end' }}>
-            <Button variant="text" startIcon={<DeleteIcon />} onClick={onDelete}>Papelera</Button>
-            <Button variant="text" startIcon={<ArchiveIcon />} onClick={onArchive}>Archivar</Button>
+          <Toolbar sx={{
+            background: '#ffffff',
+            borderBottom: '1px solid rgba(0, 0 ,0, 0.12)',
+            gap: 1,
+            justifyContent: 'end'
+          }}>
+            <Button
+              variant="text"
+              startIcon={<DeleteIcon />}
+              onClick={onDelete}>
+              <FormattedMessage id="button.delete" defaultMessage="Delete" />
+            </Button>
+            <Button
+              variant="text"
+              startIcon={<ArchiveIcon />}
+              onClick={onArchive}>
+              <FormattedMessage id="button.archive" defaultMessage="Archive" />
+            </Button>
           </Toolbar>
+
           <Box sx={{ pt: '10px' }}>
             <Autocomplete multiple
               id="tags-standard"
@@ -254,23 +284,37 @@ function EditThinkPage () {
                 key={1}
               >
                 <ListItemButton role={undefined} dense>
-                  <ListItemText primary={`Lugar: ${place?.name}`} />
+                  <ListItemText
+                    primary={<FormattedMessage id="think.info.place" defaultMessage="Place: {name}" values={{ name: place?.name || '' }} />}
+                  />
                 </ListItemButton>
               </ListItem>
               <ListItem
                 sx={{ height: '25', borderBottom: '1px solid rgba(0,0,0,0.12)' }}
                 key={2}
               >
-                <ListItemButton role={undefined} dense gap={2}>
-                  <ListItemText primary={`Creado el ${dayjs(think?.created_at).format('YYYY-MM-DD')}`} />
+                <ListItemButton role={undefined} dense>
+                  <ListItemText
+                    primary={<FormattedMessage id="think.info.date" defaultMessage="Created at: {create}" values={{ create: dayjs(think?.created_at).format('YYYY-MM-DD') }} />}
+                  />
                 </ListItemButton>
               </ListItem>
             </List>
           </Box>
         </Box>
         <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center', gap: 2 }}>
-          <Button variant="contained" size="large" onClick={() => navigate(`/place/${think.place_id}`)}>Volver</Button>
-          <Button variant="contained" onClick={onSave} disabled={!!(newTextThink === think?.text_think || newTextThink.trimEnd().length < 5) && !!(JSON.stringify(emotions) === JSON.stringify(newEmotionsThink))}>Guardar</Button>
+          <Button
+            variant="contained"
+            size="large"
+            onClick={() => navigate(-1)}>
+            <FormattedMessage id="button.back" defaultMessage="Back" />
+          </Button>
+          <Button
+            variant="contained"
+            onClick={onSave}
+            disabled={!!(newTextThink === think?.text_think || newTextThink.trimEnd().length < 5) && !!(JSON.stringify(emotions) === JSON.stringify(newEmotionsThink))}>
+            <FormattedMessage id="button.save" defaultMessage="Save" />
+          </Button>
         </Box>
       </Box>
     </Box >
