@@ -1,7 +1,10 @@
 import { Autocomplete, Box, Button, ButtonGroup, TextareaAutosize, TextField, Typography } from '@mui/material'
+
 import { Link, useNavigate } from 'react-router-dom'
-import { Forms } from '../../components/Form'
 import { useEffect, useState } from 'react'
+import { FormattedMessage } from 'react-intl'
+
+import { Forms } from '../../components/Form'
 import { Combobox } from '../../components/Combobox'
 import { useAuth } from '../../hooks/useAuth'
 import axios from '../../api/axios'
@@ -121,7 +124,12 @@ function NewThinkPage () {
           borderRadius: '10px',
           background: '#ffffff'
         }}>
-          <Forms title="Crea un nuevo pensamiento" isCancel={true} disableSubmit={loading || textThink.length < 5 || emotionsSelect.length < 1} submitText="Crear pensamiento" handleSubmit={handleSubmit}>
+          <Forms
+            title={<FormattedMessage id="think.new.title" defaultMessage="Create new a think" />}
+            isCancel={true}
+            disableSubmit={loading || textThink.length < 5 || emotionsSelect.length < 1}
+            submitText={<FormattedMessage id="think.new.submit" defaultMessage="Create a think" />}
+            handleSubmit={handleSubmit}>
             <TextareaAutosize
               style={{ resize: 'none', minHeight: '56px', maxHeight: '200px', fontSize: '16px' }}
               value={textThink}
@@ -156,8 +164,12 @@ function NewThinkPage () {
                   }}
                 >
                   <ButtonGroup variant="text" aria-label="outlined button group">
-                    <Button variant='contained'>Pensamiento</Button>
-                    <Button component={Link} to="/place/new">Lugar</Button>
+                    <Button variant='contained'>
+                      <FormattedMessage id="select.new.think" defaultMessage="Think" />
+                    </Button>
+                    <Button component={Link} to="/place/new">
+                      <FormattedMessage id="select.new.place" defaultMessage="Place" />
+                    </Button>
                   </ButtonGroup>
                 </Box>
                 <Combobox options={allPlaces} setOptionSelect={setPlace} />
@@ -178,8 +190,7 @@ function NewThinkPage () {
                     <TextField
                       {...params}
                       variant="standard"
-                      label="Emociones"
-                      placeholder="Emociones"
+                      label={<FormattedMessage id="think.new.emotion" defaultMessage="Emotions" />}
                     />
                   )} />
               </Box>

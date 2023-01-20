@@ -1,12 +1,15 @@
 import { Button, FormControl, Toolbar, Typography, Box, TextField, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material'
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { useAuth } from '../../hooks/useAuth'
-import axios from '../../api/axios'
-import { GENDER_REGEX, NAMES_REGEX } from '../../utils/regex'
+
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
+import { FormattedMessage } from 'react-intl'
+
+import { useAuth } from '../../hooks/useAuth'
+import { GENDER_REGEX, NAMES_REGEX } from '../../utils/regex'
+import axios from '../../api/axios'
 
 function NewProfilePage () {
   const navigate = useNavigate()
@@ -122,7 +125,9 @@ function NewProfilePage () {
           p: '30px',
           borderRadius: '10px'
         }}>
-          <Typography variant='h1' sx={{ fontSize: '1.4em', textAlign: 'center', mb: '10px' }}>Información basica personal</Typography>
+          <Typography variant='h1' sx={{ fontSize: '1.4em', textAlign: 'center', mb: '10px' }}>
+            <FormattedMessage id="profile.new.title" defaultMessage="Basic personal information" />
+          </Typography>
           <Box
             component="form"
             autoComplete="off"
@@ -133,8 +138,7 @@ function NewProfilePage () {
                 type="text"
                 id="outlined-required"
                 error={!validNames && names !== ''}
-                label="Nombre"
-                placeholder="Nombre"
+                label={<FormattedMessage id="profile.new.name.first" defaultMessage="First name" />}
                 onChange={(e) => setNames(e.target.value)}
                 required
               />
@@ -142,14 +146,13 @@ function NewProfilePage () {
                 type="text"
                 id="outlined"
                 error={!validLastNames && lastNames !== ''}
-                label="Apellido (opcional)"
-                placeholder="Apellido (opcional)"
+                label={<FormattedMessage id="profile.new.name.last" defaultMessage="Last name (Optional)" />}
                 onChange={(e) => setLastNames(e.target.value)}
               />
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   disableFuture
-                  label="Fecha de nacimiento (opcional)"
+                  label={<FormattedMessage id="profile.new.birth" defaultMessage="Birth date (Optional)" />}
                   openTo="year"
                   inputFormat="YYYY/MM/DD"
                   views={['year', 'month', 'day']}
@@ -159,7 +162,9 @@ function NewProfilePage () {
                 />
               </LocalizationProvider>
               <FormControl>
-                <FormLabel id="demo-controlled-radio-buttons-group">Gender</FormLabel>
+                <FormLabel id="demo-controlled-radio-buttons-group">
+                  <FormattedMessage id="profile.new.gender" defaultMessage="Gender" />
+                </FormLabel>
                 <RadioGroup
                   row
                   aria-labelledby="demo-controlled-radio-buttons-group"
@@ -168,12 +173,29 @@ function NewProfilePage () {
                   onChange={(e) => setGender(e.target.value)}
                   required
                 >
-                  <FormControlLabel value="female" control={<Radio />} label="Female" />
-                  <FormControlLabel value="male" control={<Radio />} label="Male" />
-                  <FormControlLabel value="otro" control={<Radio />} label="Otro" />
+                  <FormControlLabel
+                    value="female"
+                    control={<Radio />}
+                    label={<FormattedMessage id="profile.new.gender.female" defaultMessage="Female" />} />
+
+                  <FormControlLabel
+                    value="male"
+                    control={<Radio />}
+                    label={<FormattedMessage id="profile.new.gender.male" defaultMessage="Male" />} />
+
+                  <FormControlLabel
+                    value="other"
+                    control={<Radio />}
+                    label={<FormattedMessage id="profile.new.gender.other" defaultMessage="Other" />} />
                 </RadioGroup>
               </FormControl>
-              <Button disabled={!!(!validNames || (!validLastNames && lastNames !== '') || !validGender) || loading} type='submit' variant='contained' size='large'>Crear cuenta</Button>
+              <Button
+                disabled={!!(!validNames || (!validLastNames && lastNames !== '') || !validGender) || loading}
+                type='submit'
+                variant='contained'
+                size='large'>
+                <FormattedMessage id="profile.new.submit" defaultMessage="Create a profile" />
+              </Button>
               <Typography paragraph>{errMsg}</Typography>
             </Box>
           </Box>

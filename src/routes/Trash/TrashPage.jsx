@@ -2,10 +2,13 @@ import { Box, Checkbox, IconButton, List, ListItem, ListItemButton, ListItemIcon
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import RestoreIcon from '@mui/icons-material/Restore'
 import DeleteIcon from '@mui/icons-material/Delete'
+
+import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import { FormattedMessage } from 'react-intl'
+
 import { useAuth } from '../../hooks/useAuth'
 import axios from '../../api/axios'
-import { useNavigate } from 'react-router-dom'
 
 function TrashPage () {
   const navigate = useNavigate()
@@ -110,7 +113,6 @@ function TrashPage () {
     try {
       for await (const value of checked) {
         const trash = allTrash[value]
-        console.log({ trash, value })
         await axios.post(`/trash/${trash.id}`, {}, {
           headers: {
             Authorization: `Bearer ${credentials}`
@@ -132,7 +134,7 @@ function TrashPage () {
           noWrap
           component="div"
         >
-          Papelera
+          <FormattedMessage id="trash.title" defaultMessage="Trash" />
         </Typography>
         <Box>
           <IconButton onClick={onRestoreSelect}>
@@ -191,9 +193,19 @@ function TrashPage () {
         open={Boolean(anchorElTrash)}
         onClose={handleTrashMenu}
       >
-        <MenuItem key="1" onClick={() => navigate(`/trash/${idSelect}`)}>Ver pensamiento</MenuItem>
-        <MenuItem key="2" onClick={onDeleteId}>Eliminar a la papelera</MenuItem>
-        <MenuItem key="3" onClick={onRestoreId}>Restaurar pensamiento</MenuItem>
+        <MenuItem
+          key="1"
+          onClick={() => navigate(`/trash/${idSelect}`)}>
+          <FormattedMessage id="options.think.see" defaultMessage="See thought" />
+        </MenuItem>
+        <MenuItem
+          key="2"
+          onClick={onDeleteId}>
+          <FormattedMessage id="options.think.delete" defaultMessage="Delete thought" />
+        </MenuItem>
+        <MenuItem key="3" onClick={onRestoreId}>
+          <FormattedMessage id="options.think.restore" defaultMessage="Restore thought" />
+        </MenuItem>
       </Menu>
     </Box >
   )
