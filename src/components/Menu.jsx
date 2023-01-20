@@ -1,8 +1,11 @@
-import { AppBar, Box, Menu, MenuItem, Drawer as MuiDrawer, Container, Button, Toolbar, IconButton, Avatar, Fab, Typography, List, ListItem, ListItemIcon, ListItemButton, ListItemText } from '@mui/material'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { AppBar, Box, Menu, MenuItem, Drawer as MuiDrawer, Container, Toolbar, IconButton, Avatar, Fab, Typography, List, ListItem, ListItemIcon, ListItemButton, ListItemText } from '@mui/material'
 import { Menu as MenuIcon, ArrowDropDown as ArrowDropDownIcon, Archive as ArchiveIcon, Delete as DeleteIcon, Dashboard as DashboardIcon, Add as AddIcon, Logout as LogoutIcon } from '@mui/icons-material'
 import { styled } from '@mui/material/styles'
+
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import { FormattedMessage } from 'react-intl'
+
 import { useAuth } from '../hooks/useAuth'
 
 const StyledToolbar = styled(Toolbar)(() => ({
@@ -12,12 +15,12 @@ const StyledToolbar = styled(Toolbar)(() => ({
 }))
 
 function MenuNavUnLogin () {
-  const location = useLocation()
-  const pathNow = location.pathname
-
-  const pages = [{ text: 'Iniciar sesión', route: 'login' }, { text: 'Crear una cuenta', route: 'signup' }]
   return (
-    <AppBar sx={{ backgroundColor: '#fcfcfc', boxShadow: 'none', borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}>
+    <AppBar sx={{
+      backgroundColor: '#fcfcfc',
+      boxShadow: 'none',
+      borderBottom: '1px solid rgba(0, 0, 0, 0.12)'
+    }}>
       <Container >
         <StyledToolbar disableGutters>
           <Typography
@@ -33,22 +36,8 @@ function MenuNavUnLogin () {
             }}
             to='/'
           >
-            Align Mind
+            AlignMind
           </Typography>
-          {(pathNow === '/') &&
-            <Box sx={{ display: 'flex', gap: 3 }}>
-              {pages.map((page) => (
-                <Button
-                  key={page.route}
-                  component={Link}
-                  sx={{ display: { xs: page.route === 'signup' ? 'none' : 'block', sm: 'block' } }}
-                  to={`${page.route}`}
-                >
-                  {`${page.text}`}
-                </Button>
-              ))}
-            </Box>
-          }
         </StyledToolbar>
       </Container>
     </AppBar>
@@ -96,9 +85,9 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 )
 
 const pageLogin = [
-  { text: 'Dashboard', route: '/dashboard', icon: <DashboardIcon /> },
-  { text: 'Papelera', route: '/trash', icon: <DeleteIcon /> },
-  { text: 'Archivados', route: '/archive', icon: <ArchiveIcon /> }
+  { text: <FormattedMessage id="menu.list.dashboard" defaultMessage="Dashboard" />, route: '/dashboard', icon: <DashboardIcon /> },
+  { text: <FormattedMessage id="menu.list.trash" defaultMessage="Trash" />, route: '/trash', icon: <DeleteIcon /> },
+  { text: <FormattedMessage id="menu.list.archive" defaultMessage="Archive" />, route: '/archive', icon: <ArchiveIcon /> }
 ]
 
 function MenuNavLogin () {
@@ -157,10 +146,11 @@ function MenuNavLogin () {
               }}
               to='/dashboard'
             >
-              Align Mind
+              AlignMind
             </Typography>
           </Box>
         </StyledToolbar>
+
         <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', pb: '30px' }}>
           <Box>
             <Box sx={{ ml: open ? 2.5 : 0.4, mt: 2 }}>
@@ -169,7 +159,7 @@ function MenuNavLogin () {
               </Fab>
               <Fab variant='extended' color="primary" onClick={handleCreateMenu} sx={{ gap: 1, ...(!open && { display: 'none' }) }}>
                 <AddIcon />
-                Crear
+                <FormattedMessage id="menu.add" defaultMessage="Create" />
                 <ArrowDropDownIcon />
               </Fab>
               <Menu
@@ -188,13 +178,19 @@ function MenuNavLogin () {
                 open={Boolean(anchorElCreate)}
                 onClose={handleCreateMenu}
               >
-                {[{ text: 'Crear Pensamiento', route: '/think/new' }, { text: 'Crear Lugar', route: '/place/new' }].map((options) => (
-                  <MenuItem component={Link} key={options.text} onClick={handleCreateMenu} to={`${options.route}`}>
-                    <Typography textAlign="center">{options.text}</Typography>
-                  </MenuItem>
-                ))}
+                <MenuItem component={Link} key={1} to="/think/new">
+                  <Typography textAlign="center">
+                    <FormattedMessage id="menu.add.think" defaultMessage="New think" />
+                  </Typography>
+                </MenuItem>
+                <MenuItem component={Link} key={2} to="/place/new">
+                  <Typography textAlign="center">
+                    <FormattedMessage id="menu.add.place" defaultMessage="New place" />
+                  </Typography>
+                </MenuItem>
               </Menu>
             </Box>
+
             <List>
               {pageLogin.map((text) => (
                 <ListItem key={text.text} disablePadding sx={{ display: 'block' }}>
@@ -206,6 +202,7 @@ function MenuNavLogin () {
                       justifyContent: open ? 'initial' : 'center',
                       px: 2.5
                     }}
+                    onClick={() => setOpen(false)}
                     to={text.route}
                   >
                     <ListItemIcon
@@ -240,14 +237,14 @@ function MenuNavLogin () {
                       justifyContent: 'center'
                     }}
                   >
-                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                    <Avatar />
                   </ListItemIcon>
-                  <ListItemText primary="Cuenta" sx={{ opacity: open ? 1 : 0 }} />
+                  <ListItemText primary={<FormattedMessage id="menu.account" defaultMessage="Account" />} sx={{ opacity: open ? 1 : 0 }} />
                 </ListItemButton>
               </ListItem>
             </List>
             <Menu
-              sx={{ ml: open ? '160px' : '44px' }}
+              sx={{ ml: open ? '120px' : '44px' }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
@@ -262,19 +259,26 @@ function MenuNavLogin () {
               open={Boolean(anchorElUser)}
               onClose={handleUserMenu}
             >
-              <MenuItem key={1} onClick={() => navigate('/account')}>
+              <MenuItem key={1} onClick={() => {
+                setOpen(false)
+                navigate('/account')
+              }}>
                 <ListItemIcon>
-
                   <Avatar sx={{ width: '24px', height: '24px' }} />
                 </ListItemIcon>
 
-                Cuenta
+                <Typography>
+                  <FormattedMessage id="menu.account.profile" defaultMessage="Profile" />
+                </Typography>
               </MenuItem>
               <MenuItem key={2} onClick={logoutEvent}>
                 <ListItemIcon>
                   <LogoutIcon fontSize="medium" />
                 </ListItemIcon>
-                <Typography textAlign="center">Cerrar sesión</Typography>
+
+                <Typography textAlign="center">
+                  <FormattedMessage id="menu.account.logout" defaultMessage="Logout" />
+                </Typography>
               </MenuItem>
             </Menu>
           </Box>

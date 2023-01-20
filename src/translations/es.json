@@ -1,4 +1,13 @@
 {
+  "menu.add": "Crear",
+  "menu.add.think": "Nuevo pensamiento",
+  "menu.add.place": "Nuevo lugar",
+  "menu.list.dashboard": "Tablero",
+  "menu.list.trash": "Papelera",
+  "menu.list.archive": "Archivados",
+  "menu.account": "Cuenta",
+  "menu.account.profile": "Perfil",
+  "menu.account.logout": "Cerrar sesión",
   "dashboard.welcome": "Bienvenido",
   "dashboard.emotion": "Tus emociones",
   "dashboard.positive": "Emociones positivas",
