@@ -3,6 +3,7 @@ import { Autocomplete, Box, Button, ButtonGroup, TextareaAutosize, TextField, Ty
 import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
+import { Helmet } from 'react-helmet-async'
 
 import { Forms } from '../../components/Form'
 import { Combobox } from '../../components/Combobox'
@@ -103,6 +104,9 @@ function NewThinkPage () {
   }
   return (
     <>
+      <Helmet>
+        <title>New think | AlignMind</title>
+      </Helmet>
       <Box
         sx={{
           display: 'flex',

@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { SketchPicker } from 'react-color'
 import { FormattedMessage } from 'react-intl'
+import { Helmet } from 'react-helmet-async'
 
 import axios from '../../api/axios'
 import { useAuth } from '../../hooks/useAuth'
@@ -113,6 +114,9 @@ function EditPlacePage () {
 
   return (
     <Box sx={{ p: '30px', height: '100%', width: '100%', display: 'flex', flexDirection: 'column', margin: { xs: '50px 0', sm: '50px' }, background: '#ffffff' }}>
+      <Helmet>
+        <title>Edit place | AlignMind</title>
+      </Helmet>
       <Box sx={{ width: '100%' }}>
         <TextField
           sx={{ width: '100%' }}

@@ -6,6 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
+import { Helmet } from 'react-helmet-async'
 
 import { useAuth } from '../../hooks/useAuth'
 import axios from '../../api/axios'
@@ -128,6 +129,9 @@ function TrashPage () {
 
   return (
     <Box sx={{ width: '100%', p: '30px' }}>
+      <Helmet>
+        <title>Trash | AlignMind</title>
+      </Helmet>
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', backgroundColor: '#ffffff' }}>
         <Typography
           variant="h6"

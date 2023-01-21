@@ -5,6 +5,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import CircleIcon from '@mui/icons-material/Circle'
 import FilterListIcon from '@mui/icons-material/FilterList'
 
+import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
 import { Doughnut } from 'react-chartjs-2'
 import { FormattedMessage } from 'react-intl'
@@ -234,6 +235,9 @@ function DashboardPage () {
     <Box
       component="main"
       sx={{ width: '100%', px: { xs: '10px', sm: '50px', md: '100px' }, py: '20px' }}>
+      <Helmet>
+        <title>Dashboard | Alignmind</title>
+      </Helmet>
       <Box component="header" sx={{
         my: '20px',
         display: 'flex',

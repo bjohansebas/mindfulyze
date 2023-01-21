@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { SketchPicker } from 'react-color'
 import { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
+import { Helmet } from 'react-helmet-async'
 
 import { HEXADECIMAL_REGEX } from '../../utils/regex'
 import { useAuth } from '../../hooks/useAuth'
@@ -113,6 +114,9 @@ function NewPlacePage () {
         mx: { sm: '10px', md: 0 }
       }}
     >
+      <Helmet>
+        <title>New place | AlignMind</title>
+      </Helmet>
       <Box sx={{
         display: 'flex',
         justifyContent: ' center',
