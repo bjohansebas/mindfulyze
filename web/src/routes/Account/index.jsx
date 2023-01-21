@@ -187,7 +187,7 @@ function AccountPage () {
           />
           <FormControl>
             <FormLabel id="demo-controlled-radio-buttons-group">
-              <FormattedMessage id="profile.new.gender" defaultMessage="Gender" />
+              <FormattedMessage id="profile.edit.gender" defaultMessage="Gender" />
             </FormLabel>
             <RadioGroup
               row
@@ -200,7 +200,7 @@ function AccountPage () {
               <FormControlLabel
                 value="female"
                 control={<Radio />}
-                label={<FormattedMessage id="profile.new.gender.female" defaultMessage="Female" />} />
+                label={<FormattedMessage id="profile.edit.gender.female" defaultMessage="Female" />} />
 
               <FormControlLabel
                 value="male"
