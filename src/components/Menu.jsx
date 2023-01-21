@@ -261,6 +261,7 @@ function MenuNavLogin () {
             >
               <MenuItem key={1} onClick={() => {
                 setOpen(false)
+                handleUserMenu()
                 navigate('/account')
               }}>
                 <ListItemIcon>
