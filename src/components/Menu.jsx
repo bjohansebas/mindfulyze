@@ -192,8 +192,8 @@ function MenuNavLogin () {
             </Box>
 
             <List>
-              {pageLogin.map((text) => (
-                <ListItem key={text.text} disablePadding sx={{ display: 'block' }}>
+              {pageLogin.map((text, index) => (
+                <ListItem key={index} disablePadding sx={{ display: 'block' }}>
                   <ListItemButton
                     component={Link}
                     selected={pathNow === text.route}
