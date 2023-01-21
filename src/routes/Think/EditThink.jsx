@@ -5,6 +5,7 @@ import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
+import { Helmet } from 'react-helmet-async'
 
 import axios from '../../api/axios'
 import { useAuth } from '../../hooks/useAuth'
@@ -207,13 +208,15 @@ function EditThinkPage () {
 
   return (
     <Box sx={{
-      p:
-        '30px',
+      p: '30px',
       height: { xs: '100%', md: '480px' },
       width: '100%',
       display: 'flex',
       flexDirection: { xs: 'column', md: 'row' }
     }}>
+      <Helmet>
+        <title>Edit think | AlignMind</title>
+      </Helmet>
       <Box sx={{
         width: { xs: '100%', md: '60%' },
         height: { xs: '300px', md: '100%' },

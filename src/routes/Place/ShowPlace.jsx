@@ -6,6 +6,7 @@ import SwapVertIcon from '@mui/icons-material/SwapVert'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
+import { Helmet } from 'react-helmet-async'
 
 import { useAuth } from '../../hooks/useAuth'
 import axios from '../../api/axios'
@@ -134,6 +135,9 @@ function ShowPlacePage () {
 
   return (
     <Box sx={{ width: '100%' }}>
+      <Helmet>
+        <title>Place | AlignMind</title>
+      </Helmet>
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', backgroundColor: '#ffffff', borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}>
         <Typography
           variant="h6"

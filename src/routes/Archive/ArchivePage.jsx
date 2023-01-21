@@ -3,6 +3,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import DeleteIcon from '@mui/icons-material/Delete'
 import UnarchiveIcon from '@mui/icons-material/Unarchive'
 
+import { Helmet } from 'react-helmet-async'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
@@ -132,6 +133,10 @@ function ArchivePage () {
 
   return (
     <Box sx={{ width: '100%', p: '30px' }}>
+      <Helmet>
+        <title>Archive | AlignMind</title>
+      </Helmet>
+
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', backgroundColor: '#ffffff' }}>
         <Typography
           variant="h6"
