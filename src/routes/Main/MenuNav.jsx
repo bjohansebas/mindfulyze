@@ -1,48 +1,10 @@
-import { AppBar, Box, Menu, MenuItem, Drawer as MuiDrawer, Container, Toolbar, IconButton, Avatar, Fab, Typography, List, ListItem, ListItemIcon, ListItemButton, ListItemText } from '@mui/material'
-import { Menu as MenuIcon, ArrowDropDown as ArrowDropDownIcon, Archive as ArchiveIcon, Delete as DeleteIcon, Dashboard as DashboardIcon, Add as AddIcon, Logout as LogoutIcon } from '@mui/icons-material'
+import { Box, Menu, MenuItem, Drawer as MuiDrawer, IconButton, Avatar, Fab, Typography, List, ListItem, ListItemIcon, ListItemButton, ListItemText, Toolbar } from '@mui/material'
 import { styled } from '@mui/material/styles'
+import { Menu as MenuIcon, ArrowDropDown as ArrowDropDownIcon, Archive as ArchiveIcon, Delete as DeleteIcon, Dashboard as DashboardIcon, Add as AddIcon, Logout as LogoutIcon } from '@mui/icons-material'
 
-import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
-
-import { useAuth } from '../hooks/useAuth'
-
-const StyledToolbar = styled(Toolbar)(() => ({
-  boxSizing: 'border-box',
-  alignItems: 'center',
-  justifyContent: 'space-between'
-}))
-
-function MenuNavUnLogin () {
-  return (
-    <AppBar sx={{
-      backgroundColor: '#fcfcfc',
-      boxShadow: 'none',
-      borderBottom: '1px solid rgba(0, 0, 0, 0.12)'
-    }}>
-      <Container >
-        <StyledToolbar disableGutters>
-          <Typography
-            component={Link}
-            noWrap
-            sx={{
-              display: 'flex',
-              fontFamily: 'roboto',
-              fontWeight: 700,
-              color: 'black',
-              letterSpacing: '.2rem',
-              textDecoration: 'none'
-            }}
-            to='/'
-          >
-            AlignMind
-          </Typography>
-        </StyledToolbar>
-      </Container>
-    </AppBar>
-  )
-}
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 const drawerWidth = 210
 
@@ -90,9 +52,9 @@ const pageLogin = [
   { text: <FormattedMessage id="menu.list.archive" defaultMessage="Archive" />, route: '/archive', icon: <ArchiveIcon /> }
 ]
 
-function MenuNavLogin () {
+function MenuApp () {
   const navigate = useNavigate()
-  const { logoutEvent } = useAuth()
+  // const { logoutEvent } = useAuth()
   const location = useLocation()
   const [open, setOpen] = useState(false)
   const [anchorElUser, setAnchorElUser] = useState(null)
@@ -122,7 +84,7 @@ function MenuNavLogin () {
   return (
     <>
       <Drawer variant="permanent" open={open}>
-        <StyledToolbar sx={{
+        <Toolbar sx={{
           px: 2.5
         }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -149,7 +111,7 @@ function MenuNavLogin () {
               AlignMind
             </Typography>
           </Box>
-        </StyledToolbar>
+        </Toolbar>
 
         <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', pb: '30px' }}>
           <Box>
@@ -272,7 +234,10 @@ function MenuNavLogin () {
                   <FormattedMessage id="menu.account.profile" defaultMessage="Profile" />
                 </Typography>
               </MenuItem>
-              <MenuItem key={2} onClick={logoutEvent}>
+              <MenuItem
+                key={2}
+              // onClick={logoutEvent}
+              >
                 <ListItemIcon>
                   <LogoutIcon fontSize="medium" />
                 </ListItemIcon>
@@ -289,13 +254,4 @@ function MenuNavLogin () {
   )
 }
 
-function MenuNav () {
-  const { isLogin } = useAuth()
-  return (
-    <>
-      {isLogin && <MenuNavLogin />}
-      {!isLogin && <MenuNavUnLogin />}
-    </>
-  )
-}
-export { MenuNav }
+export { MenuApp }

@@ -6,10 +6,10 @@ import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { FormattedMessage } from 'react-intl'
 
-import { useAuth } from '../../hooks/useAuth'
+// import { useAuth } from '../../hooks/useAuth'
 
 function LoginPage () {
-  const { loginPost } = useAuth()
+  // const { loginPost } = useAuth()
 
   const [email, setEmail] = useState('')
   const [pwd, setPwd] = useState('')
@@ -30,7 +30,7 @@ function LoginPage () {
     e.preventDefault()
     setLoading(true)
     try {
-      await loginPost(email, pwd)
+      // await loginPost(email, pwd)
       setLoading(false)
     } catch (e) {
       setErrMsg(e)
