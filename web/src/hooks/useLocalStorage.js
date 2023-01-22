@@ -1,47 +1,26 @@
 import { useEffect, useState } from 'react'
+import localforage from 'localforage'
 
-function useLocalStorage (itemName, initialValue) {
-  const [sincronizedItem, setSincronizedItem] = useState(true)
-  const [item, setItem] = useState(initialValue)
+function useLocalStorage (key) {
+  const [value, setValue] = useState(null)
 
   useEffect(() => {
-    try {
-      const localStorageItem = localStorage.getItem(itemName)
-      let parsedItem
-
-      if (!localStorageItem) {
-        localStorage.setItem(itemName, JSON.stringify(initialValue))
-        parsedItem = initialValue
-      } else {
-        parsedItem = JSON.parse(localStorageItem)
-      }
-
-      setSincronizedItem(true)
-      setItem(parsedItem)
-    } catch (e) {
-      console.error('Error')
+    async function getData () {
+      const data = await localforage.getItem(key)
+      setValue(data)
     }
-  }, [sincronizedItem])
 
-  const saveItem = (newItem) => {
-    try {
-      const stringifiedItem = JSON.stringify(newItem)
-      localStorage.setItem(itemName, stringifiedItem)
+    getData()
+  })
 
-      setItem(newItem)
-    } catch (error) {
-      console.error('Error')
-    }
-  }
-
-  const sincronizeItem = () => {
-    setSincronizedItem(false)
+  const saveData = async (data) => {
+    await localforage.setItem(key, data)
+    setValue(data)
   }
 
   return {
-    item,
-    saveItem,
-    sincronizeItem
+    value,
+    saveData
   }
 }
 

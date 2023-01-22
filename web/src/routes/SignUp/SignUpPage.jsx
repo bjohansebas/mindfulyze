@@ -1,5 +1,4 @@
-import { Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, Toolbar, Typography, Box, TextField } from '@mui/material'
-import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { Button, Toolbar, Typography, Box, TextField } from '@mui/material'
 
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
@@ -8,10 +7,11 @@ import { FormattedMessage } from 'react-intl'
 
 import { EMAIL_REGEX, PWD_REGEX, USER_REGEX } from '../../utils/regex'
 import axios from '../../api/axios'
-import { useAuth } from '../../hooks/useAuth'
+import { TextFieldPassword } from '../../components/TextFieldPassword'
+// import { useAuth } from '../../hooks/useAuth'
 
 function SignUpPage () {
-  const { loginPost } = useAuth()
+  // const { loginPost } = useAuth()
   const navigate = useNavigate()
   const [user, setUser] = useState('')
   const [validUser, setValidUser] = useState(false)
@@ -47,9 +47,6 @@ function SignUpPage () {
     setErrMsg('')
   }, [email, pwd, matchPwd])
 
-  const handleClickShowPassword = () => setShowPassword((show) => !show)
-  const handleMouseDownPassword = (e) => e.preventDefault()
-
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
@@ -75,7 +72,7 @@ function SignUpPage () {
           headers: { 'Content-Type': 'application/json' }
         })
       try {
-        await loginPost(email, pwd)
+        // await loginPost(email, pwd)
         setLoading(false)
       } catch (e) {
         navigate('/login')
@@ -147,57 +144,23 @@ function SignUpPage () {
                 arial-invalid={validUser ? 'false' : 'true'}
                 required
               />
-              <FormControl variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-password">
-                  <FormattedMessage id="signup.password" defaultMessage="Password" />
-                </InputLabel>
-                <OutlinedInput
-                  id="outlined-adornment-password"
-                  type={showPassword ? 'text' : 'password'}
-                  error={!validPwd && pwd !== ''}
-                  onChange={(e) => setPwd(e.target.value)}
-                  label={<FormattedMessage id="signup.password" defaultMessage="Password" />}
-                  required
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
-              <FormControl variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-password">
-                  <FormattedMessage id="signup.confirm" defaultMessage="Confirm password" />
-                </InputLabel>
-                <OutlinedInput
-                  id="outlined-adornment-password"
-                  type={showPassword ? 'text' : 'password'}
-                  error={!validMatch && matchPwd !== ''}
-                  disabled={!validPwd}
-                  onChange={(e) => setMatchPwd(e.target.value)}
-                  label={<FormattedMessage id="signup.confirm" defaultMessage="Confirm password" />}
-                  required
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
+              <TextFieldPassword
+                pwd={pwd}
+                setPwd={setPwd}
+                validPwd={validPwd}
+                showPassword={showPassword}
+                setShowPassword={setShowPassword}
+                label={<FormattedMessage id="signup.password" defaultMessage="Password" />}
+              />
+              <TextFieldPassword
+                pwd={matchPwd}
+                setPwd={setMatchPwd}
+                validPwd={validMatch}
+                isDisable={!validPwd}
+                showPassword={showPassword}
+                setShowPassword={setShowPassword}
+                label={<FormattedMessage id="signup.confirm" defaultMessage="Confirm password" />}
+              />
               <Button
                 disabled={!!(!validPwd || !validEmail || !validMatch || !validUser) || loading}
                 type='submit' variant='contained' size='large'>

@@ -1,5 +1,4 @@
-function ThinksPage () {
-  return (<p>All thinks</p>)
-}
+import { EditThinkPage } from './EditThink'
+import { NewThinkPage } from './NewThink'
 
-export { ThinksPage }
+export { EditThinkPage, NewThinkPage }

@@ -1,10 +1,16 @@
-import { Navigate } from 'react-router-dom'
-import { useAuth } from '../../hooks/useAuth'
+import { Box } from '@mui/material'
+
+import { Outlet } from 'react-router-dom'
+
+import { MenuApp } from './MenuNav'
 
 function MainPage () {
-  const { credentials } = useAuth()
-
-  return credentials ?? <Navigate to="/login" replace />
+  return (
+    <Box>
+      <MenuApp />
+      <Outlet />
+    </Box>
+  )
 }
 
 export { MainPage }
