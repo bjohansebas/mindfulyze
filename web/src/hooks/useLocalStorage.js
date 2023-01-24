@@ -11,17 +11,14 @@ function useLocalStorage (key) {
     }
 
     getData()
-  })
+  }, [])
 
   const saveData = async (data) => {
     await localforage.setItem(key, data)
     setValue(data)
   }
 
-  return {
-    value,
-    saveData
-  }
+  return [value, saveData]
 }
 
 export { useLocalStorage }

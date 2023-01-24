@@ -1,73 +1,36 @@
-import { useEffect, useState } from 'react'
-import { Navigate, Outlet, useNavigate } from 'react-router-dom'
-import { useAuth } from '../hooks/useAuth'
+import localforage from 'localforage'
+import { useEffect } from 'react'
+import { Outlet, redirect, useNavigate } from 'react-router-dom'
+import { MenuApp } from '../routes/Main/MenuNav'
 import axios from '../api/axios'
-import PropTypes from 'prop-types'
 
-function RequiredAuth ({ requiredProfile }) {
+function RequiredAuth () {
   const navigate = useNavigate()
-
-  const [loading, setLoading] = useState(true)
-  const { isLogin, setIsLogin, credentials, setCredentials, userId, setUserId, setUserInfo, setHasProfile } = useAuth()
-
   useEffect(() => {
-    if (credentials && userId && !isLogin) {
-      async function getUser () {
-        try {
-          const response = await axios.get(`/users/${userId}`, {
-            headers: { Authorization: `Bearer ${credentials}` }
-          })
-          let data = {
-            username: response?.data.data.username, email: response?.data.data.email
-          }
-          if (requiredProfile) {
-            try {
-              const responseProfile = await axios.get(`/users/${userId}/profile`, {
-                headers: { Authorization: `Bearer ${credentials}` }
-              })
-              const dataRequest = responseProfile?.data.data
-              if (dataRequest?.last_name) {
-                data = { lastName: dataRequest?.last_name }
-              }
-              data = {
-                firstName: dataRequest.first_name,
-                lang: dataRequest.preference_lang,
-                gender: dataRequest.gender,
-                ...data
-              }
-              setHasProfile(true)
-              setUserInfo({ data })
-            } catch (e) {
-              navigate('/account/new')
-            }
-          }
-          setUserInfo(data)
-          setIsLogin(true)
-          setLoading(false)
-        } catch (e) {
-          setCredentials(null)
-          setUserId(null)
-          setLoading(false)
-          setIsLogin(false)
-        }
+    async function existUser () {
+      const credential = await localforage.getItem('credentials_token')
+      const userId = await localforage.getItem('userInfo_userId')
+      if (!credential || !userId) {
+        return navigate('/login', { replace: true })
       }
-      getUser()
-    } else {
-      setIsLogin(false)
-      setLoading(false)
-      navigate('/login')
+      try {
+        await axios.get(`users/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${credential}`
+          }
+        })
+      } catch (err) {
+        return redirect('/login', { replace: true })
+      }
     }
+
+    existUser()
   }, [])
 
-  if (!isLogin && !loading) {
-    return <Navigate to='/login' />
-  }
-
-  return <Outlet />
+  return (<>
+    <MenuApp />
+    <Outlet />
+  </>
+  )
 }
-
-RequiredAuth.propTypes = {
-  requiredProfile: PropTypes.bool
-}
-
 export { RequiredAuth }

@@ -1,4 +1,4 @@
-import 'chart.js/auto'
+// import 'chart.js/auto'
 import { Box, Button, Divider, List, IconButton, Menu, MenuItem, Typography, ListItem, ListItemButton, ListItemText } from '@mui/material'
 import {
   // useEffect,
@@ -10,7 +10,7 @@ import FilterListIcon from '@mui/icons-material/FilterList'
 
 import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
-import { Doughnut } from 'react-chartjs-2'
+// import { Doughnut } from 'react-chartjs-2'
 import { FormattedMessage } from 'react-intl'
 
 // import axios from '../../api/axios'
@@ -365,7 +365,7 @@ function DashboardPage () {
 
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Box sx={{ height: '100%' }}>
-            <Doughnut
+            {/* <Doughnut
               // data={data}
               options={{
                 responsive: true,
@@ -379,7 +379,7 @@ function DashboardPage () {
                     right: 0
                   }
                 }
-              }} width={300} height={300} />
+              }} width={300} height={300} /> */}
           </Box>
         </Box>
       </Box>
