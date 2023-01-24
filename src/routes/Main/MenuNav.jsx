@@ -47,7 +47,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 )
 
 const pageLogin = [
-  { text: <FormattedMessage id="menu.list.dashboard" defaultMessage="Dashboard" />, route: '/dashboard', icon: <DashboardIcon /> },
+  { text: <FormattedMessage id="menu.list.dashboard" defaultMessage="Dashboard" />, route: '/', icon: <DashboardIcon /> },
   { text: <FormattedMessage id="menu.list.trash" defaultMessage="Trash" />, route: '/trash', icon: <DeleteIcon /> },
   { text: <FormattedMessage id="menu.list.archive" defaultMessage="Archive" />, route: '/archive', icon: <ArchiveIcon /> }
 ]

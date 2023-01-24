@@ -1,5 +1,4 @@
-import { createBrowserRouter, redirect, RouterProvider } from 'react-router-dom'
-import localforage from 'localforage'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { MainPage } from './routes/Main'
 import { LoginPage } from './routes/Login'
@@ -13,6 +12,7 @@ import { NewThinkPage, EditThinkPage } from './routes/Think'
 import { NewPlacePage, ShowPlacePage, EditPlacePage } from './routes/Place'
 import { TrashPage, ShowThinkTrashPage } from './routes/Trash'
 import { ArchivePage } from './routes/Archive'
+import { RequiredAuth } from './components/RequiredAuth'
 
 const router = createBrowserRouter([
   {
@@ -21,38 +21,43 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        index: true,
-        element: <DashboardPage />
-      }, {
-        path: 'account',
-        element: <AccountPage />
-      }, {
-        path: 'account/new',
-        element: <NewProfilePage />
-      }, {
-        path: 'think/:id',
-        element: <EditThinkPage />
-      }, {
-        path: 'think/new',
-        element: <NewThinkPage />
-      }, {
-        path: 'place/new',
-        element: <NewPlacePage />
-      }, {
-        path: 'place/:id',
-        element: <ShowPlacePage />
-      }, {
-        path: 'place/:id/edit',
-        element: <EditPlacePage />
-      }, {
-        path: 'trash/',
-        element: <TrashPage />
-      }, {
-        path: 'trash/:id',
-        element: <ShowThinkTrashPage />
-      }, {
-        path: 'archive',
-        element: <ArchivePage />
+        element: <RequiredAuth />,
+        children: [
+          {
+            index: true,
+            element: <DashboardPage />
+          }, {
+            path: 'account',
+            element: <AccountPage />
+          }, {
+            path: 'account/new',
+            element: <NewProfilePage />
+          }, {
+            path: 'think/:id',
+            element: <EditThinkPage />
+          }, {
+            path: 'think/new',
+            element: <NewThinkPage />
+          }, {
+            path: 'place/new',
+            element: <NewPlacePage />
+          }, {
+            path: 'place/:id',
+            element: <ShowPlacePage />
+          }, {
+            path: 'place/:id/edit',
+            element: <EditPlacePage />
+          }, {
+            path: 'trash/',
+            element: <TrashPage />
+          }, {
+            path: 'trash/:id',
+            element: <ShowThinkTrashPage />
+          }, {
+            path: 'archive',
+            element: <ArchivePage />
+          }
+        ]
       }
     ]
   },
