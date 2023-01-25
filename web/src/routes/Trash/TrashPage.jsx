@@ -1,4 +1,4 @@
-import { Box, Checkbox, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, Toolbar, Typography } from '@mui/material'
+import { Box, Checkbox, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, Skeleton, Toolbar, Typography } from '@mui/material'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import RestoreIcon from '@mui/icons-material/Restore'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -13,24 +13,30 @@ import axios from '../../api/axios'
 
 function TrashPage () {
   const navigate = useNavigate()
-  const { userId, credentials } = useAuth()
+  const { userId, credential } = useAuth()
+
   const [anchorElTrash, setAnchorElTrash] = useState(null)
   const [checked, setChecked] = useState([])
+
   const [allTrash, setAllTrash] = useState([])
+  const [loading, setLoading] = useState(true)
   const [idSelect, setIdSelect] = useState('')
 
   const getTrash = async () => {
     try {
       const response = await axios.get(`/users/${userId}/trash`, {
         headers: {
-          Authorization: `Bearer ${credentials}`
+          Authorization: `Bearer ${credential}`
         }
       })
+
       setAllTrash(response?.data.data.map(data => {
         return { text: data.text_think, id: data.trash_th_id }
       }))
     } catch (e) {
       console.log(e?.response)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -66,7 +72,7 @@ function TrashPage () {
       setAnchorElTrash(null)
       await axios.delete(`/trash/${idSelect}`, {
         headers: {
-          Authorization: `Bearer ${credentials}`
+          Authorization: `Bearer ${credential}`
         }
       })
 
@@ -82,7 +88,7 @@ function TrashPage () {
       setAnchorElTrash(null)
       await axios.post(`/trash/${idSelect}`, {}, {
         headers: {
-          Authorization: `Bearer ${credentials}`
+          Authorization: `Bearer ${credential}`
         }
       })
 
@@ -94,36 +100,40 @@ function TrashPage () {
   }
 
   const onDeleteSelect = async () => {
-    try {
-      for await (const value of checked) {
-        const trash = allTrash[value]
-        await axios.delete(`/trash/${trash.id}`, {
-          headers: {
-            Authorization: `Bearer ${credentials}`
-          }
-        })
+    if (checked.length > 0) {
+      try {
+        for await (const value of checked) {
+          const trash = allTrash[value]
+          await axios.delete(`/trash/${trash.id}`, {
+            headers: {
+              Authorization: `Bearer ${credential}`
+            }
+          })
+        }
+        setChecked([])
+        await getTrash()
+      } catch (err) {
+        console.log(err)
       }
-      setChecked([])
-      await getTrash()
-    } catch (err) {
-      console.log(err)
     }
   }
 
   const onRestoreSelect = async () => {
-    try {
-      for await (const value of checked) {
-        const trash = allTrash[value]
-        await axios.post(`/trash/${trash.id}`, {}, {
-          headers: {
-            Authorization: `Bearer ${credentials}`
-          }
-        })
+    if (checked.length > 0) {
+      try {
+        for await (const value of checked) {
+          const trash = allTrash[value]
+          await axios.post(`/trash/${trash.id}`, {}, {
+            headers: {
+              Authorization: `Bearer ${credential}`
+            }
+          })
+        }
+        setChecked([])
+        await getTrash()
+      } catch (err) {
+        console.log(err)
       }
-      setChecked([])
-      await getTrash()
-    } catch (err) {
-      console.log(err)
     }
   }
 
@@ -141,45 +151,45 @@ function TrashPage () {
           <FormattedMessage id="trash.title" defaultMessage="Trash" />
         </Typography>
         <Box>
-          <IconButton onClick={onRestoreSelect}>
+          <IconButton onClick={onRestoreSelect} disabled={checked.length === 0}>
             <RestoreIcon />
           </IconButton>
-          <IconButton onClick={onDeleteSelect}>
+          <IconButton onClick={onDeleteSelect} disabled={checked.length === 0}>
             <DeleteIcon />
           </IconButton>
         </Box>
       </Toolbar>
       <Box>
-        {allTrash.length >= 1 &&
-          <List sx={{ width: '100%', bgcolor: 'background.paper', p: 0, pb: '10px' }}>
-            {allTrash.map((value, index) => {
-              const labelId = `checkbox-list-label-${index}`
-              return (
-                <ListItem
-                  key={index}
-                  secondaryAction={
-                    <IconButton edge="end" aria-label="comments" onClick={(e) => { handleTrashMenu(e, value.id) }}>
-                      <MoreVertIcon />
-                    </IconButton>
-                  }
-                  disablePadding
-                >
-                  <ListItemButton role={undefined} onClick={handleToggle(index)} dense>
-                    <ListItemIcon>
-                      <Checkbox
-                        edge="start"
-                        checked={checked.indexOf(index) !== -1}
-                        tabIndex={-1}
-                        disableRipple
-                        inputProps={{ 'aria-labelledby': labelId }}
-                      />
-                    </ListItemIcon>
-                    <ListItemText id={labelId} primary={`${value.text}`} />
-                  </ListItemButton>
-                </ListItem>
-              )
-            })}
-          </List>}
+        <List sx={{ width: '100%', bgcolor: 'background.paper', p: 0, pb: '10px' }}>
+          {loading && <Skeleton variant="rectangular" height={50} />}
+          {!loading && allTrash.map((value, index) => {
+            const labelId = `checkbox-list-label-${index}`
+            return (
+              <ListItem
+                key={index}
+                secondaryAction={
+                  <IconButton edge="end" aria-label="comments" onClick={(e) => { handleTrashMenu(e, value.id) }}>
+                    <MoreVertIcon />
+                  </IconButton>
+                }
+                disablePadding
+              >
+                <ListItemButton role={undefined} onClick={handleToggle(index)} dense>
+                  <ListItemIcon>
+                    <Checkbox
+                      edge="start"
+                      checked={checked.indexOf(index) !== -1}
+                      tabIndex={-1}
+                      disableRipple
+                      inputProps={{ 'aria-labelledby': labelId }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText id={labelId} primary={`${value.text}`} />
+                </ListItemButton>
+              </ListItem>
+            )
+          })}
+        </List>
       </Box>
       <Menu
         sx={{ mt: '40px', zIndex: 1202 }}

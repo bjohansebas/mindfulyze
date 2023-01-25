@@ -19,7 +19,7 @@ function SignLayoutPage () {
   })
 
   return (
-    <Box>
+    <Box sx={{ background: '#f6f6f6' }}>
       <AppBar sx={{
         backgroundColor: '#fcfcfc',
         boxShadow: 'none',

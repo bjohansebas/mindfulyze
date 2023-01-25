@@ -6,6 +6,8 @@ import { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
+import { useAuth } from '../../hooks/useAuth'
+
 const drawerWidth = 210
 
 const openedMixin = (theme) => ({
@@ -54,8 +56,9 @@ const pageLogin = [
 
 function MenuApp () {
   const navigate = useNavigate()
-  // const { logoutEvent } = useAuth()
+  const { logoutAction } = useAuth()
   const location = useLocation()
+
   const [open, setOpen] = useState(false)
   const [anchorElUser, setAnchorElUser] = useState(null)
   const [anchorElCreate, setAnchorElCreate] = useState(null)
@@ -236,7 +239,7 @@ function MenuApp () {
               </MenuItem>
               <MenuItem
                 key={2}
-              // onClick={logoutEvent}
+                onClick={logoutAction}
               >
                 <ListItemIcon>
                   <LogoutIcon fontSize="medium" />

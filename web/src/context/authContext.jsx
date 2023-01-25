@@ -1,5 +1,6 @@
 import { useState, createContext } from 'react'
 import PropTypes from 'prop-types'
+import localforage from 'localforage'
 
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import axios from '../api/axios'
@@ -39,6 +40,13 @@ function AuthProvider ({ children }) {
     }
   }
 
+  const logoutAction = async () => {
+    setCredential(null)
+    setUserId(null)
+    await localforage.clear()
+    window.location.reload()
+  }
+
   return <AuthContext.Provider value={{
     credential,
     setCredential,
@@ -48,7 +56,8 @@ function AuthProvider ({ children }) {
     userInfo,
     hasProfile,
     setHasProfile,
-    loginAction
+    loginAction,
+    logoutAction
   }}>
     {children}
   </AuthContext.Provider>

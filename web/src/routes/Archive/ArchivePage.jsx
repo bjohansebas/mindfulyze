@@ -1,4 +1,4 @@
-import { Box, Checkbox, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, Toolbar, Typography } from '@mui/material'
+import { Box, Checkbox, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, Skeleton, Toolbar, Typography } from '@mui/material'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import DeleteIcon from '@mui/icons-material/Delete'
 import UnarchiveIcon from '@mui/icons-material/Unarchive'
@@ -13,17 +13,21 @@ import axios from '../../api/axios'
 
 function ArchivePage () {
   const navigate = useNavigate()
-  const { userId, credentials } = useAuth()
+  const { userId, credential } = useAuth()
+
   const [anchorElTrash, setAnchorElTrash] = useState(null)
   const [checked, setChecked] = useState([])
+
   const [allArchive, setAllArchive] = useState([])
+  const [loading, setLoading] = useState(true)
   const [idSelect, setIdSelect] = useState('')
 
   const getArchive = async () => {
     try {
+      setLoading(true)
       const response = await axios.get(`/users/${userId}/archives`, {
         headers: {
-          Authorization: `Bearer ${credentials}`
+          Authorization: `Bearer ${credential}`
         }
       })
       setAllArchive(response?.data.data.map(data => {
@@ -31,6 +35,8 @@ function ArchivePage () {
       }))
     } catch (e) {
       console.log(e?.response)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -66,7 +72,7 @@ function ArchivePage () {
       setAnchorElTrash(null)
       await axios.post(`/thinks/${idSelect}/trash`, {}, {
         headers: {
-          Authorization: `Bearer ${credentials}`
+          Authorization: `Bearer ${credential}`
         }
       })
 
@@ -84,7 +90,7 @@ function ArchivePage () {
         is_archive: false
       }), {
         headers: {
-          Authorization: `Bearer ${credentials}`
+          Authorization: `Bearer ${credential}`
         }
       })
 
@@ -96,43 +102,47 @@ function ArchivePage () {
   }
 
   const onDeleteSelect = async () => {
-    try {
-      for await (const value of checked) {
-        const archive = allArchive[value]
-        await axios.post(`/thinks/${archive.id}/trash`, {}, {
-          headers: {
-            Authorization: `Bearer ${credentials}`
-          }
-        })
+    if (checked.length > 0) {
+      try {
+        for await (const value of checked) {
+          const archive = allArchive[value]
+          await axios.post(`/thinks/${archive.id}/trash`, {}, {
+            headers: {
+              Authorization: `Bearer ${credential}`
+            }
+          })
+        }
+        setChecked([])
+        await getArchive()
+      } catch (err) {
+        console.log(err)
       }
-      setChecked([])
-      await getArchive()
-    } catch (err) {
-      console.log(err)
     }
   }
 
   const onUnarchiveSelect = async () => {
-    try {
-      for await (const value of checked) {
-        const archive = allArchive[value]
-        await axios.put(`/thinks/${archive.id}`, JSON.stringify({
-          is_archive: false
-        }), {
-          headers: {
-            Authorization: `Bearer ${credentials}`
-          }
-        })
+    if (checked.length > 0) {
+      try {
+        for await (const value of checked) {
+          const archive = allArchive[value]
+          await axios.put(`/thinks/${archive.id}`, JSON.stringify({
+            is_archive: false
+          }), {
+            headers: {
+              Authorization: `Bearer ${credential}`
+            }
+          })
+        }
+        setChecked([])
+        await getArchive()
+      } catch (err) {
+        console.log(err)
       }
-      setChecked([])
-      await getArchive()
-    } catch (err) {
-      console.log(err)
     }
   }
 
   return (
-    <Box sx={{ width: '100%', p: '30px' }}>
+    <Box sx={{ width: '100%', p: '30px', height: '100vh' }}>
       <Helmet>
         <title>Archive | AlignMind</title>
       </Helmet>
@@ -146,46 +156,47 @@ function ArchivePage () {
           <FormattedMessage id="archive.title" defaultMessage="Archive" />
         </Typography>
         <Box>
-          <IconButton onClick={onUnarchiveSelect}>
+          <IconButton onClick={onUnarchiveSelect} disabled={checked.length === 0}>
             <UnarchiveIcon />
           </IconButton>
-          <IconButton onClick={onDeleteSelect}>
+          <IconButton onClick={onDeleteSelect} disabled={checked.length === 0}>
             <DeleteIcon />
           </IconButton>
         </Box>
       </Toolbar>
 
       <Box>
-        {allArchive.length >= 1 &&
-          <List sx={{ width: '100%', bgcolor: 'background.paper', p: 0, pb: '10px' }}>
-            {allArchive.map((value, index) => {
-              const labelId = `checkbox-list-label-${index}`
-              return (
-                <ListItem
-                  key={index}
-                  secondaryAction={
-                    <IconButton edge="end" aria-label="comments" onClick={(e) => { handleTrashMenu(e, value.id) }}>
-                      <MoreVertIcon />
-                    </IconButton>
-                  }
-                  disablePadding
-                >
-                  <ListItemButton role={undefined} onClick={handleToggle(index)} dense>
-                    <ListItemIcon>
-                      <Checkbox
-                        edge="start"
-                        checked={checked.indexOf(index) !== -1}
-                        tabIndex={-1}
-                        disableRipple
-                        inputProps={{ 'aria-labelledby': labelId }}
-                      />
-                    </ListItemIcon>
-                    <ListItemText id={labelId} primary={`${value.text}`} />
-                  </ListItemButton>
-                </ListItem>
-              )
-            })}
-          </List>}
+        <List sx={{ width: '100%', bgcolor: 'background.paper', p: 0, pb: '10px' }}>
+          {loading && <Skeleton variant="rectangular" height={50} />}
+
+          {!loading && allArchive.map((value, index) => {
+            const labelId = `checkbox-list-label-${index}`
+            return (
+              <ListItem
+                key={index}
+                secondaryAction={
+                  <IconButton edge="end" aria-label="comments" onClick={(e) => { handleTrashMenu(e, value.id) }}>
+                    <MoreVertIcon />
+                  </IconButton>
+                }
+                disablePadding
+              >
+                <ListItemButton role={undefined} onClick={handleToggle(index)} dense>
+                  <ListItemIcon>
+                    <Checkbox
+                      edge="start"
+                      checked={checked.indexOf(index) !== -1}
+                      tabIndex={-1}
+                      disableRipple
+                      inputProps={{ 'aria-labelledby': labelId }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText id={labelId} primary={`${value.text}`} />
+                </ListItemButton>
+              </ListItem>
+            )
+          })}
+        </List>
       </Box>
 
       <Menu
