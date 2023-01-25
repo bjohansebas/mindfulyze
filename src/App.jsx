@@ -12,7 +12,7 @@ import { NewThinkPage, EditThinkPage } from './routes/Think'
 import { NewPlacePage, ShowPlacePage, EditPlacePage } from './routes/Place'
 import { TrashPage, ShowThinkTrashPage } from './routes/Trash'
 import { ArchivePage } from './routes/Archive'
-import { RequiredAuth } from './components/RequiredAuth'
+import { RequiredAuth } from './routes/Main/RequiredAuth'
 
 const router = createBrowserRouter([
   {

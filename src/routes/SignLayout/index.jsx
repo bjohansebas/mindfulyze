@@ -1,8 +1,23 @@
-import { AppBar, Box, Toolbar, Typography } from '@mui/material'
-import { Container } from '@mui/system'
-import { Link, Outlet } from 'react-router-dom'
+import { AppBar, Container, Box, Toolbar, Typography } from '@mui/material'
+
+import localforage from 'localforage'
+import { useEffect } from 'react'
+import { Outlet, useNavigate, Link } from 'react-router-dom'
 
 function SignLayoutPage () {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    async function existUser () {
+      const credential = await localforage.getItem('credentials_token')
+      const userId = await localforage.getItem('userInfo_userId')
+      if (credential && userId) {
+        return navigate('/', { replace: true })
+      }
+    }
+    existUser()
+  })
+
   return (
     <Box>
       <AppBar sx={{

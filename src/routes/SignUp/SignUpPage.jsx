@@ -8,10 +8,10 @@ import { FormattedMessage } from 'react-intl'
 import { EMAIL_REGEX, PWD_REGEX, USER_REGEX } from '../../utils/regex'
 import axios from '../../api/axios'
 import { TextFieldPassword } from '../../components/TextFieldPassword'
-// import { useAuth } from '../../hooks/useAuth'
+import { useAuth } from '../../hooks/useAuth'
 
 function SignUpPage () {
-  // const { loginPost } = useAuth()
+  const { loginAction } = useAuth()
   const navigate = useNavigate()
   const [user, setUser] = useState('')
   const [validUser, setValidUser] = useState(false)
@@ -72,7 +72,8 @@ function SignUpPage () {
           headers: { 'Content-Type': 'application/json' }
         })
       try {
-        // await loginPost(email, pwd)
+        await loginAction(email, pwd)
+        navigate('/account/new')
         setLoading(false)
       } catch (e) {
         navigate('/login')

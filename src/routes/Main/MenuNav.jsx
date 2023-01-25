@@ -106,7 +106,7 @@ function MenuApp () {
                 letterSpacing: '.2rem',
                 textDecoration: 'none'
               }}
-              to='/dashboard'
+              to='/'
             >
               AlignMind
             </Typography>
