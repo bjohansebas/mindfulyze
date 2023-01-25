@@ -13,7 +13,7 @@ import axios from '../../api/axios'
 function NewThinkPage () {
   const navigate = useNavigate()
 
-  const { userId, credentials } = useAuth()
+  const { userId, credential } = useAuth()
   const [textThink, setTextThink] = useState('')
   const [allPlaces, setAllPlaces] = useState([])
   const [place, setPlace] = useState({})
@@ -27,7 +27,7 @@ function NewThinkPage () {
       setLoading(true)
       const response = await axios.get(`/users/${userId}/places`, {
         headers: {
-          Authorization: `Bearer ${credentials}`
+          Authorization: `Bearer ${credential}`
         }
       })
       setAllPlaces(response?.data.data.map(data => {
@@ -43,7 +43,7 @@ function NewThinkPage () {
       setLoading(true)
       const response = await axios.get('/emotions/', {
         headers: {
-          Authorization: `Bearer ${credentials}`
+          Authorization: `Bearer ${credential}`
         }
       })
       setAllEmotions(response?.data.data.map(data => {
@@ -70,7 +70,7 @@ function NewThinkPage () {
           place_id: place.id
         }),
         {
-          headers: { Authorization: `Bearer ${credentials}` }
+          headers: { Authorization: `Bearer ${credential}` }
         })
 
       const thinkId = response?.data.data.think_id
@@ -82,7 +82,7 @@ function NewThinkPage () {
               emotion_id: emotion.id
             }),
             {
-              headers: { Authorization: `Bearer ${credentials}` }
+              headers: { Authorization: `Bearer ${credential}` }
             })
         } catch (e) {
           console.log('error')
@@ -190,6 +190,7 @@ function NewThinkPage () {
                   }}
                   options={allEmotions}
                   getOptionLabel={(option) => option.text}
+                  isOptionEqualToValue={(option, value) => option.id === value.id}
                   renderInput={(params) => (
                     <TextField
                       {...params}
