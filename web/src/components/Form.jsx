@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 function Forms ({ handleSubmit, title, submitText, children, disableSubmit, isCancel, cancelRoute }) {
   const navigate = useNavigate()
-  const cancel = cancelRoute || '/dashboard'
+  const cancel = cancelRoute || '/'
 
   return (
     <>

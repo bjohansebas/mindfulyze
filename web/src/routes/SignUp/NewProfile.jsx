@@ -13,7 +13,7 @@ import axios from '../../api/axios'
 
 function NewProfilePage () {
   const navigate = useNavigate()
-  const { userId, credentials } = useAuth()
+  const { userId, credential, setHasProfile } = useAuth()
 
   const [names, setNames] = useState('')
   const [validNames, setValidNames] = useState(false)
@@ -84,9 +84,10 @@ function NewProfilePage () {
           ...request
         }),
         {
-          headers: { Authorization: `Bearer ${credentials}` }
+          headers: { Authorization: `Bearer ${credential}` }
         })
-      navigate('/dashboard')
+      setHasProfile(true)
+      navigate('/')
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response')

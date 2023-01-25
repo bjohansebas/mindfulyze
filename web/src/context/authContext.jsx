@@ -1,4 +1,4 @@
-import { createContext } from 'react'
+import { useState, createContext } from 'react'
 import PropTypes from 'prop-types'
 
 import { useLocalStorage } from '../hooks/useLocalStorage'
@@ -14,6 +14,7 @@ function AuthProvider ({ children }) {
   const [credential, setCredential] = useLocalStorage('credentials_token')
   const [userId, setUserId] = useLocalStorage('userInfo_userId')
   const [userInfo, setUserInfo] = useLocalStorage('userInfo_userInfo')
+  const [hasProfile, setHasProfile] = useState(true)
 
   const loginAction = async (email, password, error) => {
     try {
@@ -45,6 +46,8 @@ function AuthProvider ({ children }) {
     userId,
     setUserInfo,
     userInfo,
+    hasProfile,
+    setHasProfile,
     loginAction
   }}>
     {children}
