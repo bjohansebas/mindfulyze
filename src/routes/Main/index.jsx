@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom'
 
 function MainPage () {
   return (
-    <Box>
+    <Box display='flex'>
       <Outlet />
     </Box>
   )

@@ -1,50 +1,32 @@
-import { Box, Button, IconButton, List, ListItem, ListItemButton, ListItemText, Menu, MenuItem, Toolbar, Typography } from '@mui/material'
-import MoreVertIcon from '@mui/icons-material/MoreVert'
+import { Box, Button, IconButton, List, ListItem, ListItemButton, ListItemText, Menu, MenuItem, Skeleton, Toolbar } from '@mui/material'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import SwapVertIcon from '@mui/icons-material/SwapVert'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
 
-import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
-import { Helmet } from 'react-helmet-async'
+import PropTypes from 'prop-types'
 
-import { useAuth } from '../../hooks/useAuth'
-import axios from '../../api/axios'
+import { useAuth } from '../../../hooks/useAuth'
+import axios from '../../../api/axios'
 
-function ShowPlacePage () {
-  const { id } = useParams()
+ShowThinks.propTypes = {
+  id: PropTypes.string.isRequired
+}
+
+function ShowThinks ({ id }) {
   const navigate = useNavigate()
-  const { credentials } = useAuth()
-  const [anchorElPlace, setAnchorElPlace] = useState(null)
+  const { credential } = useAuth()
+
+  const [allThink, setAllThink] = useState([])
+  const [loading, setLoading] = useState(true)
+
   const [anchorElThink, setAnchorElThink] = useState(null)
   const [anchorElFilter, setAnchorElFilter] = useState(null)
   const [anchorElOrder, setAnchorElOrder] = useState(null)
   const [options, setOptions] = useState([])
   const [idSelect, setIdSelect] = useState('')
-  const [namePlace, setNamePlace] = useState('')
-  const [allThink, setAllThink] = useState([])
-
-  useEffect(() => {
-    async function getPlace () {
-      try {
-        const responsePlace = await axios.get(`/places/${id}`, {
-          headers: {
-            Authorization: `Bearer ${credentials}`
-          }
-        })
-        setNamePlace(responsePlace?.data.data.name_place)
-      } catch (err) {
-        if (!err?.response) {
-          console.log('Server not response')
-        } else if (err.response?.status === 404) {
-          navigate('/dashboard')
-        } else {
-          console.log('error aqui')
-        }
-      }
-    }
-    getPlace()
-  }, [])
 
   useEffect(() => {
     getThinks()
@@ -53,16 +35,18 @@ function ShowPlacePage () {
   const getThinks = async () => {
     try {
       setAnchorElFilter(null)
+      setLoading(true)
 
       const response = await axios.get(`/places/${id}/thinks`, {
         headers: {
-          Authorization: `Bearer ${credentials}`
+          Authorization: `Bearer ${credential}`
         }
       })
 
       setAllThink(response?.data.data.map(data => {
         return { text: data.text_think, id: data.think_id, created: data.created_at }
       }))
+
       setOptions([
         {
           text: <FormattedMessage id="options.think.see" defaultMessage="See thought" />,
@@ -77,21 +61,26 @@ function ShowPlacePage () {
           click: (idThink) => onArchive(idThink)
         }
       ])
+
+      setLoading(false)
     } catch (err) {
       if (!err?.response) {
         return 'No server response'
       } else if (err.response?.status === 404) {
-        navigate('/dashboard')
+        navigate('/')
       }
+    } finally {
+      setLoading(false)
     }
   }
 
   const getTrashThinks = async () => {
     try {
       setAnchorElFilter(null)
+      setLoading(true)
       const response = await axios.get(`/places/${id}/trash`, {
         headers: {
-          Authorization: `Bearer ${credentials}`
+          Authorization: `Bearer ${credential}`
         }
       })
 
@@ -113,22 +102,27 @@ function ShowPlacePage () {
           click: (idThink) => onRestoreId(idThink)
         }
       ])
+
+      setLoading(false)
     } catch (err) {
       if (!err?.response) {
         return 'No server response'
       } else if (err.response?.status === 404) {
-        navigate('/dashboard')
+        navigate('/')
       }
+    } finally {
+      setLoading(false)
     }
   }
 
   const getArchiveThinks = async () => {
     try {
       setAnchorElFilter(null)
+      setLoading(true)
 
       const response = await axios.get(`/places/${id}/thinks/archive`, {
         headers: {
-          Authorization: `Bearer ${credentials}`
+          Authorization: `Bearer ${credential}`
         }
       })
 
@@ -140,7 +134,6 @@ function ShowPlacePage () {
         {
           text: <FormattedMessage id="options.think.see" defaultMessage="See thought" />,
           click: (idThink) => {
-            console.log(idSelect)
             navigate(`/think/${idThink}`)
           }
         },
@@ -157,16 +150,10 @@ function ShowPlacePage () {
       if (!err?.response) {
         return 'No server response'
       } else if (err.response?.status === 404) {
-        navigate('/dashboard')
+        navigate('/')
       }
-    }
-  }
-
-  const handlePlaceMenu = (event) => {
-    if (anchorElPlace) {
-      setAnchorElPlace(null)
-    } else {
-      setAnchorElPlace(event.currentTarget)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -196,16 +183,31 @@ function ShowPlacePage () {
     }
   }
 
-  const onDelete = async (idThink) => {
-    setAnchorElThink(null)
+  const onRestoreId = async (idThink) => {
     try {
-      await axios.post(`/thinks/${idThink}/trash`, {}, {
+      setAnchorElThink(null)
+      await axios.post(`/trash/${idThink}`, {}, {
         headers: {
-          Authorization: `Bearer ${credentials}`
+          Authorization: `Bearer ${credential}`
         }
       })
 
-      await getThinks()
+      await getTrashThinks()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const onDeleteTrash = async (idThink) => {
+    try {
+      setAnchorElThink(null)
+      await axios.delete(`/trash/${idThink}`, {
+        headers: {
+          Authorization: `Bearer ${credential}`
+        }
+      })
+
+      await getTrashThinks()
     } catch (err) {
       console.log(err)
     }
@@ -218,56 +220,11 @@ function ShowPlacePage () {
         is_archive: false
       }), {
         headers: {
-          Authorization: `Bearer ${credentials}`
+          Authorization: `Bearer ${credential}`
         }
       })
 
       await getArchiveThinks()
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  const onDeleteTrash = async (idThink) => {
-    try {
-      setAnchorElThink(null)
-      await axios.delete(`/trash/${idThink}`, {
-        headers: {
-          Authorization: `Bearer ${credentials}`
-        }
-      })
-
-      await getTrashThinks()
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  const onRestoreId = async (idThink) => {
-    try {
-      setAnchorElThink(null)
-      await axios.post(`/trash/${idThink}`, {}, {
-        headers: {
-          Authorization: `Bearer ${credentials}`
-        }
-      })
-
-      await getTrashThinks()
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  const onDeletePlace = async () => {
-    setAnchorElPlace(null)
-    try {
-      await axios.delete(`/places/${id}`, {
-        headers: {
-          Authorization: `Bearer ${credentials}`
-        }
-      })
-
-      navigate('/dashboard')
     } catch (err) {
       console.log(err)
     }
@@ -281,7 +238,7 @@ function ShowPlacePage () {
           is_archive: true
         }), {
           headers: {
-            Authorization: `Bearer ${credentials}`
+            Authorization: `Bearer ${credential}`
           }
         })
 
@@ -291,53 +248,23 @@ function ShowPlacePage () {
     }
   }
 
+  const onDelete = async (idThink) => {
+    setAnchorElThink(null)
+    try {
+      await axios.post(`/thinks/${idThink}/trash`, {}, {
+        headers: {
+          Authorization: `Bearer ${credential}`
+        }
+      })
+
+      await getThinks()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   return (
-    <Box sx={{ width: '100%' }}>
-      <Helmet>
-        <title>Place | AlignMind</title>
-      </Helmet>
-      <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', backgroundColor: '#ffffff', borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}>
-        <Typography
-          variant="h6"
-          noWrap
-          component="div"
-        >
-          {namePlace}
-        </Typography>
-        <IconButton onClick={handlePlaceMenu}
-          aria-label="more"
-          id="long-button"
-        >
-          <MoreVertIcon />
-        </IconButton>
-        <Menu
-          sx={{ mt: '40px', zIndex: 1202 }}
-          id="menu-appbar"
-          anchorEl={anchorElPlace}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right'
-          }}
-          keepMounted
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right'
-          }}
-          open={Boolean(anchorElPlace)}
-          onClose={handlePlaceMenu}
-        >
-          <MenuItem
-            key="1"
-            onClick={() => navigate(`/place/${id}/edit`)}>
-            <FormattedMessage id="options.edit.place" defaultMessage="Edit place" />
-          </MenuItem>
-          <MenuItem
-            key="2"
-            onClick={onDeletePlace}>
-            <FormattedMessage id="options.delete.place" defaultMessage="Delete place" />
-          </MenuItem>
-        </Menu>
-      </Toolbar>
+    <>
       <Box sx={{ p: '30px' }}>
         <Toolbar sx={{ background: '#ffffff', borderBottom: '1px solid rgba(0, 0 ,0, 0.12)', gap: 1, borderRadius: '10px 10px 0 0' }}>
           <Button
@@ -355,27 +282,27 @@ function ShowPlacePage () {
             <FormattedMessage id="options.order.text" defaultMessage="Order" />
           </Button>
         </Toolbar>
-        {allThink.length >= 1 &&
-          <List sx={{ width: '100%', bgcolor: 'background.paper', p: 0, pb: '10px' }}>
-            {allThink.map((value, index) => {
-              return (
-                <ListItem
-                  sx={{ height: '25', borderBottom: '1px solid rgba(0,0,0,0.12)' }}
-                  key={index}
-                  secondaryAction={
-                    <IconButton edge="end" aria-label="comments" onClick={(e) => handleThinkMenu(e, value.id)}>
-                      <MoreVertIcon />
-                    </IconButton>
-                  }
-                  disablePadding
-                >
-                  <ListItemButton role={undefined} dense onClick={() => { navigate(`/think/${value.id}`) }}>
-                    <ListItemText primary={`${value?.text}`} />
-                  </ListItemButton>
-                </ListItem>
-              )
-            })}
-          </List>}
+        <List sx={{ width: '100%', bgcolor: 'background.paper', p: 0, pb: '10px' }}>
+          {loading && <Skeleton variant="rectangular" height={25} />}
+          {!loading && allThink.map((value, index) => {
+            return (
+              <ListItem
+                sx={{ height: '25', borderBottom: '1px solid rgba(0,0,0,0.12)' }}
+                key={index}
+                secondaryAction={
+                  <IconButton edge="end" aria-label="comments" onClick={(e) => handleThinkMenu(e, value.id)}>
+                    <MoreVertIcon />
+                  </IconButton>
+                }
+                disablePadding
+              >
+                <ListItemButton role={undefined} dense onClick={() => { navigate(`/think/${value.id}`) }}>
+                  <ListItemText primary={`${value?.text}`} />
+                </ListItemButton>
+              </ListItem>
+            )
+          })}
+        </List>
         <Menu
           sx={{ mt: '40px', zIndex: 1202 }}
           id="menu-appbar"
@@ -417,7 +344,6 @@ function ShowPlacePage () {
         open={Boolean(anchorElFilter)}
         onClose={handleFilterMenu}
       >
-
         <MenuItem
           key="1"
           onClick={getThinks}>
@@ -451,24 +377,20 @@ function ShowPlacePage () {
         onClose={handleOrderMenu}
       >
         <MenuItem
-          key="1"
-          onClick={() => navigate(`/place/${id}/edit`)}>
+          key="1">
           <FormattedMessage id="options.order.think.recent" defaultMessage="Recent" />
         </MenuItem>
         <MenuItem
-          key="2"
-          onClick={onDeletePlace}>
+          key="2">
           <FormattedMessage id="options.order.think.older" defaultMessage="Older" />
         </MenuItem>
         <MenuItem
-          key="3"
-          onClick={onDeletePlace}>
+          key="3">
           <FormattedMessage id="options.order.think.alphabetical" defaultMessage="Alphabetical order" />
         </MenuItem>
       </Menu>
-
-    </Box >
+    </>
   )
 }
 
-export { ShowPlacePage }
+export { ShowThinks }

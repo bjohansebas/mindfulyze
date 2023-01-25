@@ -13,7 +13,7 @@ import { Forms } from '../../components/Form'
 
 function NewPlacePage () {
   const navigate = useNavigate()
-  const { userId, credentials } = useAuth()
+  const { userId, credential } = useAuth()
 
   const [color, setColor] = useState('#00575C')
   const [textPlace, setTextPlace] = useState('')
@@ -28,7 +28,7 @@ function NewPlacePage () {
       try {
         const response = await axios.get(`/users/${userId}/colors`, {
           headers: {
-            Authorization: `Bearer ${credentials}`
+            Authorization: `Bearer ${credential}`
           }
         })
         setAllColors(response?.data.data.map((data) => {
@@ -49,7 +49,6 @@ function NewPlacePage () {
 
       if (isExist.length >= 1) {
         setTextColorName(isExist[0].title)
-        console.log(isExist[0].title)
       }
     }
   }, [color])
@@ -77,7 +76,7 @@ function NewPlacePage () {
       const response = await axios.post(`/places/${userId}`,
         JSON.stringify(request),
         {
-          headers: { Authorization: `Bearer ${credentials}` }
+          headers: { Authorization: `Bearer ${credential}` }
         })
 
       navigate('/place/' + response.data.data.place_id)
@@ -129,7 +128,7 @@ function NewPlacePage () {
       }}>
         <Forms
           title={<FormattedMessage id='place.new.title' defaultMessage="Create a new place" />}
-          disableSubmit={loading}
+          disableSubmit={loading || textPlace.length < 5}
           isCancel={true}
           submitText={<FormattedMessage id='place.new.submit' defaultMessage="Create a place" />}
           handleSubmit={handleSubmit}>

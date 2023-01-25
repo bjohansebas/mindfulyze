@@ -13,34 +13,39 @@ import { useAuth } from '../../hooks/useAuth'
 function EditPlacePage () {
   const { id } = useParams()
   const navigate = useNavigate()
-  const [anchorElColor, setAnchorElColor] = useState(null)
-  const { userId, credentials } = useAuth()
+  const { userId, credential } = useAuth()
+
   const [place, setPlace] = useState({})
   const [newTextPlace, setNewTextPlace] = useState('')
+  const [loading, setLoading] = useState(true)
+
   const [allColors, setAllColors] = useState([])
   const [newColor, setNewColor] = useState('#00575C')
+  const [anchorElColor, setAnchorElColor] = useState(null)
 
   useEffect(() => {
     async function getPlace () {
       try {
         const response = await axios.get(`/places/${id}`, {
           headers: {
-            Authorization: `Bearer ${credentials}`
+            Authorization: `Bearer ${credential}`
           }
         })
         const data = response?.data.data
         const responseColor = await axios.get(`/colors/${data.color_id}`, {
           headers: {
-            Authorization: `Bearer ${credentials}`
+            Authorization: `Bearer ${credential}`
           }
         })
 
         setPlace({ name: data.name_place, color: responseColor.data.data.code_color })
+
+        setLoading(false)
       } catch (err) {
         if (!err?.response) {
           console.log(err)
         } else if (err.response?.status === 404) {
-          navigate('/dashboard')
+          navigate('/')
         } else {
           console.log('error aqui')
         }
@@ -60,7 +65,7 @@ function EditPlacePage () {
       try {
         const response = await axios.get(`/users/${userId}/colors`, {
           headers: {
-            Authorization: `Bearer ${credentials}`
+            Authorization: `Bearer ${credential}`
           }
         })
         setAllColors(response?.data.data.map((data) => {
@@ -102,7 +107,7 @@ function EditPlacePage () {
         await axios.put(`/places/${id}/`,
           JSON.stringify(request), {
             headers: {
-              Authorization: `Bearer ${credentials}`
+              Authorization: `Bearer ${credential}`
             }
           })
         navigate(`/place/${id}`)
@@ -147,6 +152,7 @@ function EditPlacePage () {
             <Button
               variant='text'
               onClick={handleColorMenu}
+              disabled={loading}
               startIcon={
                 <Avatar sx={{
                   background: `${newColor}`,
@@ -179,7 +185,7 @@ function EditPlacePage () {
               }} presetColors={allColors} />
             </Menu>
           </Box>
-          <Button variant="text" startIcon={<DeleteIcon />}>
+          <Button variant="text" startIcon={<DeleteIcon />} disabled={loading}>
             <FormattedMessage id="button.delete" defaultMessage="Delete" />
           </Button>
         </Toolbar>
@@ -187,13 +193,18 @@ function EditPlacePage () {
         <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center', gap: 2 }}>
           <Button
             variant="contained"
-            size="large" onClick={() => navigate(`/place/${id}`)}>
+            size="large"
+            onClick={() => navigate(`/place/${id}`)}
+          >
             <FormattedMessage id="button.back" defaultMessage="Back" />
           </Button>
+
           <Button
             variant="contained"
             onClick={onSave}
-            disabled={!!(newColor.slice(1) === place.color) && !!(newTextPlace === place.name || newTextPlace.length < 5)}>
+            disabled={
+              loading || (newColor.slice(1) === place.color && newTextPlace === place.name) || newTextPlace.length < 5}
+          >
             <FormattedMessage id="button.save" defaultMessage="Save" />
           </Button>
         </Box>
