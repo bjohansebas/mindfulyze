@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, List, ListItem, ListItemButton, ListItemText, TextareaAutosize, TextField } from '@mui/material'
+import { Autocomplete, Box, Button, List, ListItem, ListItemButton, ListItemText, Skeleton, TextareaAutosize, TextField } from '@mui/material'
 import { Delete as DeleteIcon, Restore as RestoreIcon } from '@mui/icons-material'
 
 import dayjs from 'dayjs'
@@ -13,9 +13,14 @@ import { useAuth } from '../../hooks/useAuth'
 function ShowThinkTrashPage () {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { credentials } = useAuth()
+  const { credential } = useAuth()
+
   const [think, setThink] = useState({})
+  const [loadingThink, setLoadingThink] = useState(true)
+
   const [place, setPlace] = useState({})
+  const [loadingPlace, setLoadingPlace] = useState(true)
+
   const [emotions, setEmotions] = useState([])
 
   useEffect(() => {
@@ -23,7 +28,7 @@ function ShowThinkTrashPage () {
       try {
         const response = await axios.get(`/trash/${id}`, {
           headers: {
-            Authorization: `Bearer ${credentials}`
+            Authorization: `Bearer ${credential}`
           }
         })
         setThink(response.data.data)
@@ -31,10 +36,12 @@ function ShowThinkTrashPage () {
         if (!err?.response) {
           console.log('Server not response')
         } else if (err.response?.status === 404) {
-          navigate('/dashboard')
+          navigate('/')
         } else {
           console.log('error aqui')
         }
+      } finally {
+        setLoadingThink(false)
       }
     }
     getThink()
@@ -44,7 +51,7 @@ function ShowThinkTrashPage () {
       try {
         const response = await axios.get(`/trash/${id}/emotions`, {
           headers: {
-            Authorization: `Bearer ${credentials}`
+            Authorization: `Bearer ${credential}`
           }
         })
         setEmotions(response?.data.data.map(data => {
@@ -54,7 +61,7 @@ function ShowThinkTrashPage () {
         if (!err?.response) {
           console.log('Server not response')
         } else if (err.response?.status === 404) {
-          navigate('/dashboard')
+          navigate('/')
         } else {
           console.log('error aqui')
         }
@@ -69,13 +76,13 @@ function ShowThinkTrashPage () {
         try {
           const response = await axios.get(`/places/${think.place_id}`, {
             headers: {
-              Authorization: `Bearer ${credentials}`
+              Authorization: `Bearer ${credential}`
             }
           })
           const data = response?.data.data
           const responseColor = await axios.get(`/colors/${data.color_id}`, {
             headers: {
-              Authorization: `Bearer ${credentials}`
+              Authorization: `Bearer ${credential}`
             }
           })
 
@@ -84,10 +91,12 @@ function ShowThinkTrashPage () {
           if (!err?.response) {
             console.log(err)
           } else if (err.response?.status === 404) {
-            navigate('/dashboard')
+            navigate('/')
           } else {
             console.log('error aqui')
           }
+        } finally {
+          setLoadingPlace(false)
         }
       }
       getPlace()
@@ -98,7 +107,7 @@ function ShowThinkTrashPage () {
     try {
       await axios.delete(`/trash/${id}`, {
         headers: {
-          Authorization: `Bearer ${credentials}`
+          Authorization: `Bearer ${credential}`
         }
       })
 
@@ -112,7 +121,7 @@ function ShowThinkTrashPage () {
     try {
       await axios.post(`/trash/${id}/`, {}, {
         headers: {
-          Authorization: `Bearer ${credentials}`
+          Authorization: `Bearer ${credential}`
         }
       })
 
@@ -167,6 +176,7 @@ function ShowThinkTrashPage () {
               value={emotions}
               options={emotions}
               getOptionLabel={(option) => option.text}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
               renderInput={(params) => (
                 <TextField {...params}
                   variant="standard"
@@ -180,9 +190,10 @@ function ShowThinkTrashPage () {
                 key={1}
               >
                 <ListItemButton role={undefined} dense>
-                  <ListItemText
+                  {loadingPlace && <Skeleton variant="text" width={100} />}
+                  {!loadingPlace && <ListItemText
                     primary={<FormattedMessage id="think.info.place" defaultMessage="Place: {name}" values={{ name: place?.name || '' }} />}
-                  />
+                  />}
                 </ListItemButton>
               </ListItem>
               <ListItem
@@ -190,9 +201,10 @@ function ShowThinkTrashPage () {
                 key={2}
               >
                 <ListItemButton role={undefined} dense>
-                  <ListItemText
+                  {loadingThink && <Skeleton variant="text" width={200} />}
+                  {!loadingThink && <ListItemText
                     primary={<FormattedMessage id="think.info.date" defaultMessage="Created at: {create}" values={{ create: dayjs(think?.created_at).format('YYYY-MM-DD') }} />}
-                  />
+                  />}
                 </ListItemButton>
               </ListItem>
             </List>
@@ -206,12 +218,14 @@ function ShowThinkTrashPage () {
             <FormattedMessage id="button.back" defaultMessage="Back" />
           </Button>
           <Button
+            disabled={loadingThink}
             variant="contained"
             startIcon={<DeleteIcon />}
             onClick={onDelete}>
             <FormattedMessage id="button.delete" defaultMessage="Delete" />
           </Button>
           <Button
+            disabled={loadingThink}
             variant="contained"
             startIcon={<RestoreIcon />}
             onClick={onRestore}>
