@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, List, ListItem, ListItemButton, ListItemText, TextareaAutosize, TextField, Toolbar } from '@mui/material'
+import { Autocomplete, Box, Button, List, ListItem, ListItemButton, ListItemText, Skeleton, TextareaAutosize, TextField, Toolbar } from '@mui/material'
 import { Delete as DeleteIcon, Archive as ArchiveIcon } from '@mui/icons-material'
 
 import dayjs from 'dayjs'
@@ -13,20 +13,30 @@ import { useAuth } from '../../hooks/useAuth'
 function EditThinkPage () {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { credentials } = useAuth()
+  const { credential } = useAuth()
+
   const [think, setThink] = useState({})
+  const [loadingThink, setLoadingThink] = useState(true)
+
   const [place, setPlace] = useState({})
-  const [newTextThink, setNewTextThink] = useState('')
+  const [loadingPlace, setLoadingPlace] = useState(true)
+
   const [emotions, setEmotions] = useState([])
+  const [loadingEmotions, setLoadingEmotions] = useState(true)
+
   const [allEmotions, setAllEmotions] = useState([])
+  const [loadingAllEmotions, setLoadingAllEmotions] = useState(true)
+
+  const [newTextThink, setNewTextThink] = useState('')
   const [newEmotionsThink, setNewEmotionsThink] = useState([])
+  const [loadingSave, setLoadingSave] = useState(false)
 
   useEffect(() => {
     async function getThink () {
       try {
         const response = await axios.get(`/thinks/${id}`, {
           headers: {
-            Authorization: `Bearer ${credentials}`
+            Authorization: `Bearer ${credential}`
           }
         })
         setThink(response.data.data)
@@ -34,10 +44,12 @@ function EditThinkPage () {
         if (!err?.response) {
           console.log('Server not response')
         } else if (err.response?.status === 404) {
-          navigate('/dashboard')
+          navigate('/')
         } else {
           console.log('error aqui')
         }
+      } finally {
+        setLoadingThink(false)
       }
     }
     getThink()
@@ -45,14 +57,20 @@ function EditThinkPage () {
 
   useEffect(() => {
     async function getEmotions () {
-      const response = await axios.get('/emotions/', {
-        headers: {
-          Authorization: `Bearer ${credentials}`
-        }
-      })
-      setAllEmotions(response?.data.data.map(data => {
-        return { text: data.name_emotion, id: data.emotion_id }
-      }))
+      try {
+        const response = await axios.get('/emotions/', {
+          headers: {
+            Authorization: `Bearer ${credential}`
+          }
+        })
+        setAllEmotions(response?.data.data.map(data => {
+          return { text: data.name_emotion, id: data.emotion_id }
+        }))
+      } catch (e) {
+        console.log(e)
+      } finally {
+        setLoadingAllEmotions(false)
+      }
     }
     getEmotions()
   }, [])
@@ -62,7 +80,7 @@ function EditThinkPage () {
       try {
         const response = await axios.get(`/thinks/${id}/emotions`, {
           headers: {
-            Authorization: `Bearer ${credentials}`
+            Authorization: `Bearer ${credential}`
           }
         })
         setEmotions(response?.data.data.map(data => {
@@ -72,10 +90,12 @@ function EditThinkPage () {
         if (!err?.response) {
           console.log('Server not response')
         } else if (err.response?.status === 404) {
-          navigate('/dashboard')
+          navigate('/')
         } else {
           console.log('error aqui')
         }
+      } finally {
+        setLoadingEmotions(false)
       }
     }
     getEmotions()
@@ -87,25 +107,22 @@ function EditThinkPage () {
         try {
           const response = await axios.get(`/places/${think.place_id}`, {
             headers: {
-              Authorization: `Bearer ${credentials}`
+              Authorization: `Bearer ${credential}`
             }
           })
           const data = response?.data.data
-          const responseColor = await axios.get(`/colors/${data.color_id}`, {
-            headers: {
-              Authorization: `Bearer ${credentials}`
-            }
-          })
 
-          setPlace({ name: data.name_place, color: responseColor.data.data.code_color })
+          setPlace({ name: data.name_place })
         } catch (err) {
           if (!err?.response) {
             console.log(err)
           } else if (err.response?.status === 404) {
-            navigate('/dashboard')
+            navigate('/')
           } else {
             console.log('error aqui')
           }
+        } finally {
+          setLoadingPlace(false)
         }
       }
       getPlace()
@@ -126,36 +143,48 @@ function EditThinkPage () {
 
   const onDelete = async () => {
     try {
+      setLoadingSave(true)
+      setLoadingThink(true)
       await axios.post(`/thinks/${id}/trash`, {}, {
         headers: {
-          Authorization: `Bearer ${credentials}`
+          Authorization: `Bearer ${credential}`
         }
       })
 
       navigate(`/place/${think.place_id}`, { replace: true })
     } catch (err) {
       console.log(err)
+    } finally {
+      setLoadingSave(false)
+      setLoadingThink(false)
     }
   }
 
   const onArchive = async () => {
     try {
+      setLoadingSave(true)
+      setLoadingThink(true)
+
       await axios.put(`/thinks/${id}/`,
         JSON.stringify({
           is_archive: true
         }), {
           headers: {
-            Authorization: `Bearer ${credentials}`
+            Authorization: `Bearer ${credential}`
           }
         })
 
       navigate(`/place/${think.place_id}`, { replace: true })
     } catch (err) {
       console.log(err)
+    } finally {
+      setLoadingSave(false)
+      setLoadingThink(false)
     }
   }
 
   const onSave = async () => {
+    setLoadingSave(true)
     if (JSON.stringify(emotions) !== JSON.stringify(newEmotionsThink)) {
       for await (const value of newEmotionsThink) {
         if (!emotions.some(obj => obj.id === value.id)) {
@@ -165,7 +194,7 @@ function EditThinkPage () {
                 emotion_id: value.id
               }), {
                 headers: {
-                  Authorization: `Bearer ${credentials}`
+                  Authorization: `Bearer ${credential}`
                 }
               })
           } catch (err) {
@@ -173,13 +202,14 @@ function EditThinkPage () {
           }
         }
       }
+
       for await (const value of emotions) {
         if (!newEmotionsThink.some(obj => obj.id === value.id)) {
           try {
             await axios.delete(`/thinks/${id}/${value.id}`,
               {
                 headers: {
-                  Authorization: `Bearer ${credentials}`
+                  Authorization: `Bearer ${credential}`
                 }
               })
           } catch (err) {
@@ -196,14 +226,15 @@ function EditThinkPage () {
             text_think: newTextThink.trimEnd()
           }), {
             headers: {
-              Authorization: `Bearer ${credentials}`
+              Authorization: `Bearer ${credential}`
             }
           })
       } catch (err) {
         console.log(err)
       }
     }
-    navigate(`/place/${think.place_id}`)
+    setLoadingSave(false)
+    navigate(`/place/${think.place_id}`, { replace: true })
   }
 
   return (
@@ -223,6 +254,7 @@ function EditThinkPage () {
         background: '#ffffff'
       }}>
         <TextareaAutosize
+          disabled={loadingThink}
           style={{ resize: 'none', height: '100%', fontSize: '16px', width: '100%', padding: '10px' }}
           value={newTextThink}
           onChange={(e) => setNewTextThink(e.target.value)}
@@ -252,12 +284,14 @@ function EditThinkPage () {
             <Button
               variant="text"
               startIcon={<DeleteIcon />}
+              disabled={loadingThink}
               onClick={onDelete}>
               <FormattedMessage id="button.delete" defaultMessage="Delete" />
             </Button>
             <Button
               variant="text"
               startIcon={<ArchiveIcon />}
+              disabled={loadingThink}
               onClick={onArchive}>
               <FormattedMessage id="button.archive" defaultMessage="Archive" />
             </Button>
@@ -272,8 +306,10 @@ function EditThinkPage () {
                   ...newValue
                 ])
               }}
+              disabled={loadingAllEmotions && loadingEmotions}
               options={allEmotions}
               getOptionLabel={(option) => option.text}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
               renderInput={(params) => (
                 <TextField {...params}
                   variant="standard"
@@ -287,9 +323,10 @@ function EditThinkPage () {
                 key={1}
               >
                 <ListItemButton role={undefined} dense>
-                  <ListItemText
+                  {loadingPlace && <Skeleton variant="text" width={100} />}
+                  {!loadingPlace && <ListItemText
                     primary={<FormattedMessage id="think.info.place" defaultMessage="Place: {name}" values={{ name: place?.name || '' }} />}
-                  />
+                  />}
                 </ListItemButton>
               </ListItem>
               <ListItem
@@ -297,9 +334,10 @@ function EditThinkPage () {
                 key={2}
               >
                 <ListItemButton role={undefined} dense>
-                  <ListItemText
+                  {loadingThink && <Skeleton variant="text" width={200} />}
+                  {!loadingThink && <ListItemText
                     primary={<FormattedMessage id="think.info.date" defaultMessage="Created at: {create}" values={{ create: dayjs(think?.created_at).format('YYYY-MM-DD') }} />}
-                  />
+                  />}
                 </ListItemButton>
               </ListItem>
             </List>
@@ -315,7 +353,9 @@ function EditThinkPage () {
           <Button
             variant="contained"
             onClick={onSave}
-            disabled={!!(newTextThink === think?.text_think || newTextThink.trimEnd().length < 5) && !!(JSON.stringify(emotions) === JSON.stringify(newEmotionsThink))}>
+            disabled={
+              loadingSave || loadingThink || (!!(newTextThink === think?.text_think || newTextThink.trimEnd().length < 5) && !!(JSON.stringify(emotions) === JSON.stringify(newEmotionsThink)))}
+          >
             <FormattedMessage id="button.save" defaultMessage="Save" />
           </Button>
         </Box>

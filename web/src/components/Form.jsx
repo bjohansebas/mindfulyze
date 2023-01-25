@@ -3,6 +3,16 @@ import { useNavigate } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 import PropTypes from 'prop-types'
 
+Forms.propTypes = {
+  children: PropTypes.node,
+  handleSubmit: PropTypes.func.isRequired,
+  title: PropTypes.object.isRequired,
+  submitText: PropTypes.object.isRequired,
+  disableSubmit: PropTypes.bool,
+  isCancel: PropTypes.bool,
+  cancelRoute: PropTypes.string
+}
+
 function Forms ({ handleSubmit, title, submitText, children, disableSubmit, isCancel, cancelRoute }) {
   const navigate = useNavigate()
   const cancel = cancelRoute || '/'
@@ -34,16 +44,6 @@ function Forms ({ handleSubmit, title, submitText, children, disableSubmit, isCa
       </Box>
     </>
   )
-}
-
-Forms.propTypes = {
-  children: PropTypes.node,
-  handleSubmit: PropTypes.func.isRequired,
-  title: PropTypes.string,
-  submitText: PropTypes.string,
-  disableSubmit: PropTypes.bool,
-  isCancel: PropTypes.bool,
-  cancelRoute: PropTypes.string
 }
 
 export { Forms }
