@@ -8,6 +8,7 @@ import { Doughnut } from 'react-chartjs-2'
 
 import axios from '../../api/axios'
 import { useAuth } from '../../hooks/useAuth'
+import { EmptyStatistics } from './EmptyStatistics'
 
 function Statistics () {
   const { userId, credential } = useAuth()
@@ -170,21 +171,23 @@ function Statistics () {
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Box sx={{ height: '100%' }}>
             {loading && <Skeleton variant='circular' height={300} width={300} />}
-            {!loading && <Doughnut
-              data={data}
-              options={{
-                responsive: true,
-                maintainAspectRatio: false,
-                cutout: 0,
-                layout: {
-                  padding: {
-                    left: 0,
-                    top: 0,
-                    bottom: 0,
-                    right: 0
+            {(!loading && dataEmotions.length === 0) && <EmptyStatistics />}
+            {(!loading && dataEmotions.length > 0) &&
+              <Doughnut
+                data={data}
+                options={{
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  cutout: 0,
+                  layout: {
+                    padding: {
+                      left: 0,
+                      top: 0,
+                      bottom: 0,
+                      right: 0
+                    }
                   }
-                }
-              }} width={300} height={300} />}
+                }} width={300} height={300} />}
           </Box>
         </Box>
       </Box>

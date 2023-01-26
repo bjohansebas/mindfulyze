@@ -18,6 +18,7 @@ function NewThinkPage () {
   const [allPlaces, setAllPlaces] = useState([])
   const [place, setPlace] = useState({})
   const [loading, setLoading] = useState(true)
+
   const [errMsg, setErrMsg] = useState('')
   const [allEmotions, setAllEmotions] = useState([])
   const [emotionsSelect, setEmotionsSelect] = useState([])
@@ -131,7 +132,7 @@ function NewThinkPage () {
           <Forms
             title={<FormattedMessage id="think.new.title" defaultMessage="Create new a think" />}
             isCancel={true}
-            disableSubmit={loading || textThink.length < 5 || emotionsSelect.length < 1}
+            disableSubmit={loading || textThink.length < 5 || emotionsSelect.length < 1 || allPlaces.length === 0}
             submitText={<FormattedMessage id="think.new.submit" defaultMessage="Create a think" />}
             handleSubmit={handleSubmit}>
             <TextareaAutosize
@@ -176,7 +177,12 @@ function NewThinkPage () {
                     </Button>
                   </ButtonGroup>
                 </Box>
-                <Combobox options={allPlaces} setOptionSelect={setPlace} />
+                {(!loading && allPlaces.length === 0) &&
+                  <Button component={Link} to="/place/new">
+                    <FormattedMessage id="place.empty.button" defaultMessage="You must create your first place" />
+                  </Button>}
+                {allPlaces.length > 0 &&
+                  <Combobox options={allPlaces} setOptionSelect={setPlace} />}
               </Box>
               <Box sx={{ width: '300px' }}>
                 <Autocomplete

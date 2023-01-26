@@ -10,6 +10,7 @@ import PropTypes from 'prop-types'
 
 import { useAuth } from '../../../hooks/useAuth'
 import axios from '../../../api/axios'
+import { EmptyThink } from './EmptyThink'
 
 ShowThinks.propTypes = {
   id: PropTypes.string.isRequired
@@ -282,9 +283,10 @@ function ShowThinks ({ id }) {
             <FormattedMessage id="options.order.text" defaultMessage="Order" />
           </Button>
         </Toolbar>
-        <List sx={{ width: '100%', bgcolor: 'background.paper', p: 0, pb: '10px' }}>
+        <List sx={{ width: '100%', bgcolor: 'background.paper', p: 0, pb: '10px', height: '100%' }}>
           {loading && <Skeleton variant="rectangular" height={25} />}
-          {!loading && allThink.map((value, index) => {
+          {(!loading && allThink.length === 0) && <EmptyThink />}
+          {(!loading && allThink.length > 0) && allThink.map((value, index) => {
             return (
               <ListItem
                 sx={{ height: '25', borderBottom: '1px solid rgba(0,0,0,0.12)' }}

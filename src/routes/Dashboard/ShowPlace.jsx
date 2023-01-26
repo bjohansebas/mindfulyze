@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 
 import axios from '../../api/axios'
 import { useAuth } from '../../hooks/useAuth'
+import { EmptyPlace } from './EmptyPlace'
 
 function ShowPlaces () {
   const { userId, credential } = useAuth()
@@ -55,6 +56,7 @@ function ShowPlaces () {
 
   const onDelete = async () => {
     try {
+      setLoading(true)
       setAnchorEl(null)
       await axios.delete(`/places/${idSelect}`, {
         headers: {
@@ -64,6 +66,8 @@ function ShowPlaces () {
       await getPlace()
     } catch (err) {
       console.log(err)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -83,7 +87,8 @@ function ShowPlaces () {
         gap: 2
       }}>
         {loading && <Skeleton variant="rounded" height={68} />}
-        {!loading && allPlaces.map((data, index) => (
+        {(!loading && allPlaces.length === 0) && <EmptyPlace />}
+        {(!loading && allPlaces.length > 0) && allPlaces.map((data, index) => (
           <ListItem
             sx={{ borderRadius: '10px', boxShadow: `0 0 10px #${data?.color}80`, background: '#ffffff' }}
             key={index}
