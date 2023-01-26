@@ -10,6 +10,7 @@ import { Helmet } from 'react-helmet-async'
 
 import { useAuth } from '../../hooks/useAuth'
 import axios from '../../api/axios'
+import { EmptyTrash } from './EmptyTrash'
 
 function TrashPage () {
   const navigate = useNavigate()
@@ -162,7 +163,8 @@ function TrashPage () {
       <Box>
         <List sx={{ width: '100%', bgcolor: 'background.paper', p: 0, pb: '10px' }}>
           {loading && <Skeleton variant="rectangular" height={50} />}
-          {!loading && allTrash.map((value, index) => {
+          {(!loading && allTrash.length === 0) && <EmptyTrash />}
+          {(!loading && allTrash.length > 0) && allTrash.map((value, index) => {
             const labelId = `checkbox-list-label-${index}`
             return (
               <ListItem

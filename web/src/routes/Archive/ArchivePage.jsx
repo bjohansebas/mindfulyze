@@ -10,6 +10,7 @@ import { FormattedMessage } from 'react-intl'
 
 import { useAuth } from '../../hooks/useAuth'
 import axios from '../../api/axios'
+import { EmptyArchive } from './EmptyArchive'
 
 function ArchivePage () {
   const navigate = useNavigate()
@@ -168,8 +169,8 @@ function ArchivePage () {
       <Box>
         <List sx={{ width: '100%', bgcolor: 'background.paper', p: 0, pb: '10px' }}>
           {loading && <Skeleton variant="rectangular" height={50} />}
-
-          {!loading && allArchive.map((value, index) => {
+          {(!loading && allArchive.length === 0) && <EmptyArchive />}
+          {(!loading && allArchive.length > 0) && allArchive.map((value, index) => {
             const labelId = `checkbox-list-label-${index}`
             return (
               <ListItem
