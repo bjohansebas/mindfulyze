@@ -5,6 +5,7 @@ import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 import { MenuApp } from './MenuNav'
 import axios from '../../api/axios'
 import { useAuth } from '../../hooks/useAuth'
+import { Loading } from '../../components/Loading'
 
 function RequiredAuth () {
   const location = useLocation()
@@ -81,7 +82,7 @@ function RequiredAuth () {
   return (
     <>
       {loading
-        ? <p>Loading...</p>
+        ? <Loading/>
         : <>
           {hasProfile && <MenuApp />}
           <Outlet />

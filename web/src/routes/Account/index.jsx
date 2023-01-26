@@ -10,6 +10,7 @@ import dayjs from 'dayjs'
 import axios from '../../api/axios'
 import { useAuth } from '../../hooks/useAuth'
 import { EMAIL_REGEX, USER_REGEX, NAMES_REGEX, GENDER_REGEX } from '../../utils/regex'
+import { Loading } from '../../components/Loading'
 
 function AccountPage () {
   const { userId, credential, logoutEvent } = useAuth()
@@ -144,7 +145,7 @@ function AccountPage () {
       <Helmet>
         <title>Account | AlignMind</title>
       </Helmet>
-      {loading && <p>Loading...</p>}
+      {loading && <Loading/>}
       {!loading &&
         <Box sx={{
           background: '#ffffff',
