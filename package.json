@@ -6,7 +6,7 @@
   "license": "MPL V2",
   "scripts": {
     "co": "sui-mono commit",
-    "dev:web": "npm run start -w web",
+    "dev:web": "npm run dev -w web",
     "start:server": "npm run start:dev -w server",
     "build:web": "npm run build -w web",
     "build:server": "npm run build -w server",
