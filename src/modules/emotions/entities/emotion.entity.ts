@@ -7,6 +7,7 @@ import {
   JoinColumn,
   ManyToOne,
   ManyToMany,
+  OneToMany,
 } from 'typeorm';
 
 import { Color } from '../../users/entities/color.entity';
@@ -37,12 +38,12 @@ export class Emotion {
   })
   @JoinColumn({ name: 'color_id', foreignKeyConstraintName: 'fk_color_em' })
   color: Color;
+  @OneToMany(() => Think, (think) => think.emotions)
+  thinks: Think[];
+  @ManyToMany(() => Trash, (trash) => trash.emotions)
+  trash: Trash[];
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
   @UpdateDateColumn({ type: 'timestamp', name: 'updated_at' })
   updatedAt: Date;
-  @ManyToMany(() => Think, (think) => think.emotions)
-  thinks: Think[];
-  @ManyToMany(() => Trash, (trash) => trash.emotions)
-  trash: Trash[];
 }

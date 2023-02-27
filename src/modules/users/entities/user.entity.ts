@@ -6,11 +6,13 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  OneToOne,
 } from 'typeorm';
 
 import { Color } from './color.entity';
 import { Place } from '../../places/entities/place.entity';
 import { Think } from '../../thinks/entities/think.entity';
+import { ProfileUser } from './profile.entity';
 
 @Entity({
   name: 'users',
@@ -31,6 +33,8 @@ export class User {
     default: () => 'CURRENT_TIMESTAMP',
   })
   changedPasswordAt: Date;
+  @OneToOne(() => ProfileUser, (profile) => profile.user, { nullable: true })
+  profile: ProfileUser;
   @OneToMany(() => Color, (color) => color.user)
   colors: Color[];
   @OneToMany(() => Place, (place) => place.user)

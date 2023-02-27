@@ -5,13 +5,12 @@ import {
   CreateDateColumn,
   JoinColumn,
   ManyToOne,
-  ManyToMany,
-  JoinTable,
+  OneToMany,
 } from 'typeorm';
 
-import { Emotion } from '../../emotions/entities/emotion.entity';
 import { Place } from '../../places/entities/place.entity';
 import { User } from '../../users/entities/user.entity';
+import { TrashEmotion } from './trashEmotion.entity';
 
 @Entity({
   name: 'trash_thinks',
@@ -37,19 +36,8 @@ export class Trash {
   })
   @JoinColumn({ name: 'user_id', foreignKeyConstraintName: 'fk_user_ts' })
   user: User;
-  @ManyToMany(() => Emotion, (emotion) => emotion.thinks)
-  @JoinTable({
-    name: 'think_trash_emotions',
-    joinColumn: {
-      name: 'trash_th_id',
-      foreignKeyConstraintName: 'fk_think_trash_thiemo',
-    },
-    inverseJoinColumn: {
-      name: 'emotion_id',
-      foreignKeyConstraintName: 'fk_emotion_thiemo_trash',
-    },
-  })
-  emotions: Emotion[];
+  @OneToMany(() => TrashEmotion, (emotion) => emotion.think)
+  emotions: TrashEmotion[];
   @CreateDateColumn({ type: 'date', name: 'date_start' })
   dateStart: Date;
   @Column({ type: 'date', name: 'date_end' })
