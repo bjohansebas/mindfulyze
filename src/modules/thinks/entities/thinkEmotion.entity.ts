@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -37,6 +38,7 @@ export class ThinkEmotion {
     foreignKeyConstraintName: 'fk_emotion_thiemo',
   })
   emotion: Emotion;
+  @Exclude()
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
 }

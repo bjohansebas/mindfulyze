@@ -9,6 +9,7 @@ import {
   ManyToMany,
   OneToMany,
 } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 import { Color } from '../../users/entities/color.entity';
 import { Think } from '../../thinks/entities/think.entity';
@@ -42,8 +43,10 @@ export class Emotion {
   thinks: Think[];
   @ManyToMany(() => Trash, (trash) => trash.emotions)
   trash: Trash[];
+  @Exclude()
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
+  @Exclude()
   @UpdateDateColumn({ type: 'timestamp', name: 'updated_at' })
   updatedAt: Date;
 }
