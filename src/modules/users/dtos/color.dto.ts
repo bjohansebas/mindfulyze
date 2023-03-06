@@ -5,7 +5,7 @@ export class CreateColorDto {
   @IsHexColor()
   @IsNotEmpty()
   @Length(6, 6)
-  readonly code: string;
+  code: string;
 }
 
 export class UpdateColorDto extends PartialType(CreateColorDto) {}

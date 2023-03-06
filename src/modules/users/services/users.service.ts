@@ -50,7 +50,7 @@ export class UsersService {
     return user;
   }
 
-  async findColors(id_user) {
+  async findColors(id_user: string) {
     const user: User = await this.userRepo.findOne({
       where: {
         id: id_user,
@@ -63,6 +63,51 @@ export class UsersService {
     }
 
     return user.colors;
+  }
+
+  async findPlaces(id_user: string) {
+    const user: User = await this.userRepo.findOne({
+      where: {
+        id: id_user,
+      },
+      relations: ['places', 'places.color'],
+    });
+
+    if (!user) {
+      throw new NotFoundException(`User #${id_user} not found`);
+    }
+
+    return user.places;
+  }
+
+  async findAllThinks(id_user: string) {
+    const user: User = await this.userRepo.findOne({
+      where: {
+        id: id_user,
+      },
+      relations: ['thinks'],
+    });
+
+    if (!user) {
+      throw new NotFoundException(`User #${id_user} not found`);
+    }
+
+    return user.thinks;
+  }
+
+  async findTrash(id_user: string) {
+    const user: User = await this.userRepo.findOne({
+      where: {
+        id: id_user,
+      },
+      relations: ['trash'],
+    });
+
+    if (!user) {
+      throw new NotFoundException(`User #${id_user} not found`);
+    }
+
+    return user.trash;
   }
 
   async findEmail(email: string): Promise<User> {
@@ -94,6 +139,7 @@ export class UsersService {
     newUser.password = hashPassword;
 
     const isUser = this.userRepo.save(newUser);
+
     return isUser;
   }
 

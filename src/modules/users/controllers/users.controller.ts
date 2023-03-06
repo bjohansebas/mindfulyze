@@ -23,6 +23,7 @@ export class UsersController {
     private userService: UsersService,
     private profileService: ProfileService,
   ) {}
+
   @Get('')
   getAccountAndProfile(@Request() req) {
     return this.userService.findAccountAndProfile(req.user.sub);
@@ -36,6 +37,21 @@ export class UsersController {
   @Get('colors')
   getColors(@Request() req) {
     return this.userService.findColors(req.user.sub);
+  }
+
+  @Get('places')
+  gePlaces(@Request() req) {
+    return this.userService.findPlaces(req.user.sub);
+  }
+
+  @Get('thinks')
+  getAllThinks(@Request() req) {
+    return this.userService.findAllThinks(req.user.sub);
+  }
+
+  @Get('trash')
+  getTrash(@Request() req) {
+    return this.userService.findTrash(req.user.sub);
   }
 
   @Get('profile')

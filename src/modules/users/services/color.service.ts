@@ -29,6 +29,18 @@ export class ColorService {
     return color;
   }
 
+  async findByCodeAndUser(code: string, id_user: string): Promise<Color> {
+    const colorUser: Color[] = await this.userService.findColors(id_user);
+
+    const existColor: Color = colorUser.find((color) => color.code === code);
+
+    if (Object.keys(existColor).length === 0) {
+      throw new NotFoundException(`Color with this code:"${code}" not found`);
+    }
+
+    return existColor;
+  }
+
   async createColor(id_user: string, payload: CreateColorDto) {
     const user = await this.userService.findAccount(id_user);
 
