@@ -2,12 +2,12 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { Place } from 'src/modules/places/entities/place.entity';
-import { User } from 'src/modules/users/entities/user.entity';
+import { Place } from '../../places/entities/place.entity';
+import { User } from '../../users/entities/user.entity';
 import { Think } from '../entities/think.entity';
 
-import { PlacesService } from 'src/modules/places/services/places.service';
-import { UsersService } from 'src/modules/users/services/users.service';
+import { PlacesService } from '../../places/services/places.service';
+import { UsersService } from '../../users/services/users.service';
 import { ThinksEmotionService } from './thinks-emotion.service';
 import { TrashService } from './trash.service';
 

@@ -106,3 +106,4 @@ dist
 
 # Docker database
 postgres_data
+.vercel

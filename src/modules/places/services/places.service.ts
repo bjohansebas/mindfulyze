@@ -6,13 +6,13 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { ColorService } from 'src/modules/users/services/color.service';
-import { UsersService } from 'src/modules/users/services/users.service';
+import { ColorService } from '../../users/services/color.service';
+import { UsersService } from '../../users/services/users.service';
 
 import { Place } from '../entities/place.entity';
-import { Color } from 'src/modules/users/entities/color.entity';
+import { Color } from '../../users/entities/color.entity';
 
-import { CreateColorDto } from 'src/modules/users/dtos/color.dto';
+import { CreateColorDto } from '../../users/dtos/color.dto';
 import { CreatePlaceDto, UpdatePlaceDto } from '../dtos/place.dto';
 
 @Injectable()

@@ -3,8 +3,8 @@ import { ConfigType } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 
-import config from 'src/config';
-import { UsersModule } from 'src/modules/users/users.module';
+import config from '../config';
+import { UsersModule } from '../modules/users/users.module';
 
 import { AuthController } from './controllers/auth.controller';
 

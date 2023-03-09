@@ -15,7 +15,7 @@ import {
 
 import { User } from '../entities/user.entity';
 
-import { DEFAULT_COST } from 'src/utils/saltRounds';
+import { DEFAULT_COST } from '../../../utils/saltRounds';
 
 @Injectable()
 export class UsersService {
