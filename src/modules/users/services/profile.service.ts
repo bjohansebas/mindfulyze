@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -29,13 +33,20 @@ export class ProfileService {
   }
 
   async createProfile(idUser: string, payload: CreateProfileDto) {
-    const user = await this.userService.findAccount(idUser);
+    const user = await this.userService.findAccountAndProfile(idUser);
+
+    const profile = user.profile;
+
+    if (profile) {
+      throw new ConflictException(`The profile has been created`);
+    }
 
     const newProfile = this.profileRepo.create(payload);
 
     newProfile.user = user;
 
     const isUser = this.profileRepo.save(newProfile);
+
     return isUser;
   }
 
