@@ -26,6 +26,21 @@ export class PlaceController {
     return this.placeService.findById(id);
   }
 
+  @Get(':id/thinks')
+  getThinks(@Param('id', ParseUUIDPipe) id: string) {
+    return this.placeService.findThinksByPlace(id);
+  }
+
+  @Get(':id/thinks/archive')
+  getArchiveThinks(@Param('id', ParseUUIDPipe) id: string) {
+    return this.placeService.findArchiveThinksByPlace(id);
+  }
+
+  @Get(':id/trash')
+  getTrash(@Param('id', ParseUUIDPipe) id: string) {
+    return this.placeService.findTrashByPlace(id);
+  }
+
   @Post('')
   createPlace(@Request() req, @Body() payload: CreatePlaceDto) {
     return this.placeService.create(req.user.sub, payload);

@@ -12,6 +12,7 @@ import {
 import { Color } from '../../users/entities/color.entity';
 import { Think } from '../../thinks/entities/think.entity';
 import { User } from '../../users/entities/user.entity';
+import { Trash } from '../../thinks/entities/trash.entity';
 
 @Entity({
   name: 'places',
@@ -39,6 +40,8 @@ export class Place {
   user: User;
   @OneToMany(() => Think, (think) => think.place)
   thinks: Think[];
+  @OneToMany(() => Trash, (trash) => trash.place)
+  trashes: Trash[];
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
   @UpdateDateColumn({ type: 'timestamp', name: 'updated_at' })

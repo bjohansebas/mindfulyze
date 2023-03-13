@@ -50,6 +50,45 @@ export class PlacesService {
     return existPlace;
   }
 
+  async findThinksByPlace(id: string) {
+    const thinksPlace: Place[] = await this.placeRepo.find({
+      where: {
+        id: id,
+        thinks: {
+          isArchive: false,
+        },
+      },
+      relations: ['thinks'],
+    });
+
+    return thinksPlace;
+  }
+
+  async findArchiveThinksByPlace(id: string) {
+    const thinksPlace: Place[] = await this.placeRepo.find({
+      where: {
+        id: id,
+        thinks: {
+          isArchive: true,
+        },
+      },
+      relations: ['thinks'],
+    });
+
+    return thinksPlace;
+  }
+
+  async findTrashByPlace(id: string) {
+    const trashPlace: Place[] = await this.placeRepo.find({
+      where: {
+        id: id,
+      },
+      relations: ['trashes'],
+    });
+
+    return trashPlace;
+  }
+
   async create(id_user: string, payload: CreatePlaceDto): Promise<Place> {
     const user = await this.userService.findAccount(id_user);
 
