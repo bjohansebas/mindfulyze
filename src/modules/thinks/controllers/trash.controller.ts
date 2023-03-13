@@ -26,7 +26,7 @@ export class TrashController {
   }
 
   @Put(':id')
-  moveTrash(@Param('id', ParseUUIDPipe) id: string) {
+  restoreTrash(@Param('id', ParseUUIDPipe) id: string) {
     return this.thinkService.removeOfTrash(id);
   }
 

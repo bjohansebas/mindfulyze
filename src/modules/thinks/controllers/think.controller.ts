@@ -35,14 +35,6 @@ export class ThinkController {
     return this.thinkService.create(req.user.sub, payload);
   }
 
-  @Post(':id')
-  newEmotions(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() payload: AddEmotionsDto,
-  ) {
-    return this.thinkEmotionService.registerEmotion(id, payload);
-  }
-
   @Put(':id')
   updateThink(
     @Param('id', ParseUUIDPipe) id: string,
@@ -51,7 +43,15 @@ export class ThinkController {
     return this.thinkService.update(id, payload);
   }
 
-  @Put(':id/emotions')
+  @Put(':id/emotions/add')
+  newEmotions(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() payload: AddEmotionsDto,
+  ) {
+    return this.thinkEmotionService.registerEmotion(id, payload);
+  }
+
+  @Put(':id/emotions/remove')
   removeEmotions(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() payload: DeleteEmotionsDto,

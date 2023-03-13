@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { default as dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import { Repository } from 'typeorm';
 
 import { Trash } from '../entities/trash.entity';
