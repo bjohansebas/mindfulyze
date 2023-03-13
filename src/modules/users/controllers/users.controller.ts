@@ -49,6 +49,16 @@ export class UsersController {
     return this.userService.findAllThinks(req.user.sub);
   }
 
+  @Get('thinks/archives')
+  getArchiveThinks(@Request() req) {
+    return this.userService.findArchiveThinks(req.user.sub);
+  }
+
+  @Get('thinks/unarchives')
+  getUnarchiveThinks(@Request() req) {
+    return this.userService.findUnarchiveThinks(req.user.sub);
+  }
+
   @Get('trash')
   getTrash(@Request() req) {
     return this.userService.findTrash(req.user.sub);

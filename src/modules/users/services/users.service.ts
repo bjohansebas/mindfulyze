@@ -110,6 +110,34 @@ export class UsersService {
     return user.trash;
   }
 
+  async findArchiveThinks(id_user: string) {
+    const user: User = await this.userRepo.findOne({
+      where: {
+        id: id_user,
+        thinks: {
+          isArchive: true,
+        },
+      },
+      relations: ['thinks'],
+    });
+
+    return user?.thinks || [];
+  }
+
+  async findUnarchiveThinks(id_user: string) {
+    const user: User = await this.userRepo.findOne({
+      where: {
+        id: id_user,
+        thinks: {
+          isArchive: false,
+        },
+      },
+      relations: ['thinks'],
+    });
+
+    return user?.thinks || [];
+  }
+
   async findEmail(email: string): Promise<User> {
     const user: User = await this.userRepo.findOne({ where: { email } });
 
