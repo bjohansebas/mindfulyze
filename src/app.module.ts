@@ -11,6 +11,7 @@ import { EmotionsModule } from './modules/emotions/emotions.module';
 import { PlacesModule } from './modules/places/places.module';
 import { ThinksModule } from './modules/thinks/thinks.module';
 import { AuthModule } from './auth/auth.module';
+import { StatisticsModule } from './modules/statistics/statistics.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { AuthModule } from './auth/auth.module';
     PlacesModule,
     ThinksModule,
     AuthModule,
+    StatisticsModule,
   ],
 })
 export class AppModule {}
