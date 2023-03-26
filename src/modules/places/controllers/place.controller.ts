@@ -12,14 +12,20 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-import { CreatePlaceDto, UpdatePlaceDto } from '../dtos/place.dto';
-
+import { ThinksService } from '../../thinks/services/thinks.service';
+import { TrashService } from '../../thinks/services/trash.service';
 import { PlacesService } from '../services/places.service';
+
+import { CreatePlaceDto, UpdatePlaceDto } from '../dtos/place.dto';
 
 @Controller({ path: 'places', version: '1' })
 @UseGuards(AuthGuard('jwt'))
 export class PlaceController {
-  constructor(private placeService: PlacesService) {}
+  constructor(
+    private placeService: PlacesService,
+    private thinkService: ThinksService,
+    private trashService: TrashService,
+  ) {}
 
   @Get(':id')
   getPlace(@Param('id', ParseUUIDPipe) id: string) {
@@ -28,17 +34,17 @@ export class PlaceController {
 
   @Get(':id/thinks')
   getThinks(@Param('id', ParseUUIDPipe) id: string) {
-    return this.placeService.findThinksByPlace(id);
+    return this.thinkService.findUnarchiveThinksByPlace(id);
   }
 
   @Get(':id/thinks/archive')
   getArchiveThinks(@Param('id', ParseUUIDPipe) id: string) {
-    return this.placeService.findArchiveThinksByPlace(id);
+    return this.thinkService.findArchiveThinksByPlace(id);
   }
 
   @Get(':id/trash')
   getTrash(@Param('id', ParseUUIDPipe) id: string) {
-    return this.placeService.findTrashByPlace(id);
+    return this.trashService.findTrashByPlace(id);
   }
 
   @Post('')

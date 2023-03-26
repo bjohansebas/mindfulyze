@@ -39,6 +39,30 @@ export class ThinksService {
     return think;
   }
 
+  async findUnarchiveThinksByPlace(id: string) {
+    const thinksPlace: Think[] = await this.thinkRepo.find({
+      where: {
+        place: { id: id },
+        isArchive: false,
+      },
+      relations: ['place'],
+    });
+
+    return thinksPlace;
+  }
+
+  async findArchiveThinksByPlace(id: string) {
+    const thinksPlace: Think[] = await this.thinkRepo.find({
+      where: {
+        place: { id: id },
+        isArchive: true,
+      },
+      relations: ['place'],
+    });
+
+    return thinksPlace;
+  }
+
   async create(id_user: string, payload: CreateThinkDto) {
     const user: User = await this.userService.findAccount(id_user);
 

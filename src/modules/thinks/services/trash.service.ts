@@ -37,6 +37,17 @@ export class TrashService {
     return trash;
   }
 
+  async findTrashByPlace(id: string) {
+    const trashPlace: Trash[] = await this.trashRepo.find({
+      where: {
+        place: { id: id },
+      },
+      relations: ['place'],
+    });
+
+    return trashPlace;
+  }
+
   async create(id_think: string) {
     const think = await this.thinkService.findById(id_think);
 

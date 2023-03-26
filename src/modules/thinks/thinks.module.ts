@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { PlacesModule } from '../places/places.module';
@@ -21,7 +21,7 @@ import { TrashEmotionService } from './services/trash-emotion.service';
 @Module({
   imports: [
     EmotionsModule,
-    PlacesModule,
+    forwardRef(() => PlacesModule),
     TypeOrmModule.forFeature([Think, ThinkEmotion, Trash, TrashEmotion]),
     UsersModule,
   ],
