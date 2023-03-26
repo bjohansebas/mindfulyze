@@ -1,6 +1,6 @@
 import { PartialType } from '@nestjs/mapped-types';
 import {
-  IsDate,
+  IsDateString,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -26,7 +26,7 @@ export class CreateProfileDto {
   @Length(3, 20)
   readonly lastName: string;
 
-  @IsDate()
+  @IsDateString()
   @IsNotEmpty()
   @IsOptional()
   readonly birth: string;
