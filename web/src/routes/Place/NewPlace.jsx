@@ -13,11 +13,10 @@ import { Forms } from '../../components/Form'
 
 function NewPlacePage () {
   const navigate = useNavigate()
-  const { userId, credential } = useAuth()
+  const { credential } = useAuth()
 
   const [color, setColor] = useState('#00575C')
   const [textPlace, setTextPlace] = useState('')
-  const [textColorName, setTextColorName] = useState('')
   const [errMsg, setErrMsg] = useState('')
   const [loading, setLoading] = useState(false)
   const [anchorElColor, setAnchorElColor] = useState(null)
@@ -26,13 +25,13 @@ function NewPlacePage () {
   useEffect(() => {
     async function getColor () {
       try {
-        const response = await axios.get(`/users/${userId}/colors`, {
+        const response = await axios.get('/users/colors', {
           headers: {
             Authorization: `Bearer ${credential}`
           }
         })
-        setAllColors(response?.data.data.map((data) => {
-          return { color: '#' + data.code_color, title: data.name_color, id: data.color_id }
+        setAllColors(response?.data.map((data) => {
+          return { color: '#' + data.code, id: data.id }
         }))
       } catch (e) {
         console.log(e)
@@ -41,45 +40,30 @@ function NewPlacePage () {
     getColor()
   }, [])
 
-  useEffect(() => {
-    if (allColors.length >= 1) {
-      const isExist = allColors.filter(col => {
-        return col.color === color
-      })
-
-      if (isExist.length >= 1) {
-        setTextColorName(isExist[0].title)
-      }
-    }
-  }, [color])
-
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
 
     const testColor = HEXADECIMAL_REGEX.test(color)
 
-    if (!testColor || textPlace.trimEnd().length < 5) {
+    if (!testColor || textPlace.trimEnd().length < 2) {
       setErrMsg('Invalid Entry')
       setLoading(false)
       return
     }
-    let request = {
-      name_place: textPlace.trimEnd(),
-      code_color: color.slice(1)
-    }
-    if (textColorName && textColorName.trimEnd().length >= 3) {
-      request = { name_color: textColorName.trimEnd(), ...request }
+    const request = {
+      name: textPlace.trimEnd(),
+      code: color.slice(1)
     }
 
     try {
-      const response = await axios.post(`/places/${userId}`,
+      const response = await axios.post('/places',
         JSON.stringify(request),
         {
           headers: { Authorization: `Bearer ${credential}` }
         })
 
-      navigate('/place/' + response.data.data.place_id)
+      navigate('/place/' + response.data.id)
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response')
@@ -128,7 +112,7 @@ function NewPlacePage () {
       }}>
         <Forms
           title={<FormattedMessage id='place.new.title' defaultMessage="Create a new place" />}
-          disableSubmit={loading || textPlace.length < 5}
+          disableSubmit={loading || textPlace.length < 2}
           isCancel={true}
           submitText={<FormattedMessage id='place.new.submit' defaultMessage="Create a place" />}
           handleSubmit={handleSubmit}>

@@ -27,7 +27,7 @@ function ShowPlacePage () {
             Authorization: `Bearer ${credential}`
           }
         })
-        setNamePlace(responsePlace?.data.data.name_place)
+        setNamePlace(responsePlace?.data.name)
       } catch (err) {
         if (!err?.response) {
           console.log('Server not response')

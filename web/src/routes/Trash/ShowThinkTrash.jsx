@@ -23,85 +23,37 @@ function ShowThinkTrashPage () {
 
   const [emotions, setEmotions] = useState([])
 
-  useEffect(() => {
-    async function getThink () {
-      try {
-        const response = await axios.get(`/trash/${id}`, {
-          headers: {
-            Authorization: `Bearer ${credential}`
-          }
-        })
-        setThink(response.data.data)
-      } catch (err) {
-        if (!err?.response) {
-          console.log('Server not response')
-        } else if (err.response?.status === 404) {
-          navigate('/')
-        } else {
-          console.log('error aqui')
+  async function getThink () {
+    try {
+      const response = await axios.get(`/trash/${id}`, {
+        headers: {
+          Authorization: `Bearer ${credential}`
         }
-      } finally {
-        setLoadingThink(false)
+      })
+
+      const data = response?.data
+      setThink(data)
+      setEmotions(data.emotions.map(data => {
+        return { text: data.emotion.name, id: data.emotion.id }
+      }))
+      setPlace({ name: data.place.name, id: data.place.id })
+    } catch (err) {
+      if (!err?.response) {
+        console.log('Server not response')
+      } else if (err.response?.status === 404) {
+        navigate('/')
+      } else {
+        console.log('error aqui')
       }
+    } finally {
+      setLoadingThink(false)
+      setLoadingPlace(false)
     }
+  }
+
+  useEffect(() => {
     getThink()
   }, [])
-  useEffect(() => {
-    async function getEmotions () {
-      try {
-        const response = await axios.get(`/trash/${id}/emotions`, {
-          headers: {
-            Authorization: `Bearer ${credential}`
-          }
-        })
-        setEmotions(response?.data.data.map(data => {
-          return { text: data.name_emotion, id: data.emotion_id }
-        }))
-      } catch (err) {
-        if (!err?.response) {
-          console.log('Server not response')
-        } else if (err.response?.status === 404) {
-          navigate('/')
-        } else {
-          console.log('error aqui')
-        }
-      }
-    }
-    getEmotions()
-  }, [])
-
-  useEffect(() => {
-    if (Object.entries(think).length >= 1) {
-      async function getPlace () {
-        try {
-          const response = await axios.get(`/places/${think.place_id}`, {
-            headers: {
-              Authorization: `Bearer ${credential}`
-            }
-          })
-          const data = response?.data.data
-          const responseColor = await axios.get(`/colors/${data.color_id}`, {
-            headers: {
-              Authorization: `Bearer ${credential}`
-            }
-          })
-
-          setPlace({ name: data.name_place, color: responseColor.data.data.code_color })
-        } catch (err) {
-          if (!err?.response) {
-            console.log(err)
-          } else if (err.response?.status === 404) {
-            navigate('/')
-          } else {
-            console.log('error aqui')
-          }
-        } finally {
-          setLoadingPlace(false)
-        }
-      }
-      getPlace()
-    }
-  }, [think])
 
   const onDelete = async () => {
     try {
@@ -119,13 +71,13 @@ function ShowThinkTrashPage () {
 
   const onRestore = async () => {
     try {
-      await axios.post(`/trash/${id}/`, {}, {
+      await axios.put(`/trash/${id}/`, {}, {
         headers: {
           Authorization: `Bearer ${credential}`
         }
       })
 
-      navigate(`/place/${think.place_id}`, { replace: true })
+      navigate(`/place/${place.id}`, { replace: true })
     } catch (err) {
       console.log(err)
     }
@@ -149,7 +101,7 @@ function ShowThinkTrashPage () {
       }}>
         <TextareaAutosize
           disabled
-          value={think.text_think}
+          value={think.text}
           style={{ resize: 'none', height: '100%', fontSize: '16px', width: '100%', padding: '10px' }}
         />
       </Box>
@@ -203,7 +155,7 @@ function ShowThinkTrashPage () {
                 <ListItemButton role={undefined} dense>
                   {loadingThink && <Skeleton variant="text" width={200} />}
                   {!loadingThink && <ListItemText
-                    primary={<FormattedMessage id="think.info.date" defaultMessage="Created at: {create}" values={{ create: dayjs(think?.created_at).format('YYYY-MM-DD') }} />}
+                    primary={<FormattedMessage id="think.info.date" defaultMessage="Created at: {create}" values={{ create: dayjs(think?.createdAt).format('YYYY-MM-DD') }} />}
                   />}
                 </ListItemButton>
               </ListItem>

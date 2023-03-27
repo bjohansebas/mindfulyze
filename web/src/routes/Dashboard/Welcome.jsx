@@ -8,20 +8,24 @@ import axios from '../../api/axios'
 import { useAuth } from '../../hooks/useAuth'
 
 function Welcome () {
-  const { userInfo, userId, credential } = useAuth()
+  const { userInfo, credential } = useAuth()
 
   const [emotions, setEmotions] = useState([0, 0])
   const [loading, setLoading] = useState(true)
 
   const getEmotions = async () => {
     try {
-      const response = await axios.get(`/statistics/${userId}/`, {
+      const response = await axios.get('/statistics/all', {
         headers: {
           Authorization: `Bearer ${credential}`
         }
       })
 
-      setEmotions([...response?.data.data])
+      const dataResponse = response?.data
+      const positive = dataResponse.filter(value => value.emotion.type === 'Positive').length
+      const negative = dataResponse.filter(value => value.emotion.type === 'Negative').length
+
+      setEmotions([positive, negative])
     } catch (e) {
       console.log(e)
     } finally {
@@ -45,7 +49,7 @@ function Welcome () {
         fontSize: '1.7em',
         textAlign: 'center'
       }}>
-        <FormattedMessage id="dashboard.welcome" defaultMessage="Welcome" /> {userInfo?.firstName} {userInfo?.lastName}
+        <FormattedMessage id="dashboard.welcome" defaultMessage="Welcome" /> {userInfo.profile?.firstName} {userInfo.profile?.lastName}
       </Typography>
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         {loading

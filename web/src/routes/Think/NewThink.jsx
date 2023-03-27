@@ -13,7 +13,7 @@ import axios from '../../api/axios'
 function NewThinkPage () {
   const navigate = useNavigate()
 
-  const { userId, credential } = useAuth()
+  const { credential } = useAuth()
   const [textThink, setTextThink] = useState('')
   const [allPlaces, setAllPlaces] = useState([])
   const [place, setPlace] = useState({})
@@ -26,13 +26,13 @@ function NewThinkPage () {
   useEffect(() => {
     async function getPlace () {
       setLoading(true)
-      const response = await axios.get(`/users/${userId}/places`, {
+      const response = await axios.get('/users/places', {
         headers: {
           Authorization: `Bearer ${credential}`
         }
       })
-      setAllPlaces(response?.data.data.map(data => {
-        return { text: data.name_place, id: data.place_id }
+      setAllPlaces(response?.data.map(data => {
+        return { text: data.name, id: data.id }
       }))
       setLoading(false)
     }
@@ -47,8 +47,8 @@ function NewThinkPage () {
           Authorization: `Bearer ${credential}`
         }
       })
-      setAllEmotions(response?.data.data.map(data => {
-        return { text: data.name_emotion, id: data.emotion_id }
+      setAllEmotions(response?.data.map(data => {
+        return { text: data.name, id: data.id }
       }))
       setLoading(false)
     }
@@ -58,37 +58,37 @@ function NewThinkPage () {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
-    if (textThink.trimEnd().length < 5) {
+    if (textThink.trimEnd().length < 5 && textThink.trimEnd().length > 1000) {
       setErrMsg('Invalid Entry')
       setLoading(false)
       return
     }
 
     try {
-      const response = await axios.post(`/thinks/${userId}`,
+      const response = await axios.post('/thinks/',
         JSON.stringify({
-          text_think: textThink.trimEnd(),
-          place_id: place.id
+          text: textThink.trimEnd(),
+          place: place.id
         }),
         {
           headers: { Authorization: `Bearer ${credential}` }
         })
 
-      const thinkId = response?.data.data.think_id
+      const thinkId = response?.data.id
 
-      emotionsSelect.forEach(async (emotion) => {
-        try {
-          await axios.post(`/thinks/${thinkId}/emotions`,
-            JSON.stringify({
-              emotion_id: emotion.id
-            }),
-            {
-              headers: { Authorization: `Bearer ${credential}` }
-            })
-        } catch (e) {
-          console.log('error')
-        }
-      })
+      const emotions = emotionsSelect.map(value => value.id)
+
+      try {
+        await axios.put(`/thinks/${thinkId}/emotions/add`,
+          JSON.stringify({
+            emotions
+          }),
+          {
+            headers: { Authorization: `Bearer ${credential}` }
+          })
+      } catch (e) {
+        console.log('error')
+      }
 
       navigate('/place/' + place.id)
     } catch (err) {

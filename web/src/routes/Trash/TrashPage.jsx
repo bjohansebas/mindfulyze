@@ -14,7 +14,7 @@ import { EmptyTrash } from './EmptyTrash'
 
 function TrashPage () {
   const navigate = useNavigate()
-  const { userId, credential } = useAuth()
+  const { credential } = useAuth()
 
   const [anchorElTrash, setAnchorElTrash] = useState(null)
   const [checked, setChecked] = useState([])
@@ -25,14 +25,14 @@ function TrashPage () {
 
   const getTrash = async () => {
     try {
-      const response = await axios.get(`/users/${userId}/trash`, {
+      const response = await axios.get('/users/trash', {
         headers: {
           Authorization: `Bearer ${credential}`
         }
       })
 
-      setAllTrash(response?.data.data.map(data => {
-        return { text: data.text_think, id: data.trash_th_id }
+      setAllTrash(response?.data.map(data => {
+        return { text: data.text, id: data.id }
       }))
     } catch (e) {
       console.log(e?.response)
@@ -87,7 +87,7 @@ function TrashPage () {
   const onRestoreId = async () => {
     try {
       setAnchorElTrash(null)
-      await axios.post(`/trash/${idSelect}`, {}, {
+      await axios.put(`/trash/${idSelect}`, {}, {
         headers: {
           Authorization: `Bearer ${credential}`
         }
@@ -124,7 +124,7 @@ function TrashPage () {
       try {
         for await (const value of checked) {
           const trash = allTrash[value]
-          await axios.post(`/trash/${trash.id}`, {}, {
+          await axios.put(`/trash/${trash.id}`, {}, {
             headers: {
               Authorization: `Bearer ${credential}`
             }

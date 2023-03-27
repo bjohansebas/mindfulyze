@@ -11,7 +11,7 @@ import { useAuth } from '../../hooks/useAuth'
 import { EmptyStatistics } from './EmptyStatistics'
 
 function Statistics () {
-  const { userId, credential } = useAuth()
+  const { credential } = useAuth()
   const [anchorEl, setAnchorEl] = useState(null)
 
   const [filter, setFilter] = useState('all')
@@ -48,26 +48,46 @@ function Statistics () {
 
     try {
       setLoading(true)
-      const response = await axios.get(`/statistics/${userId}/all`, {
+      const response = await axios.get('/statistics/all', {
         headers: {
           Authorization: `Bearer ${credential}`
         }
       })
 
-      const dataResponse = response?.data.data
-      const positive = dataResponse.positive
-      const negative = dataResponse.negative
+      const dataResponse = response?.data
+      const positive = dataResponse.filter(value => value.emotion.type === 'Positive')
+      const negative = dataResponse.filter(value => value.emotion.type === 'Negative')
+      const repeatNegative = {}
+      const repeatPositive = {}
 
       for await (const value of positive) {
-        label.push(value[0])
-        dataResult.push(value[1])
-        color.push(`#${value[2]}`)
+        const nameEmotion = value.emotion.name
+        repeatPositive[nameEmotion] = {
+          name: nameEmotion,
+          count: (repeatPositive[nameEmotion]?.count || 0) + 1,
+          color: value.emotion.color.code
+        }
       }
 
       for await (const value of negative) {
-        label.push(value[0])
-        dataResult.push(value[1])
-        color.push(`#${value[2]}`)
+        const nameEmotion = value.emotion.name
+        repeatNegative[nameEmotion] = {
+          name: nameEmotion,
+          count: (repeatNegative[nameEmotion]?.count || 0) + 1,
+          color: value.emotion.color.code
+        }
+      }
+
+      for await (const value of Object.entries(repeatNegative)) {
+        label.push(value[1].name)
+        color.push(`#${value[1].color}`)
+        dataResult.push(value[1].count)
+      }
+
+      for await (const value of Object.entries(repeatPositive)) {
+        label.push(value[1].name)
+        color.push(`#${value[1].color}`)
+        dataResult.push(value[1].count)
       }
 
       setLabels(label)
@@ -87,19 +107,28 @@ function Statistics () {
 
     try {
       setLoading(true)
-      const response = await axios.get(`/statistics/${userId}/negative`, {
+      const response = await axios.get('/statistics/negative', {
         headers: {
           Authorization: `Bearer ${credential}`
         }
       })
 
-      const dataResponse = response?.data.data
-      for await (const value of dataResponse) {
-        label.push(value[0])
-        dataResult.push(value[1])
-        color.push(`#${value[2]}`)
-      }
+      const dataResponse = response?.data
+      const negative = {}
 
+      for await (const value of dataResponse) {
+        const nameEmotion = value.emotion.name
+        negative[nameEmotion] = {
+          name: nameEmotion,
+          count: (negative[nameEmotion]?.count || 0) + 1,
+          color: value.emotion.color.code
+        }
+      }
+      for await (const value of Object.entries(negative)) {
+        label.push(value[1].name)
+        color.push(`#${value[1].color}`)
+        dataResult.push(value[1].count)
+      }
       setLabels(label)
       setDataEmotions(dataResult)
       setColors(color)
@@ -117,17 +146,28 @@ function Statistics () {
 
     try {
       setLoading(true)
-      const response = await axios.get(`/statistics/${userId}/positive`, {
+      const response = await axios.get('/statistics/positive', {
         headers: {
           Authorization: `Bearer ${credential}`
         }
       })
 
-      const dataResponse = response?.data.data
+      const dataResponse = response?.data
+      const positive = {}
+
       for await (const value of dataResponse) {
-        label.push(value[0])
-        dataResult.push(value[1])
-        color.push(`#${value[2]}`)
+        const nameEmotion = value.emotion.name
+        positive[nameEmotion] = {
+          name: nameEmotion,
+          count: (positive[nameEmotion]?.count || 0) + 1,
+          color: value.emotion.color.code
+        }
+      }
+
+      for await (const value of Object.entries(positive)) {
+        label.push(value[1].name)
+        color.push(`#${value[1].color}`)
+        dataResult.push(value[1].count)
       }
 
       setLabels(label)

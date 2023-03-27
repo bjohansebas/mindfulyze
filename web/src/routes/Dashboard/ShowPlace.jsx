@@ -10,7 +10,7 @@ import { useAuth } from '../../hooks/useAuth'
 import { EmptyPlace } from './EmptyPlace'
 
 function ShowPlaces () {
-  const { userId, credential } = useAuth()
+  const { credential } = useAuth()
   const navigate = useNavigate()
 
   const [allPlaces, setAllPlaces] = useState([])
@@ -21,21 +21,14 @@ function ShowPlaces () {
 
   const getPlace = async () => {
     try {
-      const response = await axios.get(`/users/${userId}/places`, {
+      const response = await axios.get('/users/places', {
         headers: {
           Authorization: `Bearer ${credential}`
         }
       })
 
-      const responseColors = await axios.get(`/places/${userId}/colors`, {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
-
-      setAllPlaces(response?.data.data.map(data => {
-        const findColor = responseColors?.data.data.find(element => element.color_id === data.color_id)
-        return { text: data.name_place, id: data.place_id, color: findColor.code_color }
+      setAllPlaces(response?.data.map(data => {
+        return { text: data.name, id: data.id, color: data.color.code }
       }))
     } catch (e) {
       console.log(e?.response)

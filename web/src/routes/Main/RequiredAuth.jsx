@@ -22,19 +22,18 @@ function RequiredAuth () {
     if (!credential || !userId) {
       return navigate('/login', { replace: true })
     }
-
     try {
-      const responseUser = await axios.get(`users/${userId}`, {
+      const responseUser = await axios.get('users/', {
         headers: {
           Authorization: `Bearer ${credential}`
         }
       })
 
-      const dataUser = responseUser?.data.data
+      const dataUser = responseUser?.data
 
       data = {
-        username: dataUser.username,
-        email: dataUser.email
+        email: dataUser.email,
+        profile: dataUser.profile
       }
     } catch (err) {
       await localforage.clear()
@@ -42,37 +41,20 @@ function RequiredAuth () {
       return navigate('/login', { replace: true })
     }
 
-    try {
-      const responseProfile = await axios.get(`users/${userId}/profile`,
-        {
-          headers: {
-            Authorization: `Bearer ${credential}`
-          }
-        }
-      )
-
-      const dataProfile = responseProfile?.data.data
-
-      data = {
-        firstName: dataProfile.first_name,
-        lastName: dataProfile.last_name,
-        lang: dataProfile.preference_lang,
-        gender: dataProfile.gender,
-        ...data
-      }
-
-      if (location.pathname === '/account/new') {
-        return navigate('/')
-      }
-    } catch (err) {
+    if (!data.profile) {
       setHasProfile(false)
 
+      setLoading(false)
       return navigate('/account/new', { replace: true })
-    } finally {
+    }
+
+    await localforage.setItem('userInfo_userInfo', data)
+    if (location.pathname === '/account/new') {
       setLoading(false)
 
-      await localforage.setItem('userInfo_userInfo', data)
+      return navigate('/')
     }
+    setLoading(false)
   }
 
   useEffect(() => {
