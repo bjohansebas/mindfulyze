@@ -13,7 +13,7 @@ import { useAuth } from '../../hooks/useAuth'
 function EditPlacePage () {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { userId, credential } = useAuth()
+  const { credential } = useAuth()
 
   const [place, setPlace] = useState({})
   const [newTextPlace, setNewTextPlace] = useState('')
@@ -31,14 +31,9 @@ function EditPlacePage () {
             Authorization: `Bearer ${credential}`
           }
         })
-        const data = response?.data.data
-        const responseColor = await axios.get(`/colors/${data.color_id}`, {
-          headers: {
-            Authorization: `Bearer ${credential}`
-          }
-        })
+        const data = response?.data
 
-        setPlace({ name: data.name_place, color: responseColor.data.data.code_color })
+        setPlace({ name: data.name, color: data.color.code })
 
         setLoading(false)
       } catch (err) {
@@ -63,13 +58,13 @@ function EditPlacePage () {
   useEffect(() => {
     async function getColor () {
       try {
-        const response = await axios.get(`/users/${userId}/colors`, {
+        const response = await axios.get('/users/colors', {
           headers: {
             Authorization: `Bearer ${credential}`
           }
         })
-        setAllColors(response?.data.data.map((data) => {
-          return { color: '#' + data.code_color, title: data.name_color, id: data.color_id }
+        setAllColors(response?.data.map((data) => {
+          return { color: '#' + data.code, title: data.name, id: data.id }
         }))
       } catch (e) {
         console.log(e)
@@ -95,11 +90,11 @@ function EditPlacePage () {
   const onSave = async () => {
     let request = {}
     if (newColor.slice(1) !== place.color) {
-      request = { code_color: newColor.slice(1) }
+      request = { code: newColor.slice(1) }
     }
 
     if (newTextPlace.trimEnd() !== place.name) {
-      request = { name_place: newTextPlace.trimEnd(), ...request }
+      request = { name: newTextPlace.trimEnd(), ...request }
     }
 
     if (Object.entries(request).length >= 1) {
@@ -203,7 +198,7 @@ function EditPlacePage () {
             variant="contained"
             onClick={onSave}
             disabled={
-              loading || (newColor.slice(1) === place.color && newTextPlace === place.name) || newTextPlace.length < 5}
+              loading || (newColor.slice(1) === place.color && newTextPlace === place.name) || newTextPlace.length < 2}
           >
             <FormattedMessage id="button.save" defaultMessage="Save" />
           </Button>

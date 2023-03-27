@@ -13,7 +13,7 @@ import axios from '../../api/axios'
 
 function NewProfilePage () {
   const navigate = useNavigate()
-  const { userId, credential, setHasProfile } = useAuth()
+  const { credential, setHasProfile } = useAuth()
 
   const [names, setNames] = useState('')
   const [validNames, setValidNames] = useState(false)
@@ -55,13 +55,13 @@ function NewProfilePage () {
 
     if (lastNames !== '') {
       if (NAMES_REGEX.test(lastNames)) {
-        request = { last_name: lastNames, ...request }
+        request = { lastName: lastNames, ...request }
       }
     }
 
     if (years) {
       if (years.isValid()) {
-        request = { years_old: years.format('YYYY-MM-DD'), ...request }
+        request = { birth: years.format('YYYY-MM-DD'), ...request }
       }
     }
 
@@ -72,14 +72,14 @@ function NewProfilePage () {
     }
 
     request = {
-      first_name: names,
+      firstName: names,
       gender,
-      preference_lang: 'es',
+      preferenceLang: 'es',
       ...request
     }
 
     try {
-      await axios.post(`/users/${userId}/profile`,
+      await axios.post('/users/profile',
         JSON.stringify({
           ...request
         }),

@@ -24,8 +24,8 @@ function AuthProvider ({ children }) {
           email, password
         }))
 
-      const data = response?.data.data
-      setCredential(data.login_session)
+      const data = response?.data
+      setCredential(data.access_token)
       setUserId(data.id)
     } catch (err) {
       if (!err.response) {

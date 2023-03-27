@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { FormattedMessage } from 'react-intl'
 
-import { EMAIL_REGEX, PWD_REGEX, USER_REGEX } from '../../utils/regex'
+import { EMAIL_REGEX, PWD_REGEX } from '../../utils/regex'
 import axios from '../../api/axios'
 import { TextFieldPassword } from '../../components/TextFieldPassword'
 import { useAuth } from '../../hooks/useAuth'
@@ -13,8 +13,6 @@ import { useAuth } from '../../hooks/useAuth'
 function SignUpPage () {
   const { loginAction } = useAuth()
   const navigate = useNavigate()
-  const [user, setUser] = useState('')
-  const [validUser, setValidUser] = useState(false)
 
   const [email, setEmail] = useState('')
   const [validEmail, setValidEmail] = useState(false)
@@ -35,10 +33,6 @@ function SignUpPage () {
   }, [email])
 
   useEffect(() => {
-    setValidUser(USER_REGEX.test(user))
-  })
-
-  useEffect(() => {
     setValidPwd(PWD_REGEX.test(pwd))
     setValidMatch(pwd === matchPwd)
   }, [pwd, matchPwd])
@@ -51,11 +45,10 @@ function SignUpPage () {
     e.preventDefault()
     setLoading(true)
 
-    const testUser = USER_REGEX.test(user)
     const testEmail = EMAIL_REGEX.test(email)
     const testPwd = PWD_REGEX.test(pwd)
 
-    if (!testUser || !testEmail || !testPwd) {
+    if (!testEmail || !testPwd) {
       setErrMsg('Invalid Entry')
       setLoading(false)
       return
@@ -64,7 +57,6 @@ function SignUpPage () {
     try {
       await axios.post('/auth/signup',
         JSON.stringify({
-          username: user,
           password: pwd,
           email
         }),
@@ -83,7 +75,7 @@ function SignUpPage () {
         setErrMsg('No Server Response')
         setLoading(false)
       } else if (err.response?.status === 409) {
-        setErrMsg('Username or Email taken')
+        setErrMsg('Email taken')
         setLoading(false)
       } else {
         setErrMsg('Registration failed')
@@ -127,22 +119,14 @@ function SignUpPage () {
             onSubmit={handleSubmit}
             sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              <TextField
-                type="text"
-                id="outlined-required"
-                error={!validUser && user !== ''}
-                label={<FormattedMessage id="signup.username" defaultMessage="Username" />}
-                onChange={(e) => setUser(e.target.value)}
-                arial-invalid={validUser ? 'false' : 'true'}
-                required
-              />
+
               <TextField
                 type="email"
                 id="outlined-required"
                 error={!validEmail && email !== ''}
                 label={<FormattedMessage id="signup.email" defaultMessage="Email" />}
                 onChange={(e) => setEmail(e.target.value)}
-                arial-invalid={validUser ? 'false' : 'true'}
+                arial-invalid={validEmail ? 'false' : 'true'}
                 required
               />
               <TextFieldPassword
@@ -163,7 +147,7 @@ function SignUpPage () {
                 label={<FormattedMessage id="signup.confirm" defaultMessage="Confirm password" />}
               />
               <Button
-                disabled={!!(!validPwd || !validEmail || !validMatch || !validUser) || loading}
+                disabled={!!(!validPwd || !validEmail || !validMatch) || loading}
                 type='submit' variant='contained' size='large'>
                 <FormattedMessage id="signup.submit" defaultMessage="Sign up" />
               </Button>

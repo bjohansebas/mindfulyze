@@ -44,8 +44,8 @@ function ShowThinks ({ id }) {
         }
       })
 
-      setAllThink(response?.data.data.map(data => {
-        return { text: data.text_think, id: data.think_id, created: data.created_at }
+      setAllThink(response?.data.map(data => {
+        return { text: data.text, id: data.id, created: data.createdAt }
       }))
 
       setOptions([
@@ -85,8 +85,8 @@ function ShowThinks ({ id }) {
         }
       })
 
-      setAllThink(response?.data.data.map(data => {
-        return { text: data.text_think, id: data.trash_th_id, created: data.created_at }
+      setAllThink(response?.data.map(data => {
+        return { text: data.text, id: data.id, created: data.createdAt }
       }))
 
       setOptions([
@@ -127,8 +127,8 @@ function ShowThinks ({ id }) {
         }
       })
 
-      setAllThink(response?.data.data.map(data => {
-        return { text: data.text_think, id: data.think_id, created: data.created_at }
+      setAllThink(response?.data.map(data => {
+        return { text: data.text, id: data.id, created: data.createdAt }
       }))
 
       setOptions([
@@ -187,7 +187,7 @@ function ShowThinks ({ id }) {
   const onRestoreId = async (idThink) => {
     try {
       setAnchorElThink(null)
-      await axios.post(`/trash/${idThink}`, {}, {
+      await axios.put(`/trash/${idThink}`, {}, {
         headers: {
           Authorization: `Bearer ${credential}`
         }
@@ -218,7 +218,7 @@ function ShowThinks ({ id }) {
     try {
       setAnchorElThink(null)
       await axios.put(`/thinks/${idThink}`, JSON.stringify({
-        is_archive: false
+        isArchive: false
       }), {
         headers: {
           Authorization: `Bearer ${credential}`
@@ -236,7 +236,7 @@ function ShowThinks ({ id }) {
     try {
       await axios.put(`/thinks/${idThink}/`,
         JSON.stringify({
-          is_archive: true
+          isArchive: true
         }), {
           headers: {
             Authorization: `Bearer ${credential}`
@@ -252,7 +252,7 @@ function ShowThinks ({ id }) {
   const onDelete = async (idThink) => {
     setAnchorElThink(null)
     try {
-      await axios.post(`/thinks/${idThink}/trash`, {}, {
+      await axios.put(`/thinks/${idThink}/trash`, {}, {
         headers: {
           Authorization: `Bearer ${credential}`
         }

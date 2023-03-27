@@ -5,18 +5,16 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Helmet } from 'react-helmet-async'
-import dayjs from 'dayjs'
 
 import axios from '../../api/axios'
 import { useAuth } from '../../hooks/useAuth'
-import { EMAIL_REGEX, USER_REGEX, NAMES_REGEX, GENDER_REGEX } from '../../utils/regex'
+import { EMAIL_REGEX, NAMES_REGEX, GENDER_REGEX } from '../../utils/regex'
 import { Loading } from '../../components/Loading'
 
 function AccountPage () {
-  const { userId, credential, logoutEvent } = useAuth()
+  const { credential, logoutEvent } = useAuth()
 
   const [dataUser, setDataUser] = useState({})
-  const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -27,26 +25,19 @@ function AccountPage () {
 
   const getData = async () => {
     try {
-      const response = await axios.get(`users/${userId}`, {
+      const response = await axios.get('users/', {
         headers: { Authorization: `Bearer ${credential}` }
       })
 
-      const responseProfile = await axios.get(`users/${userId}/profile`, {
-        headers: { Authorization: `Bearer ${credential}` }
-      })
-
-      const dataResponse = response?.data.data
-      const dataResponseProfile = responseProfile?.data.data
+      const dataResponse = response?.data
       const data = {
-        username: dataResponse.username,
         email: dataResponse.email,
-        firstName: dataResponseProfile.first_name,
-        lastName: dataResponseProfile?.last_name || '',
-        yearsOld: dayjs(dataResponseProfile?.years_old) || '',
-        gender: dataResponseProfile.gender
+        firstName: dataResponse.profile.firstName,
+        lastName: dataResponse.profile.lastName || '',
+        yearsOld: dataResponse.profile?.birth,
+        gender: dataResponse.profile?.gender
       }
 
-      setUsername(data.username)
       setEmail(data.email)
       setFirstName(data.firstName)
       setLastName(data.lastName)
@@ -62,7 +53,7 @@ function AccountPage () {
 
   const deleteAccount = async () => {
     try {
-      await axios.delete(`/users/${userId}`, {
+      await axios.delete('/users/', {
         headers: { Authorization: `Bearer ${credential}` }
       })
       logoutEvent()
@@ -78,13 +69,9 @@ function AccountPage () {
       requestAccount = { email }
     }
 
-    if (dataUser.username !== username && USER_REGEX.test(username)) {
-      requestAccount = { username, ...requestAccount }
-    }
-
     if (Object.entries(requestAccount).length >= 1) {
       try {
-        await axios.put(`/users/${userId}/`,
+        await axios.put('/users/',
           JSON.stringify(requestAccount), {
             headers: {
               Authorization: `Bearer ${credential}`
@@ -98,15 +85,15 @@ function AccountPage () {
     let requestProfile = {}
 
     if (dataUser.firstName !== firstName && NAMES_REGEX.test(firstName)) {
-      requestProfile = { first_name: firstName }
+      requestProfile = { firstName }
     }
 
     if (dataUser.lastName !== lastName && NAMES_REGEX.test(lastName)) {
-      requestProfile = { last_name: lastName, ...requestProfile }
+      requestProfile = { lastName, ...requestProfile }
     }
 
-    if (dataUser.yearsOld.format('YYYY-MM-DD') !== yearsOld.format('YYYY-MM-DD') && yearsOld?.isValid()) {
-      requestProfile = { years_old: yearsOld.format('YYYY-MM-DD'), ...requestProfile }
+    if (yearsOld?.isValid()) {
+      requestProfile = { birth: yearsOld.format('YYYY-MM-DD'), ...requestProfile }
     }
 
     if (dataUser.gender !== gender && GENDER_REGEX.test(gender)) {
@@ -115,7 +102,7 @@ function AccountPage () {
 
     if (Object.entries(requestProfile).length >= 1) {
       try {
-        await axios.put(`/users/${userId}/profile`,
+        await axios.put('/users/profile',
           JSON.stringify(requestProfile), {
             headers: {
               Authorization: `Bearer ${credential}`
@@ -180,14 +167,6 @@ function AccountPage () {
               label={<FormattedMessage id="profile.edit.name.last" defaultMessage="Last name" />}
               value={lastName}
               onChange={(e) => setLastName(e.target.value)} />
-            <TextField
-              type="text"
-              id="outlined"
-              error={false}
-              label={<FormattedMessage id="profile.edit.username" defaultMessage="Username" />}
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
             <TextField
               type="text"
               id="outlined"

@@ -14,7 +14,7 @@ import { EmptyArchive } from './EmptyArchive'
 
 function ArchivePage () {
   const navigate = useNavigate()
-  const { userId, credential } = useAuth()
+  const { credential } = useAuth()
 
   const [anchorElTrash, setAnchorElTrash] = useState(null)
   const [checked, setChecked] = useState([])
@@ -26,13 +26,13 @@ function ArchivePage () {
   const getArchive = async () => {
     try {
       setLoading(true)
-      const response = await axios.get(`/users/${userId}/archives`, {
+      const response = await axios.get('/users/thinks/archives', {
         headers: {
           Authorization: `Bearer ${credential}`
         }
       })
-      setAllArchive(response?.data.data.map(data => {
-        return { text: data.text_think, id: data.think_id }
+      setAllArchive(response?.data.map(data => {
+        return { text: data.text, id: data.id }
       }))
     } catch (e) {
       console.log(e?.response)
@@ -71,7 +71,7 @@ function ArchivePage () {
   const onDeleteId = async () => {
     try {
       setAnchorElTrash(null)
-      await axios.post(`/thinks/${idSelect}/trash`, {}, {
+      await axios.put(`/thinks/${idSelect}/trash`, {}, {
         headers: {
           Authorization: `Bearer ${credential}`
         }
@@ -88,7 +88,7 @@ function ArchivePage () {
     try {
       setAnchorElTrash(null)
       await axios.put(`/thinks/${idSelect}`, JSON.stringify({
-        is_archive: false
+        isArchive: false
       }), {
         headers: {
           Authorization: `Bearer ${credential}`
@@ -107,7 +107,7 @@ function ArchivePage () {
       try {
         for await (const value of checked) {
           const archive = allArchive[value]
-          await axios.post(`/thinks/${archive.id}/trash`, {}, {
+          await axios.put(`/thinks/${archive.id}/trash`, {}, {
             headers: {
               Authorization: `Bearer ${credential}`
             }
@@ -127,7 +127,7 @@ function ArchivePage () {
         for await (const value of checked) {
           const archive = allArchive[value]
           await axios.put(`/thinks/${archive.id}`, JSON.stringify({
-            is_archive: false
+            isArchive: false
           }), {
             headers: {
               Authorization: `Bearer ${credential}`
