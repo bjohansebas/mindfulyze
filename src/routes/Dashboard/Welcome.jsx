@@ -49,7 +49,7 @@ function Welcome () {
         fontSize: '1.7em',
         textAlign: 'center'
       }}>
-        <FormattedMessage id="dashboard.welcome" defaultMessage="Welcome" /> {userInfo.profile?.firstName} {userInfo.profile?.lastName}
+        <FormattedMessage id="dashboard.welcome" defaultMessage="Welcome" /> {userInfo?.profile?.firstName} {userInfo?.profile?.lastName}
       </Typography>
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         {loading

@@ -27,6 +27,7 @@ function AuthProvider ({ children }) {
       const data = response?.data
       setCredential(data.access_token)
       setUserId(data.id)
+      setUserInfo(data.profile)
     } catch (err) {
       if (!err.response) {
         console.log('No server response')
