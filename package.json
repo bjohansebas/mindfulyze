@@ -1,63 +1,26 @@
 {
   "name": "alignmind",
-  "version": "0.1.0",
-  "author": "Sebastian Beltran <bjohansebas@gmail.com>",
-  "private": true,
-  "type": "module",
-  "dependencies": {
-    "@emotion/react": "11.10.6",
-    "@emotion/styled": "11.10.6",
-    "@fontsource/roboto": "4.5.8",
-    "@formatjs/intl-pluralrules": "5.1.8",
-    "@mui/icons-material": "5.11.9",
-    "@mui/material": "5.11.9",
-    "@mui/x-date-pickers": "5.0.19",
-    "axios": "1.3.3",
-    "chart.js": "4.2.1",
-    "dayjs": "1.11.7",
-    "localforage": "1.10.0",
-    "react": "18.2.0",
-    "react-chartjs-2": "5.2.0",
-    "react-color": "2.19.3",
-    "react-dom": "18.2.0",
-    "react-helmet-async": "1.3.0",
-    "react-intl": "6.2.8",
-    "react-router-dom": "6.8.1",
-    "sort-by": "1.2.0"
-  },
+  "version": "0.0.1",
+  "description": "Alignmind is a web application for tracking emotions and thoughts. The application was created with the goal of helping you reflect on your emotions and thoughts, and keep a record of them in a simple and organized way.",
+  "author": "bsebas <bjohansebas@gmail.com>",
+  "license": "MPL V2",
   "scripts": {
     "co": "sui-mono commit",
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev:web": "npm run dev -w web",
+    "start:server": "npm run start:dev -w server",
+    "build:web": "npm run build -w web",
+    "build:server": "npm run build -w server",
+    "preview:web": "npm run preview -w web"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "workspaces": [
+    "web",
+    "server"
+  ], 
+  "devDependencies": {
+    "@s-ui/mono": "2.34.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/bsebas/alignmind.git"
-  },
-  "devDependencies": {
-    "@s-ui/mono": "2.34.0",
-    "@types/react": "18.0.28",
-    "@types/react-dom": "18.0.11",
-    "@vitejs/plugin-react": "3.1.0",
-    "eslint": "8.34.0",
-    "eslint-config-standard": "17.0.0",
-    "eslint-plugin-import": "2.27.5",
-    "eslint-plugin-n": "15.6.1",
-    "eslint-plugin-promise": "6.1.1",
-    "eslint-plugin-react": "7.32.2",
-    "vite": "4.1.2"
   }
 }
