@@ -1,17 +1,21 @@
 {
   "name": "alignmind",
-  "version": "0.1.0",
-  "author": "Sebastian Beltran <bjohansebas@gmail.com>",
-  "private": true,
+  "version": "0.0.1",
+  "description": "Alignmind is a web application for tracking emotions and thoughts. The application was created with the goal of helping you reflect on your emotions and thoughts, and keep a record of them in a simple and organized way.",
+  "author": "bsebas <bjohansebas@gmail.com>",
+  "license": "MPL V2",
   "scripts": {
     "co": "sui-mono commit",
     "dev:web": "npm run dev -w web",
+    "start:server": "npm run start:dev -w server",
     "build:web": "npm run build -w web",
+    "build:server": "npm run build -w server",
     "preview:web": "npm run preview -w web"
   },
   "workspaces": [
-    "web"
-  ],
+    "web",
+    "server"
+  ], 
   "devDependencies": {
     "@s-ui/mono": "2.34.0"
   },

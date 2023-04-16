@@ -1,4 +1,3 @@
-### Node ###
 # Logs
 logs
 *.log
@@ -43,8 +42,8 @@ build/Release
 node_modules/
 jspm_packages/
 
-# Snowpack dependency directory (https://snowpack.dev/)
-web_modules/
+# TypeScript v1 declaration files
+typings/
 
 # TypeScript cache
 *.tsbuildinfo
@@ -76,6 +75,7 @@ web_modules/
 # dotenv environment variable files
 .env
 .env.development.local
+.env.development
 .env.test.local
 .env.production.local
 .env.local
@@ -119,34 +119,30 @@ dist
 # TernJS port file
 .tern-port
 
-# Stores VSCode versions used for testing VSCode extensions
-.vscode-test
+# Docker database
+postgres_data
+.vercel
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# yarn v2
-.yarn/cache
-.yarn/unplugged
-.yarn/build-state.yml
-.yarn/install-state.gz
-.pnp.*
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
 
-### Node Patch ###
-# Serverless Webpack directories
-.webpack/
+# testing
+/coverage
 
-# Optional stylelint cache
+# production
+/build
 
-# SvelteKit build / generate output
-.svelte-kit
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-### react ###
-.DS_*
-**/*.backup.*
-**/*.back.*
-
-node_modules
-
-*.sublime*
-
-psd
-thumb
-sketch
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+server/src/database/dataSource.ts

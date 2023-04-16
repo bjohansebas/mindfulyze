@@ -1,9 +1,7 @@
 {
   "name": "web",
   "version": "0.1.0",
-  "author": "Sebastian Beltran <bjohansebas@gmail.com>",
   "private": true,
-  "type": "module",
   "dependencies": {
     "@emotion/react": "11.10.6",
     "@emotion/styled": "11.10.6",
@@ -29,6 +27,12 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
     "production": [
