@@ -7,7 +7,7 @@
   "scripts": {
     "co": "sui-mono commit",
     "dev:web": "npm run dev -w web",
-    "start:server": "npm run start:dev -w server",
+    "dev:server": "npm run start:dev -w server",
     "build:web": "npm run build -w web",
     "build:server": "npm run build -w server",
     "preview:web": "npm run preview -w web"
@@ -15,7 +15,7 @@
   "workspaces": [
     "web",
     "server"
-  ], 
+  ],
   "devDependencies": {
     "@s-ui/mono": "2.34.0"
   },
