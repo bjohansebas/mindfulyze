@@ -10,7 +10,9 @@
     "dev:server": "npm run start:dev -w server",
     "build:web": "npm run build -w web",
     "build:server": "npm run build -w server",
-    "preview:web": "npm run preview -w web"
+    "preview:web": "npm run preview -w web",
+    "lint:web": "npm run lint -w web",
+    "lint:server": "npm run lint -w server"
   },
   "workspaces": [
     "web",
