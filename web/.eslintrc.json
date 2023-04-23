@@ -17,7 +17,7 @@
         "ecmaVersion": "latest",
         "sourceType": "module",
         "project": [
-            "./tsconfig.json"
+            "web/tsconfig.json"
         ]
     },
     "plugins": [
