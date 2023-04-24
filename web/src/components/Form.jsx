@@ -32,7 +32,6 @@ function Forms ({ handleSubmit, title, submitText, children, disableSubmit, isCa
           {isCancel &&
             <Button
               disabled={disableSubmit}
-              type='submit'
               variant='contained'
               size='large'
               onClick={() => navigate(cancel)}>
