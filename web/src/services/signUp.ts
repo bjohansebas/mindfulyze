@@ -3,6 +3,7 @@ import { type AxiosResponse } from 'axios'
 import axios from '../api/axios'
 import { type ErrorRequest } from './login'
 import { DATE_REGEX, GENDER_REGEX, NAMES_REGEX } from '../utils/regex'
+import { type ResponseProfile } from './user'
 
 export interface ResponseSignUpAccount {
   email: string
@@ -12,29 +13,7 @@ export interface ResponseSignUpAccount {
   updatedAt: string
 }
 
-interface ResponseAccount {
-  id: string
-  email: string
-  changedPasswordAt: string
-  createdAt: string
-  updatedAt: string
-  profile: string | null
-}
-
-interface ResponseProfile {
-  firstName: string
-  lastName: string | null
-  birth: string | null
-  preferenceLang: string
-  gender: string
-  user: ResponseAccount
-  photo: string | null
-  id: string
-  createdAt: string
-  updatedAt: string
-}
-
-interface dataProfile {
+export interface dataProfile {
   firstName: string
   lastName?: string
   birth?: string
