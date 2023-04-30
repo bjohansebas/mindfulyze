@@ -6,10 +6,11 @@ import { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Helmet } from 'react-helmet-async'
 
-import axios from '../../api/axios'
 import { useAuth } from '../../hooks/useAuth'
 import { EMAIL_REGEX, NAMES_REGEX, GENDER_REGEX } from '../../utils/regex'
 import { Loading } from '../../components/Loading'
+import { deleteAccountUser, getAccount, putAccount, putProfile } from '../../services/user'
+import dayjs from 'dayjs'
 
 function AccountPage () {
   const { credential, logoutEvent } = useAuth()
@@ -25,16 +26,13 @@ function AccountPage () {
 
   const getData = async () => {
     try {
-      const response = await axios.get('users/', {
-        headers: { Authorization: `Bearer ${credential}` }
-      })
+      const dataResponse = await getAccount(credential)
 
-      const dataResponse = response?.data
       const data = {
         email: dataResponse.email,
         firstName: dataResponse.profile.firstName,
         lastName: dataResponse.profile.lastName || '',
-        yearsOld: dataResponse.profile?.birth,
+        yearsOld: dataResponse.profile?.birth ? dayjs(dataResponse.profile.birth) : dataResponse.profile.birth,
         gender: dataResponse.profile?.gender
       }
 
@@ -53,9 +51,7 @@ function AccountPage () {
 
   const deleteAccount = async () => {
     try {
-      await axios.delete('/users/', {
-        headers: { Authorization: `Bearer ${credential}` }
-      })
+      await deleteAccountUser(credential)
       logoutEvent()
     } catch (e) {
       console.log(e)
@@ -71,12 +67,7 @@ function AccountPage () {
 
     if (Object.entries(requestAccount).length >= 1) {
       try {
-        await axios.put('/users/',
-          JSON.stringify(requestAccount), {
-            headers: {
-              Authorization: `Bearer ${credential}`
-            }
-          })
+        await putAccount(requestAccount, credential)
       } catch (e) {
         console.log(e)
       }
@@ -102,12 +93,7 @@ function AccountPage () {
 
     if (Object.entries(requestProfile).length >= 1) {
       try {
-        await axios.put('/users/profile',
-          JSON.stringify(requestProfile), {
-            headers: {
-              Authorization: `Bearer ${credential}`
-            }
-          })
+        await putProfile(requestProfile, credential)
       } catch (e) {
         console.log(e)
       }
@@ -132,7 +118,7 @@ function AccountPage () {
       <Helmet>
         <title>Account | AlignMind</title>
       </Helmet>
-      {loading && <Loading/>}
+      {loading && <Loading />}
       {!loading &&
         <Box sx={{
           background: '#ffffff',
