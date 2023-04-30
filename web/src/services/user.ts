@@ -71,7 +71,7 @@ export async function putProfile (data: UpdateProfile, credential: string): Prom
     throw new Error('Please enter a valid date')
   }
 
-  const response: AxiosResponse<ResponseProfile, ErrorRequest> = await axios.put('/users/', data, {
+  const response: AxiosResponse<ResponseProfile, ErrorRequest> = await axios.put('/users/profile', data, {
     headers: {
       Authorization: `Bearer ${credential}`
     }
