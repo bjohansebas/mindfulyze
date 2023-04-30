@@ -28,12 +28,24 @@ export interface NewThink {
 }
 
 export interface UpdateThink {
-  text: string
-  isArchive: boolean
+  text?: string
+  isArchive?: boolean
 }
+
+export type ResponseThinks = ResponseThink[]
 
 export async function getThink (id: string, credential: string): Promise<ResponseThink> {
   const response: AxiosResponse<ResponseThink, ErrorRequest> = await axios.get(`/thinks/${id}`, {
+    headers: {
+      Authorization: `Bearer ${credential}`
+    }
+  })
+
+  return response.data
+}
+
+export async function getArchiveThinks (credential: string): Promise<ResponseThinks> {
+  const response: AxiosResponse<ResponseThinks, ErrorRequest> = await axios.get('/users/thinks/archives', {
     headers: {
       Authorization: `Bearer ${credential}`
     }

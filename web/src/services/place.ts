@@ -4,6 +4,8 @@ import axios from '../api/axios'
 import { type ErrorRequest } from './login'
 import { type ResponseAccount } from './user'
 import { type ResponseColor } from './color'
+import { type ResponseThinks } from './think'
+import { type ResponseTrashes } from './trash'
 
 export interface ResponsePlace {
   id: string
@@ -29,6 +31,36 @@ export interface UpdatePlace {
 
 export async function getPlace (id: string, credential: string): Promise<ResponseAllPlaces> {
   const response: AxiosResponse<ResponseAllPlaces, ErrorRequest> = await axios.get(`/places/${id}`, {
+    headers: {
+      Authorization: `Bearer ${credential}`
+    }
+  })
+
+  return response?.data
+}
+
+export async function getThinksPlace (id: string, credential: string): Promise<ResponseThinks> {
+  const response: AxiosResponse<ResponseThinks, ErrorRequest> = await axios.get(`/places/${id}/thinks`, {
+    headers: {
+      Authorization: `Bearer ${credential}`
+    }
+  })
+
+  return response?.data
+}
+
+export async function getTrashPlace (id: string, credential: string): Promise<ResponseTrashes> {
+  const response: AxiosResponse<ResponseTrashes, ErrorRequest> = await axios.get(`/places/${id}/trash`, {
+    headers: {
+      Authorization: `Bearer ${credential}`
+    }
+  })
+
+  return response?.data
+}
+
+export async function getArchiveThinksPlace (id: string, credential: string): Promise<ResponseThinks> {
+  const response: AxiosResponse<ResponseThinks, ErrorRequest> = await axios.get(`/places/${id}/thinks/archive`, {
     headers: {
       Authorization: `Bearer ${credential}`
     }
