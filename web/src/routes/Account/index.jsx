@@ -13,7 +13,7 @@ import { deleteAccountUser, getAccount, putAccount, putProfile } from '../../ser
 import dayjs from 'dayjs'
 
 function AccountPage () {
-  const { credential, logoutEvent } = useAuth()
+  const { credential, logoutAction } = useAuth()
 
   const [dataUser, setDataUser] = useState({})
   const [email, setEmail] = useState('')
@@ -52,7 +52,7 @@ function AccountPage () {
   const deleteAccount = async () => {
     try {
       await deleteAccountUser(credential)
-      logoutEvent()
+      logoutAction()
     } catch (e) {
       console.log(e)
     }
