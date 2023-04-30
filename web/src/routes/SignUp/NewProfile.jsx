@@ -9,7 +9,7 @@ import { FormattedMessage } from 'react-intl'
 
 import { useAuth } from '../../hooks/useAuth'
 import { GENDER_REGEX, NAMES_REGEX } from '../../utils/regex'
-import axios from '../../api/axios'
+import { postNewProfile } from '../../services/signUp'
 
 function NewProfilePage () {
   const navigate = useNavigate()
@@ -79,13 +79,8 @@ function NewProfilePage () {
     }
 
     try {
-      await axios.post('/users/profile',
-        JSON.stringify({
-          ...request
-        }),
-        {
-          headers: { Authorization: `Bearer ${credential}` }
-        })
+      await postNewProfile(request, credential)
+
       setHasProfile(true)
       navigate('/')
     } catch (err) {

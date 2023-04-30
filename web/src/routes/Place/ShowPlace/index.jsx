@@ -7,8 +7,8 @@ import { FormattedMessage } from 'react-intl'
 import { Helmet } from 'react-helmet-async'
 
 import { useAuth } from '../../../hooks/useAuth'
-import axios from '../../../api/axios'
 import { ShowThinks } from './ShowThinks'
+import { deletePlace, getPlace } from '../../../services/place'
 
 function ShowPlacePage () {
   const { id } = useParams()
@@ -20,14 +20,11 @@ function ShowPlacePage () {
   const [namePlace, setNamePlace] = useState('')
 
   useEffect(() => {
-    async function getPlace () {
+    async function getRequestPlace () {
       try {
-        const responsePlace = await axios.get(`/places/${id}`, {
-          headers: {
-            Authorization: `Bearer ${credential}`
-          }
-        })
-        setNamePlace(responsePlace?.data.name)
+        const responsePlace = await getPlace(id, credential)
+
+        setNamePlace(responsePlace.name)
       } catch (err) {
         if (!err?.response) {
           console.log('Server not response')
@@ -40,7 +37,7 @@ function ShowPlacePage () {
         setLoading(false)
       }
     }
-    getPlace()
+    getRequestPlace()
   }, [])
 
   const handlePlaceMenu = (event) => {
@@ -54,11 +51,7 @@ function ShowPlacePage () {
   const onDeletePlace = async () => {
     setAnchorElPlace(null)
     try {
-      await axios.delete(`/places/${id}`, {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
+      await deletePlace(id, credential)
 
       navigate('/')
     } catch (err) {

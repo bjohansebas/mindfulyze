@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import localforage from 'localforage'
 
 import { useLocalStorage } from '../hooks/useLocalStorage'
-import axios from '../api/axios'
+import { postLogin } from '../services/login'
 
 const AuthContext = createContext()
 
@@ -19,15 +19,11 @@ function AuthProvider ({ children }) {
 
   const loginAction = async (email, password, error) => {
     try {
-      const response = await axios.post('auth/login',
-        JSON.stringify({
-          email, password
-        }))
+      const response = await postLogin(email, password)
 
-      const data = response?.data
-      setCredential(data.access_token)
-      setUserId(data.id)
-      setUserInfo(data.profile)
+      setCredential(response.access_token)
+      setUserId(response.id)
+      setUserInfo(response.profile)
     } catch (err) {
       if (!err.response) {
         console.log('No server response')

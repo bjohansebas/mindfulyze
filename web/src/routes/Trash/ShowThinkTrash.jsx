@@ -7,8 +7,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 import { Helmet } from 'react-helmet-async'
 
-import axios from '../../api/axios'
 import { useAuth } from '../../hooks/useAuth'
+import { deleteThinkFromTrash, getTrash, restoreFromTrash } from '../../services/trash'
 
 function ShowThinkTrashPage () {
   const { id } = useParams()
@@ -25,13 +25,7 @@ function ShowThinkTrashPage () {
 
   async function getThink () {
     try {
-      const response = await axios.get(`/trash/${id}`, {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
-
-      const data = response?.data
+      const data = await getTrash(id, credential)
       setThink(data)
       setEmotions(data.emotions.map(data => {
         return { text: data.emotion.name, id: data.emotion.id }
@@ -57,11 +51,7 @@ function ShowThinkTrashPage () {
 
   const onDelete = async () => {
     try {
-      await axios.delete(`/trash/${id}`, {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
+      await deleteThinkFromTrash(id, credential)
 
       navigate(-1, { replace: true })
     } catch (err) {
@@ -71,11 +61,7 @@ function ShowThinkTrashPage () {
 
   const onRestore = async () => {
     try {
-      await axios.put(`/trash/${id}/`, {}, {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
+      await restoreFromTrash(id, credential)
 
       navigate(`/place/${place.id}`, { replace: true })
     } catch (err) {

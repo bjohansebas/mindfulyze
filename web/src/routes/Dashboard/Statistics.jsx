@@ -6,9 +6,9 @@ import { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Doughnut } from 'react-chartjs-2'
 
-import axios from '../../api/axios'
 import { useAuth } from '../../hooks/useAuth'
 import { EmptyStatistics } from './EmptyStatistics'
+import { getStatisticsAll, getStatisticsNegative, getStatisticsPositive } from '../../services/statistics'
 
 function Statistics () {
   const { credential } = useAuth()
@@ -48,13 +48,8 @@ function Statistics () {
 
     try {
       setLoading(true)
-      const response = await axios.get('/statistics/all', {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
+      const dataResponse = await getStatisticsAll(credential)
 
-      const dataResponse = response?.data
       const positive = dataResponse.filter(value => value.emotion.type === 'Positive')
       const negative = dataResponse.filter(value => value.emotion.type === 'Negative')
       const repeatNegative = {}
@@ -107,13 +102,7 @@ function Statistics () {
 
     try {
       setLoading(true)
-      const response = await axios.get('/statistics/negative', {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
-
-      const dataResponse = response?.data
+      const dataResponse = await getStatisticsNegative(credential)
       const negative = {}
 
       for await (const value of dataResponse) {
@@ -146,13 +135,8 @@ function Statistics () {
 
     try {
       setLoading(true)
-      const response = await axios.get('/statistics/positive', {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
 
-      const dataResponse = response?.data
+      const dataResponse = await getStatisticsPositive(credential)
       const positive = {}
 
       for await (const value of dataResponse) {

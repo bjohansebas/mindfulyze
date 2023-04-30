@@ -4,8 +4,8 @@ import { Circle } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 
-import axios from '../../api/axios'
 import { useAuth } from '../../hooks/useAuth'
+import { getStatisticsAll } from '../../services/statistics'
 
 function Welcome () {
   const { userInfo, credential } = useAuth()
@@ -15,13 +15,7 @@ function Welcome () {
 
   const getEmotions = async () => {
     try {
-      const response = await axios.get('/statistics/all', {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
-
-      const dataResponse = response?.data
+      const dataResponse = await getStatisticsAll(credential)
       const positive = dataResponse.filter(value => value.emotion.type === 'Positive').length
       const negative = dataResponse.filter(value => value.emotion.type === 'Negative').length
 

@@ -8,7 +8,10 @@ import { Helmet } from 'react-helmet-async'
 import { Forms } from '../../components/Form'
 import { Combobox } from '../../components/Combobox'
 import { useAuth } from '../../hooks/useAuth'
-import axios from '../../api/axios'
+import { getAllPlaces } from '../../services/place'
+import { postThink, putAddEmotion } from '../../services/think'
+
+import { getAllEmotions } from '../../services/emotion'
 
 function NewThinkPage () {
   const navigate = useNavigate()
@@ -26,14 +29,12 @@ function NewThinkPage () {
   useEffect(() => {
     async function getPlace () {
       setLoading(true)
-      const response = await axios.get('/users/places', {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
-      setAllPlaces(response?.data.map(data => {
+      const response = await getAllPlaces(credential)
+
+      setAllPlaces(response?.map(data => {
         return { text: data.name, id: data.id }
       }))
+
       setLoading(false)
     }
     getPlace()
@@ -42,14 +43,12 @@ function NewThinkPage () {
   useEffect(() => {
     async function getEmotions () {
       setLoading(true)
-      const response = await axios.get('/emotions/', {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
-      setAllEmotions(response?.data.map(data => {
+      const response = await getAllEmotions(credential)
+
+      setAllEmotions(response?.map(data => {
         return { text: data.name, id: data.id }
       }))
+
       setLoading(false)
     }
     getEmotions()
@@ -65,27 +64,19 @@ function NewThinkPage () {
     }
 
     try {
-      const response = await axios.post('/thinks/',
-        JSON.stringify({
-          text: textThink.trimEnd(),
-          place: place.id
-        }),
-        {
-          headers: { Authorization: `Bearer ${credential}` }
-        })
+      const request = {
+        text: textThink.trimEnd(),
+        place: place.id
+      }
 
-      const thinkId = response?.data.id
+      const response = await postThink(request, credential)
+
+      const thinkId = response?.id
 
       const emotions = emotionsSelect.map(value => value.id)
 
       try {
-        await axios.put(`/thinks/${thinkId}/emotions/add`,
-          JSON.stringify({
-            emotions
-          }),
-          {
-            headers: { Authorization: `Bearer ${credential}` }
-          })
+        await putAddEmotion(thinkId, emotions, credential)
       } catch (e) {
         console.log('error')
       }

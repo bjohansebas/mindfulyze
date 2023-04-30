@@ -8,8 +8,9 @@ import { Helmet } from 'react-helmet-async'
 
 import { HEXADECIMAL_REGEX } from '../../utils/regex'
 import { useAuth } from '../../hooks/useAuth'
-import axios from '../../api/axios'
 import { Forms } from '../../components/Form'
+import { postPlace } from '../../services/place'
+import { getAllColor } from '../../services/color'
 
 function NewPlacePage () {
   const navigate = useNavigate()
@@ -25,12 +26,8 @@ function NewPlacePage () {
   useEffect(() => {
     async function getColor () {
       try {
-        const response = await axios.get('/users/colors', {
-          headers: {
-            Authorization: `Bearer ${credential}`
-          }
-        })
-        setAllColors(response?.data.map((data) => {
+        const response = await getAllColor(credential)
+        setAllColors(response?.map((data) => {
           return { color: '#' + data.code, id: data.id }
         }))
       } catch (e) {
@@ -57,13 +54,9 @@ function NewPlacePage () {
     }
 
     try {
-      const response = await axios.post('/places',
-        JSON.stringify(request),
-        {
-          headers: { Authorization: `Bearer ${credential}` }
-        })
+      const response = await postPlace(request, credential)
 
-      navigate('/place/' + response.data.id)
+      navigate('/place/' + response.id)
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response')

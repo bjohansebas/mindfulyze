@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { useNavigate } from 'react-router-dom'
 
-import axios from '../../api/axios'
 import { useAuth } from '../../hooks/useAuth'
 import { EmptyPlace } from './EmptyPlace'
+import { deletePlace, getAllPlaces } from '../../services/place'
 
 function ShowPlaces () {
   const { credential } = useAuth()
@@ -21,17 +21,13 @@ function ShowPlaces () {
 
   const getPlace = async () => {
     try {
-      const response = await axios.get('/users/places', {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
+      const response = await getAllPlaces(credential)
 
-      setAllPlaces(response?.data.map(data => {
+      setAllPlaces(response.map(data => {
         return { text: data.name, id: data.id, color: data.color.code }
       }))
     } catch (e) {
-      console.log(e?.response)
+      console.log(e)
     } finally {
       setLoading(false)
     }
@@ -51,11 +47,7 @@ function ShowPlaces () {
     try {
       setLoading(true)
       setAnchorEl(null)
-      await axios.delete(`/places/${idSelect}`, {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
+      await deletePlace(idSelect, credential)
       await getPlace()
     } catch (err) {
       console.log(err)

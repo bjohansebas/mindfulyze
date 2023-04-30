@@ -9,8 +9,10 @@ import { FormattedMessage } from 'react-intl'
 import PropTypes from 'prop-types'
 
 import { useAuth } from '../../../hooks/useAuth'
-import axios from '../../../api/axios'
 import { EmptyThink } from './EmptyThink'
+import { getArchiveThinksPlace, getThinksPlace, getTrashPlace } from '../../../services/place'
+import { moveToTrash, putThink } from '../../../services/think'
+import { deleteThinkFromTrash, restoreFromTrash } from '../../../services/trash'
 
 ShowThinks.propTypes = {
   id: PropTypes.string.isRequired
@@ -38,13 +40,9 @@ function ShowThinks ({ id }) {
       setAnchorElFilter(null)
       setLoading(true)
 
-      const response = await axios.get(`/places/${id}/thinks`, {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
+      const response = await getThinksPlace(id, credential)
 
-      setAllThink(response?.data.map(data => {
+      setAllThink(response.map(data => {
         return { text: data.text, id: data.id, created: data.createdAt }
       }))
 
@@ -79,13 +77,9 @@ function ShowThinks ({ id }) {
     try {
       setAnchorElFilter(null)
       setLoading(true)
-      const response = await axios.get(`/places/${id}/trash`, {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
+      const response = await getTrashPlace(id, credential)
 
-      setAllThink(response?.data.map(data => {
+      setAllThink(response?.map(data => {
         return { text: data.text, id: data.id, created: data.createdAt }
       }))
 
@@ -121,13 +115,9 @@ function ShowThinks ({ id }) {
       setAnchorElFilter(null)
       setLoading(true)
 
-      const response = await axios.get(`/places/${id}/thinks/archive`, {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
+      const response = await getArchiveThinksPlace(id, credential)
 
-      setAllThink(response?.data.map(data => {
+      setAllThink(response?.map(data => {
         return { text: data.text, id: data.id, created: data.createdAt }
       }))
 
@@ -187,11 +177,7 @@ function ShowThinks ({ id }) {
   const onRestoreId = async (idThink) => {
     try {
       setAnchorElThink(null)
-      await axios.put(`/trash/${idThink}`, {}, {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
+      await restoreFromTrash(idThink, credential)
 
       await getTrashThinks()
     } catch (err) {
@@ -202,11 +188,7 @@ function ShowThinks ({ id }) {
   const onDeleteTrash = async (idThink) => {
     try {
       setAnchorElThink(null)
-      await axios.delete(`/trash/${idThink}`, {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
+      await deleteThinkFromTrash(idThink, credential)
 
       await getTrashThinks()
     } catch (err) {
@@ -217,13 +199,7 @@ function ShowThinks ({ id }) {
   const onUnarchiveId = async (idThink) => {
     try {
       setAnchorElThink(null)
-      await axios.put(`/thinks/${idThink}`, JSON.stringify({
-        isArchive: false
-      }), {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
+      await putThink(idThink, { isArchive: false }, credential)
 
       await getArchiveThinks()
     } catch (err) {
@@ -234,14 +210,7 @@ function ShowThinks ({ id }) {
   const onArchive = async (idThink) => {
     setAnchorElThink(null)
     try {
-      await axios.put(`/thinks/${idThink}/`,
-        JSON.stringify({
-          isArchive: true
-        }), {
-          headers: {
-            Authorization: `Bearer ${credential}`
-          }
-        })
+      await putThink(idThink, { isArchive: true }, credential)
 
       await getThinks()
     } catch (err) {
@@ -252,11 +221,7 @@ function ShowThinks ({ id }) {
   const onDelete = async (idThink) => {
     setAnchorElThink(null)
     try {
-      await axios.put(`/thinks/${idThink}/trash`, {}, {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
+      await moveToTrash(idThink, credential)
 
       await getThinks()
     } catch (err) {

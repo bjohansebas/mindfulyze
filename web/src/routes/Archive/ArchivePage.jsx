@@ -9,8 +9,8 @@ import { useNavigate } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 
 import { useAuth } from '../../hooks/useAuth'
-import axios from '../../api/axios'
 import { EmptyArchive } from './EmptyArchive'
+import { getArchiveThinks, moveToTrash, putThink } from '../../services/think'
 
 function ArchivePage () {
   const navigate = useNavigate()
@@ -26,12 +26,8 @@ function ArchivePage () {
   const getArchive = async () => {
     try {
       setLoading(true)
-      const response = await axios.get('/users/thinks/archives', {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
-      setAllArchive(response?.data.map(data => {
+      const response = await getArchiveThinks(credential)
+      setAllArchive(response.map(data => {
         return { text: data.text, id: data.id }
       }))
     } catch (e) {
@@ -71,11 +67,7 @@ function ArchivePage () {
   const onDeleteId = async () => {
     try {
       setAnchorElTrash(null)
-      await axios.put(`/thinks/${idSelect}/trash`, {}, {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
+      await moveToTrash(idSelect, credential)
 
       handleToggle(allArchive.findIndex(val => val.id === idSelect))
       await getArchive()
@@ -87,13 +79,8 @@ function ArchivePage () {
   const onUnarchiveId = async () => {
     try {
       setAnchorElTrash(null)
-      await axios.put(`/thinks/${idSelect}`, JSON.stringify({
-        isArchive: false
-      }), {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
+
+      await putThink(idSelect, { isArchive: false }, credential)
 
       handleToggle(allArchive.findIndex(val => val.id === idSelect))
       await getArchive()
@@ -107,11 +94,7 @@ function ArchivePage () {
       try {
         for await (const value of checked) {
           const archive = allArchive[value]
-          await axios.put(`/thinks/${archive.id}/trash`, {}, {
-            headers: {
-              Authorization: `Bearer ${credential}`
-            }
-          })
+          await moveToTrash(archive.id, credential)
         }
         setChecked([])
         await getArchive()
@@ -126,13 +109,8 @@ function ArchivePage () {
       try {
         for await (const value of checked) {
           const archive = allArchive[value]
-          await axios.put(`/thinks/${archive.id}`, JSON.stringify({
-            isArchive: false
-          }), {
-            headers: {
-              Authorization: `Bearer ${credential}`
-            }
-          })
+
+          await putThink(archive.id, { isArchive: false }, credential)
         }
         setChecked([])
         await getArchive()

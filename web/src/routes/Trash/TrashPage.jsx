@@ -9,8 +9,8 @@ import { FormattedMessage } from 'react-intl'
 import { Helmet } from 'react-helmet-async'
 
 import { useAuth } from '../../hooks/useAuth'
-import axios from '../../api/axios'
 import { EmptyTrash } from './EmptyTrash'
+import { deleteThinkFromTrash, getAllTrashes, restoreFromTrash } from '../../services/trash'
 
 function TrashPage () {
   const navigate = useNavigate()
@@ -25,13 +25,9 @@ function TrashPage () {
 
   const getTrash = async () => {
     try {
-      const response = await axios.get('/users/trash', {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
+      const response = await getAllTrashes(credential)
 
-      setAllTrash(response?.data.map(data => {
+      setAllTrash(response.map(data => {
         return { text: data.text, id: data.id }
       }))
     } catch (e) {
@@ -71,11 +67,7 @@ function TrashPage () {
   const onDeleteId = async () => {
     try {
       setAnchorElTrash(null)
-      await axios.delete(`/trash/${idSelect}`, {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
+      await deleteThinkFromTrash(idSelect, credential)
 
       handleToggle(allTrash.findIndex(val => val.id === idSelect))
       await getTrash()
@@ -87,11 +79,7 @@ function TrashPage () {
   const onRestoreId = async () => {
     try {
       setAnchorElTrash(null)
-      await axios.put(`/trash/${idSelect}`, {}, {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
+      await restoreFromTrash(idSelect, credential)
 
       handleToggle(allTrash.findIndex(val => val.id === idSelect))
       await getTrash()
@@ -105,11 +93,8 @@ function TrashPage () {
       try {
         for await (const value of checked) {
           const trash = allTrash[value]
-          await axios.delete(`/trash/${trash.id}`, {
-            headers: {
-              Authorization: `Bearer ${credential}`
-            }
-          })
+
+          await deleteThinkFromTrash(trash.id, credential)
         }
         setChecked([])
         await getTrash()
@@ -124,11 +109,7 @@ function TrashPage () {
       try {
         for await (const value of checked) {
           const trash = allTrash[value]
-          await axios.put(`/trash/${trash.id}`, {}, {
-            headers: {
-              Authorization: `Bearer ${credential}`
-            }
-          })
+          await restoreFromTrash(trash.id, credential)
         }
         setChecked([])
         await getTrash()

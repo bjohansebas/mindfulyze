@@ -7,8 +7,9 @@ import { SketchPicker } from 'react-color'
 import { FormattedMessage } from 'react-intl'
 import { Helmet } from 'react-helmet-async'
 
-import axios from '../../api/axios'
 import { useAuth } from '../../hooks/useAuth'
+import { getPlace, putPlace } from '../../services/place'
+import { getAllColor } from '../../services/color'
 
 function EditPlacePage () {
   const { id } = useParams()
@@ -24,14 +25,9 @@ function EditPlacePage () {
   const [anchorElColor, setAnchorElColor] = useState(null)
 
   useEffect(() => {
-    async function getPlace () {
+    async function getOnePlace () {
       try {
-        const response = await axios.get(`/places/${id}`, {
-          headers: {
-            Authorization: `Bearer ${credential}`
-          }
-        })
-        const data = response?.data
+        const data = await getPlace(id, credential)
 
         setPlace({ name: data.name, color: data.color.code })
 
@@ -46,7 +42,7 @@ function EditPlacePage () {
         }
       }
     }
-    getPlace()
+    getOnePlace()
   }, [])
 
   useEffect(() => {
@@ -58,12 +54,9 @@ function EditPlacePage () {
   useEffect(() => {
     async function getColor () {
       try {
-        const response = await axios.get('/users/colors', {
-          headers: {
-            Authorization: `Bearer ${credential}`
-          }
-        })
-        setAllColors(response?.data.map((data) => {
+        const response = await getAllColor(credential)
+
+        setAllColors(response?.map((data) => {
           return { color: '#' + data.code, title: data.name, id: data.id }
         }))
       } catch (e) {
@@ -99,12 +92,7 @@ function EditPlacePage () {
 
     if (Object.entries(request).length >= 1) {
       try {
-        await axios.put(`/places/${id}/`,
-          JSON.stringify(request), {
-            headers: {
-              Authorization: `Bearer ${credential}`
-            }
-          })
+        await putPlace(id, request, credential)
         navigate(`/place/${id}`)
       } catch (err) {
         console.log(err)

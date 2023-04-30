@@ -7,8 +7,9 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 import { Helmet } from 'react-helmet-async'
 
-import axios from '../../api/axios'
 import { useAuth } from '../../hooks/useAuth'
+import { getThink, moveToTrash, putAddEmotion, putDeleteEmotion, putThink } from '../../services/think'
+import { getAllEmotions } from '../../services/emotion'
 
 function EditThinkPage () {
   const { id } = useParams()
@@ -29,19 +30,15 @@ function EditThinkPage () {
   const [newTextThink, setNewTextThink] = useState('')
   const [newEmotionsThink, setNewEmotionsThink] = useState([])
   const [loadingSave, setLoadingSave] = useState(false)
-  async function getThink () {
+  async function gettingThink () {
     try {
-      const response = await axios.get(`/thinks/${id}`, {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
-      setThink(response.data)
-      setEmotions(response?.data.emotions.map(data => {
+      const response = await getThink(id, credential)
+      setThink(response)
+      setEmotions(response?.emotions.map(data => {
         return { text: data.emotion.name, id: data.emotion.id }
       }))
-      setPlace({ name: response.data.place.name })
-      setNewTextThink(response.data.text)
+      setPlace({ name: response.place.name })
+      setNewTextThink(response.text)
     } catch (err) {
       if (!err?.response) {
         console.log('Server not response')
@@ -57,18 +54,15 @@ function EditThinkPage () {
   }
 
   useEffect(() => {
-    getThink()
+    gettingThink()
   }, [])
 
   useEffect(() => {
     async function getEmotions () {
       try {
-        const response = await axios.get('/emotions/', {
-          headers: {
-            Authorization: `Bearer ${credential}`
-          }
-        })
-        setAllEmotions(response?.data.map(data => {
+        const response = await getAllEmotions(credential)
+
+        setAllEmotions(response?.map(data => {
           return { text: data.name, id: data.id }
         }))
       } catch (e) {
@@ -90,11 +84,8 @@ function EditThinkPage () {
     try {
       setLoadingSave(true)
       setLoadingThink(true)
-      await axios.post(`/thinks/${id}/trash`, {}, {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
+
+      await moveToTrash(id, credential)
 
       navigate(`/place/${think.place.id}`, { replace: true })
     } catch (err) {
@@ -110,14 +101,7 @@ function EditThinkPage () {
       setLoadingSave(true)
       setLoadingThink(true)
 
-      await axios.put(`/thinks/${id}/`,
-        JSON.stringify({
-          isArchive: true
-        }), {
-          headers: {
-            Authorization: `Bearer ${credential}`
-          }
-        })
+      await putThink(id, { isArchive: true }, credential)
 
       navigate(`/place/${think.place.id}`, { replace: true })
     } catch (err) {
@@ -134,11 +118,7 @@ function EditThinkPage () {
       const emotionsList = newEmotionsThink.map(value => value.id)
       console.log(emotions)
 
-      await axios.put(`/thinks/${id}/emotions/add`,
-        { emotions: emotionsList },
-        {
-          headers: { Authorization: `Bearer ${credential}` }
-        })
+      await putAddEmotion(id, emotionsList, credential)
 
       const listRemoveEmotions = []
       for await (const value of emotions) {
@@ -151,14 +131,7 @@ function EditThinkPage () {
       if (listRemoveEmotions.length > 0) {
         console.log(listRemoveEmotions)
         try {
-          await axios.put(`/thinks/${id}/emotions/remove`, {
-            emotions: listRemoveEmotions
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${credential}`
-            }
-          })
+          await putDeleteEmotion(id, listRemoveEmotions, credential)
         } catch (err) {
           console.log(err)
         }
@@ -167,14 +140,9 @@ function EditThinkPage () {
 
     if (think.text !== newTextThink.trimEnd()) {
       try {
-        await axios.put(`/thinks/${id}/`,
-          JSON.stringify({
-            text: newTextThink.trimEnd()
-          }), {
-            headers: {
-              Authorization: `Bearer ${credential}`
-            }
-          })
+        const request = { text: newTextThink.trimEnd() }
+
+        await putThink(id, request, credential)
       } catch (err) {
         console.log(err)
       }

@@ -6,9 +6,9 @@ import { Helmet } from 'react-helmet-async'
 import { FormattedMessage } from 'react-intl'
 
 import { EMAIL_REGEX, PWD_REGEX } from '../../utils/regex'
-import axios from '../../api/axios'
 import { TextFieldPassword } from '../../components/TextFieldPassword'
 import { useAuth } from '../../hooks/useAuth'
+import { postSignUpAccount } from '../../services/signUp'
 
 function SignUpPage () {
   const { loginAction } = useAuth()
@@ -55,14 +55,7 @@ function SignUpPage () {
     }
 
     try {
-      await axios.post('/auth/signup',
-        JSON.stringify({
-          password: pwd,
-          email
-        }),
-        {
-          headers: { 'Content-Type': 'application/json' }
-        })
+      await postSignUpAccount(pwd, email)
       try {
         await loginAction(email, pwd)
         navigate('/account/new')
@@ -74,7 +67,7 @@ function SignUpPage () {
       if (!err?.response) {
         setErrMsg('No Server Response')
         setLoading(false)
-      } else if (err.response?.status === 409) {
+      } else if (err.response?.status === 404) {
         setErrMsg('Email taken')
         setLoading(false)
       } else {

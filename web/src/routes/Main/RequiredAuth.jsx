@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 
 import { MenuApp } from './MenuNav'
-import axios from '../../api/axios'
 import { useAuth } from '../../hooks/useAuth'
 import { Loading } from '../../components/Loading'
+import { getAccount } from '../../services/user'
 
 function RequiredAuth () {
   const location = useLocation()
@@ -23,13 +23,7 @@ function RequiredAuth () {
       return navigate('/login', { replace: true })
     }
     try {
-      const responseUser = await axios.get('users/', {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
-
-      const dataUser = responseUser?.data
+      const dataUser = await getAccount(credential)
 
       data = {
         email: dataUser.email,
@@ -64,7 +58,7 @@ function RequiredAuth () {
   return (
     <>
       {loading
-        ? <Loading/>
+        ? <Loading />
         : <>
           {hasProfile && <MenuApp />}
           <Outlet />
