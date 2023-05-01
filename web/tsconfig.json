@@ -15,6 +15,41 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*",
+        "dist/*",
+        ""
+      ],
+      "components/*": [
+        "src/components/*"
+      ],
+      "hooks/*": [
+        "src/hooks/*"
+      ],
+      "routes/*": [
+        "src/routes/*"
+      ],
+      "services/*": [
+        "src/services/*"
+      ],
+      "assets/*": [
+        "src/assets/*"
+      ],
+      "context/*": [
+        "src/context/*"
+      ],
+      "translations/*": [
+        "src/translations/*"
+      ],
+      "utils/*": [
+        "src/utils/*"
+      ],
+      "api/*": [
+        "src/api/*"
+      ]
+    },
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
