@@ -13,6 +13,7 @@ import { NewPlacePage, ShowPlacePage, EditPlacePage } from './routes/Place'
 import { TrashPage, ShowThinkTrashPage } from './routes/Trash'
 import { ArchivePage } from './routes/Archive'
 import { RequiredAuth } from './routes/Main/RequiredAuth'
+import { LogoutPage } from './routes/Logout/'
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,9 @@ const router = createBrowserRouter([
           }, {
             path: 'archive',
             element: <ArchivePage />
+          }, {
+            path: 'logout',
+            element: <LogoutPage/>
           }
         ]
       }
