@@ -2,7 +2,7 @@ import localforage from 'localforage'
 import { useEffect, useState } from 'react'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 
-import { MenuApp } from './MenuNav'
+import { MenuLogged } from '../../components/Navigation/Menu-Logged'
 import { useAuth } from '../../hooks/useAuth'
 import { Loading } from '../../components/Loading'
 import { getAccount } from '../../services/user'
@@ -60,7 +60,7 @@ function RequiredAuth () {
       {loading
         ? <Loading />
         : <>
-          {hasProfile && <MenuApp />}
+          {hasProfile && <MenuLogged />}
           <Outlet />
         </>
       }
