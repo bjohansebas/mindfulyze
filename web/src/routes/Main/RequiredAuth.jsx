@@ -1,4 +1,3 @@
-import localforage from 'localforage'
 import { useEffect, useState } from 'react'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 
@@ -15,8 +14,8 @@ function RequiredAuth () {
   const [loading, setLoading] = useState(true)
 
   const processLogin = async () => {
-    const credential = await localforage.getItem('credentials_token')
-    const userId = await localforage.getItem('userInfo_userId')
+    const credential = JSON.parse(localStorage.getItem('credentials_token'))
+    const userId = localStorage.getItem('userInfo_userId')
     let data = {}
 
     if (!credential || !userId) {
@@ -30,7 +29,7 @@ function RequiredAuth () {
         profile: dataUser.profile
       }
     } catch (err) {
-      await localforage.clear()
+      localStorage.clear()
 
       return navigate('/login', { replace: true })
     }
@@ -42,7 +41,7 @@ function RequiredAuth () {
       return navigate('/account/new', { replace: true })
     }
 
-    await localforage.setItem('userInfo_userInfo', data)
+    localStorage.setItem('userInfo_userInfo', data)
     if (location.pathname === '/account/new') {
       setLoading(false)
 

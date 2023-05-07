@@ -1,6 +1,5 @@
 import { AppBar, Container, Box, Toolbar, Typography } from '@mui/material'
 
-import localforage from 'localforage'
 import { useEffect } from 'react'
 import { Outlet, useNavigate, Link } from 'react-router-dom'
 
@@ -9,8 +8,9 @@ function SignLayoutPage () {
 
   useEffect(() => {
     async function existUser () {
-      const credential = await localforage.getItem('credentials_token')
-      const userId = await localforage.getItem('userInfo_userId')
+      const credential = localStorage.getItem('credentials_token')
+      const userId = localStorage.getItem('userInfo_userId')
+
       if (credential && userId) {
         return navigate('/', { replace: true })
       }
