@@ -10,17 +10,18 @@ const mainTheme = createTheme({
       contrastText: '#ffffff'
     },
     secondary: {
-      light: '#61d7c9',
-      main: '#21a699',
-      dark: '#00756',
-      contrastText: '#000000'
+      light: '#375677',
+      main: '#062C55',
+      dark: '#041E3B',
+      contrastText: '#FFFFFF'
     },
     text: {
       primary: '#212121',
       secondary: '#424242'
     },
     background: {
-      default: '#fcfcfc'
+      default: '#F8FBFC',
+      paper: '#EBF3F0'
     },
     contrastThreshold: 4.5
   },
