@@ -1,9 +1,22 @@
-import { useState, createContext } from 'react'
+import { useState, createContext, Dispatch, SetStateAction } from 'react'
 
 import { useLocalStorage } from 'usehooks-ts'
 import { postLogin } from '../services/login'
 
-export const AuthContext = createContext({})
+export type AuthContextProps = {
+  credential: string | null
+  userId: string | null,
+  userInfo: object | null,
+  setCredential: Dispatch<SetStateAction<string | null>>
+  setUserId: Dispatch<SetStateAction<string | null>>,
+  setUserInfo: Dispatch<SetStateAction<object | null>>,
+  hasProfile: boolean,
+  setHasProfile: Dispatch<SetStateAction<boolean>>,
+  loginAction: (email: string, password: string) => Promise<void>,
+  logoutAction: () => void
+}
+
+export const AuthContext = createContext<AuthContextProps>({} as AuthContextProps)
 
 export function AuthProvider({ children }: React.PropsWithChildren) {
   const [credential, setCredential] = useLocalStorage<string | null>('credentials_token', null)
