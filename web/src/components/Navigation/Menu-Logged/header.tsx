@@ -1,18 +1,16 @@
-import { Box, IconButton, SvgIcon, Toolbar } from '@mui/material'
+import { Box, IconButton, Toolbar } from '@mui/material'
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded'
 
 import { type Dispatch, type SetStateAction } from 'react'
-import { Link } from 'react-router-dom'
 
-import { ReactComponent as LogoIcon } from 'assets/favicon.svg'
-import { ReactComponent as TextLogo } from 'assets/text.svg'
+import { Banner } from '@/components/Banner'
 
 export interface HeaderNavigationLoggedProps {
   isOpen: boolean
   settingOpen: Dispatch<SetStateAction<boolean>>
 }
 
-export function HeaderNavigationLogged ({ settingOpen, isOpen }: HeaderNavigationLoggedProps): JSX.Element {
+export function HeaderNavigationLogged({ settingOpen, isOpen }: HeaderNavigationLoggedProps): JSX.Element {
   const handleDrawer = (): void => { settingOpen((prevOpen) => !prevOpen) }
 
   return (
@@ -28,13 +26,8 @@ export function HeaderNavigationLogged ({ settingOpen, isOpen }: HeaderNavigatio
       >
         <MenuRoundedIcon />
       </IconButton>
-      <Box component={Link} sx={{ display: 'flex', height: '100%', alignItems: 'center', opacity: isOpen ? 1 : 0 }} to="/">
-        <SvgIcon sx={{ height: 32, width: 32 }} viewBox='0 0 32 32'>
-          <LogoIcon></LogoIcon>
-        </SvgIcon>
-        <SvgIcon sx={{ width: 135, height: 14, color: '#000000' }} viewBox='0 0 180 24'>
-          <TextLogo></TextLogo>
-        </SvgIcon>
+      <Box sx={{ opacity: isOpen ? 1 : 0 }}>
+        <Banner></Banner>
       </Box>
     </Toolbar>
   )
