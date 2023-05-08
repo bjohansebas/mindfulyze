@@ -1,7 +1,7 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import PropTypes from 'prop-types'
+import { PropsWithChildren } from 'react'
 
-const mainTheme = createTheme({
+let mainTheme = createTheme({
   palette: {
     primary: {
       light: '#3f8388',
@@ -38,14 +38,15 @@ const mainTheme = createTheme({
   },
   mixins: {
     toolbar: { height: 58 }
+  },
+  typography: {
+    fontFamily: 'Poppins',
+    fontSize: 14
   }
 })
 
-PaletteProvider.propTypes = {
-  children: PropTypes.node
-}
 
-export default function PaletteProvider ({ children }) {
+export default function PaletteProvider({ children }: PropsWithChildren) {
   return (
     <ThemeProvider theme={mainTheme}>
       {children}
