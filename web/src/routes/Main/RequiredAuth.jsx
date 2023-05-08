@@ -1,3 +1,5 @@
+import { Box } from '@mui/material'
+
 import { useEffect, useState } from 'react'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 
@@ -58,10 +60,10 @@ function RequiredAuth () {
     <>
       {loading
         ? <Loading />
-        : <>
+        : <Box sx={{ display: 'flex' }}>
           {hasProfile && <MenuLogged />}
           <Outlet />
-        </>
+        </Box>
       }
     </>
   )
