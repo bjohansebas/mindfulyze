@@ -1,7 +1,5 @@
-import { AppBar, Container, Box, Toolbar, Typography } from '@mui/material'
-
 import { useEffect } from 'react'
-import { Outlet, useNavigate, Link } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 function SignLayoutPage () {
   const navigate = useNavigate()
@@ -18,37 +16,7 @@ function SignLayoutPage () {
     existUser()
   })
 
-  return (
-    <Box sx={{ background: '#f6f6f6' }}>
-      <AppBar sx={{
-        backgroundColor: '#fcfcfc',
-        boxShadow: 'none',
-        borderBottom: '1px solid rgba(0, 0, 0, 0.12)'
-      }}>
-        <Container >
-          <Toolbar disableGutters>
-            <Typography
-              component={Link}
-              noWrap
-              sx={{
-                display: 'flex',
-                fontFamily: 'roboto',
-                fontWeight: 700,
-                color: 'black',
-                letterSpacing: '.2rem',
-                textDecoration: 'none'
-              }}
-              to='/'
-            >
-              AlignMind
-            </Typography>
-          </Toolbar>
-        </Container>
-      </AppBar>
-
-      <Outlet />
-    </Box>
-  )
+  return <Outlet />
 }
 
 export { SignLayoutPage }
