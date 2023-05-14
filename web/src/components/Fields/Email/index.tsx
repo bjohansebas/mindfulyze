@@ -1,4 +1,4 @@
-import { FormControl, FormHelperText, FormLabel, OutlinedInput } from '@mui/material'
+import { Box, FormControl, FormHelperText, FormLabel, InputAdornment, OutlinedInput } from '@mui/material'
 import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 
 import { type SetStateAction, type Dispatch, useState, useEffect } from 'react'
@@ -25,27 +25,39 @@ export function EmailField({ text, errorText, errorRequest, setText, label, isDi
   }, [text])
 
   return (
-    <FormControl variant="outlined" sx={{ gap: '8px' }}>
-      <FormLabel
-        htmlFor='outlined-adornment-email'
-        error={(!validityError && text !== '') || errorRequest !== ''}
-        sx={{ pl: '8px' }}
-      >
-        {label}
-      </FormLabel>
-      <OutlinedInput
-        id='outlined-adornment-email'
-        value={text}
-        type='email'
-        onChange={(e) => { setText(e.target.value) }}
-        disabled={isDisable}
-        error={(!validityError && text !== '') || errorRequest !== ''}
-        placeholder='lorem@gmail.com'
-        required
-        startAdornment={
-          <EmailRoundedIcon sx={{ mr: '8px' }} />
-        }
-      />
+    <FormControl variant="outlined">
+      <Box sx={{ display: 'flex',flexDirection:'column', gap: '8px' }}>
+        <FormLabel
+          htmlFor='outlined-adornment-email'
+          error={(!validityError && text !== '') || errorRequest !== ''}
+          sx={{
+            pl: '8px',
+            "&.MuiFormLabel-root.Mui-focused ~ .MuiInputBase-root .MuiSvgIcon-root": {
+              color: '#00575C'
+            },
+            "&.MuiFormLabel-root.Mui-error ~ .MuiInputBase-root .MuiSvgIcon-root": {
+              color: '#d32f2f'
+            },
+          }}
+        >
+          {label}
+        </FormLabel>
+        <OutlinedInput
+          id='outlined-adornment-email'
+          value={text}
+          type='email'
+          onChange={(e) => { setText(e.target.value) }}
+          disabled={isDisable}
+          error={(!validityError && text !== '') || errorRequest !== ''}
+          placeholder='lorem@gmail.com'
+          required
+          startAdornment={
+            <InputAdornment position='start'>
+              <EmailRoundedIcon />
+            </InputAdornment>
+          }
+        />
+      </Box>
       {(!validityError && text !== '') && <FormHelperText error id="component-error-text">{errorText}</FormHelperText>}
       {(errorRequest !== '') && <FormHelperText error id="component-error-text">{errorRequest}</FormHelperText>}
     </FormControl>
