@@ -1,7 +1,7 @@
 import { Box, FormControl, FormHelperText, FormLabel, InputAdornment, OutlinedInput } from '@mui/material'
 import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 
-import { type SetStateAction, type Dispatch, useState, useEffect } from 'react'
+import { type SetStateAction, type Dispatch, useState, useEffect, useId } from 'react'
 
 import { EMAIL_REGEX } from 'utils/regex'
 
@@ -13,22 +13,27 @@ export interface EmailFieldProps {
   errorRequest?: string
   errorText?: string
   isDisable?: boolean
+  setValid?: Dispatch<SetStateAction<boolean>>
 }
 
-export function EmailField({ text, errorText, errorRequest, setText, label, isDisable, requiredValid = false }: EmailFieldProps): JSX.Element {
+export function EmailField({ text, errorText, errorRequest, setText, label, isDisable, requiredValid = false, setValid }: EmailFieldProps): JSX.Element {
+  const fieldId = useId()
   const [validityError, setValidityError] = useState<boolean>(true)
 
   useEffect(() => {
     if (requiredValid) {
       setValidityError(EMAIL_REGEX.test(text))
+      if (setValid !== undefined) {
+        setValid(EMAIL_REGEX.test(text))
+      }
     }
   }, [text])
 
   return (
     <FormControl variant="outlined">
-      <Box sx={{ display: 'flex',flexDirection:'column', gap: '8px' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
         <FormLabel
-          htmlFor='outlined-adornment-email'
+          htmlFor={`email-${fieldId}`}
           error={(!validityError && text !== '') || errorRequest !== ''}
           sx={{
             pl: '8px',
@@ -43,7 +48,7 @@ export function EmailField({ text, errorText, errorRequest, setText, label, isDi
           {label}
         </FormLabel>
         <OutlinedInput
-          id='outlined-adornment-email'
+          id={`email-${fieldId}`}
           value={text}
           type='email'
           onChange={(e) => { setText(e.target.value) }}
@@ -58,8 +63,8 @@ export function EmailField({ text, errorText, errorRequest, setText, label, isDi
           }
         />
       </Box>
-      {(!validityError && text !== '') && <FormHelperText error id="component-error-text">{errorText}</FormHelperText>}
-      {(errorRequest !== '') && <FormHelperText error id="component-error-text">{errorRequest}</FormHelperText>}
+      {(!validityError && text !== '') && <FormHelperText error id={`component-error-${fieldId}`}>{errorText}</FormHelperText>}
+      {(errorRequest !== '') && <FormHelperText error id={`component-error-${fieldId}`}>{errorRequest}</FormHelperText>}
     </FormControl>
   )
 }
