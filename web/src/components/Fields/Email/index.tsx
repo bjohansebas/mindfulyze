@@ -37,11 +37,8 @@ export function EmailField({ text, errorText, errorRequest, setText, label, isDi
           error={(!validityError && text !== '') || errorRequest !== ''}
           sx={{
             pl: '8px',
-            "&.MuiFormLabel-root.Mui-focused ~ .MuiInputBase-root .MuiSvgIcon-root": {
-              color: '#00575C'
-            },
             "&.MuiFormLabel-root.Mui-error ~ .MuiInputBase-root .MuiSvgIcon-root": {
-              color: '#d32f2f'
+              color: '#D25959'
             },
           }}
         >
@@ -58,7 +55,7 @@ export function EmailField({ text, errorText, errorRequest, setText, label, isDi
           required
           startAdornment={
             <InputAdornment position='start'>
-              <EmailRoundedIcon />
+              <EmailRoundedIcon/>
             </InputAdornment>
           }
         />

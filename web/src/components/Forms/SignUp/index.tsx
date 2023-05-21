@@ -13,6 +13,7 @@ import { EmailField } from '@/components/Fields/Email'
 import { HeaderFormSignUp } from './HeaderSignUp'
 
 import backgroundImage from '@/assets/background.png'
+import PaletteFormProvider from '../Theme'
 
 export function SignUpForm(): JSX.Element {
   const { loginAction } = useAuth()
@@ -62,9 +63,9 @@ export function SignUpForm(): JSX.Element {
         width: '100vw',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: { sm: 'center', xs: 'normal' },
+        alignItems: 'center',
         flexDirection: 'column',
-        backgroundImage: { xs: 'paper', sm: `url(${backgroundImage})` },
+        backgroundImage: `url(${backgroundImage})`,
         backgroundPosition: '0 0',
         backgroundSize: '100% 100%',
         py: { sm: '40px', xs: '0' }
@@ -74,11 +75,10 @@ export function SignUpForm(): JSX.Element {
         display: 'flex',
         justifyContent: ' center',
         flexDirection: 'column',
-        width: { lg: '552px', md: '452', xs: '330' },
+        width: { xs: '90%', sm:'60%',md:'50%', lg:'40%' },
         gap: 4,
         p: { sm: '40px 32px', xs: '40px 16px' },
         borderRadius: '12px',
-        background: '#ffffff',
       }}>
         <HeaderFormSignUp />
         <Box
@@ -86,50 +86,53 @@ export function SignUpForm(): JSX.Element {
           autoComplete="off"
           onSubmit={handleSubmit}
           sx={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <EmailField
-              text={email}
-              setText={setEmail}
-              setValid={setValidEmail}
-              errorRequest=''
-              requiredValid={true}
-              errorText='Enter a valid email address'
-              label={<FormattedMessage id="login.email" defaultMessage="Email" />}
-            />
-            <PasswordTextField
-              text={pwd}
-              setText={setPwd}
-              errorRequest=''
-              requiredValid={true}
-              setValid={setValidPwd}
-              errorText='The password must have at least one lowercase letter, one number, and a length between 8 and 30 characters'
-              label={<FormattedMessage id="signup.password" defaultMessage="Password" />}
-            />
-            <PasswordTextField
-              text={confirmPwd}
-              setText={setConfirmPwd}
-              errorRequest=''
-              errorText='The passwords do not match. Please make sure both passwords are the same.'
-              comparePassword={pwd}
-              isDisable={true}
-              setValid={setValidConfirmPwd}
-              label={<FormattedMessage id="signup.confirm" defaultMessage="Confirm password" />}
-            />
-          </Box>
-          <Box display="flex" sx={{ gap: { sm: '32px', xs: '16px' }, flexDirection: { xs: 'column', sm: 'row' } }}>
-            <Button
-              disabled={(!validPwd || !validConfirmPwd || !validEmail) || loading}
-              type='submit'
-              variant='contained'
-              size='large'
-              sx={{ width: '100%', borderRadius: '12px' }}
-            >
-              <FormattedMessage id="signup.submit" defaultMessage="Sign up" />
-            </Button>
-            <Button component={Link} variant='outlined' size='large' to='/login' sx={{ width: { sm: '160px', sx: '100%' }, borderRadius: '12px' }}>
-              <FormattedMessage id="signup.login.link" defaultMessage="Log in" />
-            </Button>
-          </Box>
+          <PaletteFormProvider>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <EmailField
+                text={email}
+                setText={setEmail}
+                setValid={setValidEmail}
+                errorRequest=''
+                requiredValid={true}
+                errorText='Enter a valid email address'
+                label={<FormattedMessage id="login.email" defaultMessage="Email" />}
+              />
+              <PasswordTextField
+                text={pwd}
+                setText={setPwd}
+                errorRequest=''
+                requiredValid={true}
+                setValid={setValidPwd}
+                errorText='The password must have at least one lowercase letter, one number, and a length between 8 and 30 characters'
+                label={<FormattedMessage id="signup.password" defaultMessage="Password" />}
+              />
+              <PasswordTextField
+                text={confirmPwd}
+                setText={setConfirmPwd}
+                errorRequest=''
+                errorText='The passwords do not match. Please make sure both passwords are the same.'
+                comparePassword={pwd}
+                isDisable={true}
+                setValid={setValidConfirmPwd}
+                label={<FormattedMessage id="signup.confirm" defaultMessage="Confirm password" />}
+              />
+            </Box>
+            <Box display="flex" sx={{ gap: { sm: '32px', xs: '16px' }, flexDirection: { xs: 'column', sm: 'row' } }}>
+              <Button
+                disabled={(!validPwd || !validConfirmPwd || !validEmail) || loading}
+                type='submit'
+                variant='contained'
+                size='large'
+                sx={{ width: '100%', borderRadius: '12px' }}
+              >
+                <FormattedMessage id="signup.submit" defaultMessage="Sign up" />
+              </Button>
+              <Button component={Link} variant='outlined' size='large' to='/login' sx={{ width: { sm: '160px', sx: '100%' }, borderRadius: '12px' }}>
+                <FormattedMessage id="signup.login.link" defaultMessage="Log in" />
+              </Button>
+            </Box>
+          </PaletteFormProvider>
+
         </Box>
       </Box>
     </Box>
