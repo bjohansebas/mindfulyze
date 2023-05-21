@@ -9,7 +9,6 @@ import { PasswordTextField } from 'components/Fields/Password'
 import { HeaderFormLogin } from './HeaderForm'
 import { EmailField } from '@/components/Fields/Email'
 
-import backgroundImage from '@/assets/background.png'
 import PaletteFormProvider from '../Theme'
 
 export function LoginForm(): JSX.Element {
@@ -41,7 +40,7 @@ export function LoginForm(): JSX.Element {
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-        backgroundImage: `url(${backgroundImage})`,
+        background: `linear-gradient(45deg, #00575C 0%, #002d32 100%)`,
         backgroundPosition: '0 0',
         backgroundSize: '100% 100%',
         py: { sm: '40px', xs: '0' }
