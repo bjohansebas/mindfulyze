@@ -1,11 +1,26 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { PropsWithChildren } from 'react'
 
+import type { } from '@mui/x-date-pickers/themeAugmentation';
+
 let mainTheme = createTheme({
   palette: {
     primary: {
-      main: '#ffffff',
+      main: '#ffffff'
     },
+    secondary: {
+      light: '#3f8388',
+      main: '#00575C',
+      dark: '#002d32',
+      contrastText: '#ffffff'
+    },
+    background: {
+      default: '#F8FBFC',
+      paper: '#EBF3F0'
+    },
+    text: {
+      primary: '#fffff'
+    }
   },
   components: {
     MuiOutlinedInput: {
@@ -59,9 +74,7 @@ let mainTheme = createTheme({
     },
     MuiIconButton: {
       styleOverrides: {
-        root: {
-          color: '#E1F5F4',
-        }
+        colorPrimary: '#E1F5F4'
       }
     },
     MuiFormHelperText: {
@@ -75,8 +88,13 @@ let mainTheme = createTheme({
         },
       },
     },
-    MuiButton: {
-    }
+    MuiFormControlLabel: {
+      styleOverrides: {
+        root: {
+          color: '#ffffff'
+        }
+      }
+    },
   },
   typography: {
     fontFamily: 'Poppins',

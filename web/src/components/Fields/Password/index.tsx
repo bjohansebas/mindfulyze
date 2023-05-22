@@ -49,7 +49,7 @@ export function PasswordTextField({ text, errorText, errorRequest, comparePasswo
   }, [comparePassword, text])
 
   return (
-    <FormControl variant="outlined">
+    <FormControl variant="outlined" disabled={disable}>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
         <FormLabel
           htmlFor={`password-${fieldId}`}
@@ -70,15 +70,14 @@ export function PasswordTextField({ text, errorText, errorRequest, comparePasswo
           value={text}
           type={showPassword ? 'text' : 'password'}
           onChange={(e) => { setText(e.target.value) }}
-          disabled={disable}
           error={
             (((requiredValid && validityError && text !== '') || (PWD_REGEX.test(comparePassword) && comparePassword !== text)) && text !== '') || errorRequest !== ''
           }
           placeholder='••••••••••••••'
           required
           startAdornment={
-            <InputAdornment position='start'>
-              <KeyRoundedIcon sx={{ mr: '8px' }} />
+            <InputAdornment position='start' sx={{ color: disable ? '#002d32' : '#EBF3F0' }}>
+              <KeyRoundedIcon />
             </InputAdornment>
           }
           endAdornment={
@@ -86,7 +85,9 @@ export function PasswordTextField({ text, errorText, errorRequest, comparePasswo
               <IconButton
                 aria-label="toggle password visibility"
                 onClick={handleClickShowPassword}
+                color='primary'
                 edge="end"
+                disabled={disable}
               >
                 {showPassword ? <VisibilityOffRounded /> : <VisibilityRounded />}
               </IconButton>
