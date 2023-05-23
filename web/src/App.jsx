@@ -1,89 +1,126 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-import { MainPage } from './routes/Main'
-import { LoginPage } from './routes/Login'
-import { SignUpPage } from './routes/SignUp'
-import { AccountPage } from './routes/Account'
-import { NewProfilePage } from './routes/SignUp/NewProfile'
-import { DashboardPage } from './routes/Dashboard'
 import { ErrorPage } from './routes/Error'
-import { SignLayoutPage } from './routes/SignLayout'
-import { NewThinkPage, EditThinkPage } from './routes/Think'
-import { NewPlacePage, ShowPlacePage, EditPlacePage } from './routes/Place'
-import { TrashPage, ShowThinkTrashPage } from './routes/Trash'
-import { ArchivePage } from './routes/Archive'
-import { RequiredAuth } from './routes/Main/RequiredAuth'
-import { LogoutPage } from './routes/Logout/'
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <MainPage />,
+    async lazy () {
+      const { MainPage } = await import('./routes/Main')
+      return { Component: MainPage }
+    },
     errorElement: <ErrorPage />,
     children: [
       {
-        element: <RequiredAuth />,
+        async lazy () {
+          const { RequiredAuth } = await import('./routes/Main/RequiredAuth')
+          return { Component: RequiredAuth }
+        },
         children: [
           {
             index: true,
-            element: <DashboardPage />
+            async lazy () {
+              const { DashboardPage } = await import('./routes/Dashboard')
+              return { Component: DashboardPage }
+            }
           }, {
             path: 'account',
-            element: <AccountPage />
+            async lazy () {
+              const { AccountPage } = await import('./routes/Account')
+              return { Component: AccountPage }
+            }
           }, {
             path: 'account/new',
-            element: <NewProfilePage />
+            async lazy () {
+              const { NewProfilePage } = await import('./routes/SignUp/NewProfile')
+              return { Component: NewProfilePage }
+            }
           }, {
             path: 'think/:id',
-            element: <EditThinkPage />
+            async lazy () {
+              const { EditThinkPage } = await import('./routes/Think')
+              return { Component: EditThinkPage }
+            }
           }, {
             path: 'think/new',
-            element: <NewThinkPage />
+            async lazy () {
+              const { NewThinkPage } = await import('./routes/Think')
+              return { Component: NewThinkPage }
+            }
           }, {
             path: 'place/new',
-            element: <NewPlacePage />
+            async lazy () {
+              const { NewPlacePage } = await import('./routes/Place')
+              return { Component: NewPlacePage }
+            }
           }, {
             path: 'place/:id',
-            element: <ShowPlacePage />
+            async lazy () {
+              const { ShowPlacePage } = await import('./routes/Place')
+              return { Component: ShowPlacePage }
+            }
           }, {
             path: 'place/:id/edit',
-            element: <EditPlacePage />
+            async lazy () {
+              const { EditPlacePage } = await import('./routes/Place')
+              return { Component: EditPlacePage }
+            }
           }, {
             path: 'trash/',
-            element: <TrashPage />
+            async lazy () {
+              const { TrashPage } = await import('./routes/Trash')
+              return { Component: TrashPage }
+            }
+
           }, {
             path: 'trash/:id',
-            element: <ShowThinkTrashPage />
+            async lazy () {
+              const { ShowThinkTrashPage } = await import('./routes/Trash')
+              return { Component: ShowThinkTrashPage }
+            }
           }, {
             path: 'archive',
-            element: <ArchivePage />
+            async lazy () {
+              const { ArchivePage } = await import('./routes/Archive')
+              return { Component: ArchivePage }
+            }
           }, {
             path: 'logout',
-            element: <LogoutPage/>
+            async lazy () {
+              const { LogoutPage } = await import('./routes/Logout/')
+              return { Component: LogoutPage }
+            }
           }
         ]
       }
     ]
   },
   {
-    element: <SignLayoutPage />,
+    async lazy () {
+      const { SignLayoutPage } = await import('./routes/SignLayout')
+      return { Component: SignLayoutPage }
+    },
     children: [
       {
         path: '/login',
-        element: <LoginPage />
+        async lazy () {
+          const { LoginPage } = await import('./routes/Login')
+          return { Component: LoginPage }
+        }
       },
       {
         path: '/signup',
-        element: <SignUpPage />
+        async lazy () {
+          const { SignUpPage } = await import('./routes/SignUp')
+          return { Component: SignUpPage }
+        }
       }
     ]
   }
 ])
 
 function App () {
-  return (
-    <RouterProvider router={router} />
-  )
+  return <RouterProvider router={router} />
 }
 
 export { App }
