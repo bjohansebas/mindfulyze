@@ -2,6 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 
 import '@fontsource/poppins'
+import '@fontsource/poppins/600.css'
+import '@fontsource/poppins/500.css'
+import '@fontsource/poppins/700.css'
+
 import '@formatjs/intl-pluralrules/polyfill'
 import '@formatjs/intl-pluralrules/locale-data/es'
 import '@formatjs/intl-pluralrules/locale-data/en'
