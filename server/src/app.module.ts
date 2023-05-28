@@ -20,7 +20,8 @@ import { StatisticsModule } from './modules/statistics/statistics.module';
       load: [config],
       isGlobal: true,
       validationSchema: Joi.object({
-        JWT_SECRET: Joi.string().required(),
+        JWT_ACCESS_SECRET: Joi.string().required(),
+        JWT_REFRESH_SECRET: Joi.string().required(),
         POSTGRES_USER: Joi.string().required(),
         POSTGRES_PASSWORD: Joi.string().required(),
         POSTGRES_PORT: Joi.number().required(),
