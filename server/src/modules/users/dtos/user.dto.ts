@@ -8,7 +8,7 @@ export class CreateUserDto {
 
   @IsString()
   @IsNotEmpty()
-  @Length(8, 30)
+  @Length(8, 50)
   readonly password: string;
 }
 
@@ -22,11 +22,11 @@ export class UpdateEmailUserDto {
 export class UpdatePasswordDto {
   @IsString()
   @IsNotEmpty()
-  @Length(8, 30)
+  @Length(8, 50)
   readonly password: string;
 
   @IsString()
   @IsNotEmpty()
-  @Length(8, 30)
+  @Length(8, 50)
   readonly newPassword: string;
 }
