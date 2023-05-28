@@ -1,36 +1,35 @@
 import { Button, Typography, Box } from '@mui/material'
-import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
+import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded'
 
 import { type Dayjs } from 'dayjs'
 
-import { FormEvent, useEffect, useState } from 'react'
+import { type FormEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 
 import { useAuth } from 'hooks/useAuth'
 import { GENDER_REGEX, NAMES_REGEX } from 'utils/regex'
-import { postNewProfile } from 'services/signUp'
+import { postNewProfile, type dataProfile } from 'services/signUp'
 import { HeaderFormNewProfile } from './HeaderForm'
-import { dataProfile } from 'services/signUp'
 import PaletteFormProvider from '../Theme'
 import { NameField } from '@/components/Fields/Name'
 import { DateField } from '@/components/Fields/Date'
-import { RadioField, RadioOption } from '@/components/Fields/Radio'
+import { RadioField, type RadioOption } from '@/components/Fields/Radio'
 
 const genderOptions: RadioOption[] = [
   {
     label: <FormattedMessage id="profile.new.gender.female" defaultMessage="Female" />,
-    value: "female"
+    value: 'female'
   }, {
     label: <FormattedMessage id="profile.new.gender.male" defaultMessage="Male" />,
-    value: "male"
+    value: 'male'
   }, {
     label: <FormattedMessage id="profile.new.gender.other" defaultMessage="Other" />,
-    value: "other"
+    value: 'other'
   }
 ]
 
-export function NewProfileForm() {
+export function NewProfileForm (): JSX.Element {
   const navigate = useNavigate()
   const { credential, setHasProfile } = useAuth()
 
@@ -68,21 +67,21 @@ export function NewProfileForm() {
     let request: dataProfile = {
       gender,
       firstName,
-      preferenceLang: navigator.language.split(/[-_]/)[0],
+      preferenceLang: navigator.language.split(/[-_]/)[0]
     }
 
     if (lastName !== '') {
       if (NAMES_REGEX.test(lastName)) {
-        request = { lastName: lastName, ...request }
+        request = { lastName, ...request }
       }
     }
 
-    if (years && years.isValid()) {
+    if ((years?.isValid()) === true) {
       request = { birth: years.format('YYYY-MM-DD'), ...request }
     }
 
     try {
-      if (credential) {
+      if (credential != null) {
         await postNewProfile(request, credential)
       }
 
@@ -103,7 +102,7 @@ export function NewProfileForm() {
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'column',
-        background: `linear-gradient(45deg, #00575C 0%, #002d32 100%)`,
+        background: 'linear-gradient(45deg, #00575C 0%, #002d32 100%)',
         backgroundPosition: '0 0',
         backgroundSize: '100% 100%',
         py: { sm: '40px', xs: '0' }
@@ -116,7 +115,7 @@ export function NewProfileForm() {
         width: { xs: '90%', sm: '60%', md: '50%', lg: '40%' },
         gap: 4,
         p: { sm: '40px 32px', xs: '40px 16px' },
-        borderRadius: '12px',
+        borderRadius: '12px'
       }}>
         <HeaderFormNewProfile />
         <Box

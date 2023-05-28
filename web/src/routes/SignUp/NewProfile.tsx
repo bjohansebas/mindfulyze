@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async'
 
 import { NewProfileForm } from '@/components/Forms/NewProfile'
 
-function NewProfilePage() {
+function NewProfilePage (): JSX.Element {
   return (
     <>
       <Helmet>

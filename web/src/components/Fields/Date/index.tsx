@@ -1,10 +1,9 @@
 import { Box, FormControl, FormLabel } from '@mui/material'
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { Dayjs } from 'dayjs'
+import { type Dayjs } from 'dayjs'
 
 import { type SetStateAction, type Dispatch, useId, useState } from 'react'
-
 
 export interface DateFieldProps {
   date: Dayjs | null
@@ -16,7 +15,7 @@ export interface DateFieldProps {
   isDisable?: boolean
 }
 
-export function DateField({ date, errorRequest, errorDate, setDate, label, isDisable }: DateFieldProps): JSX.Element {
+export function DateField ({ date, errorRequest, errorDate, setDate, label, isDisable }: DateFieldProps): JSX.Element {
   const fieldId = useId()
   const [isErrorDate, setIsErrorDate] = useState(false)
 
@@ -28,9 +27,9 @@ export function DateField({ date, errorRequest, errorDate, setDate, label, isDis
           error={isErrorDate}
           sx={{
             pl: '8px',
-            "&.MuiFormLabel-root.Mui-error ~ .MuiInputBase-root .MuiSvgIcon-root": {
+            '&.MuiFormLabel-root.Mui-error ~ .MuiInputBase-root .MuiSvgIcon-root': {
               color: '#D25959'
-            },
+            }
           }}
         >
           {label}

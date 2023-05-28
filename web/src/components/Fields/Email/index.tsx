@@ -1,5 +1,5 @@
 import { Box, FormControl, FormHelperText, FormLabel, InputAdornment, OutlinedInput } from '@mui/material'
-import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
+import EmailRoundedIcon from '@mui/icons-material/EmailRounded'
 
 import { type SetStateAction, type Dispatch, useState, useEffect, useId } from 'react'
 
@@ -16,7 +16,7 @@ export interface EmailFieldProps {
   setValid?: Dispatch<SetStateAction<boolean>>
 }
 
-export function EmailField({ text, errorText, errorRequest, setText, label, isDisable, requiredValid = false, setValid }: EmailFieldProps): JSX.Element {
+export function EmailField ({ text, errorText, errorRequest, setText, label, isDisable, requiredValid = false, setValid }: EmailFieldProps): JSX.Element {
   const fieldId = useId()
   const [validityError, setValidityError] = useState<boolean>(true)
 
@@ -37,9 +37,9 @@ export function EmailField({ text, errorText, errorRequest, setText, label, isDi
           error={(!validityError && text !== '') || errorRequest !== ''}
           sx={{
             pl: '8px',
-            "&.MuiFormLabel-root.Mui-error ~ .MuiInputBase-root .MuiSvgIcon-root": {
+            '&.MuiFormLabel-root.Mui-error ~ .MuiInputBase-root .MuiSvgIcon-root': {
               color: '#D25959'
-            },
+            }
           }}
         >
           {label}

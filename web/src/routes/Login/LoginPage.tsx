@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async'
 
 import { LoginForm } from 'components/Forms/Login'
 
-function LoginPage() {
+function LoginPage (): JSX.Element {
   return (
     <>
       <Helmet>

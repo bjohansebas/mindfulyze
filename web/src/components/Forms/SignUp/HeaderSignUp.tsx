@@ -1,8 +1,8 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography } from '@mui/material'
 
-import { Banner } from "@/components/Banner";
+import { Banner } from '@/components/Banner'
 
-export function HeaderFormSignUp() {
+export function HeaderFormSignUp (): JSX.Element {
   return (
     <Box component="header" sx={{ display: 'flex', alignItems: 'center', gap: '24px', flexDirection: 'column' }}>
       <Box>
@@ -12,7 +12,7 @@ export function HeaderFormSignUp() {
         <Typography
           variant='h1'
           color="primary.contrastText"
-          sx={{ fontSize: { md: '2.143rem', xs: '1.714rem' }, fontWeight: '600', lineHeight: '120%'}}>
+          sx={{ fontSize: { md: '2.143rem', xs: '1.714rem' }, fontWeight: '600', lineHeight: '120%' }}>
           Sign Up
         </Typography>
         <Typography

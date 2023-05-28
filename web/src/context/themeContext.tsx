@@ -1,7 +1,7 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { PropsWithChildren } from 'react'
+import { type PropsWithChildren } from 'react'
 
-let mainTheme = createTheme({
+const mainTheme = createTheme({
   palette: {
     primary: {
       light: '#3f8388',
@@ -45,8 +45,7 @@ let mainTheme = createTheme({
   }
 })
 
-
-export default function PaletteProvider({ children }: PropsWithChildren) {
+export default function PaletteProvider ({ children }: PropsWithChildren): JSX.Element {
   return (
     <ThemeProvider theme={mainTheme}>
       {children}

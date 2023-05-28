@@ -1,6 +1,6 @@
 import { Button, Box } from '@mui/material'
 
-import { FormEvent, useState } from 'react'
+import { type FormEvent, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 
@@ -14,7 +14,7 @@ import { HeaderFormSignUp } from './HeaderSignUp'
 
 import PaletteFormProvider from '../Theme'
 
-export function SignUpForm(): JSX.Element {
+export function SignUpForm (): JSX.Element {
   const { loginAction } = useAuth()
   const navigate = useNavigate()
 
@@ -29,7 +29,7 @@ export function SignUpForm(): JSX.Element {
 
   const [loading, setLoading] = useState(false)
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
     setLoading(true)
 
@@ -38,20 +38,19 @@ export function SignUpForm(): JSX.Element {
 
     if (!testEmail || !testPwd) {
       setLoading(false)
-      return
-    }
-
-    try {
-      await postSignUpAccount(pwd, email)
+    } else {
       try {
-        await loginAction(email, pwd)
-        navigate('/account/new')
+        await postSignUpAccount(pwd, email)
+        try {
+          await loginAction(email, pwd)
+          navigate('/account/new')
+          setLoading(false)
+        } catch (e) {
+          navigate('/login')
+        }
+      } catch (err) {
         setLoading(false)
-      } catch (e) {
-        navigate('/login')
       }
-    } catch (err) {
-      setLoading(false)
     }
   }
 
@@ -64,7 +63,7 @@ export function SignUpForm(): JSX.Element {
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-        background: `linear-gradient(45deg, #00575C 0%, #002d32 100%)`,
+        background: 'linear-gradient(45deg, #00575C 0%, #002d32 100%)',
         backgroundPosition: '0 0',
         backgroundSize: '100% 100%',
         py: { sm: '40px', xs: '0' }
@@ -74,16 +73,16 @@ export function SignUpForm(): JSX.Element {
         display: 'flex',
         justifyContent: ' center',
         flexDirection: 'column',
-        width: { xs: '90%', sm:'60%',md:'50%', lg:'40%' },
+        width: { xs: '90%', sm: '60%', md: '50%', lg: '40%' },
         gap: 4,
         p: { sm: '40px 32px', xs: '40px 16px' },
-        borderRadius: '12px',
+        borderRadius: '12px'
       }}>
         <HeaderFormSignUp />
         <Box
           component="form"
           autoComplete="off"
-          onSubmit={handleSubmit}
+          onSubmit={async (e) => { await handleSubmit(e) }}
           sx={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
           <PaletteFormProvider>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>

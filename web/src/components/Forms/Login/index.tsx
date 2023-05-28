@@ -11,14 +11,13 @@ import { EmailField } from '@/components/Fields/Email'
 
 import PaletteFormProvider from '../Theme'
 
-export function LoginForm(): JSX.Element {
+export function LoginForm (): JSX.Element {
   const navigate = useNavigate()
   const { loginAction } = useAuth()
 
   const [email, setEmail] = useState('')
   const [pwd, setPwd] = useState('')
   const [loading, setLoading] = useState(false)
-
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
@@ -40,7 +39,7 @@ export function LoginForm(): JSX.Element {
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-        background: `linear-gradient(45deg, #00575C 0%, #002d32 100%)`,
+        background: 'linear-gradient(45deg, #00575C 0%, #002d32 100%)',
         backgroundPosition: '0 0',
         backgroundSize: '100% 100%',
         py: { sm: '40px', xs: '0' }
@@ -50,10 +49,10 @@ export function LoginForm(): JSX.Element {
         display: 'flex',
         justifyContent: ' center',
         flexDirection: 'column',
-        width: { xs: '90%', sm:'60%',md:'50%', lg:'40%' },
+        width: { xs: '90%', sm: '60%', md: '50%', lg: '40%' },
         gap: 4,
         p: { sm: '40px 32px', xs: '40px 16px' },
-        borderRadius: '12px',
+        borderRadius: '12px'
       }}>
         <HeaderFormLogin />
         <Box

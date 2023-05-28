@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom'
 
-function MainPage() {
+function MainPage (): JSX.Element {
   return (
     <Outlet />
   )

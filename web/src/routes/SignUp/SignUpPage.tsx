@@ -1,7 +1,7 @@
-import { SignUpForm } from "@/components/Forms/SignUp"
-import { Helmet } from "react-helmet-async"
+import { SignUpForm } from '@/components/Forms/SignUp'
+import { Helmet } from 'react-helmet-async'
 
-function SignUpPage() {
+function SignUpPage (): JSX.Element {
   return (
     <>
       <Helmet>
