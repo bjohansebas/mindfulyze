@@ -10,7 +10,7 @@ export interface HeaderNavigationLoggedProps {
   settingOpen: Dispatch<SetStateAction<boolean>>
 }
 
-export function HeaderNavigationLogged({ settingOpen, isOpen }: HeaderNavigationLoggedProps): JSX.Element {
+export function HeaderNavigationLogged ({ settingOpen, isOpen }: HeaderNavigationLoggedProps): JSX.Element {
   const handleDrawer = (): void => { settingOpen((prevOpen) => !prevOpen) }
 
   return (

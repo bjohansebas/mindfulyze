@@ -1,6 +1,6 @@
 import { FormControl, IconButton, InputAdornment, FormHelperText, FormLabel, OutlinedInput, Box } from '@mui/material'
 import { VisibilityOffRounded, VisibilityRounded } from '@mui/icons-material'
-import KeyRoundedIcon from '@mui/icons-material/KeyRounded';
+import KeyRoundedIcon from '@mui/icons-material/KeyRounded'
 
 import { type SetStateAction, type Dispatch, useState, useEffect, useId } from 'react'
 
@@ -18,7 +18,7 @@ export interface PasswordTextFieldProps {
   setValid?: Dispatch<SetStateAction<boolean>>
 }
 
-export function PasswordTextField({ text, errorText, errorRequest, comparePassword = '', setText, label, isDisable = false, requiredValid = false, setValid }: PasswordTextFieldProps): JSX.Element {
+export function PasswordTextField ({ text, errorText, errorRequest, comparePassword = '', setText, label, isDisable = false, requiredValid = false, setValid }: PasswordTextFieldProps): JSX.Element {
   const fieldId = useId()
 
   const [validityError, setValidityError] = useState<boolean>(false)
@@ -33,8 +33,7 @@ export function PasswordTextField({ text, errorText, errorRequest, comparePasswo
       if (setValid !== undefined) {
         setValid(PWD_REGEX.test(text))
       }
-    }
-    else if (comparePassword !== '') {
+    } else if (comparePassword !== '') {
       setValidityError(text === comparePassword)
       if (setValid !== undefined) {
         setValid(text === comparePassword)
@@ -58,9 +57,9 @@ export function PasswordTextField({ text, errorText, errorRequest, comparePasswo
           }
           sx={{
             pl: '8px',
-            "&.MuiFormLabel-root.Mui-error ~ .MuiInputBase-root .MuiSvgIcon-root": {
+            '&.MuiFormLabel-root.Mui-error ~ .MuiInputBase-root .MuiSvgIcon-root': {
               color: '#D25959'
-            },
+            }
           }}
         >
           {label}
@@ -95,8 +94,8 @@ export function PasswordTextField({ text, errorText, errorRequest, comparePasswo
           }
         />
       </Box>
-      {(((requiredValid && validityError) || (PWD_REGEX.test(comparePassword) && comparePassword !== text)) && text !== '')
-        && <FormHelperText error id={`error-text-${fieldId}`}>{errorText}</FormHelperText>}
+      {(((requiredValid && validityError) || (PWD_REGEX.test(comparePassword) && comparePassword !== text)) && text !== '') &&
+        <FormHelperText error id={`error-text-${fieldId}`}>{errorText}</FormHelperText>}
       {(errorRequest !== '') && <FormHelperText error id={`error-text-${fieldId}`}>{errorRequest}</FormHelperText>}
     </FormControl>
   )

@@ -1,8 +1,8 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography } from '@mui/material'
 
-import { Banner } from "@/components/Banner";
+import { Banner } from '@/components/Banner'
 
-export function HeaderFormLogin() {
+export function HeaderFormLogin (): JSX.Element {
   return (<Box component="header" sx={{ display: 'flex', alignItems: 'center', gap: '24px', flexDirection: 'column' }}>
     <Box>
       <Banner widthFavicon={40} heightText={24.26} widthText={230} color='#FFFFFF' />

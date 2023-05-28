@@ -15,7 +15,7 @@ export interface NameFieldProps {
   setValid?: Dispatch<SetStateAction<boolean>>
 }
 
-export function NameField({ text, errorText, errorRequest, setText, label, isDisable, requiredValid = false, setValid }: NameFieldProps): JSX.Element {
+export function NameField ({ text, errorText, errorRequest, setText, label, isDisable, requiredValid = false, setValid }: NameFieldProps): JSX.Element {
   const fieldId = useId()
   const [validityError, setValidityError] = useState<boolean>(true)
 
@@ -36,9 +36,9 @@ export function NameField({ text, errorText, errorRequest, setText, label, isDis
           error={(!validityError && text !== '') || errorRequest !== ''}
           sx={{
             pl: '8px',
-            "&.MuiFormLabel-root.Mui-error ~ .MuiInputBase-root .MuiSvgIcon-root": {
+            '&.MuiFormLabel-root.Mui-error ~ .MuiInputBase-root .MuiSvgIcon-root': {
               color: '#D25959'
-            },
+            }
           }}
         >
           {label}

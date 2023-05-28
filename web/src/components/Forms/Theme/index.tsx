@@ -1,9 +1,9 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { PropsWithChildren } from 'react'
+import { type PropsWithChildren } from 'react'
 
-import type { } from '@mui/x-date-pickers/themeAugmentation';
+import type { } from '@mui/x-date-pickers/themeAugmentation'
 
-let mainTheme = createTheme({
+const mainTheme = createTheme({
   palette: {
     primary: {
       main: '#ffffff'
@@ -29,46 +29,46 @@ let mainTheme = createTheme({
           background: '#00383D',
           color: '#ffffff',
           '& fieldset': {
-            borderColor: '#3F8388',
+            borderColor: '#3F8388'
           },
-          "&.Mui-error fieldset": {
-            borderColor: "#D25959 !important"
+          '&.Mui-error fieldset': {
+            borderColor: '#D25959 !important'
           },
-          "&.Mui-error:hover fieldset": {
-            borderColor: "#D25959 !important"
+          '&.Mui-error:hover fieldset': {
+            borderColor: '#D25959 !important'
           },
           '&.Mui-focused fieldset': {
-            borderColor: '#ffffff !important',
+            borderColor: '#ffffff !important'
           },
           '&.Mui-focused.Mui-error fieldset': {
-            borderColor: "#D25959 !important"
+            borderColor: '#D25959 !important'
           },
           '&.Mui-disabled:hover fieldset': {
-            borderColor: 'rgba(0, 0, 0, 0.38) !important',
+            borderColor: 'rgba(0, 0, 0, 0.38) !important'
           },
           '&:hover fieldset': {
-            borderColor: '#ffffff !important',
-          },
-        },
+            borderColor: '#ffffff !important'
+          }
+        }
       }
     },
     MuiFormLabel: {
       styleOverrides: {
         root: {
           color: '#ffffff',
-          "&.Mui-focused": {
-            color: "#ffffff"
+          '&.Mui-focused': {
+            color: '#ffffff'
           },
-          "&.Mui-error": {
-            color: "#D25959"
-          },
-        },
+          '&.Mui-error': {
+            color: '#D25959'
+          }
+        }
       }
     },
     MuiInputAdornment: {
       styleOverrides: {
         root: {
-          color: '#E1F5F4',
+          color: '#E1F5F4'
         }
       }
     },
@@ -82,11 +82,11 @@ let mainTheme = createTheme({
         root: {
           textTransform: 'initial',
           fontSize: '1rem',
-          "&.Mui-error": {
-            color: "#D25959"
+          '&.Mui-error': {
+            color: '#D25959'
           }
-        },
-      },
+        }
+      }
     },
     MuiFormControlLabel: {
       styleOverrides: {
@@ -94,7 +94,7 @@ let mainTheme = createTheme({
           color: '#ffffff'
         }
       }
-    },
+    }
   },
   typography: {
     fontFamily: 'Poppins',
@@ -102,8 +102,7 @@ let mainTheme = createTheme({
   }
 })
 
-
-export default function PaletteFormProvider({ children }: PropsWithChildren) {
+export default function PaletteFormProvider ({ children }: PropsWithChildren): JSX.Element {
   return (
     <ThemeProvider theme={mainTheme}>
       {children}

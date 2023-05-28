@@ -4,7 +4,7 @@ import { type SetStateAction, type Dispatch, useEffect, useId } from 'react'
 
 import { GENDER_REGEX } from 'utils/regex'
 
-export type RadioOption = {
+export interface RadioOption {
   label: string | JSX.Element
   value: string
 }
@@ -17,7 +17,7 @@ export interface RadioFieldProps {
   setValid?: Dispatch<SetStateAction<boolean>>
 }
 
-export function RadioField({ option, setOption, label, setValid, options }: RadioFieldProps): JSX.Element {
+export function RadioField ({ option, setOption, label, setValid, options }: RadioFieldProps): JSX.Element {
   const fieldId = useId()
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export function RadioField({ option, setOption, label, setValid, options }: Radi
           row
           aria-labelledby={`radio-${fieldId}`}
           value={option}
-          onChange={(e) => setOption(e.target.value)}
+          onChange={(e) => { setOption(e.target.value) }}
           color='primary'
         >
           {
@@ -44,7 +44,7 @@ export function RadioField({ option, setOption, label, setValid, options }: Radi
               <FormControlLabel
                 key={value}
                 value={value}
-                control={<Radio color='primary'  />}
+                control={<Radio color='primary' />}
                 label={label} />
             ))
           }
