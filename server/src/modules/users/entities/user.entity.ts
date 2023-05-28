@@ -34,6 +34,14 @@ export class User {
     default: () => 'CURRENT_TIMESTAMP',
   })
   changedPasswordAt: Date;
+  @Exclude()
+  @Column({
+    type: 'varchar',
+    array: true,
+    name: 'refresh_tokens',
+    nullable: true,
+  })
+  refreshTokens: string[];
   @OneToOne(() => ProfileUser, (profile) => profile.user, { nullable: true })
   profile: ProfileUser;
   @OneToMany(() => Color, (color) => color.user)
