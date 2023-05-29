@@ -1,16 +1,38 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { ErrorPage } from './routes/Error'
+import { Loading } from './components/Loading'
 
 const router = createBrowserRouter([
   {
-    path: '/',
     async lazy () {
       const { MainPage } = await import('./routes/Main')
       return { Component: MainPage }
     },
     errorElement: <ErrorPage />,
     children: [
+      {
+        async lazy () {
+          const { SignLayoutPage } = await import('./routes/SignLayout')
+          return { Component: SignLayoutPage }
+        },
+        children: [
+          {
+            path: '/login',
+            async lazy () {
+              const { LoginPage } = await import('./routes/Login')
+              return { Component: LoginPage }
+            }
+          },
+          {
+            path: '/signup',
+            async lazy () {
+              const { SignUpPage } = await import('./routes/SignUp')
+              return { Component: SignUpPage }
+            }
+          }
+        ]
+      },
       {
         async lazy () {
           const { RequiredAuth } = await import('./routes/Main/RequiredAuth')
@@ -87,40 +109,18 @@ const router = createBrowserRouter([
           }, {
             path: 'logout',
             async lazy () {
-              const { LogoutPage } = await import('./routes/Logout/')
+              const { LogoutPage } = await import('./routes/Logout')
               return { Component: LogoutPage }
             }
           }
         ]
       }
     ]
-  },
-  {
-    async lazy () {
-      const { SignLayoutPage } = await import('./routes/SignLayout')
-      return { Component: SignLayoutPage }
-    },
-    children: [
-      {
-        path: '/login',
-        async lazy () {
-          const { LoginPage } = await import('./routes/Login')
-          return { Component: LoginPage }
-        }
-      },
-      {
-        path: '/signup',
-        async lazy () {
-          const { SignUpPage } = await import('./routes/SignUp')
-          return { Component: SignUpPage }
-        }
-      }
-    ]
   }
 ])
 
 function App () {
-  return <RouterProvider router={router} />
+  return <RouterProvider router={router} fallbackElement={<Loading />} />
 }
 
 export { App }
