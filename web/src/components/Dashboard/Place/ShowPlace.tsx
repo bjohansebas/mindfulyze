@@ -1,31 +1,32 @@
 import { Box, List, IconButton, Menu, MenuItem, Typography, ListItem, ListItemButton, ListItemText, Skeleton } from '@mui/material'
 import { MoreVert } from '@mui/icons-material'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type MouseEvent } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { useNavigate } from 'react-router-dom'
 
-import { useAuth } from '../../hooks/useAuth'
-import { EmptyPlace } from './EmptyPlace'
-import { deletePlace, getAllPlaces } from '../../services/place'
+import { useAuth } from 'hooks/useAuth'
+import { deletePlace, getAllPlaces, type ResponseAllPlaces } from 'services/place'
 
-function ShowPlaces () {
+import { EmptyPlace } from './EmptyPlace'
+
+export function ShowPlaces (): JSX.Element {
   const { credential } = useAuth()
   const navigate = useNavigate()
 
-  const [allPlaces, setAllPlaces] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [allPlaces, setAllPlaces] = useState<ResponseAllPlaces>([])
+  const [loading, setLoading] = useState<boolean>(true)
 
-  const [anchorEl, setAnchorEl] = useState(null)
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
   const [idSelect, setIdSelect] = useState('')
 
-  const getPlace = async () => {
+  const getPlace = async (): Promise<void> => {
     try {
-      const response = await getAllPlaces(credential)
+      if (credential != null) {
+        const response = await getAllPlaces(credential)
 
-      setAllPlaces(response.map(data => {
-        return { text: data.name, id: data.id, color: data.color.code }
-      }))
+        setAllPlaces(response)
+      }
     } catch (e) {
       console.log(e)
     } finally {
@@ -33,8 +34,8 @@ function ShowPlaces () {
     }
   }
 
-  const handlePlaceMenu = (event, id) => {
-    if (anchorEl) {
+  const handlePlaceMenu = (event: MouseEvent<HTMLButtonElement>, id: string): void => {
+    if (anchorEl != null) {
       setIdSelect('')
       setAnchorEl(null)
     } else {
@@ -43,12 +44,14 @@ function ShowPlaces () {
     }
   }
 
-  const onDelete = async () => {
+  const onDelete = async (): Promise<void> => {
     try {
       setLoading(true)
       setAnchorEl(null)
-      await deletePlace(idSelect, credential)
-      await getPlace()
+      if (credential != null) {
+        await deletePlace(idSelect, credential)
+        await getPlace()
+      }
     } catch (err) {
       console.log(err)
     } finally {
@@ -57,7 +60,7 @@ function ShowPlaces () {
   }
 
   useEffect(() => {
-    getPlace()
+    void getPlace()
   }, [])
 
   return (
@@ -75,10 +78,10 @@ function ShowPlaces () {
         {(!loading && allPlaces.length === 0) && <EmptyPlace />}
         {(!loading && allPlaces.length > 0) && allPlaces.map((data, index) => (
           <ListItem
-            sx={{ borderRadius: '10px', boxShadow: `0 0 10px #${data?.color}80`, background: '#ffffff' }}
+            sx={{ borderRadius: '10px', boxShadow: `0 0 10px #${data.color.code}80`, background: '#ffffff' }}
             key={index}
             secondaryAction={
-              <IconButton edge="end" aria-label="comments" onClick={(e) => handlePlaceMenu(e, data.id)}>
+              <IconButton edge="end" aria-label="comments" onClick={(e) => { handlePlaceMenu(e, data.id) }}>
                 <MoreVert />
               </IconButton>
             }
@@ -88,7 +91,7 @@ function ShowPlaces () {
               role={undefined}
               dense
               onClick={() => { navigate(`/place/${data?.id}`) }}>
-              <ListItemText primary={`${data?.text}`} />
+              <ListItemText primary={`${data.name}`} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -118,12 +121,10 @@ function ShowPlaces () {
         </MenuItem>
         <MenuItem
           key="2"
-          onClick={() => navigate(`/place/${idSelect}/edit`)}>
+          onClick={() => { navigate(`/place/${idSelect}/edit`) }}>
           <FormattedMessage id="options.edit.place" defaultMessage="Edit place" />
         </MenuItem>
       </Menu>
     </Box>
   )
 }
-
-export { ShowPlaces }

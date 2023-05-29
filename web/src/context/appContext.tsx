@@ -3,14 +3,15 @@ import { useNavigate } from 'react-router-dom'
 import { useLocalStorage } from 'usehooks-ts'
 
 import { postLogin } from '../services/login'
+import { type ResponseAccount } from '@/services/user'
 
 export interface AppContextProps {
   credential: string | null
   userId: string | null
-  userInfo: object | null
+  userInfo: ResponseAccount | null
   setCredential: Dispatch<SetStateAction<string | null>>
   setUserId: Dispatch<SetStateAction<string | null>>
-  setUserInfo: Dispatch<SetStateAction<object | null>>
+  setUserInfo: Dispatch<SetStateAction<ResponseAccount | null>>
   loginAction: (email: string, password: string) => Promise<void>
   logoutAction: () => void
 }
@@ -23,7 +24,7 @@ export function AppProvider ({ children }: React.PropsWithChildren): JSX.Element
 
   const [credential, setCredential] = useLocalStorage<string | null>('credentials_token', null)
   const [userId, setUserId] = useLocalStorage<string | null>('userId', null)
-  const [userInfo, setUserInfo] = useLocalStorage<object | null>('userInfo', null)
+  const [userInfo, setUserInfo] = useLocalStorage<ResponseAccount | null>('userInfo', null)
 
   const loginAction = async (email: string, password: string): Promise<void> => {
     try {
@@ -31,7 +32,6 @@ export function AppProvider ({ children }: React.PropsWithChildren): JSX.Element
 
       setCredential(response.access_token)
       setUserId(response.id)
-      setUserInfo({ ...response })
     } catch (err) {
       console.log('Login failed')
     }

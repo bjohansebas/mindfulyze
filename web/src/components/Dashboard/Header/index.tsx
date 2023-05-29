@@ -4,17 +4,20 @@ import { Circle } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 
-import { useAuth } from '../../hooks/useAuth'
-import { getStatisticsAll } from '../../services/statistics'
+import { useAuth } from 'hooks/useAuth'
 
-function Welcome () {
+import { getStatisticsAll } from 'services/statistics'
+
+export function WelcomeHeader (): JSX.Element {
   const { userInfo, credential } = useAuth()
 
-  const [emotions, setEmotions] = useState([0, 0])
-  const [loading, setLoading] = useState(true)
+  const [emotions, setEmotions] = useState<number[]>([0, 0])
+  const [loading, setLoading] = useState<boolean>(true)
 
-  const getEmotions = async () => {
+  const getEmotions = async (): Promise<void> => {
     try {
+      if (credential == null) return
+
       const dataResponse = await getStatisticsAll(credential)
       const positive = dataResponse.filter(value => value.emotion.type === 'Positive').length
       const negative = dataResponse.filter(value => value.emotion.type === 'Negative').length
@@ -28,7 +31,7 @@ function Welcome () {
   }
 
   useEffect(() => {
-    getEmotions()
+    void getEmotions()
   }, [])
 
   return (
@@ -79,5 +82,3 @@ function Welcome () {
     </Box>
   )
 }
-
-export { Welcome }

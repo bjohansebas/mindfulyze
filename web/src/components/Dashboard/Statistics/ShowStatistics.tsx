@@ -2,23 +2,33 @@ import 'chart.js/auto'
 import { Box, Button, Menu, MenuItem, Skeleton, Typography } from '@mui/material'
 import { FilterList } from '@mui/icons-material'
 
-import { useEffect, useState } from 'react'
+import { type MouseEvent, useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Doughnut } from 'react-chartjs-2'
 
-import { useAuth } from '../../hooks/useAuth'
-import { EmptyStatistics } from './EmptyStatistics'
-import { getStatisticsAll, getStatisticsNegative, getStatisticsPositive } from '../../services/statistics'
+import { useAuth } from 'hooks/useAuth'
 
-function Statistics () {
+import { getStatisticsAll, getStatisticsNegative, getStatisticsPositive } from 'services/statistics'
+import { type ResponseRelationEmotion } from 'services/think'
+
+import { EmptyStatistics } from './EmptyStatistics'
+
+type StatisticsCount = Record<string, {
+  name: string
+  count: number
+  color: string
+}>
+
+export function ShowStatistics (): JSX.Element {
   const { credential } = useAuth()
-  const [anchorEl, setAnchorEl] = useState(null)
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
+  const [loading, setLoading] = useState(true)
 
   const [filter, setFilter] = useState('all')
-  const [dataEmotions, setDataEmotions] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [labels, setLabels] = useState([])
-  const [colors, setColors] = useState([])
+
+  const [dataEmotions, setDataEmotions] = useState<number[]>([])
+  const [labels, setLabels] = useState<string[]>([])
+  const [colors, setColors] = useState<string[]>([])
 
   const data = {
     labels,
@@ -33,33 +43,36 @@ function Statistics () {
     ]
   }
 
-  const handleStatisticsMenu = (event) => {
-    if (anchorEl) {
+  const handleStatisticsMenu = (event: MouseEvent<HTMLButtonElement>): void => {
+    if (anchorEl != null) {
       setAnchorEl(null)
     } else {
       setAnchorEl(event.currentTarget)
     }
   }
 
-  const filterAll = async () => {
+  const filterAll = async (): Promise<void> => {
     const label = []
     const dataResult = []
     const color = []
 
     try {
       setLoading(true)
-      const dataResponse = await getStatisticsAll(credential)
+      if (credential == null) return
 
-      const positive = dataResponse.filter(value => value.emotion.type === 'Positive')
-      const negative = dataResponse.filter(value => value.emotion.type === 'Negative')
-      const repeatNegative = {}
-      const repeatPositive = {}
+      const dataResponse: ResponseRelationEmotion[] = await getStatisticsAll(credential)
+
+      const positive = dataResponse.filter(({ emotion }) => emotion.type === 'Positive')
+      const negative = dataResponse.filter(({ emotion }) => emotion.type === 'Negative')
+      const repeatNegative: StatisticsCount = {}
+      const repeatPositive: StatisticsCount = {}
 
       for await (const value of positive) {
-        const nameEmotion = value.emotion.name
+        const nameEmotion: string = value.emotion.name
+
         repeatPositive[nameEmotion] = {
           name: nameEmotion,
-          count: (repeatPositive[nameEmotion]?.count || 0) + 1,
+          count: (repeatPositive[nameEmotion]?.count ?? 0) + 1,
           color: value.emotion.color.code
         }
       }
@@ -68,7 +81,7 @@ function Statistics () {
         const nameEmotion = value.emotion.name
         repeatNegative[nameEmotion] = {
           name: nameEmotion,
-          count: (repeatNegative[nameEmotion]?.count || 0) + 1,
+          count: (repeatNegative[nameEmotion]?.count ?? 0) + 1,
           color: value.emotion.color.code
         }
       }
@@ -95,21 +108,23 @@ function Statistics () {
     }
   }
 
-  const filterNegative = async () => {
+  const filterNegative = async (): Promise<void> => {
     const label = []
     const dataResult = []
     const color = []
 
     try {
       setLoading(true)
+      if (credential == null) return
+
       const dataResponse = await getStatisticsNegative(credential)
-      const negative = {}
+      const negative: StatisticsCount = {}
 
       for await (const value of dataResponse) {
         const nameEmotion = value.emotion.name
         negative[nameEmotion] = {
           name: nameEmotion,
-          count: (negative[nameEmotion]?.count || 0) + 1,
+          count: (negative[nameEmotion]?.count ?? 0) + 1,
           color: value.emotion.color.code
         }
       }
@@ -128,22 +143,23 @@ function Statistics () {
     }
   }
 
-  const filterPositive = async () => {
+  const filterPositive = async (): Promise<void> => {
     const label = []
     const dataResult = []
     const color = []
 
     try {
       setLoading(true)
+      if (credential == null) return
 
       const dataResponse = await getStatisticsPositive(credential)
-      const positive = {}
+      const positive: StatisticsCount = {}
 
       for await (const value of dataResponse) {
         const nameEmotion = value.emotion.name
         positive[nameEmotion] = {
           name: nameEmotion,
-          count: (positive[nameEmotion]?.count || 0) + 1,
+          count: (positive[nameEmotion]?.count ?? 0) + 1,
           color: value.emotion.color.code
         }
       }
@@ -166,11 +182,11 @@ function Statistics () {
 
   useEffect(() => {
     if (filter === 'positive') {
-      filterPositive()
+      void filterPositive()
     } else if (filter === 'negative') {
-      filterNegative()
+      void filterNegative()
     } else {
-      filterAll()
+      void filterAll()
     }
   }, [filter])
 
@@ -254,5 +270,3 @@ function Statistics () {
     </>
   )
 }
-
-export { Statistics }

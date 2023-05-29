@@ -3,7 +3,7 @@ import { Box, Button, Typography } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
 
-function EmptyStatistics () {
+export function EmptyStatistics (): JSX.Element {
   return (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Typography>
@@ -15,5 +15,3 @@ function EmptyStatistics () {
     </Box>
   )
 }
-
-export { EmptyStatistics }

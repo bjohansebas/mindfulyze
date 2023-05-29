@@ -1,12 +1,9 @@
 import { Box } from '@mui/material'
-
 import { Helmet } from 'react-helmet-async'
 
-import { ShowPlaces } from './ShowPlace'
-import { Welcome } from './Welcome'
-import { Statistics } from './Statistics'
+import { DashboardUI } from '@/components/Dashboard'
 
-function DashboardPage () {
+export function DashboardPage (): JSX.Element {
   return (
     <Box
       component="main"
@@ -14,10 +11,7 @@ function DashboardPage () {
       <Helmet>
         <title>Dashboard | Alignmind</title>
       </Helmet>
-      <Welcome />
-      <ShowPlaces />
-      <Statistics />
-    </Box >)
+      <DashboardUI/>
+    </Box>
+  )
 }
-
-export { DashboardPage }
