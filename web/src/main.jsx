@@ -12,7 +12,6 @@ import '@formatjs/intl-pluralrules/locale-data/en'
 
 import { App } from './App'
 import PaletteProvider from './context/themeContext'
-import { AuthProvider } from './context/authContext'
 import { HelmetProvider } from 'react-helmet-async'
 import { IntlProvider } from 'react-intl'
 import messagesEs from './translations/es'
@@ -29,10 +28,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <IntlProvider locale={language} messages={messages[language]}>
       <PaletteProvider>
         <HelmetProvider>
-          <AuthProvider>
-            <CssBaseline/>
-            <App />
-          </AuthProvider>
+          <CssBaseline />
+          <App />
         </HelmetProvider>
       </PaletteProvider>
     </IntlProvider>
