@@ -90,8 +90,8 @@ const router = createBrowserRouter([
           }, {
             path: 'trash/',
             async lazy () {
-              const { TrashPage } = await import('./routes/Trash')
-              return { Component: TrashPage }
+              const { ShowTrashPage } = await import('./routes/Trash')
+              return { Component: ShowTrashPage }
             }
 
           }, {

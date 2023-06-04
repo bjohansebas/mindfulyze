@@ -4,44 +4,43 @@ import RestoreIcon from '@mui/icons-material/Restore'
 import DeleteIcon from '@mui/icons-material/Delete'
 
 import { useNavigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { type MouseEvent, useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { Helmet } from 'react-helmet-async'
 
-import { useAuth } from '../../hooks/useAuth'
+import { useAuth } from 'hooks/useAuth'
 import { EmptyTrash } from './EmptyTrash'
-import { deleteThinkFromTrash, getAllTrashes, restoreFromTrash } from '../../services/trash'
+import { type ResponseTrashes, deleteThinkFromTrash, getAllTrashes, restoreFromTrash } from 'services/trash'
 
-function TrashPage () {
+export function ShowTrashUI (): JSX.Element {
   const navigate = useNavigate()
   const { credential } = useAuth()
 
-  const [anchorElTrash, setAnchorElTrash] = useState(null)
-  const [checked, setChecked] = useState([])
+  const [anchorElTrash, setAnchorElTrash] = useState<HTMLButtonElement | null>(null)
+  const [checked, setChecked] = useState<number[]>([])
 
-  const [allTrash, setAllTrash] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [idSelect, setIdSelect] = useState('')
+  const [allTrash, setAllTrash] = useState<ResponseTrashes>([])
+  const [loading, setLoading] = useState<boolean>(true)
+  const [idSelect, setIdSelect] = useState<string>('')
 
-  const getTrash = async () => {
+  const getTrash = async (): Promise<void> => {
+    if (credential == null) return
+
     try {
       const response = await getAllTrashes(credential)
 
-      setAllTrash(response.map(data => {
-        return { text: data.text, id: data.id }
-      }))
+      setAllTrash(response)
     } catch (e) {
-      console.log(e?.response)
+      console.log(e)
     } finally {
       setLoading(false)
     }
   }
 
   useEffect(() => {
-    getTrash()
+    void getTrash()
   }, [])
 
-  const handleToggle = (value) => () => {
+  const handleToggle = (value: number): void => {
     const currentIndex = checked.indexOf(value)
     const newChecked = [...checked]
 
@@ -54,8 +53,8 @@ function TrashPage () {
     setChecked(newChecked)
   }
 
-  const handleTrashMenu = (event, id) => {
-    if (anchorElTrash) {
+  const handleTrashMenu = (event: MouseEvent<HTMLButtonElement>, id: string): void => {
+    if (anchorElTrash != null) {
       setIdSelect('')
       setAnchorElTrash(null)
     } else {
@@ -64,7 +63,9 @@ function TrashPage () {
     }
   }
 
-  const onDeleteId = async () => {
+  const onDeleteId = async (): Promise<void> => {
+    if (credential == null) return
+
     try {
       setAnchorElTrash(null)
       await deleteThinkFromTrash(idSelect, credential)
@@ -76,7 +77,9 @@ function TrashPage () {
     }
   }
 
-  const onRestoreId = async () => {
+  const onRestoreId = async (): Promise<void> => {
+    if (credential == null) return
+
     try {
       setAnchorElTrash(null)
       await restoreFromTrash(idSelect, credential)
@@ -88,7 +91,9 @@ function TrashPage () {
     }
   }
 
-  const onDeleteSelect = async () => {
+  const onDeleteSelect = async (): Promise<void> => {
+    if (credential == null) return
+
     if (checked.length > 0) {
       try {
         for await (const value of checked) {
@@ -104,7 +109,9 @@ function TrashPage () {
     }
   }
 
-  const onRestoreSelect = async () => {
+  const onRestoreSelect = async (): Promise<void> => {
+    if (credential == null) return
+
     if (checked.length > 0) {
       try {
         for await (const value of checked) {
@@ -121,9 +128,6 @@ function TrashPage () {
 
   return (
     <Box sx={{ width: '100%', p: '30px' }}>
-      <Helmet>
-        <title>Trash | AlignMind</title>
-      </Helmet>
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', backgroundColor: '#ffffff' }}>
         <Typography
           variant="h6"
@@ -157,11 +161,11 @@ function TrashPage () {
                 }
                 disablePadding
               >
-                <ListItemButton role={undefined} onClick={handleToggle(index)} dense>
+                <ListItemButton role={undefined} onClick={() => { handleToggle(index) }} dense>
                   <ListItemIcon>
                     <Checkbox
                       edge="start"
-                      checked={checked.indexOf(index) !== -1}
+                      checked={checked.includes(index)}
                       tabIndex={-1}
                       disableRipple
                       inputProps={{ 'aria-labelledby': labelId }}
@@ -192,7 +196,7 @@ function TrashPage () {
       >
         <MenuItem
           key="1"
-          onClick={() => navigate(`/trash/${idSelect}`)}>
+          onClick={() => { navigate(`/trash/${idSelect}`) }}>
           <FormattedMessage id="options.think.see" defaultMessage="See thought" />
         </MenuItem>
         <MenuItem
@@ -207,5 +211,3 @@ function TrashPage () {
     </Box >
   )
 }
-
-export { TrashPage }

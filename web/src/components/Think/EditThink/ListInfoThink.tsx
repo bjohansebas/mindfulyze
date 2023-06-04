@@ -4,12 +4,13 @@ import dayjs from 'dayjs'
 
 import { type ResponsePlace } from 'services/place'
 import { type ResponseThink } from 'services/think'
+import { type ResponseTrash } from 'services/trash'
 
 export interface ListInfoThinkProps {
   loadingPlace: boolean
   place: ResponsePlace | null
   loadingThink: boolean
-  think: ResponseThink | null
+  think: ResponseThink | ResponseTrash | null
 }
 
 export function ListInfoThink ({ loadingPlace, loadingThink, place, think }: ListInfoThinkProps): JSX.Element {

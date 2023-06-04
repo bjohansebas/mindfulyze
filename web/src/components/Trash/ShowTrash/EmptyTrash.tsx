@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material'
 
 import { FormattedMessage } from 'react-intl'
 
-function EmptyTrash () {
+export function EmptyTrash (): JSX.Element {
   return (
     <Box sx={{
       height: '100%',
@@ -19,5 +19,3 @@ function EmptyTrash () {
     </Box >
   )
 }
-
-export { EmptyTrash }

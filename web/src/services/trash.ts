@@ -11,9 +11,9 @@ export interface ResponseTrash {
   text: string
   createdAt: string
   updatedAt: string
-  place?: ResponsePlace
+  place: ResponsePlace
   user?: ResponseAccount
-  emotions?: ResponseRelationEmotion
+  emotions?: ResponseRelationEmotion[]
   dateStart: string
   dateEnd: string
 }

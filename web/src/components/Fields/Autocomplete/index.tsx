@@ -12,16 +12,17 @@ export interface AutocompleteFieldProps {
   setSelect: Dispatch<SetStateAction<OptionsProps[]>>
   options: OptionsProps[]
   loading?: boolean
+  disabled?: boolean
 }
 
-export function AutocompleteField ({ options, loading, select, setSelect }: AutocompleteFieldProps): JSX.Element {
+export function AutocompleteField ({ options, loading, select, setSelect, disabled }: AutocompleteFieldProps): JSX.Element {
   return <Autocomplete multiple
     id="tags-standard"
     value={select}
     onChange={(_, newValue) => {
       setSelect(newValue)
     }}
-    disabled={loading}
+    disabled={(loading === true) || (disabled === true)}
     options={options}
     getOptionLabel={(option) => option.text}
     isOptionEqualToValue={(option, value) => option.id === value.id}
