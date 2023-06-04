@@ -32,8 +32,8 @@ export interface UpdateAccount {
 
 export interface UpdateProfile {
   firstName?: string
-  lastName?: string
-  birth?: string
+  lastName?: string | null
+  birth?: string | null
   gender?: string
   preferenceLang?: string
 }
