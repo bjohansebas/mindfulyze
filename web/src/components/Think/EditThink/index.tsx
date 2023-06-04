@@ -1,51 +1,61 @@
-import { Autocomplete, Box, Button, List, ListItem, ListItemButton, ListItemText, Skeleton, TextareaAutosize, TextField, Toolbar } from '@mui/material'
+import { Box, Button, Toolbar } from '@mui/material'
 import { Delete as DeleteIcon, Archive as ArchiveIcon } from '@mui/icons-material'
 
-import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
-import { Helmet } from 'react-helmet-async'
 
-import { useAuth } from '../../hooks/useAuth'
-import { getThink, moveToTrash, putAddEmotion, putDeleteEmotion, putThink } from '../../services/think'
-import { getAllEmotions } from '../../services/emotion'
+import { useAuth } from 'hooks/useAuth'
+import { getThink, moveToTrash, putAddEmotion, putDeleteEmotion, putThink, type ResponseThink } from 'services/think'
+import { getAllEmotions } from 'services/emotion'
+import { isAxiosError } from 'axios'
+import { type ResponsePlace } from 'services/place'
+import { AutocompleteField, type OptionsProps } from '../../Fields/Autocomplete'
+import { TextAreaField } from '../../Fields/TextArea'
+import { ListInfoThink } from './ListInfoThink'
 
-function EditThinkPage () {
+export function EditThinkUI (): JSX.Element {
   const { id } = useParams()
   const navigate = useNavigate()
   const { credential } = useAuth()
 
-  const [think, setThink] = useState({})
+  const [think, setThink] = useState<ResponseThink | null>(null)
   const [loadingThink, setLoadingThink] = useState(true)
 
-  const [place, setPlace] = useState({})
+  const [place, setPlace] = useState<ResponsePlace | null>(null)
   const [loadingPlace, setLoadingPlace] = useState(true)
 
-  const [emotions, setEmotions] = useState([])
+  const [emotions, setEmotions] = useState<OptionsProps[] | null>(null)
 
-  const [allEmotions, setAllEmotions] = useState([])
-  const [loadingAllEmotions, setLoadingAllEmotions] = useState(true)
+  const [allEmotions, setAllEmotions] = useState<OptionsProps[]>([])
+  const [loadingAllEmotions, setLoadingAllEmotions] = useState<boolean>(true)
 
-  const [newTextThink, setNewTextThink] = useState('')
-  const [newEmotionsThink, setNewEmotionsThink] = useState([])
-  const [loadingSave, setLoadingSave] = useState(false)
-  async function gettingThink () {
+  const [newTextThink, setNewTextThink] = useState<string>('')
+  const [newEmotionsThink, setNewEmotionsThink] = useState<OptionsProps[]>([])
+  const [loadingSave, setLoadingSave] = useState<boolean>(false)
+
+  const gettingThink = async (): Promise<void> => {
     try {
+      if (id == null || credential == null) return
+
       const response = await getThink(id, credential)
       setThink(response)
-      setEmotions(response?.emotions.map(data => {
-        return { text: data.emotion.name, id: data.emotion.id }
-      }))
-      setPlace({ name: response.place.name })
+      if ((response?.emotions) != null) {
+        setEmotions(response?.emotions.map(value => {
+          return {
+            id: value.emotion.id,
+            text: value.emotion.name
+          }
+        }
+        ))
+      }
+      setPlace(response.place)
       setNewTextThink(response.text)
     } catch (err) {
-      if (!err?.response) {
-        console.log('Server not response')
-      } else if (err.response?.status === 404) {
-        navigate('/')
-      } else {
-        console.log('error aqui')
+      if (isAxiosError(err)) {
+        if (err.response?.status === 400 || err.response?.status === 404) {
+          navigate('/')
+        }
       }
     } finally {
       setLoadingThink(false)
@@ -54,16 +64,20 @@ function EditThinkPage () {
   }
 
   useEffect(() => {
-    gettingThink()
+    void gettingThink()
   }, [])
 
   useEffect(() => {
-    async function getEmotions () {
+    async function getEmotions (): Promise<void> {
+      if (credential == null) return
       try {
         const response = await getAllEmotions(credential)
 
-        setAllEmotions(response?.map(data => {
-          return { text: data.name, id: data.id }
+        setAllEmotions(response.map(value => {
+          return {
+            id: value.id,
+            text: value.name
+          }
         }))
       } catch (e) {
         console.log(e)
@@ -71,16 +85,19 @@ function EditThinkPage () {
         setLoadingAllEmotions(false)
       }
     }
-    getEmotions()
+
+    void getEmotions()
   }, [])
 
   useEffect(() => {
-    if (emotions.length >= 1) {
+    if (emotions != null) {
       setNewEmotionsThink(emotions)
     }
   }, [emotions])
 
-  const onDelete = async () => {
+  const onDelete = async (): Promise<void> => {
+    if (id == null || think == null || credential == null) return
+
     try {
       setLoadingSave(true)
       setLoadingThink(true)
@@ -96,7 +113,9 @@ function EditThinkPage () {
     }
   }
 
-  const onArchive = async () => {
+  const onArchive = async (): Promise<void> => {
+    if (id == null || think == null || credential == null) return
+
     try {
       setLoadingSave(true)
       setLoadingThink(true)
@@ -112,24 +131,23 @@ function EditThinkPage () {
     }
   }
 
-  const onSave = async () => {
+  const onSave = async (): Promise<void> => {
+    if (id == null || newEmotionsThink == null || credential == null || emotions == null || think == null) return
+
     setLoadingSave(true)
     if (JSON.stringify(emotions) !== JSON.stringify(newEmotionsThink)) {
       const emotionsList = newEmotionsThink.map(value => value.id)
-      console.log(emotions)
 
       await putAddEmotion(id, emotionsList, credential)
 
       const listRemoveEmotions = []
       for await (const value of emotions) {
-        console.log(value)
         if (!newEmotionsThink.some(obj => obj.id === value.id)) {
           listRemoveEmotions.push(value.id)
         }
       }
 
       if (listRemoveEmotions.length > 0) {
-        console.log(listRemoveEmotions)
         try {
           await putDeleteEmotion(id, listRemoveEmotions, credential)
         } catch (err) {
@@ -159,19 +177,15 @@ function EditThinkPage () {
       display: 'flex',
       flexDirection: { xs: 'column', md: 'row' }
     }}>
-      <Helmet>
-        <title>Edit think | AlignMind</title>
-      </Helmet>
       <Box sx={{
         width: { xs: '100%', md: '60%' },
         height: { xs: '300px', md: '100%' },
         background: '#ffffff'
       }}>
-        <TextareaAutosize
-          disabled={loadingThink}
-          style={{ resize: 'none', height: '100%', fontSize: '16px', width: '100%', padding: '10px' }}
-          value={newTextThink}
-          onChange={(e) => setNewTextThink(e.target.value)}
+        <TextAreaField
+          loading={loadingThink}
+          text={newTextThink}
+          setText={setNewTextThink}
         />
       </Box>
       <Box
@@ -212,56 +226,19 @@ function EditThinkPage () {
           </Toolbar>
 
           <Box sx={{ pt: '10px' }}>
-            <Autocomplete multiple
-              id="tags-standard"
-              value={newEmotionsThink}
-              onChange={(event, newValue) => {
-                setNewEmotionsThink([
-                  ...newValue
-                ])
-              }}
-              disabled={loadingAllEmotions}
+            <AutocompleteField
               options={allEmotions}
-              getOptionLabel={(option) => option.text}
-              isOptionEqualToValue={(option, value) => option.id === value.id}
-              renderInput={(params) => (
-                <TextField {...params}
-                  variant="standard"
-                  label={<FormattedMessage id="think.new.emotion" defaultMessage="Emotions" />}
-                />
-              )} />
-
-            <List sx={{ width: '100%' }}>
-              <ListItem
-                sx={{ height: '25', borderBottom: '1px solid rgba(0,0,0,0.12)' }}
-                key={1}
-              >
-                <ListItemButton role={undefined} dense>
-                  {loadingPlace && <Skeleton variant="text" width={100} />}
-                  {!loadingPlace && <ListItemText
-                    primary={<FormattedMessage id="think.info.place" defaultMessage="Place: {name}" values={{ name: place?.name || '' }} />}
-                  />}
-                </ListItemButton>
-              </ListItem>
-              <ListItem
-                sx={{ height: '25', borderBottom: '1px solid rgba(0,0,0,0.12)' }}
-                key={2}
-              >
-                <ListItemButton role={undefined} dense>
-                  {loadingThink && <Skeleton variant="text" width={200} />}
-                  {!loadingThink && <ListItemText
-                    primary={<FormattedMessage id="think.info.date" defaultMessage="Created at: {create}" values={{ create: dayjs(think?.createdAt).format('YYYY-MM-DD') }} />}
-                  />}
-                </ListItemButton>
-              </ListItem>
-            </List>
+              loading={loadingAllEmotions}
+              select={newEmotionsThink}
+              setSelect={setNewEmotionsThink} />
+            <ListInfoThink place={place} think={think} loadingPlace={loadingPlace} loadingThink={loadingThink}/>
           </Box>
         </Box>
         <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center', gap: 2 }}>
           <Button
             variant="contained"
             size="large"
-            onClick={() => navigate(-1)}>
+            onClick={() => { navigate(-1) }}>
             <FormattedMessage id="button.back" defaultMessage="Back" />
           </Button>
           <Button
@@ -277,5 +254,3 @@ function EditThinkPage () {
     </Box >
   )
 }
-
-export { EditThinkPage }

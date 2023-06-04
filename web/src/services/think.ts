@@ -12,9 +12,9 @@ export interface ResponseThink {
   isArchive: boolean
   createdAt: string
   updatedAt: string
-  place?: ResponsePlace
+  place: ResponsePlace
   user?: ResponseAccount
-  emotions?: ResponseRelationEmotion
+  emotions?: ResponseRelationEmotion[]
 }
 
 export interface ResponseRelationEmotion {
