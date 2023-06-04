@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material'
 
 import { FormattedMessage } from 'react-intl'
 
-function EmptyArchive () {
+function EmptyArchive (): JSX.Element {
   return (
     <Box sx={{
       height: '100%',

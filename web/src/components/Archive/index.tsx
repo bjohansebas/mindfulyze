@@ -3,45 +3,45 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import DeleteIcon from '@mui/icons-material/Delete'
 import UnarchiveIcon from '@mui/icons-material/Unarchive'
 
-import { Helmet } from 'react-helmet-async'
-import { useEffect, useState } from 'react'
+import { type MouseEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 
-import { useAuth } from '../../hooks/useAuth'
-import { EmptyArchive } from './EmptyArchive'
-import { getArchiveThinks, moveToTrash, putThink } from '../../services/think'
+import { useAuth } from 'hooks/useAuth'
+import { type ResponseThinks, getArchiveThinks, moveToTrash, putThink } from 'services/think'
 
-function ArchivePage () {
+import { EmptyArchive } from './EmptyArchive'
+
+export function ArchiveUI (): JSX.Element {
   const navigate = useNavigate()
   const { credential } = useAuth()
 
-  const [anchorElTrash, setAnchorElTrash] = useState(null)
-  const [checked, setChecked] = useState([])
+  const [anchorElTrash, setAnchorElTrash] = useState<HTMLButtonElement | null>(null)
+  const [checked, setChecked] = useState<number[]>([])
 
-  const [allArchive, setAllArchive] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [idSelect, setIdSelect] = useState('')
+  const [allArchive, setAllArchive] = useState<ResponseThinks>([])
+  const [loading, setLoading] = useState<boolean>(true)
+  const [idSelect, setIdSelect] = useState<string>('')
 
-  const getArchive = async () => {
+  const getArchive = async (): Promise<void> => {
     try {
       setLoading(true)
+      if (credential == null) return
       const response = await getArchiveThinks(credential)
-      setAllArchive(response.map(data => {
-        return { text: data.text, id: data.id }
-      }))
+
+      setAllArchive(response)
     } catch (e) {
-      console.log(e?.response)
+      console.log(e)
     } finally {
       setLoading(false)
     }
   }
 
   useEffect(() => {
-    getArchive()
+    void getArchive()
   }, [])
 
-  const handleToggle = (value) => () => {
+  const handleToggle = (value: number): void => {
     const currentIndex = checked.indexOf(value)
     const newChecked = [...checked]
 
@@ -54,8 +54,8 @@ function ArchivePage () {
     setChecked(newChecked)
   }
 
-  const handleTrashMenu = (event, id) => {
-    if (anchorElTrash) {
+  const handleTrashMenu = (event: MouseEvent<HTMLButtonElement>, id: string): void => {
+    if (anchorElTrash != null) {
       setIdSelect('')
       setAnchorElTrash(null)
     } else {
@@ -64,7 +64,9 @@ function ArchivePage () {
     }
   }
 
-  const onDeleteId = async () => {
+  const onDeleteId = async (): Promise<void> => {
+    if (credential == null) return
+
     try {
       setAnchorElTrash(null)
       await moveToTrash(idSelect, credential)
@@ -76,7 +78,9 @@ function ArchivePage () {
     }
   }
 
-  const onUnarchiveId = async () => {
+  const onUnarchiveId = async (): Promise<void> => {
+    if (credential == null) return
+
     try {
       setAnchorElTrash(null)
 
@@ -89,7 +93,9 @@ function ArchivePage () {
     }
   }
 
-  const onDeleteSelect = async () => {
+  const onDeleteSelect = async (): Promise<void> => {
+    if (credential == null) return
+
     if (checked.length > 0) {
       try {
         for await (const value of checked) {
@@ -104,7 +110,9 @@ function ArchivePage () {
     }
   }
 
-  const onUnarchiveSelect = async () => {
+  const onUnarchiveSelect = async (): Promise<void> => {
+    if (credential == null) return
+
     if (checked.length > 0) {
       try {
         for await (const value of checked) {
@@ -122,10 +130,6 @@ function ArchivePage () {
 
   return (
     <Box sx={{ width: '100%', p: '30px', height: '100vh' }}>
-      <Helmet>
-        <title>Archive | AlignMind</title>
-      </Helmet>
-
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', backgroundColor: '#ffffff' }}>
         <Typography
           variant="h6"
@@ -160,11 +164,11 @@ function ArchivePage () {
                 }
                 disablePadding
               >
-                <ListItemButton role={undefined} onClick={handleToggle(index)} dense>
+                <ListItemButton role={undefined} onClick={() => { handleToggle(index) }} dense>
                   <ListItemIcon>
                     <Checkbox
                       edge="start"
-                      checked={checked.indexOf(index) !== -1}
+                      checked={checked.includes(index)}
                       tabIndex={-1}
                       disableRipple
                       inputProps={{ 'aria-labelledby': labelId }}
@@ -196,7 +200,7 @@ function ArchivePage () {
       >
         <MenuItem
           key="1"
-          onClick={() => navigate(`/think/${idSelect}`)}>
+          onClick={() => { navigate(`/think/${idSelect}`) }}>
           <FormattedMessage id="options.think.see" defaultMessage="See thought" />
         </MenuItem>
         <MenuItem
@@ -213,5 +217,3 @@ function ArchivePage () {
     </Box >
   )
 }
-
-export { ArchivePage }
