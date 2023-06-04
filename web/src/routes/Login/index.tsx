@@ -1,3 +1,13 @@
-import { LoginPage } from './LoginPage'
+import { Helmet } from 'react-helmet-async'
 
-export { LoginPage }
+import { LoginForm } from 'components/Forms/Login'
+
+export function LoginPage (): JSX.Element {
+  return (
+    <>
+      <Helmet>
+        <title>Log in | Mindfulyze</title>
+      </Helmet>
+      <LoginForm />
+    </>)
+}
