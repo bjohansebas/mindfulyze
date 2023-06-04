@@ -9,7 +9,7 @@ export function DashboardPage (): JSX.Element {
       component="main"
       sx={{ width: '100%', px: { xs: '10px', sm: '50px', md: '100px' }, py: '20px' }}>
       <Helmet>
-        <title>Dashboard | Alignmind</title>
+        <title>Dashboard | Mindfulyze</title>
       </Helmet>
       <DashboardUI/>
     </Box>
