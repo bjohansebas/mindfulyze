@@ -11,7 +11,7 @@ import { type ResponseAccount, getAccount } from 'services/user'
 function RequiredAuth (): JSX.Element {
   const location = useLocation()
   const navigate = useNavigate()
-  const { credential, userId, setUserInfo } = useAuth()
+  const { credential, userId, setUserInfo, setCredential, setUserId } = useAuth()
 
   const [loading, setLoading] = useState(true)
 
@@ -27,6 +27,9 @@ function RequiredAuth (): JSX.Element {
 
       data = dataUser
     } catch (err) {
+      setCredential(null)
+      setUserId(null)
+
       localStorage.clear()
 
       navigate('/login', { replace: true }); return
