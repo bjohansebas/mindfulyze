@@ -10,8 +10,8 @@ export interface ResponseColor {
   updateAt: string
 }
 
-export async function getAllColor (credential: string): Promise<ResponseColor> {
-  const response: AxiosResponse<ResponseColor, ErrorRequest> = await axios.get('/users/colors', {
+export async function getAllColor (credential: string): Promise<ResponseColor[]> {
+  const response: AxiosResponse<ResponseColor[], ErrorRequest> = await axios.get('/users/colors', {
     headers: {
       Authorization: `Bearer ${credential}`
     }

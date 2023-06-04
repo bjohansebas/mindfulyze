@@ -3,123 +3,130 @@ import FilterListIcon from '@mui/icons-material/FilterList'
 import SwapVertIcon from '@mui/icons-material/SwapVert'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 
-import { useEffect, useState } from 'react'
+import { type MouseEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
-import PropTypes from 'prop-types'
 
-import { useAuth } from '../../../hooks/useAuth'
+import { useAuth } from 'hooks/useAuth'
+
+import { getArchiveThinksPlace, getThinksPlace, getTrashPlace } from 'services/place'
+import { type ResponseThinks, moveToTrash, putThink } from 'services/think'
+import { type ResponseTrashes, deleteThinkFromTrash, restoreFromTrash } from 'services/trash'
+import { isAxiosError } from 'axios'
 import { EmptyThink } from './EmptyThink'
-import { getArchiveThinksPlace, getThinksPlace, getTrashPlace } from '../../../services/place'
-import { moveToTrash, putThink } from '../../../services/think'
-import { deleteThinkFromTrash, restoreFromTrash } from '../../../services/trash'
 
-ShowThinks.propTypes = {
-  id: PropTypes.string.isRequired
+export interface ShowThinksProps {
+  id: string
 }
 
-function ShowThinks ({ id }) {
+export interface OptionThink {
+  text: string | JSX.Element
+  click: (idThink: string) => void
+}
+
+export function ShowThinks ({ id }: ShowThinksProps): JSX.Element {
   const navigate = useNavigate()
   const { credential } = useAuth()
 
-  const [allThink, setAllThink] = useState([])
+  const [allThink, setAllThink] = useState<ResponseThinks | ResponseTrashes>([])
+  const [options, setOptions] = useState<OptionThink[]>([])
+  const [idSelect, setIdSelect] = useState<string>('')
+
   const [loading, setLoading] = useState(true)
 
-  const [anchorElThink, setAnchorElThink] = useState(null)
-  const [anchorElFilter, setAnchorElFilter] = useState(null)
-  const [anchorElOrder, setAnchorElOrder] = useState(null)
-  const [options, setOptions] = useState([])
-  const [idSelect, setIdSelect] = useState('')
+  const [anchorElThink, setAnchorElThink] = useState<HTMLButtonElement | null>(null)
+  const [anchorElFilter, setAnchorElFilter] = useState<HTMLButtonElement | null>(null)
+  const [anchorElOrder, setAnchorElOrder] = useState<HTMLButtonElement | null>(null)
 
   useEffect(() => {
-    getThinks()
+    void getThinks()
   }, [])
 
-  const getThinks = async () => {
+  const getThinks = async (): Promise<void> => {
     try {
+      if (credential == null) return
+
       setAnchorElFilter(null)
       setLoading(true)
 
       const response = await getThinksPlace(id, credential)
 
-      setAllThink(response.map(data => {
-        return { text: data.text, id: data.id, created: data.createdAt }
-      }))
+      setAllThink(response)
 
       setOptions([
         {
           text: <FormattedMessage id="options.think.see" defaultMessage="See thought" />,
-          click: (idThink) => navigate(`/think/${idThink}`)
+          click: (idThink: string) => { navigate(`/think/${idThink}`) }
         },
         {
           text: <FormattedMessage id="options.think.delete" defaultMessage="Delete thought" />,
-          click: (idThink) => onDelete(idThink)
+          click: async (idThink: string) => { await onDelete(idThink) }
         },
         {
           text: <FormattedMessage id="options.think.archive" defaultMessage="Archive" />,
-          click: (idThink) => onArchive(idThink)
+          click: async (idThink: string) => { await onArchive(idThink) }
         }
       ])
 
       setLoading(false)
     } catch (err) {
-      if (!err?.response) {
-        return 'No server response'
-      } else if (err.response?.status === 404) {
-        navigate('/')
+      if (isAxiosError(err)) {
+        if (err.response?.status === 404) {
+          navigate('/')
+        }
       }
     } finally {
       setLoading(false)
     }
   }
 
-  const getTrashThinks = async () => {
+  const getTrashThinks = async (): Promise<void> => {
     try {
+      if (credential == null) return
+
       setAnchorElFilter(null)
       setLoading(true)
       const response = await getTrashPlace(id, credential)
 
-      setAllThink(response?.map(data => {
-        return { text: data.text, id: data.id, created: data.createdAt }
-      }))
+      setAllThink(response)
 
       setOptions([
         {
           text: <FormattedMessage id="options.think.see" defaultMessage="See thought" />,
-          click: (idThink) => navigate(`/trash/${idThink}`)
+          click: (idThink) => { navigate(`/trash/${idThink}`) }
         },
         {
           text: <FormattedMessage id="options.think.delete" defaultMessage="Delete thought" />,
-          click: (idThink) => onDeleteTrash(idThink)
+          click: async (idThink) => { await onDeleteTrash(idThink) }
         },
         {
           text: <FormattedMessage id="options.think.restore" defaultMessage="Restore thought" />,
-          click: (idThink) => onRestoreId(idThink)
+          click: async (idThink) => { await onRestoreId(idThink) }
         }
       ])
 
       setLoading(false)
     } catch (err) {
-      if (!err?.response) {
-        return 'No server response'
-      } else if (err.response?.status === 404) {
-        navigate('/')
+      if (isAxiosError(err)) {
+        if (err.response?.status === 404) {
+          navigate('/')
+        }
       }
     } finally {
       setLoading(false)
     }
   }
 
-  const getArchiveThinks = async () => {
+  const getArchiveThinks = async (): Promise<void> => {
     try {
+      if (credential == null) return
+
       setAnchorElFilter(null)
       setLoading(true)
 
       const response = await getArchiveThinksPlace(id, credential)
 
-      setAllThink(response?.map(data => {
-        return { text: data.text, id: data.id, created: data.createdAt }
-      }))
+      setAllThink(response)
 
       setOptions([
         {
@@ -130,42 +137,42 @@ function ShowThinks ({ id }) {
         },
         {
           text: <FormattedMessage id="options.think.delete" defaultMessage="Delete thought" />,
-          click: (idThink) => onDelete(idThink)
+          click: async (idThink) => { await onDelete(idThink) }
         },
         {
           text: <FormattedMessage id="options.think.unarchive" defaultMessage="Unarchive" />,
-          click: (idThink) => onUnarchiveId(idThink)
+          click: async (idThink) => { await onUnarchiveId(idThink) }
         }
       ])
     } catch (err) {
-      if (!err?.response) {
-        return 'No server response'
-      } else if (err.response?.status === 404) {
-        navigate('/')
+      if (isAxiosError(err)) {
+        if (err.response?.status === 404) {
+          navigate('/')
+        }
       }
     } finally {
       setLoading(false)
     }
   }
 
-  const handleFilterMenu = (event) => {
-    if (anchorElFilter) {
+  const handleFilterMenu = (event: MouseEvent<HTMLButtonElement>): void => {
+    if (anchorElFilter != null) {
       setAnchorElFilter(null)
     } else {
       setAnchorElFilter(event.currentTarget)
     }
   }
 
-  const handleOrderMenu = (event) => {
-    if (anchorElOrder) {
+  const handleOrderMenu = (event: MouseEvent<HTMLButtonElement>): void => {
+    if (anchorElOrder != null) {
       setAnchorElOrder(null)
     } else {
       setAnchorElOrder(event.currentTarget)
     }
   }
 
-  const handleThinkMenu = (event, id) => {
-    if (anchorElThink) {
+  const handleThinkMenu = (event: MouseEvent<HTMLButtonElement>, id: string): void => {
+    if (anchorElThink != null) {
       setIdSelect('')
       setAnchorElThink(null)
     } else {
@@ -174,7 +181,9 @@ function ShowThinks ({ id }) {
     }
   }
 
-  const onRestoreId = async (idThink) => {
+  const onRestoreId = async (idThink: string): Promise<void> => {
+    if (credential == null) return
+
     try {
       setAnchorElThink(null)
       await restoreFromTrash(idThink, credential)
@@ -185,7 +194,9 @@ function ShowThinks ({ id }) {
     }
   }
 
-  const onDeleteTrash = async (idThink) => {
+  const onDeleteTrash = async (idThink: string): Promise<void> => {
+    if (credential == null) return
+
     try {
       setAnchorElThink(null)
       await deleteThinkFromTrash(idThink, credential)
@@ -196,7 +207,9 @@ function ShowThinks ({ id }) {
     }
   }
 
-  const onUnarchiveId = async (idThink) => {
+  const onUnarchiveId = async (idThink: string): Promise<void> => {
+    if (credential == null) return
+
     try {
       setAnchorElThink(null)
       await putThink(idThink, { isArchive: false }, credential)
@@ -207,7 +220,9 @@ function ShowThinks ({ id }) {
     }
   }
 
-  const onArchive = async (idThink) => {
+  const onArchive = async (idThink: string): Promise<void> => {
+    if (credential == null) return
+
     setAnchorElThink(null)
     try {
       await putThink(idThink, { isArchive: true }, credential)
@@ -218,7 +233,9 @@ function ShowThinks ({ id }) {
     }
   }
 
-  const onDelete = async (idThink) => {
+  const onDelete = async (idThink: string): Promise<void> => {
+    if (credential == null) return
+
     setAnchorElThink(null)
     try {
       await moveToTrash(idThink, credential)
@@ -257,7 +274,7 @@ function ShowThinks ({ id }) {
                 sx={{ height: '25', borderBottom: '1px solid rgba(0,0,0,0.12)' }}
                 key={index}
                 secondaryAction={
-                  <IconButton edge="end" aria-label="comments" onClick={(e) => handleThinkMenu(e, value.id)}>
+                  <IconButton edge="end" aria-label="comments" onClick={(e) => { handleThinkMenu(e, value.id) }}>
                     <MoreVertIcon />
                   </IconButton>
                 }
@@ -359,5 +376,3 @@ function ShowThinks ({ id }) {
     </>
   )
 }
-
-export { ShowThinks }

@@ -2,55 +2,59 @@ import { Box, IconButton, Menu, MenuItem, Skeleton, Toolbar, Typography } from '
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 
 import { useNavigate, useParams } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { type MouseEvent, useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Helmet } from 'react-helmet-async'
 
-import { useAuth } from '../../../hooks/useAuth'
+import { useAuth } from 'hooks/useAuth'
+import { deletePlace, getPlace } from 'services/place'
+import { isAxiosError } from 'axios'
 import { ShowThinks } from './ShowThinks'
-import { deletePlace, getPlace } from '../../../services/place'
 
-function ShowPlacePage () {
-  const { id } = useParams()
+export function ShowPlaceUI (): JSX.Element {
   const navigate = useNavigate()
   const { credential } = useAuth()
-  const [anchorElPlace, setAnchorElPlace] = useState(null)
+  const { id } = useParams()
+
+  const [anchorElPlace, setAnchorElPlace] = useState<HTMLButtonElement | null>(null)
   const [loading, setLoading] = useState(false)
 
-  const [namePlace, setNamePlace] = useState('')
+  const [namePlace, setNamePlace] = useState<string>('')
 
   useEffect(() => {
-    async function getRequestPlace () {
+    async function getRequestPlace (): Promise<void> {
       try {
+        if (id == null || credential == null) return
         const responsePlace = await getPlace(id, credential)
 
         setNamePlace(responsePlace.name)
       } catch (err) {
-        if (!err?.response) {
-          console.log('Server not response')
-        } else if (err.response?.status === 404) {
-          navigate('/')
-        } else {
-          console.log('error aqui')
+        if (isAxiosError(err)) {
+          if (err.response?.status === 404) {
+            navigate('/')
+          }
         }
       } finally {
         setLoading(false)
       }
     }
-    getRequestPlace()
+
+    void getRequestPlace()
   }, [])
 
-  const handlePlaceMenu = (event) => {
-    if (anchorElPlace) {
+  const handlePlaceMenu = (event: MouseEvent<HTMLButtonElement>): void => {
+    if (anchorElPlace != null) {
       setAnchorElPlace(null)
     } else {
       setAnchorElPlace(event.currentTarget)
     }
   }
 
-  const onDeletePlace = async () => {
+  const onDeletePlace = async (): Promise<void> => {
     setAnchorElPlace(null)
     try {
+      if (id == null || credential == null) return
+
       await deletePlace(id, credential)
 
       navigate('/')
@@ -62,10 +66,10 @@ function ShowPlacePage () {
   return (
     <Box sx={{ width: '100%' }}>
       <Helmet>
-        <title>Place | AlignMind</title>
+        <title>Place | Mindfulyze</title>
       </Helmet>
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', backgroundColor: '#ffffff', borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}>
-        {loading && <Skeleton variant="h6" width={250} />}
+        {loading && <Skeleton width={250} variant='rectangular' />}
         {!loading && <Typography
           variant="h6"
           noWrap
@@ -97,7 +101,7 @@ function ShowPlacePage () {
         >
           <MenuItem
             key="1"
-            onClick={() => navigate(`/place/${id}/edit`)}>
+            onClick={() => { if (id != null) navigate(`/place/${id}/edit`) }}>
             <FormattedMessage id="options.edit.place" defaultMessage="Edit place" />
           </MenuItem>
           <MenuItem
@@ -107,9 +111,9 @@ function ShowPlacePage () {
           </MenuItem>
         </Menu>
       </Toolbar>
-      <ShowThinks id={id} />
+      {
+        id != null && <ShowThinks id={id} />
+      }
     </Box >
   )
 }
-
-export { ShowPlacePage }

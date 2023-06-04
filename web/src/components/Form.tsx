@@ -1,21 +1,20 @@
 import { Box, Button, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
-import PropTypes from 'prop-types'
+import { type FormEvent, type PropsWithChildren } from 'react'
 
-Forms.propTypes = {
-  children: PropTypes.node,
-  handleSubmit: PropTypes.func.isRequired,
-  title: PropTypes.object.isRequired,
-  submitText: PropTypes.object.isRequired,
-  disableSubmit: PropTypes.bool,
-  isCancel: PropTypes.bool,
-  cancelRoute: PropTypes.string
+export interface FormsProps extends PropsWithChildren {
+  handleSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void>
+  title: string | JSX.Element
+  submitText: string | JSX.Element
+  disableSubmit?: boolean
+  isCancel?: boolean
+  cancelRoute?: string
 }
 
-function Forms ({ handleSubmit, title, submitText, children, disableSubmit, isCancel, cancelRoute }) {
+export function Forms ({ handleSubmit, title, submitText, children, disableSubmit, isCancel, cancelRoute }: FormsProps): JSX.Element {
   const navigate = useNavigate()
-  const cancel = cancelRoute || '/'
+  const cancel = cancelRoute != null ? cancelRoute : '/'
 
   return (
     <>
@@ -29,12 +28,12 @@ function Forms ({ handleSubmit, title, submitText, children, disableSubmit, isCa
           {children}
         </Box>
         <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', gap: 2 }}>
-          {isCancel &&
+          {(isCancel === true) &&
             <Button
               disabled={disableSubmit}
               variant='contained'
               size='large'
-              onClick={() => navigate(cancel)}>
+              onClick={() => { navigate(cancel) }}>
               <FormattedMessage id="button.cancel" defaultMessage="Cancel" />
             </Button>
           }
@@ -44,5 +43,3 @@ function Forms ({ handleSubmit, title, submitText, children, disableSubmit, isCa
     </>
   )
 }
-
-export { Forms }

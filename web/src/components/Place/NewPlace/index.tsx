@@ -1,54 +1,63 @@
-import { Avatar, Box, Button, ButtonGroup, Menu, TextField, Typography } from '@mui/material'
+import { Avatar, Box, Button, ButtonGroup, Menu, TextField } from '@mui/material'
 
 import { Link, useNavigate } from 'react-router-dom'
 import { SketchPicker } from 'react-color'
-import { useEffect, useState } from 'react'
+import { type PresetColor } from 'react-color/lib/components/sketch/Sketch'
+
+import { type MouseEvent, useEffect, useState, type FormEvent } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Helmet } from 'react-helmet-async'
 
-import { HEXADECIMAL_REGEX } from '../../utils/regex'
-import { useAuth } from '../../hooks/useAuth'
-import { Forms } from '../../components/Form'
-import { postPlace } from '../../services/place'
-import { getAllColor } from '../../services/color'
+import { HEXADECIMAL_REGEX } from 'utils/regex'
+import { useAuth } from 'hooks/useAuth'
+import { Forms } from 'components/Form'
+import { type NewPlace, postPlace } from 'services/place'
+import { type ResponseColor, getAllColor } from 'services/color'
+import { isAxiosError } from 'axios'
 
-function NewPlacePage () {
+export function NewPlaceUI (): JSX.Element {
   const navigate = useNavigate()
   const { credential } = useAuth()
 
-  const [color, setColor] = useState('#00575C')
-  const [textPlace, setTextPlace] = useState('')
-  const [errMsg, setErrMsg] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [anchorElColor, setAnchorElColor] = useState(null)
-  const [allColors, setAllColors] = useState([])
+  const [allColors, setAllColors] = useState<PresetColor[]>([])
+  const [color, setColor] = useState<string>('#00575C')
+
+  const [textPlace, setTextPlace] = useState<string>('')
+  const [anchorElColor, setAnchorElColor] = useState<HTMLButtonElement | null>(null)
+  const [loading, setLoading] = useState<boolean>(false)
 
   useEffect(() => {
-    async function getColor () {
+    async function getColor (): Promise<void> {
       try {
-        const response = await getAllColor(credential)
-        setAllColors(response?.map((data) => {
-          return { color: '#' + data.code, id: data.id }
-        }))
+        if (credential == null) return
+
+        const response: ResponseColor[] = await getAllColor(credential)
+        const colors: PresetColor[] = response.map((value) => {
+          return { color: '#' + value.code, title: value.code }
+        }) as PresetColor[]
+
+        setAllColors(colors)
       } catch (e) {
         console.log(e)
       }
     }
-    getColor()
+
+    void getColor()
   }, [])
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
     setLoading(true)
+
+    if (credential == null) return
 
     const testColor = HEXADECIMAL_REGEX.test(color)
 
     if (!testColor || textPlace.trimEnd().length < 2) {
-      setErrMsg('Invalid Entry')
       setLoading(false)
       return
     }
-    const request = {
+    const request: NewPlace = {
       name: textPlace.trimEnd(),
       code: color.slice(1)
     }
@@ -58,20 +67,16 @@ function NewPlacePage () {
 
       navigate('/place/' + response.id)
     } catch (err) {
-      if (!err?.response) {
-        setErrMsg('No Server Response')
-        setLoading(false)
-      } if (err?.response.data.message === 'Name color is required for created new color') {
-        setErrMsg(err?.response.data.message)
-      } else {
-        setErrMsg('Create had been failed')
-        setLoading(false)
+      if (isAxiosError(err)) {
+        console.log(err)
       }
+    } finally {
+      setLoading(false)
     }
   }
 
-  const handleColorMenu = (event) => {
-    if (anchorElColor) {
+  const handleColorMenu = (event: MouseEvent<HTMLButtonElement>): void => {
+    if (anchorElColor != null) {
       setAnchorElColor(null)
     } else {
       setAnchorElColor(event.currentTarget)
@@ -91,7 +96,7 @@ function NewPlacePage () {
       }}
     >
       <Helmet>
-        <title>New place | AlignMind</title>
+        <title>New place | Mindfulyze</title>
       </Helmet>
       <Box sx={{
         display: 'flex',
@@ -113,7 +118,7 @@ function NewPlacePage () {
             type="text"
             variant='outlined'
             value={textPlace}
-            onChange={(e) => setTextPlace(e.target.value)}
+            onChange={(e) => { setTextPlace(e.target.value) }}
             required
           />
           <Box
@@ -180,13 +185,8 @@ function NewPlacePage () {
               </Menu>
             </Box>
           </Box>
-          <Box>
-            {!errMsg && <Typography>{errMsg}</Typography>}
-          </Box>
         </Forms>
       </Box>
     </Box>
   </>)
 }
-
-export { NewPlacePage }

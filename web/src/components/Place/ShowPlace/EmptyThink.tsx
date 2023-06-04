@@ -3,7 +3,7 @@ import { Box, Button, Typography } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
 
-function EmptyThink () {
+export function EmptyThink (): JSX.Element {
   return (
     <Box sx={{
       height: '100%',
@@ -23,5 +23,3 @@ function EmptyThink () {
     </Box >
   )
 }
-
-export { EmptyThink }

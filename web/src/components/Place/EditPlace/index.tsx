@@ -1,88 +1,92 @@
 import { Avatar, Box, Button, Menu, TextField, Toolbar } from '@mui/material'
 import { Delete as DeleteIcon } from '@mui/icons-material'
 
-import { useEffect, useState } from 'react'
+import { type MouseEvent, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { SketchPicker } from 'react-color'
+import { type PresetColor } from 'react-color/lib/components/sketch/Sketch'
+import { isAxiosError } from 'axios'
+
 import { FormattedMessage } from 'react-intl'
-import { Helmet } from 'react-helmet-async'
 
-import { useAuth } from '../../hooks/useAuth'
-import { getPlace, putPlace } from '../../services/place'
-import { getAllColor } from '../../services/color'
+import { useAuth } from 'hooks/useAuth'
 
-function EditPlacePage () {
+import { type ResponsePlace, getPlace, putPlace } from 'services/place'
+import { getAllColor } from 'services/color'
+
+export function EditPlaceUI (): JSX.Element {
   const { id } = useParams()
   const navigate = useNavigate()
   const { credential } = useAuth()
 
-  const [place, setPlace] = useState({})
-  const [newTextPlace, setNewTextPlace] = useState('')
-  const [loading, setLoading] = useState(true)
+  const [place, setPlace] = useState<ResponsePlace | null>(null)
+  const [newTextPlace, setNewTextPlace] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(true)
 
-  const [allColors, setAllColors] = useState([])
-  const [newColor, setNewColor] = useState('#00575C')
-  const [anchorElColor, setAnchorElColor] = useState(null)
+  const [allColors, setAllColors] = useState<PresetColor[]>([])
+  const [newColor, setNewColor] = useState<string>('#00575C')
+  const [anchorElColor, setAnchorElColor] = useState<HTMLButtonElement | null>(null)
 
   useEffect(() => {
-    async function getOnePlace () {
+    async function getOnePlace (): Promise<void> {
       try {
+        if (id == null || credential == null) return
         const data = await getPlace(id, credential)
 
-        setPlace({ name: data.name, color: data.color.code })
+        setPlace(data)
 
         setLoading(false)
       } catch (err) {
-        if (!err?.response) {
-          console.log(err)
-        } else if (err.response?.status === 404) {
-          navigate('/')
-        } else {
-          console.log('error aqui')
+        if (isAxiosError(err)) {
+          if (err.response?.status === 404) {
+            navigate('/')
+          }
         }
       }
     }
-    getOnePlace()
+    void getOnePlace()
   }, [])
 
   useEffect(() => {
-    if (Object.entries(place).length >= 1) {
-      setNewTextPlace(place.name)
+    if (place != null) {
+      if (Object.entries(place).length >= 1) {
+        setNewTextPlace(place.name)
+        setNewColor(`#${place.color.code}`)
+      }
     }
   }, [place])
 
   useEffect(() => {
-    async function getColor () {
+    async function getColor (): Promise<void> {
       try {
+        if (credential == null) return
         const response = await getAllColor(credential)
+        const colors: PresetColor[] = response.map((value) => {
+          return { color: '#' + value.code, title: value.code }
+        }) as PresetColor[]
 
-        setAllColors(response?.map((data) => {
-          return { color: '#' + data.code, title: data.name, id: data.id }
-        }))
+        setAllColors(colors)
       } catch (e) {
         console.log(e)
       }
     }
-    getColor()
+
+    void getColor()
   }, [])
 
-  useEffect(() => {
-    if (Object.entries(place).length >= 1) {
-      setNewColor(`#${place.color}`)
-    }
-  }, [place])
-
-  const handleColorMenu = (event) => {
-    if (anchorElColor) {
+  const handleColorMenu = (event: MouseEvent<HTMLButtonElement>): void => {
+    if (anchorElColor != null) {
       setAnchorElColor(null)
     } else {
       setAnchorElColor(event.currentTarget)
     }
   }
 
-  const onSave = async () => {
+  const onSave = async (): Promise<void> => {
     let request = {}
-    if (newColor.slice(1) !== place.color) {
+    if (place == null || id == null || credential == null) return
+
+    if (newColor.slice(1) !== place.color.code) {
       request = { code: newColor.slice(1) }
     }
 
@@ -102,17 +106,13 @@ function EditPlacePage () {
 
   return (
     <Box sx={{ p: '30px', height: '100%', width: '100%', display: 'flex', flexDirection: 'column', margin: { xs: '50px 0', sm: '50px' }, background: '#ffffff' }}>
-      <Helmet>
-        <title>Edit place | AlignMind</title>
-      </Helmet>
       <Box sx={{ width: '100%' }}>
         <TextField
           sx={{ width: '100%' }}
           value={newTextPlace}
-          onChange={(e) => setNewTextPlace(e.target.value)}
+          onChange={(e) => { setNewTextPlace(e.target.value) }}
         />
       </Box>
-
       <Box
         sx={{
           display: 'flex',
@@ -177,7 +177,7 @@ function EditPlacePage () {
           <Button
             variant="contained"
             size="large"
-            onClick={() => navigate(`/place/${id}`)}
+            onClick={() => { if (id != null) { navigate(`/place/${id}`) } }}
           >
             <FormattedMessage id="button.back" defaultMessage="Back" />
           </Button>
@@ -186,7 +186,7 @@ function EditPlacePage () {
             variant="contained"
             onClick={onSave}
             disabled={
-              loading || (newColor.slice(1) === place.color && newTextPlace === place.name) || newTextPlace.length < 2}
+              loading || place == null || (newColor.slice(1) === place.color.code && newTextPlace === place.name) || newTextPlace.length < 2}
           >
             <FormattedMessage id="button.save" defaultMessage="Save" />
           </Button>
@@ -195,5 +195,3 @@ function EditPlacePage () {
     </Box >
   )
 }
-
-export { EditPlacePage }

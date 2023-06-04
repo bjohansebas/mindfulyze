@@ -21,16 +21,16 @@ export type ResponseAllPlaces = ResponsePlace[]
 
 export interface NewPlace {
   name: string
-  color: string
+  code: string
 }
 
 export interface UpdatePlace {
   name?: string
-  color?: string
+  code?: string
 }
 
-export async function getPlace (id: string, credential: string): Promise<ResponseAllPlaces> {
-  const response: AxiosResponse<ResponseAllPlaces, ErrorRequest> = await axios.get(`/places/${id}`, {
+export async function getPlace (id: string, credential: string): Promise<ResponsePlace> {
+  const response: AxiosResponse<ResponsePlace, ErrorRequest> = await axios.get(`/places/${id}`, {
     headers: {
       Authorization: `Bearer ${credential}`
     }
