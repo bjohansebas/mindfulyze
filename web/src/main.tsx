@@ -14,18 +14,14 @@ import { App } from './App'
 import PaletteProvider from './context/themeContext'
 import { HelmetProvider } from 'react-helmet-async'
 import { IntlProvider } from 'react-intl'
-import messagesEs from './translations/es'
+import messagesEs from 'translations/es.json'
 import { CssBaseline } from '@mui/material'
-
-const messages = {
-  es: messagesEs
-}
 
 const language = navigator.language.split(/[-_]/)[0]
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <IntlProvider locale={language} messages={messages[language]}>
+    <IntlProvider locale={language} messages={messagesEs}>
       <PaletteProvider>
         <HelmetProvider>
           <CssBaseline />

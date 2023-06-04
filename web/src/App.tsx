@@ -119,8 +119,6 @@ const router = createBrowserRouter([
   }
 ])
 
-function App () {
+export function App (): JSX.Element {
   return <RouterProvider router={router} fallbackElement={<Loading />} />
 }
-
-export { App }
