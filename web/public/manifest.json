@@ -3,24 +3,34 @@
   "name": "Mindfulyze",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    },
-    {
       "src": "logo32x32.png",
       "type": "image/png",
       "sizes": "32x32"
     },
     {
-      "src": "logo64x64.png",
+      "src": "logo48x48.png",
       "type": "image/png",
-      "sizes": "64x64"
+      "sizes": "48x48"
     },
     {
-      "src": "logo128x128.png",
+      "src": "logo72x72.png",
       "type": "image/png",
-      "sizes": "128x128"
+      "sizes": "72x72"
+    },
+    {
+      "src": "logo96x96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "logo144x144.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "logo192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
     },
     {
       "src": "logo256x256.png",
@@ -35,6 +45,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#00575C",
   "background_color": "#ffffff"
 }
