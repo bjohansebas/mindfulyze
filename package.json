@@ -19,7 +19,7 @@
     "server"
   ],
   "devDependencies": {
-    "@s-ui/mono": "2.34.0"
+    "@s-ui/mono": "2.35.0"
   },
   "repository": {
     "type": "git",
