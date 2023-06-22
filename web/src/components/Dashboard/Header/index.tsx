@@ -1,84 +1,40 @@
-import { Box, Button, Divider, Skeleton, Typography } from '@mui/material'
-import { Circle } from '@mui/icons-material'
+import { Button, Stack, Typography } from '@mui/material'
 
-import { useEffect, useState } from 'react'
-import { FormattedMessage } from 'react-intl'
+import WorkspacesIcon from '@mui/icons-material/Workspaces'
+import BubbleChartIcon from '@mui/icons-material/BubbleChart'
+
+import { Link } from 'react-router-dom'
 
 import { useAuth } from 'hooks/useAuth'
 
-import { getStatisticsAll } from 'services/statistics'
-
-export function WelcomeHeader (): JSX.Element {
-  const { userInfo, credential } = useAuth()
-
-  const [emotions, setEmotions] = useState<number[]>([0, 0])
-  const [loading, setLoading] = useState<boolean>(true)
-
-  const getEmotions = async (): Promise<void> => {
-    try {
-      if (credential == null) return
-
-      const dataResponse = await getStatisticsAll(credential)
-      const positive = dataResponse.filter(value => value.emotion.type === 'Positive').length
-      const negative = dataResponse.filter(value => value.emotion.type === 'Negative').length
-
-      setEmotions([positive, negative])
-    } catch (e) {
-      console.log(e)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  useEffect(() => {
-    void getEmotions()
-  }, [])
+export const UserWelcomeHeader = (): JSX.Element => {
+  const { userInfo } = useAuth()
 
   return (
-    <Box component="header" sx={{
-      my: '20px',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      gap: 3
-    }}>
-      <Typography variant="h1" fontWeight="700" sx={{
+    <Stack component="header" sx={{
+      justifyContent: 'space-between',
+      width: '100%',
+      px: { xs: '0', sm: '16px', md: '32px' },
+      py: '12px'
+    }} direction="row" useFlexGap flexWrap="wrap" spacing={2}>
+      <Typography variant="h1" fontWeight="700" color="secondary.dark" sx={{
         fontSize: '1.7em',
-        textAlign: 'center'
+        textAlign: 'center',
+        textTransform: 'capitalize',
+        margin: 'auto'
       }}>
-        <FormattedMessage id="dashboard.welcome" defaultMessage="Welcome" /> {userInfo?.profile?.firstName} {userInfo?.profile?.lastName}
+        Hola, {userInfo?.profile?.firstName} {userInfo?.profile?.lastName}
       </Typography>
-      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-        {loading
-          ? <Skeleton variant='rounded' width={360} height={48} />
-          : <Box sx={{
-            display: 'flex',
-            background: 'rgba(0, 87, 92, 0.04)',
-            alignItems: 'center',
-            borderRadius: { xs: '30px', sm: '60px' },
-            flexDirection: { xs: 'column', sm: 'row' },
-            height: { xs: 'auto', md: '48px' },
-            py: '8px',
-            px: '16px',
-            gap: {
-              xs: 1, sm: 3
-            }
-          }}>
-            <Typography>
-              <FormattedMessage id="dashboard.emotion" defaultMessage="Your emotions" />
-            </Typography>
-            <Divider orientation='vertical' sx={{ display: { xs: 'none', sm: 'block' } }} />
-            <Divider orientation='horizontal' sx={{ display: { xs: 'block', sm: 'none' }, width: '100%' }} />
-            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' } }}>
-              <Button startIcon={<Circle sx={{ color: '#98CA3F' }} />}>
-                {emotions[0]} <FormattedMessage id="dashboard.positive" defaultMessage="Positive emotions" />
-              </Button>
-              <Button startIcon={<Circle sx={{ color: '#940019' }} />}>
-                {emotions[1]} <FormattedMessage id="dashboard.negative" defaultMessage="Negative emotions" />
-              </Button>
-            </Box>
-          </Box>}
-      </Box>
-    </Box>
+      <Stack
+        direction="row"
+        spacing={{ md: 4, xs: 2 }}
+        justifyContent="center"
+        useFlexGap flexWrap="wrap"
+        sx={{ margin: 'auto' }}
+      >
+        <Button component={Link} sx={{ width: { xs: '100%', sm: 'initial' } }} variant='outlined' startIcon={<WorkspacesIcon />} to="/place/new">Nuevo lugar</Button>
+        <Button component={Link} sx={{ width: { xs: '100%', sm: 'initial' } }} variant='contained' startIcon={<BubbleChartIcon />} to="/think/new">Nuevo pensamiento</Button>
+      </Stack>
+    </Stack>
   )
 }
