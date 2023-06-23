@@ -1,8 +1,8 @@
 {
-  "name": "alignmind",
+  "name": "mindfulyze",
   "version": "0.0.1",
-  "description": "Alignmind is a web application for tracking emotions and thoughts. The application was created with the goal of helping you reflect on your emotions and thoughts, and keep a record of them in a simple and organized way.",
-  "author": "bsebas <bjohansebas@gmail.com>",
+  "description": "mindfulyze is a web application for tracking emotions and thoughts. The application was created with the goal of helping you reflect on your emotions and thoughts, and keep a record of them in a simple and organized way.",
+  "author": "bjohansebas <bjohansebas@gmail.com>",
   "license": "MPL V2",
   "scripts": {
     "co": "sui-mono commit",
@@ -23,6 +23,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bsebas/alignmind.git"
+    "url": "https://github.com/bjohansebas/mindfulyze.git"
   }
 }
