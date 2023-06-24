@@ -2,6 +2,7 @@ import { type AxiosResponse } from 'axios'
 
 import axios from '../api/axios'
 import { type ErrorRequest } from './login'
+import { managerErrorNetwork } from '@/errors'
 
 export interface ResponseColor {
   id: string
@@ -11,11 +12,15 @@ export interface ResponseColor {
 }
 
 export async function getAllColor (credential: string): Promise<ResponseColor[]> {
-  const response: AxiosResponse<ResponseColor[], ErrorRequest> = await axios.get('/users/colors', {
-    headers: {
-      Authorization: `Bearer ${credential}`
-    }
-  })
+  try {
+    const response: AxiosResponse<ResponseColor[], ErrorRequest> = await axios.get('/users/colors', {
+      headers: {
+        Authorization: `Bearer ${credential}`
+      }
+    })
 
-  return response?.data
+    return response.data
+  } catch (err) {
+    throw managerErrorNetwork(err)
+  }
 }
