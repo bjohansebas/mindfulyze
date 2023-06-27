@@ -11,7 +11,7 @@ import { type ResponsePlace } from 'services/place'
 import { AutocompleteField, type OptionsProps } from 'components/Fields/Autocomplete'
 import { TextAreaField } from 'components/Fields/TextArea'
 import { ListInfoThink } from 'components/Think/EditThink/ListInfoThink'
-import { NotFoundError } from '@/errors/typeErrors'
+import { BadRequestError, NotFoundError } from '@/errors/typeErrors'
 
 export function ShowThinkTrashUI (): JSX.Element {
   const { id } = useParams()
