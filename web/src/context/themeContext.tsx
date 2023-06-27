@@ -20,8 +20,8 @@ const mainTheme = createTheme({
       secondary: '#424242'
     },
     background: {
-      default: '#F8FBFC',
-      paper: '#EBF3F0'
+      default: '#FFFFFF',
+      paper: '#E1F5F4'
     },
     contrastThreshold: 4.5
   },

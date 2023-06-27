@@ -1,6 +1,7 @@
 import { type AxiosResponse } from 'axios'
 
 import axios from '../api/axios'
+import { managerErrorNetwork } from '@/errors'
 
 export interface ResponseLogin {
   id: string
@@ -15,10 +16,14 @@ export interface ErrorRequest {
 }
 
 export async function postLogin (email: string, password: string): Promise<ResponseLogin> {
-  const response: AxiosResponse<ResponseLogin, ErrorRequest> = await axios.post('auth/login',
-    {
-      email, password
-    })
+  try {
+    const response: AxiosResponse<ResponseLogin, ErrorRequest> = await axios.post('auth/login',
+      {
+        email, password
+      })
 
-  return response.data
+    return response.data
+  } catch (err) {
+    throw managerErrorNetwork(err)
+  }
 }
