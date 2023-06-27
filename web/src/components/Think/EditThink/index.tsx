@@ -8,11 +8,12 @@ import { FormattedMessage } from 'react-intl'
 import { useAuth } from 'hooks/useAuth'
 import { getThink, moveToTrash, putAddEmotion, putDeleteEmotion, putThink, type ResponseThink } from 'services/think'
 import { getAllEmotions } from 'services/emotion'
-import { isAxiosError } from 'axios'
+
 import { type ResponsePlace } from 'services/place'
 import { AutocompleteField, type OptionsProps } from '../../Fields/Autocomplete'
 import { TextAreaField } from '../../Fields/TextArea'
 import { ListInfoThink } from './ListInfoThink'
+import { BadRequestError, NotFoundError } from '@/errors/typeErrors'
 
 export function EditThinkUI (): JSX.Element {
   const { id } = useParams()
@@ -52,10 +53,8 @@ export function EditThinkUI (): JSX.Element {
       setPlace(response.place)
       setNewTextThink(response.text)
     } catch (err) {
-      if (isAxiosError(err)) {
-        if (err.response?.status === 400 || err.response?.status === 404) {
-          navigate('/')
-        }
+      if (err instanceof BadRequestError || err instanceof NotFoundError) {
+        navigate('/')
       }
     } finally {
       setLoadingThink(false)
@@ -231,7 +230,7 @@ export function EditThinkUI (): JSX.Element {
               loading={loadingAllEmotions}
               select={newEmotionsThink}
               setSelect={setNewEmotionsThink} />
-            <ListInfoThink place={place} think={think} loadingPlace={loadingPlace} loadingThink={loadingThink}/>
+            <ListInfoThink place={place} think={think} loadingPlace={loadingPlace} loadingThink={loadingThink} />
           </Box>
         </Box>
         <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center', gap: 2 }}>

@@ -5,7 +5,6 @@ import { type MouseEvent, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { SketchPicker } from 'react-color'
 import { type PresetColor } from 'react-color/lib/components/sketch/Sketch'
-import { isAxiosError } from 'axios'
 
 import { FormattedMessage } from 'react-intl'
 
@@ -13,6 +12,7 @@ import { useAuth } from 'hooks/useAuth'
 
 import { type ResponsePlace, getPlace, putPlace } from 'services/place'
 import { getAllColor } from 'services/color'
+import { BadRequestError, NotFoundError } from '@/errors/typeErrors'
 
 export function EditPlaceUI (): JSX.Element {
   const { id } = useParams()
@@ -37,10 +37,8 @@ export function EditPlaceUI (): JSX.Element {
 
         setLoading(false)
       } catch (err) {
-        if (isAxiosError(err)) {
-          if (err.response?.status === 404) {
-            navigate('/')
-          }
+        if (err instanceof NotFoundError || err instanceof BadRequestError) {
+          navigate('/')
         }
       }
     }

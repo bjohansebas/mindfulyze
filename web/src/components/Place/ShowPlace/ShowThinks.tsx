@@ -12,8 +12,8 @@ import { useAuth } from 'hooks/useAuth'
 import { getArchiveThinksPlace, getThinksPlace, getTrashPlace } from 'services/place'
 import { type ResponseThinks, moveToTrash, putThink } from 'services/think'
 import { type ResponseTrashes, deleteThinkFromTrash, restoreFromTrash } from 'services/trash'
-import { isAxiosError } from 'axios'
 import { EmptyThink } from './EmptyThink'
+import { BadRequestError, NotFoundError } from '@/errors/typeErrors'
 
 export interface ShowThinksProps {
   id: string
@@ -70,10 +70,8 @@ export function ShowThinks ({ id }: ShowThinksProps): JSX.Element {
 
       setLoading(false)
     } catch (err) {
-      if (isAxiosError(err)) {
-        if (err.response?.status === 404) {
-          navigate('/')
-        }
+      if (err instanceof NotFoundError || err instanceof BadRequestError) {
+        navigate('/')
       }
     } finally {
       setLoading(false)
@@ -107,10 +105,8 @@ export function ShowThinks ({ id }: ShowThinksProps): JSX.Element {
 
       setLoading(false)
     } catch (err) {
-      if (isAxiosError(err)) {
-        if (err.response?.status === 404) {
-          navigate('/')
-        }
+      if (err instanceof NotFoundError || err instanceof BadRequestError) {
+        navigate('/')
       }
     } finally {
       setLoading(false)
@@ -145,10 +141,8 @@ export function ShowThinks ({ id }: ShowThinksProps): JSX.Element {
         }
       ])
     } catch (err) {
-      if (isAxiosError(err)) {
-        if (err.response?.status === 404) {
-          navigate('/')
-        }
+      if (err instanceof NotFoundError || err instanceof BadRequestError) {
+        navigate('/')
       }
     } finally {
       setLoading(false)

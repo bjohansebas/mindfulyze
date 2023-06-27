@@ -8,8 +8,8 @@ import { Helmet } from 'react-helmet-async'
 
 import { useAuth } from 'hooks/useAuth'
 import { deletePlace, getPlace } from 'services/place'
-import { isAxiosError } from 'axios'
 import { ShowThinks } from './ShowThinks'
+import { BadRequestError, NotFoundError } from '@/errors/typeErrors'
 
 export function ShowPlaceUI (): JSX.Element {
   const navigate = useNavigate()
@@ -29,10 +29,8 @@ export function ShowPlaceUI (): JSX.Element {
 
         setNamePlace(responsePlace.name)
       } catch (err) {
-        if (isAxiosError(err)) {
-          if (err.response?.status === 404) {
-            navigate('/')
-          }
+        if (err instanceof NotFoundError || err instanceof BadRequestError) {
+          navigate('/')
         }
       } finally {
         setLoading(false)

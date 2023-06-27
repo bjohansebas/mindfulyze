@@ -5,14 +5,13 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 
-import { isAxiosError } from 'axios'
-
 import { useAuth } from 'hooks/useAuth'
 import { deleteThinkFromTrash, getTrash, type ResponseTrash, restoreFromTrash } from 'services/trash'
 import { type ResponsePlace } from 'services/place'
 import { AutocompleteField, type OptionsProps } from 'components/Fields/Autocomplete'
 import { TextAreaField } from 'components/Fields/TextArea'
 import { ListInfoThink } from 'components/Think/EditThink/ListInfoThink'
+import { NotFoundError } from '@/errors/typeErrors'
 
 export function ShowThinkTrashUI (): JSX.Element {
   const { id } = useParams()
@@ -44,10 +43,8 @@ export function ShowThinkTrashUI (): JSX.Element {
 
       setPlace(response.place)
     } catch (err) {
-      if (isAxiosError(err)) {
-        if (err.response?.status === 404) {
-          navigate('/')
-        }
+      if (err instanceof NotFoundError || err instanceof BadRequestError) {
+        navigate('/')
       }
     } finally {
       setLoadingThink(false)
@@ -124,7 +121,7 @@ export function ShowThinkTrashUI (): JSX.Element {
               setSelect={setEmotions}
               options={emotions}
             />
-            <ListInfoThink place={place} think={think} loadingPlace={loadingPlace} loadingThink={loadingThink}/>
+            <ListInfoThink place={place} think={think} loadingPlace={loadingPlace} loadingThink={loadingThink} />
           </Box>
         </Box>
         <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center', gap: 2 }}>
