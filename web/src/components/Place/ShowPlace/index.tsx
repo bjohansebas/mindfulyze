@@ -13,7 +13,7 @@ import { BadRequestError, NotFoundError } from '@/errors/typeErrors'
 
 export function ShowPlaceUI (): JSX.Element {
   const navigate = useNavigate()
-  const { credential } = useAuth()
+  const { accessToken } = useAuth()
   const { id } = useParams()
 
   const [anchorElPlace, setAnchorElPlace] = useState<HTMLButtonElement | null>(null)
@@ -24,8 +24,8 @@ export function ShowPlaceUI (): JSX.Element {
   useEffect(() => {
     async function getRequestPlace (): Promise<void> {
       try {
-        if (id == null || credential == null) return
-        const responsePlace = await getPlace(id, credential)
+        if (id == null || accessToken == null) return
+        const responsePlace = await getPlace(id, accessToken)
 
         setNamePlace(responsePlace.name)
       } catch (err) {
@@ -51,9 +51,9 @@ export function ShowPlaceUI (): JSX.Element {
   const onDeletePlace = async (): Promise<void> => {
     setAnchorElPlace(null)
     try {
-      if (id == null || credential == null) return
+      if (id == null || accessToken == null) return
 
-      await deletePlace(id, credential)
+      await deletePlace(id, accessToken)
 
       navigate('/')
     } catch (err) {

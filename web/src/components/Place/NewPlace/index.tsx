@@ -17,7 +17,7 @@ import { isAxiosError } from 'axios'
 
 export function NewPlaceUI (): JSX.Element {
   const navigate = useNavigate()
-  const { credential } = useAuth()
+  const { accessToken } = useAuth()
 
   const [allColors, setAllColors] = useState<PresetColor[]>([])
   const [color, setColor] = useState<string>('#00575C')
@@ -29,9 +29,9 @@ export function NewPlaceUI (): JSX.Element {
   useEffect(() => {
     async function getColor (): Promise<void> {
       try {
-        if (credential == null) return
+        if (accessToken == null) return
 
-        const response: ResponseColor[] = await getAllColor(credential)
+        const response: ResponseColor[] = await getAllColor(accessToken)
         const colors: PresetColor[] = response.map((value) => {
           return { color: '#' + value.code, title: value.code }
         }) as PresetColor[]
@@ -49,7 +49,7 @@ export function NewPlaceUI (): JSX.Element {
     e.preventDefault()
     setLoading(true)
 
-    if (credential == null) return
+    if (accessToken == null) return
 
     const testColor = HEXADECIMAL_REGEX.test(color)
 
@@ -63,7 +63,7 @@ export function NewPlaceUI (): JSX.Element {
     }
 
     try {
-      const response = await postPlace(request, credential)
+      const response = await postPlace(request, accessToken)
 
       navigate('/place/' + response.id)
     } catch (err) {

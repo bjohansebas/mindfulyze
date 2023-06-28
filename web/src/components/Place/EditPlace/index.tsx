@@ -17,7 +17,7 @@ import { BadRequestError, NotFoundError } from '@/errors/typeErrors'
 export function EditPlaceUI (): JSX.Element {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { credential } = useAuth()
+  const { accessToken } = useAuth()
 
   const [place, setPlace] = useState<ResponsePlace | null>(null)
   const [newTextPlace, setNewTextPlace] = useState<string>('')
@@ -30,8 +30,8 @@ export function EditPlaceUI (): JSX.Element {
   useEffect(() => {
     async function getOnePlace (): Promise<void> {
       try {
-        if (id == null || credential == null) return
-        const data = await getPlace(id, credential)
+        if (id == null || accessToken == null) return
+        const data = await getPlace(id, accessToken)
 
         setPlace(data)
 
@@ -57,8 +57,8 @@ export function EditPlaceUI (): JSX.Element {
   useEffect(() => {
     async function getColor (): Promise<void> {
       try {
-        if (credential == null) return
-        const response = await getAllColor(credential)
+        if (accessToken == null) return
+        const response = await getAllColor(accessToken)
         const colors: PresetColor[] = response.map((value) => {
           return { color: '#' + value.code, title: value.code }
         }) as PresetColor[]
@@ -82,7 +82,7 @@ export function EditPlaceUI (): JSX.Element {
 
   const onSave = async (): Promise<void> => {
     let request = {}
-    if (place == null || id == null || credential == null) return
+    if (place == null || id == null || accessToken == null) return
 
     if (newColor.slice(1) !== place.color.code) {
       request = { code: newColor.slice(1) }
@@ -94,7 +94,7 @@ export function EditPlaceUI (): JSX.Element {
 
     if (Object.entries(request).length >= 1) {
       try {
-        await putPlace(id, request, credential)
+        await putPlace(id, request, accessToken)
         navigate(`/place/${id}`)
       } catch (err) {
         console.log(err)

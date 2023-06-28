@@ -13,7 +13,7 @@ import { type ResponseTrashes, deleteThinkFromTrash, getAllTrashes, restoreFromT
 
 export function ShowTrashUI (): JSX.Element {
   const navigate = useNavigate()
-  const { credential } = useAuth()
+  const { accessToken } = useAuth()
 
   const [anchorElTrash, setAnchorElTrash] = useState<HTMLButtonElement | null>(null)
   const [checked, setChecked] = useState<number[]>([])
@@ -23,10 +23,10 @@ export function ShowTrashUI (): JSX.Element {
   const [idSelect, setIdSelect] = useState<string>('')
 
   const getTrash = async (): Promise<void> => {
-    if (credential == null) return
+    if (accessToken == null) return
 
     try {
-      const response = await getAllTrashes(credential)
+      const response = await getAllTrashes(accessToken)
 
       setAllTrash(response)
     } catch (e) {
@@ -64,11 +64,11 @@ export function ShowTrashUI (): JSX.Element {
   }
 
   const onDeleteId = async (): Promise<void> => {
-    if (credential == null) return
+    if (accessToken == null) return
 
     try {
       setAnchorElTrash(null)
-      await deleteThinkFromTrash(idSelect, credential)
+      await deleteThinkFromTrash(idSelect, accessToken)
 
       handleToggle(allTrash.findIndex(val => val.id === idSelect))
       await getTrash()
@@ -78,11 +78,11 @@ export function ShowTrashUI (): JSX.Element {
   }
 
   const onRestoreId = async (): Promise<void> => {
-    if (credential == null) return
+    if (accessToken == null) return
 
     try {
       setAnchorElTrash(null)
-      await restoreFromTrash(idSelect, credential)
+      await restoreFromTrash(idSelect, accessToken)
 
       handleToggle(allTrash.findIndex(val => val.id === idSelect))
       await getTrash()
@@ -92,14 +92,14 @@ export function ShowTrashUI (): JSX.Element {
   }
 
   const onDeleteSelect = async (): Promise<void> => {
-    if (credential == null) return
+    if (accessToken == null) return
 
     if (checked.length > 0) {
       try {
         for await (const value of checked) {
           const trash = allTrash[value]
 
-          await deleteThinkFromTrash(trash.id, credential)
+          await deleteThinkFromTrash(trash.id, accessToken)
         }
         setChecked([])
         await getTrash()
@@ -110,13 +110,13 @@ export function ShowTrashUI (): JSX.Element {
   }
 
   const onRestoreSelect = async (): Promise<void> => {
-    if (credential == null) return
+    if (accessToken == null) return
 
     if (checked.length > 0) {
       try {
         for await (const value of checked) {
           const trash = allTrash[value]
-          await restoreFromTrash(trash.id, credential)
+          await restoreFromTrash(trash.id, accessToken)
         }
         setChecked([])
         await getTrash()

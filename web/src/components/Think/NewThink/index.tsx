@@ -16,7 +16,7 @@ import { AutocompleteField, type OptionsProps } from 'components/Fields/Autocomp
 
 export function NewThinkUI (): JSX.Element {
   const navigate = useNavigate()
-  const { credential } = useAuth()
+  const { accessToken } = useAuth()
 
   const [textThink, setTextThink] = useState<string>('')
   const [allPlaces, setAllPlaces] = useState<ResponsePlace[]>([])
@@ -31,10 +31,10 @@ export function NewThinkUI (): JSX.Element {
 
   useEffect(() => {
     async function getPlace (): Promise<void> {
-      if (credential == null) return
+      if (accessToken == null) return
 
       setLoading(true)
-      const response = await getAllPlaces(credential)
+      const response = await getAllPlaces(accessToken)
 
       setAllPlaces(response)
 
@@ -46,9 +46,9 @@ export function NewThinkUI (): JSX.Element {
 
   useEffect(() => {
     async function getEmotions (): Promise<void> {
-      if (credential == null) return
+      if (accessToken == null) return
       try {
-        const response = await getAllEmotions(credential)
+        const response = await getAllEmotions(accessToken)
 
         setAllEmotions(response.map(value => {
           return {
@@ -75,7 +75,7 @@ export function NewThinkUI (): JSX.Element {
       return
     }
 
-    if (credential == null || place == null) return
+    if (accessToken == null || place == null) return
 
     try {
       const request: NewThink = {
@@ -83,14 +83,14 @@ export function NewThinkUI (): JSX.Element {
         place: place.id
       }
 
-      const response = await postThink(request, credential)
+      const response = await postThink(request, accessToken)
 
       const thinkId = response?.id
 
       const emotions = emotionsSelect.map(value => value.id)
 
       try {
-        await putAddEmotion(thinkId, emotions, credential)
+        await putAddEmotion(thinkId, emotions, accessToken)
       } catch (e) {
         console.log('error')
       }

@@ -30,7 +30,7 @@ const genderOptions: RadioOption[] = [
 ]
 
 export function AccountForm (): JSX.Element {
-  const { credential, logoutAction } = useAuth()
+  const { accessToken, logoutAction } = useAuth()
 
   const [dataUser, setDataUser] = useState<ResponseAccount | null>()
 
@@ -45,9 +45,9 @@ export function AccountForm (): JSX.Element {
 
   const getData = async (): Promise<void> => {
     try {
-      if (credential == null) return
+      if (accessToken == null) return
 
-      const dataResponse: ResponseAccount = await getAccount(credential)
+      const dataResponse: ResponseAccount = await getAccount(accessToken)
 
       const data = {
         email: dataResponse.email,
@@ -72,8 +72,8 @@ export function AccountForm (): JSX.Element {
 
   const deleteAccount = async (): Promise<void> => {
     try {
-      if (credential == null) return
-      await deleteAccountUser(credential)
+      if (accessToken == null) return
+      await deleteAccountUser(accessToken)
       logoutAction()
     } catch (e) {
       console.log(e)
@@ -82,7 +82,7 @@ export function AccountForm (): JSX.Element {
 
   const onSave = async (): Promise<void> => {
     setLoadingSave(true)
-    if (credential == null || dataUser == null) return
+    if (accessToken == null || dataUser == null) return
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     let requestAccount: UpdateAccount = {} as UpdateAccount
     if (dataUser?.email !== email && EMAIL_REGEX.test(email)) {
@@ -91,7 +91,7 @@ export function AccountForm (): JSX.Element {
 
     if (Object.entries(requestAccount).length >= 1) {
       try {
-        await putAccount(requestAccount, credential)
+        await putAccount(requestAccount, accessToken)
       } catch (e) {
         console.log(e)
       }
@@ -119,7 +119,7 @@ export function AccountForm (): JSX.Element {
 
     if (Object.entries(requestProfile).length >= 1) {
       try {
-        await putProfile(requestProfile, credential)
+        await putProfile(requestProfile, accessToken)
       } catch (e) {
         console.log(e)
       }

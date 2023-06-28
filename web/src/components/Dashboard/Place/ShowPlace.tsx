@@ -11,7 +11,7 @@ import { deletePlace, getAllPlaces, type ResponseAllPlaces } from 'services/plac
 import { EmptyPlace } from './EmptyPlace'
 
 export function ShowPlaces (): JSX.Element {
-  const { credential } = useAuth()
+  const { accessToken } = useAuth()
   const navigate = useNavigate()
 
   const [allPlaces, setAllPlaces] = useState<ResponseAllPlaces>([])
@@ -22,8 +22,8 @@ export function ShowPlaces (): JSX.Element {
 
   const getPlace = async (): Promise<void> => {
     try {
-      if (credential != null) {
-        const response = await getAllPlaces(credential)
+      if (accessToken != null) {
+        const response = await getAllPlaces(accessToken)
 
         setAllPlaces(response)
       }
@@ -48,8 +48,8 @@ export function ShowPlaces (): JSX.Element {
     try {
       setLoading(true)
       setAnchorEl(null)
-      if (credential != null) {
-        await deletePlace(idSelect, credential)
+      if (accessToken != null) {
+        await deletePlace(idSelect, accessToken)
         await getPlace()
       }
     } catch (err) {

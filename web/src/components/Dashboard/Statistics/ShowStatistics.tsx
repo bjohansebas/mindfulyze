@@ -13,7 +13,7 @@ import { EmptyStatistics } from './EmptyStatistics'
 import { StatisticsHeader } from './StatisticsHeader'
 
 export const ShowStatistics = (): JSX.Element => {
-  const { credential } = useAuth()
+  const { accessToken } = useAuth()
   const [loading, setLoading] = useState(true)
 
   const [dataEmotions, setDataEmotions] = useState<number[]>([])
@@ -32,9 +32,9 @@ export const ShowStatistics = (): JSX.Element => {
   const getStatistics = async (): Promise<void> => {
     try {
       setLoading(true)
-      if (credential == null) return
+      if (accessToken == null) return
 
-      const dataResponse: ResponseRelationEmotion[] = await getStatisticsAll(credential)
+      const dataResponse: ResponseRelationEmotion[] = await getStatisticsAll(accessToken)
 
       const positive = dataResponse.filter(({ emotion }) => emotion.type === 'Positive').length
       const negative = dataResponse.filter(({ emotion }) => emotion.type === 'Negative').length

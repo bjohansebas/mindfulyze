@@ -16,7 +16,7 @@ import { BadRequestError, NotFoundError } from '@/errors/typeErrors'
 export function ShowThinkTrashUI (): JSX.Element {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { credential } = useAuth()
+  const { accessToken } = useAuth()
 
   const [think, setThink] = useState<ResponseTrash | null>(null)
   const [loadingThink, setLoadingThink] = useState(true)
@@ -27,9 +27,9 @@ export function ShowThinkTrashUI (): JSX.Element {
   const [emotions, setEmotions] = useState<OptionsProps[]>([])
 
   const getThink = async (): Promise<void> => {
-    if (id == null || credential == null) return
+    if (id == null || accessToken == null) return
     try {
-      const response = await getTrash(id, credential)
+      const response = await getTrash(id, accessToken)
       setThink(response)
       if ((response?.emotions) != null) {
         setEmotions(response?.emotions.map(value => {
@@ -57,10 +57,10 @@ export function ShowThinkTrashUI (): JSX.Element {
   }, [])
 
   const onDelete = async (): Promise<void> => {
-    if (id == null || credential == null || place == null) return
+    if (id == null || accessToken == null || place == null) return
 
     try {
-      await deleteThinkFromTrash(id, credential)
+      await deleteThinkFromTrash(id, accessToken)
 
       navigate(`/place/${place.id}`, { replace: true })
     } catch (err) {
@@ -69,10 +69,10 @@ export function ShowThinkTrashUI (): JSX.Element {
   }
 
   const onRestore = async (): Promise<void> => {
-    if (id == null || credential == null || place == null) return
+    if (id == null || accessToken == null || place == null) return
 
     try {
-      await restoreFromTrash(id, credential)
+      await restoreFromTrash(id, accessToken)
 
       navigate(`/place/${place.id}`, { replace: true })
     } catch (err) {

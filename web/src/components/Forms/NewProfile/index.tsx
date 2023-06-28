@@ -31,7 +31,7 @@ const genderOptions: RadioOption[] = [
 
 export function NewProfileForm (): JSX.Element {
   const navigate = useNavigate()
-  const { credential } = useAuth()
+  const { accessToken } = useAuth()
 
   const [firstName, setFirstName] = useState<string>('')
   const [validFirstName, setValidFirstName] = useState<boolean>(false)
@@ -81,8 +81,8 @@ export function NewProfileForm (): JSX.Element {
     }
 
     try {
-      if (credential != null) {
-        await postNewProfile(request, credential)
+      if (accessToken != null) {
+        await postNewProfile(request, accessToken)
       }
 
       navigate('/')

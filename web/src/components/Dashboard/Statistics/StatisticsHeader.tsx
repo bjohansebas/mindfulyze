@@ -19,12 +19,12 @@ export const StatisticsHeader = ({ emotions, isLoading }: StatisctisHeaderProps)
         <Typography color="primary" alignItems="center" display="flex" gap="4px">
           {isLoading
             ? <Skeleton variant='text' width="200px"/>
-            : <><MoodRoundedIcon /> {emotions[0]} emociones positivas</>}
+            : <><MoodRoundedIcon /> {emotions[0]} Emociones positivas</>}
         </Typography>
         <Typography color="error.dark" alignItems="center" display="flex" gap="4px">
           {isLoading
             ? <Skeleton variant='text' width="200px"/>
-            : <><MoodBadRoundedIcon /> {emotions[1]} emociones negativas</>}
+            : <><MoodBadRoundedIcon /> {emotions[1]} Emociones negativas</>}
         </Typography>
       </Stack>
     </Stack>

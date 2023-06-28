@@ -14,7 +14,7 @@ import { EmptyArchive } from './EmptyArchive'
 
 export function ArchiveUI (): JSX.Element {
   const navigate = useNavigate()
-  const { credential } = useAuth()
+  const { accessToken } = useAuth()
 
   const [anchorElTrash, setAnchorElTrash] = useState<HTMLButtonElement | null>(null)
   const [checked, setChecked] = useState<number[]>([])
@@ -26,8 +26,8 @@ export function ArchiveUI (): JSX.Element {
   const getArchive = async (): Promise<void> => {
     try {
       setLoading(true)
-      if (credential == null) return
-      const response = await getArchiveThinks(credential)
+      if (accessToken == null) return
+      const response = await getArchiveThinks(accessToken)
 
       setAllArchive(response)
     } catch (e) {
@@ -65,11 +65,11 @@ export function ArchiveUI (): JSX.Element {
   }
 
   const onDeleteId = async (): Promise<void> => {
-    if (credential == null) return
+    if (accessToken == null) return
 
     try {
       setAnchorElTrash(null)
-      await moveToTrash(idSelect, credential)
+      await moveToTrash(idSelect, accessToken)
 
       handleToggle(allArchive.findIndex(val => val.id === idSelect))
       await getArchive()
@@ -79,12 +79,12 @@ export function ArchiveUI (): JSX.Element {
   }
 
   const onUnarchiveId = async (): Promise<void> => {
-    if (credential == null) return
+    if (accessToken == null) return
 
     try {
       setAnchorElTrash(null)
 
-      await putThink(idSelect, { isArchive: false }, credential)
+      await putThink(idSelect, { isArchive: false }, accessToken)
 
       handleToggle(allArchive.findIndex(val => val.id === idSelect))
       await getArchive()
@@ -94,13 +94,13 @@ export function ArchiveUI (): JSX.Element {
   }
 
   const onDeleteSelect = async (): Promise<void> => {
-    if (credential == null) return
+    if (accessToken == null) return
 
     if (checked.length > 0) {
       try {
         for await (const value of checked) {
           const archive = allArchive[value]
-          await moveToTrash(archive.id, credential)
+          await moveToTrash(archive.id, accessToken)
         }
         setChecked([])
         await getArchive()
@@ -111,14 +111,14 @@ export function ArchiveUI (): JSX.Element {
   }
 
   const onUnarchiveSelect = async (): Promise<void> => {
-    if (credential == null) return
+    if (accessToken == null) return
 
     if (checked.length > 0) {
       try {
         for await (const value of checked) {
           const archive = allArchive[value]
 
-          await putThink(archive.id, { isArchive: false }, credential)
+          await putThink(archive.id, { isArchive: false }, accessToken)
         }
         setChecked([])
         await getArchive()

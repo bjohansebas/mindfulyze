@@ -26,7 +26,7 @@ export interface OptionThink {
 
 export function ShowThinks ({ id }: ShowThinksProps): JSX.Element {
   const navigate = useNavigate()
-  const { credential } = useAuth()
+  const { accessToken } = useAuth()
 
   const [allThink, setAllThink] = useState<ResponseThinks | ResponseTrashes>([])
   const [options, setOptions] = useState<OptionThink[]>([])
@@ -44,12 +44,12 @@ export function ShowThinks ({ id }: ShowThinksProps): JSX.Element {
 
   const getThinks = async (): Promise<void> => {
     try {
-      if (credential == null) return
+      if (accessToken == null) return
 
       setAnchorElFilter(null)
       setLoading(true)
 
-      const response = await getThinksPlace(id, credential)
+      const response = await getThinksPlace(id, accessToken)
 
       setAllThink(response)
 
@@ -80,11 +80,11 @@ export function ShowThinks ({ id }: ShowThinksProps): JSX.Element {
 
   const getTrashThinks = async (): Promise<void> => {
     try {
-      if (credential == null) return
+      if (accessToken == null) return
 
       setAnchorElFilter(null)
       setLoading(true)
-      const response = await getTrashPlace(id, credential)
+      const response = await getTrashPlace(id, accessToken)
 
       setAllThink(response)
 
@@ -115,12 +115,12 @@ export function ShowThinks ({ id }: ShowThinksProps): JSX.Element {
 
   const getArchiveThinks = async (): Promise<void> => {
     try {
-      if (credential == null) return
+      if (accessToken == null) return
 
       setAnchorElFilter(null)
       setLoading(true)
 
-      const response = await getArchiveThinksPlace(id, credential)
+      const response = await getArchiveThinksPlace(id, accessToken)
 
       setAllThink(response)
 
@@ -176,11 +176,11 @@ export function ShowThinks ({ id }: ShowThinksProps): JSX.Element {
   }
 
   const onRestoreId = async (idThink: string): Promise<void> => {
-    if (credential == null) return
+    if (accessToken == null) return
 
     try {
       setAnchorElThink(null)
-      await restoreFromTrash(idThink, credential)
+      await restoreFromTrash(idThink, accessToken)
 
       await getTrashThinks()
     } catch (err) {
@@ -189,11 +189,11 @@ export function ShowThinks ({ id }: ShowThinksProps): JSX.Element {
   }
 
   const onDeleteTrash = async (idThink: string): Promise<void> => {
-    if (credential == null) return
+    if (accessToken == null) return
 
     try {
       setAnchorElThink(null)
-      await deleteThinkFromTrash(idThink, credential)
+      await deleteThinkFromTrash(idThink, accessToken)
 
       await getTrashThinks()
     } catch (err) {
@@ -202,11 +202,11 @@ export function ShowThinks ({ id }: ShowThinksProps): JSX.Element {
   }
 
   const onUnarchiveId = async (idThink: string): Promise<void> => {
-    if (credential == null) return
+    if (accessToken == null) return
 
     try {
       setAnchorElThink(null)
-      await putThink(idThink, { isArchive: false }, credential)
+      await putThink(idThink, { isArchive: false }, accessToken)
 
       await getArchiveThinks()
     } catch (err) {
@@ -215,11 +215,11 @@ export function ShowThinks ({ id }: ShowThinksProps): JSX.Element {
   }
 
   const onArchive = async (idThink: string): Promise<void> => {
-    if (credential == null) return
+    if (accessToken == null) return
 
     setAnchorElThink(null)
     try {
-      await putThink(idThink, { isArchive: true }, credential)
+      await putThink(idThink, { isArchive: true }, accessToken)
 
       await getThinks()
     } catch (err) {
@@ -228,11 +228,11 @@ export function ShowThinks ({ id }: ShowThinksProps): JSX.Element {
   }
 
   const onDelete = async (idThink: string): Promise<void> => {
-    if (credential == null) return
+    if (accessToken == null) return
 
     setAnchorElThink(null)
     try {
-      await moveToTrash(idThink, credential)
+      await moveToTrash(idThink, accessToken)
 
       await getThinks()
     } catch (err) {
