@@ -1,12 +1,17 @@
 import { type AxiosResponse } from 'axios'
 
-import axios from '../api/axios'
+import axios from 'api/axios'
 import { managerErrorNetwork } from '@/errors'
+
+export interface ResponseRefresh {
+  access_token: string
+}
 
 export interface ResponseLogin {
   id: string
   email: string
   access_token: string
+  refresh_token: string
 }
 
 export interface ErrorRequest {
@@ -21,6 +26,20 @@ export async function postLogin (email: string, password: string): Promise<Respo
       {
         email, password
       })
+
+    return response.data
+  } catch (err) {
+    throw managerErrorNetwork(err)
+  }
+}
+
+export async function getAccessToken (refreshToken: string): Promise<ResponseRefresh> {
+  try {
+    const response: AxiosResponse<ResponseLogin, ErrorRequest> = await axios.post('auth/refresh', {}, {
+      headers: {
+        Authorization: `Bearer ${refreshToken}`
+      }
+    })
 
     return response.data
   } catch (err) {

@@ -7,8 +7,6 @@ import { FormattedMessage } from 'react-intl'
 import { Forms } from 'components/Form'
 import { ComboboxField } from 'components/Fields/Combobox'
 
-import { useAuth } from 'hooks/useAuth'
-
 import { getAllPlaces, type ResponsePlace } from 'services/place'
 import { type NewThink, postThink, putAddEmotion } from 'services/think'
 import { getAllEmotions } from 'services/emotion'
@@ -16,7 +14,6 @@ import { AutocompleteField, type OptionsProps } from 'components/Fields/Autocomp
 
 export function NewThinkUI (): JSX.Element {
   const navigate = useNavigate()
-  const { accessToken } = useAuth()
 
   const [textThink, setTextThink] = useState<string>('')
   const [allPlaces, setAllPlaces] = useState<ResponsePlace[]>([])
@@ -31,10 +28,8 @@ export function NewThinkUI (): JSX.Element {
 
   useEffect(() => {
     async function getPlace (): Promise<void> {
-      if (accessToken == null) return
-
       setLoading(true)
-      const response = await getAllPlaces(accessToken)
+      const response = await getAllPlaces()
 
       setAllPlaces(response)
 
@@ -46,9 +41,8 @@ export function NewThinkUI (): JSX.Element {
 
   useEffect(() => {
     async function getEmotions (): Promise<void> {
-      if (accessToken == null) return
       try {
-        const response = await getAllEmotions(accessToken)
+        const response = await getAllEmotions()
 
         setAllEmotions(response.map(value => {
           return {
@@ -75,7 +69,7 @@ export function NewThinkUI (): JSX.Element {
       return
     }
 
-    if (accessToken == null || place == null) return
+    if (place == null) return
 
     try {
       const request: NewThink = {
@@ -83,14 +77,14 @@ export function NewThinkUI (): JSX.Element {
         place: place.id
       }
 
-      const response = await postThink(request, accessToken)
+      const response = await postThink(request)
 
       const thinkId = response?.id
 
       const emotions = emotionsSelect.map(value => value.id)
 
       try {
-        await putAddEmotion(thinkId, emotions, accessToken)
+        await putAddEmotion(thinkId, emotions)
       } catch (e) {
         console.log('error')
       }

@@ -6,6 +6,14 @@ export class UnauthorizedAccessError extends Error {
   }
 }
 
+export class UnauthorizedRefreshError extends Error {
+  constructor (message: string) {
+    super(message)
+    this.name = 'UnauthorizedRefreshError'
+    this.stack = ''
+  }
+}
+
 export class NotFoundError extends Error {
   constructor (message: string) {
     super(message)

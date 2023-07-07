@@ -5,13 +5,11 @@ import { useEffect, useState, type MouseEvent } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { useNavigate } from 'react-router-dom'
 
-import { useAuth } from 'hooks/useAuth'
 import { deletePlace, getAllPlaces, type ResponseAllPlaces } from 'services/place'
 
 import { EmptyPlace } from './EmptyPlace'
 
 export function ShowPlaces (): JSX.Element {
-  const { accessToken } = useAuth()
   const navigate = useNavigate()
 
   const [allPlaces, setAllPlaces] = useState<ResponseAllPlaces>([])
@@ -22,11 +20,9 @@ export function ShowPlaces (): JSX.Element {
 
   const getPlace = async (): Promise<void> => {
     try {
-      if (accessToken != null) {
-        const response = await getAllPlaces(accessToken)
+      const response = await getAllPlaces()
 
-        setAllPlaces(response)
-      }
+      setAllPlaces(response)
     } catch (e) {
       console.log(e)
     } finally {
@@ -48,10 +44,8 @@ export function ShowPlaces (): JSX.Element {
     try {
       setLoading(true)
       setAnchorEl(null)
-      if (accessToken != null) {
-        await deletePlace(idSelect, accessToken)
-        await getPlace()
-      }
+      await deletePlace(idSelect)
+      await getPlace()
     } catch (err) {
       console.log(err)
     } finally {

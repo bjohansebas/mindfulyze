@@ -7,7 +7,6 @@ import { MenuLogged } from 'components/Navigation/Menu-Logged'
 import { useAuth } from 'hooks/useAuth'
 import { Loading } from 'components/Loading'
 import { type ResponseAccount, getAccount } from 'services/user'
-import { getAccessToken } from '@/services/login'
 
 function RequiredAuth (): JSX.Element {
   const location = useLocation()
@@ -24,9 +23,7 @@ function RequiredAuth (): JSX.Element {
     }
 
     try {
-      const { access_token: newAccessToken } = await getAccessToken(credential)
-
-      const dataUser: ResponseAccount = await getAccount(newAccessToken)
+      const dataUser: ResponseAccount = await getAccount()
 
       data = dataUser
     } catch (err) {

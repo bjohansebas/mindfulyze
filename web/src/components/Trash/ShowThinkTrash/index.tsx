@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 
-import { useAuth } from 'hooks/useAuth'
 import { deleteThinkFromTrash, getTrash, type ResponseTrash, restoreFromTrash } from 'services/trash'
 import { type ResponsePlace } from 'services/place'
 import { AutocompleteField, type OptionsProps } from 'components/Fields/Autocomplete'
@@ -16,7 +15,6 @@ import { BadRequestError, NotFoundError } from '@/errors/typeErrors'
 export function ShowThinkTrashUI (): JSX.Element {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { accessToken } = useAuth()
 
   const [think, setThink] = useState<ResponseTrash | null>(null)
   const [loadingThink, setLoadingThink] = useState(true)
@@ -27,9 +25,9 @@ export function ShowThinkTrashUI (): JSX.Element {
   const [emotions, setEmotions] = useState<OptionsProps[]>([])
 
   const getThink = async (): Promise<void> => {
-    if (id == null || accessToken == null) return
+    if (id == null) return
     try {
-      const response = await getTrash(id, accessToken)
+      const response = await getTrash(id)
       setThink(response)
       if ((response?.emotions) != null) {
         setEmotions(response?.emotions.map(value => {
@@ -57,10 +55,10 @@ export function ShowThinkTrashUI (): JSX.Element {
   }, [])
 
   const onDelete = async (): Promise<void> => {
-    if (id == null || accessToken == null || place == null) return
+    if (id == null || place == null) return
 
     try {
-      await deleteThinkFromTrash(id, accessToken)
+      await deleteThinkFromTrash(id)
 
       navigate(`/place/${place.id}`, { replace: true })
     } catch (err) {
@@ -69,10 +67,10 @@ export function ShowThinkTrashUI (): JSX.Element {
   }
 
   const onRestore = async (): Promise<void> => {
-    if (id == null || accessToken == null || place == null) return
+    if (id == null || place == null) return
 
     try {
-      await restoreFromTrash(id, accessToken)
+      await restoreFromTrash(id)
 
       navigate(`/place/${place.id}`, { replace: true })
     } catch (err) {

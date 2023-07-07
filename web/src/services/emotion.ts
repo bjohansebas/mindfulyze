@@ -1,6 +1,6 @@
 import { type AxiosResponse } from 'axios'
 
-import axios from '../api/axios'
+import { apiPrivate as axios } from '../api/axios'
 import { type ErrorRequest } from './login'
 import { type ResponseColor } from './color'
 import { managerErrorNetwork } from '@/errors'
@@ -14,13 +14,9 @@ export interface ResponseEmotion {
 
 export type ResponseAllEmotions = ResponseEmotion[]
 
-export async function getAllEmotions (credential: string): Promise<ResponseAllEmotions> {
+export async function getAllEmotions (): Promise<ResponseAllEmotions> {
   try {
-    const response: AxiosResponse<ResponseAllEmotions, ErrorRequest> = await axios.get('emotions/', {
-      headers: {
-        Authorization: `Bearer ${credential}`
-      }
-    })
+    const response: AxiosResponse<ResponseAllEmotions, ErrorRequest> = await axios.get('emotions/')
 
     return response.data
   } catch (err) {

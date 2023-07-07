@@ -8,8 +8,6 @@ import { type PresetColor } from 'react-color/lib/components/sketch/Sketch'
 
 import { FormattedMessage } from 'react-intl'
 
-import { useAuth } from 'hooks/useAuth'
-
 import { type ResponsePlace, getPlace, putPlace } from 'services/place'
 import { getAllColor } from 'services/color'
 import { BadRequestError, NotFoundError } from '@/errors/typeErrors'
@@ -17,7 +15,6 @@ import { BadRequestError, NotFoundError } from '@/errors/typeErrors'
 export function EditPlaceUI (): JSX.Element {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { accessToken } = useAuth()
 
   const [place, setPlace] = useState<ResponsePlace | null>(null)
   const [newTextPlace, setNewTextPlace] = useState<string>('')
@@ -30,8 +27,8 @@ export function EditPlaceUI (): JSX.Element {
   useEffect(() => {
     async function getOnePlace (): Promise<void> {
       try {
-        if (id == null || accessToken == null) return
-        const data = await getPlace(id, accessToken)
+        if (id == null) return
+        const data = await getPlace(id)
 
         setPlace(data)
 
@@ -57,8 +54,7 @@ export function EditPlaceUI (): JSX.Element {
   useEffect(() => {
     async function getColor (): Promise<void> {
       try {
-        if (accessToken == null) return
-        const response = await getAllColor(accessToken)
+        const response = await getAllColor()
         const colors: PresetColor[] = response.map((value) => {
           return { color: '#' + value.code, title: value.code }
         }) as PresetColor[]
@@ -82,7 +78,7 @@ export function EditPlaceUI (): JSX.Element {
 
   const onSave = async (): Promise<void> => {
     let request = {}
-    if (place == null || id == null || accessToken == null) return
+    if (place == null || id == null) return
 
     if (newColor.slice(1) !== place.color.code) {
       request = { code: newColor.slice(1) }
@@ -94,7 +90,7 @@ export function EditPlaceUI (): JSX.Element {
 
     if (Object.entries(request).length >= 1) {
       try {
-        await putPlace(id, request, accessToken)
+        await putPlace(id, request)
         navigate(`/place/${id}`)
       } catch (err) {
         console.log(err)

@@ -1,17 +1,13 @@
 import { type AxiosResponse } from 'axios'
 
-import axios from '../api/axios'
+import { apiPrivate as axios } from '../api/axios'
 import { type ResponseRelationEmotion } from './think'
 import { type ErrorRequest } from './login'
 import { managerErrorNetwork } from '@/errors'
 
-export async function getStatisticsAll (credential: string): Promise<ResponseRelationEmotion[]> {
+export async function getStatisticsAll (): Promise<ResponseRelationEmotion[]> {
   try {
-    const response: AxiosResponse<ResponseRelationEmotion[], ErrorRequest> = await axios.get('/statistics/all', {
-      headers: {
-        Authorization: `Bearer ${credential}`
-      }
-    })
+    const response: AxiosResponse<ResponseRelationEmotion[], ErrorRequest> = await axios.get('/statistics/all')
 
     return response.data
   } catch (err) {
@@ -19,13 +15,9 @@ export async function getStatisticsAll (credential: string): Promise<ResponseRel
   }
 }
 
-export async function getStatisticsNegative (credential: string): Promise<ResponseRelationEmotion[]> {
+export async function getStatisticsNegative (): Promise<ResponseRelationEmotion[]> {
   try {
-    const response: AxiosResponse<ResponseRelationEmotion[], ErrorRequest> = await axios.get('/statistics/negative', {
-      headers: {
-        Authorization: `Bearer ${credential}`
-      }
-    })
+    const response: AxiosResponse<ResponseRelationEmotion[], ErrorRequest> = await axios.get('/statistics/negative')
 
     return response.data
   } catch (err) {
@@ -33,13 +25,9 @@ export async function getStatisticsNegative (credential: string): Promise<Respon
   }
 }
 
-export async function getStatisticsPositive (credential: string): Promise<ResponseRelationEmotion[]> {
+export async function getStatisticsPositive (): Promise<ResponseRelationEmotion[]> {
   try {
-    const response: AxiosResponse<ResponseRelationEmotion[], ErrorRequest> = await axios.get('/statistics/positive', {
-      headers: {
-        Authorization: `Bearer ${credential}`
-      }
-    })
+    const response: AxiosResponse<ResponseRelationEmotion[], ErrorRequest> = await axios.get('/statistics/positive')
 
     return response.data
   } catch (err) {

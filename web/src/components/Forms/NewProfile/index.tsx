@@ -7,7 +7,6 @@ import { type FormEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 
-import { useAuth } from 'hooks/useAuth'
 import { GENDER_REGEX, NAMES_REGEX } from 'utils/regex'
 import { postNewProfile, type dataProfile } from 'services/signUp'
 import { HeaderFormNewProfile } from './HeaderForm'
@@ -31,7 +30,6 @@ const genderOptions: RadioOption[] = [
 
 export function NewProfileForm (): JSX.Element {
   const navigate = useNavigate()
-  const { accessToken } = useAuth()
 
   const [firstName, setFirstName] = useState<string>('')
   const [validFirstName, setValidFirstName] = useState<boolean>(false)
@@ -81,9 +79,7 @@ export function NewProfileForm (): JSX.Element {
     }
 
     try {
-      if (accessToken != null) {
-        await postNewProfile(request, accessToken)
-      }
+      await postNewProfile(request)
 
       navigate('/')
     } catch (err) {

@@ -9,7 +9,6 @@ import { FormattedMessage } from 'react-intl'
 import { Helmet } from 'react-helmet-async'
 
 import { HEXADECIMAL_REGEX } from 'utils/regex'
-import { useAuth } from 'hooks/useAuth'
 import { Forms } from 'components/Form'
 import { type NewPlace, postPlace } from 'services/place'
 import { type ResponseColor, getAllColor } from 'services/color'
@@ -17,7 +16,6 @@ import { isAxiosError } from 'axios'
 
 export function NewPlaceUI (): JSX.Element {
   const navigate = useNavigate()
-  const { accessToken } = useAuth()
 
   const [allColors, setAllColors] = useState<PresetColor[]>([])
   const [color, setColor] = useState<string>('#00575C')
@@ -29,9 +27,7 @@ export function NewPlaceUI (): JSX.Element {
   useEffect(() => {
     async function getColor (): Promise<void> {
       try {
-        if (accessToken == null) return
-
-        const response: ResponseColor[] = await getAllColor(accessToken)
+        const response: ResponseColor[] = await getAllColor()
         const colors: PresetColor[] = response.map((value) => {
           return { color: '#' + value.code, title: value.code }
         }) as PresetColor[]
@@ -49,8 +45,6 @@ export function NewPlaceUI (): JSX.Element {
     e.preventDefault()
     setLoading(true)
 
-    if (accessToken == null) return
-
     const testColor = HEXADECIMAL_REGEX.test(color)
 
     if (!testColor || textPlace.trimEnd().length < 2) {
@@ -63,7 +57,7 @@ export function NewPlaceUI (): JSX.Element {
     }
 
     try {
-      const response = await postPlace(request, accessToken)
+      const response = await postPlace(request)
 
       navigate('/place/' + response.id)
     } catch (err) {

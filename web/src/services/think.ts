@@ -1,6 +1,6 @@
 import { type AxiosResponse } from 'axios'
 
-import axios from '../api/axios'
+import { apiPrivate as axios } from '../api/axios'
 import { type ErrorRequest } from './login'
 import { type ResponsePlace } from './place'
 import { type ResponseAccount } from './user'
@@ -35,13 +35,9 @@ export interface UpdateThink {
 
 export type ResponseThinks = ResponseThink[]
 
-export async function getThink (id: string, credential: string): Promise<ResponseThink> {
+export async function getThink (id: string): Promise<ResponseThink> {
   try {
-    const response: AxiosResponse<ResponseThink, ErrorRequest> = await axios.get(`/thinks/${id}`, {
-      headers: {
-        Authorization: `Bearer ${credential}`
-      }
-    })
+    const response: AxiosResponse<ResponseThink, ErrorRequest> = await axios.get(`/thinks/${id}`)
 
     return response.data
   } catch (err) {
@@ -49,13 +45,9 @@ export async function getThink (id: string, credential: string): Promise<Respons
   }
 }
 
-export async function getArchiveThinks (credential: string): Promise<ResponseThinks> {
+export async function getArchiveThinks (): Promise<ResponseThinks> {
   try {
-    const response: AxiosResponse<ResponseThinks, ErrorRequest> = await axios.get('/users/thinks/archives', {
-      headers: {
-        Authorization: `Bearer ${credential}`
-      }
-    })
+    const response: AxiosResponse<ResponseThinks, ErrorRequest> = await axios.get('/users/thinks/archives')
 
     return response.data
   } catch (err) {
@@ -63,13 +55,9 @@ export async function getArchiveThinks (credential: string): Promise<ResponseThi
   }
 }
 
-export async function postThink (data: NewThink, credential: string): Promise<ResponseThink> {
+export async function postThink (data: NewThink): Promise<ResponseThink> {
   try {
-    const response: AxiosResponse<ResponseThink, ErrorRequest> = await axios.post('/thinks/', data, {
-      headers: {
-        Authorization: `Bearer ${credential}`
-      }
-    })
+    const response: AxiosResponse<ResponseThink, ErrorRequest> = await axios.post('/thinks/', data)
 
     return response.data
   } catch (err) {
@@ -77,14 +65,9 @@ export async function postThink (data: NewThink, credential: string): Promise<Re
   }
 }
 
-export async function putThink (id: string, data: UpdateThink, credential: string): Promise<ResponseThink> {
+export async function putThink (id: string, data: UpdateThink): Promise<ResponseThink> {
   try {
-    const response: AxiosResponse<ResponseThink, ErrorRequest> = await axios.put(`/thinks/${id}/`, data,
-      {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
-      })
+    const response: AxiosResponse<ResponseThink, ErrorRequest> = await axios.put(`/thinks/${id}/`, data)
 
     return response.data
   } catch (err) {
@@ -92,16 +75,11 @@ export async function putThink (id: string, data: UpdateThink, credential: strin
   }
 }
 
-export async function putAddEmotion (id: string, data: string[], credential: string): Promise<ResponseThink> {
+export async function putAddEmotion (id: string, data: string[]): Promise<ResponseThink> {
   try {
     const response: AxiosResponse<ResponseThink, ErrorRequest> = await axios.put(`/thinks/${id}/emotions/add`,
       {
         emotions: data
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
       })
 
     return response.data
@@ -110,16 +88,11 @@ export async function putAddEmotion (id: string, data: string[], credential: str
   }
 }
 
-export async function putDeleteEmotion (id: string, data: string[], credential: string): Promise<ResponseThink> {
+export async function putDeleteEmotion (id: string, data: string[]): Promise<ResponseThink> {
   try {
     const response: AxiosResponse<ResponseThink, ErrorRequest> = await axios.put(`/thinks/${id}/emotions/remove`,
       {
         emotions: data
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${credential}`
-        }
       })
 
     return response.data
@@ -128,13 +101,9 @@ export async function putDeleteEmotion (id: string, data: string[], credential: 
   }
 }
 
-export async function moveToTrash (id: string, credential: string): Promise<void> {
+export async function moveToTrash (id: string): Promise<void> {
   try {
-    await axios.put(`/thinks/${id}/trash`, {}, {
-      headers: {
-        Authorization: `Bearer ${credential}`
-      }
-    })
+    await axios.put(`/thinks/${id}/trash`, {})
   } catch (err) {
     throw managerErrorNetwork(err)
   }

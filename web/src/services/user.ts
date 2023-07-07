@@ -1,6 +1,6 @@
 import { type AxiosResponse } from 'axios'
 
-import axios from '../api/axios'
+import { apiPrivate as axios } from '../api/axios'
 import { type ErrorRequest } from './login'
 import { DATE_REGEX, GENDER_REGEX, NAMES_REGEX } from '../utils/regex'
 import { managerErrorNetwork } from '@/errors'
@@ -40,13 +40,9 @@ export interface UpdateProfile {
   preferenceLang?: string
 }
 
-export async function getAccount (credential: string): Promise<ResponseAccount> {
+export async function getAccount (): Promise<ResponseAccount> {
   try {
-    const response: AxiosResponse<ResponseAccount, ErrorRequest> = await axios.get('users/', {
-      headers: {
-        Authorization: `Bearer ${credential}`
-      }
-    })
+    const response: AxiosResponse<ResponseAccount, ErrorRequest> = await axios.get('users/')
 
     return response.data
   } catch (err) {
@@ -54,13 +50,9 @@ export async function getAccount (credential: string): Promise<ResponseAccount> 
   }
 }
 
-export async function putAccount (data: UpdateAccount, credential: string): Promise<ResponseAccount> {
+export async function putAccount (data: UpdateAccount): Promise<ResponseAccount> {
   try {
-    const response: AxiosResponse<ResponseAccount, ErrorRequest> = await axios.put('/users/account', data, {
-      headers: {
-        Authorization: `Bearer ${credential}`
-      }
-    })
+    const response: AxiosResponse<ResponseAccount, ErrorRequest> = await axios.put('/users/account', data)
 
     return response.data
   } catch (err) {
@@ -68,7 +60,7 @@ export async function putAccount (data: UpdateAccount, credential: string): Prom
   }
 }
 
-export async function putProfile (data: UpdateProfile, credential: string): Promise<ResponseProfile> {
+export async function putProfile (data: UpdateProfile): Promise<ResponseProfile> {
   try {
     if (((data.firstName != null) && !NAMES_REGEX.test(data.firstName)) || ((data.lastName != null) && !NAMES_REGEX.test(data.lastName))) {
       throw new BadRequestError('Please enter a valid name')
@@ -82,11 +74,7 @@ export async function putProfile (data: UpdateProfile, credential: string): Prom
       throw new BadRequestError('Please enter a valid date')
     }
 
-    const response: AxiosResponse<ResponseProfile, ErrorRequest> = await axios.put('/users/profile', data, {
-      headers: {
-        Authorization: `Bearer ${credential}`
-      }
-    })
+    const response: AxiosResponse<ResponseProfile, ErrorRequest> = await axios.put('/users/profile', data)
 
     return response.data
   } catch (err) {
@@ -94,13 +82,9 @@ export async function putProfile (data: UpdateProfile, credential: string): Prom
   }
 }
 
-export async function deleteAccountUser (credential: string): Promise<void> {
+export async function deleteAccountUser (): Promise<void> {
   try {
-    await axios.delete('/users/', {
-      headers: {
-        Authorization: `Bearer ${credential}`
-      }
-    })
+    await axios.delete('/users/')
   } catch (err) {
     throw managerErrorNetwork(err)
   }

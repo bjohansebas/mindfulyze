@@ -30,7 +30,7 @@ const genderOptions: RadioOption[] = [
 ]
 
 export function AccountForm (): JSX.Element {
-  const { accessToken, logoutAction } = useAuth()
+  const { logoutAction } = useAuth()
 
   const [dataUser, setDataUser] = useState<ResponseAccount | null>()
 
@@ -45,9 +45,7 @@ export function AccountForm (): JSX.Element {
 
   const getData = async (): Promise<void> => {
     try {
-      if (accessToken == null) return
-
-      const dataResponse: ResponseAccount = await getAccount(accessToken)
+      const dataResponse: ResponseAccount = await getAccount()
 
       const data = {
         email: dataResponse.email,
@@ -72,8 +70,7 @@ export function AccountForm (): JSX.Element {
 
   const deleteAccount = async (): Promise<void> => {
     try {
-      if (accessToken == null) return
-      await deleteAccountUser(accessToken)
+      await deleteAccountUser()
       logoutAction()
     } catch (e) {
       console.log(e)
@@ -82,7 +79,7 @@ export function AccountForm (): JSX.Element {
 
   const onSave = async (): Promise<void> => {
     setLoadingSave(true)
-    if (accessToken == null || dataUser == null) return
+    if (dataUser == null) return
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     let requestAccount: UpdateAccount = {} as UpdateAccount
     if (dataUser?.email !== email && EMAIL_REGEX.test(email)) {
@@ -91,7 +88,7 @@ export function AccountForm (): JSX.Element {
 
     if (Object.entries(requestAccount).length >= 1) {
       try {
-        await putAccount(requestAccount, accessToken)
+        await putAccount(requestAccount)
       } catch (e) {
         console.log(e)
       }
@@ -119,7 +116,7 @@ export function AccountForm (): JSX.Element {
 
     if (Object.entries(requestProfile).length >= 1) {
       try {
-        await putProfile(requestProfile, accessToken)
+        await putProfile(requestProfile)
       } catch (e) {
         console.log(e)
       }

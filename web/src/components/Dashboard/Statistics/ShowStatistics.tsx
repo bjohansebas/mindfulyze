@@ -4,8 +4,6 @@ import { Box, Paper, Skeleton, Stack } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { Doughnut } from 'react-chartjs-2'
 
-import { useAuth } from 'hooks/useAuth'
-
 import { getStatisticsAll } from 'services/statistics'
 import { type ResponseRelationEmotion } from 'services/think'
 
@@ -13,7 +11,6 @@ import { EmptyStatistics } from './EmptyStatistics'
 import { StatisticsHeader } from './StatisticsHeader'
 
 export const ShowStatistics = (): JSX.Element => {
-  const { accessToken } = useAuth()
   const [loading, setLoading] = useState(true)
 
   const [dataEmotions, setDataEmotions] = useState<number[]>([])
@@ -32,9 +29,8 @@ export const ShowStatistics = (): JSX.Element => {
   const getStatistics = async (): Promise<void> => {
     try {
       setLoading(true)
-      if (accessToken == null) return
 
-      const dataResponse: ResponseRelationEmotion[] = await getStatisticsAll(accessToken)
+      const dataResponse: ResponseRelationEmotion[] = await getStatisticsAll()
 
       const positive = dataResponse.filter(({ emotion }) => emotion.type === 'Positive').length
       const negative = dataResponse.filter(({ emotion }) => emotion.type === 'Negative').length

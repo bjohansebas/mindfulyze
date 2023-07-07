@@ -1,6 +1,6 @@
 import { type AxiosResponse } from 'axios'
 
-import axios from '../api/axios'
+import { apiPrivate as axios } from '../api/axios'
 import { type ErrorRequest } from './login'
 import { type ResponseAccount } from './user'
 import { type ResponseColor } from './color'
@@ -30,13 +30,9 @@ export interface UpdatePlace {
   code?: string
 }
 
-export async function getPlace (id: string, credential: string): Promise<ResponsePlace> {
+export async function getPlace (id: string): Promise<ResponsePlace> {
   try {
-    const response: AxiosResponse<ResponsePlace, ErrorRequest> = await axios.get(`/places/${id}`, {
-      headers: {
-        Authorization: `Bearer ${credential}`
-      }
-    })
+    const response: AxiosResponse<ResponsePlace, ErrorRequest> = await axios.get(`/places/${id}`)
 
     return response.data
   } catch (err) {
@@ -44,13 +40,9 @@ export async function getPlace (id: string, credential: string): Promise<Respons
   }
 }
 
-export async function getThinksPlace (id: string, credential: string): Promise<ResponseThinks> {
+export async function getThinksPlace (id: string): Promise<ResponseThinks> {
   try {
-    const response: AxiosResponse<ResponseThinks, ErrorRequest> = await axios.get(`/places/${id}/thinks`, {
-      headers: {
-        Authorization: `Bearer ${credential}`
-      }
-    })
+    const response: AxiosResponse<ResponseThinks, ErrorRequest> = await axios.get(`/places/${id}/thinks`)
 
     return response.data
   } catch (err) {
@@ -58,13 +50,9 @@ export async function getThinksPlace (id: string, credential: string): Promise<R
   }
 }
 
-export async function getTrashPlace (id: string, credential: string): Promise<ResponseTrashes> {
+export async function getTrashPlace (id: string): Promise<ResponseTrashes> {
   try {
-    const response: AxiosResponse<ResponseTrashes, ErrorRequest> = await axios.get(`/places/${id}/trash`, {
-      headers: {
-        Authorization: `Bearer ${credential}`
-      }
-    })
+    const response: AxiosResponse<ResponseTrashes, ErrorRequest> = await axios.get(`/places/${id}/trash`)
 
     return response.data
   } catch (err) {
@@ -72,13 +60,9 @@ export async function getTrashPlace (id: string, credential: string): Promise<Re
   }
 }
 
-export async function getArchiveThinksPlace (id: string, credential: string): Promise<ResponseThinks> {
+export async function getArchiveThinksPlace (id: string): Promise<ResponseThinks> {
   try {
-    const response: AxiosResponse<ResponseThinks, ErrorRequest> = await axios.get(`/places/${id}/thinks/archive`, {
-      headers: {
-        Authorization: `Bearer ${credential}`
-      }
-    })
+    const response: AxiosResponse<ResponseThinks, ErrorRequest> = await axios.get(`/places/${id}/thinks/archive`)
 
     return response.data
   } catch (err) {
@@ -86,13 +70,9 @@ export async function getArchiveThinksPlace (id: string, credential: string): Pr
   }
 }
 
-export async function getAllPlaces (credential: string): Promise<ResponseAllPlaces> {
+export async function getAllPlaces (): Promise<ResponseAllPlaces> {
   try {
-    const response: AxiosResponse<ResponseAllPlaces, ErrorRequest> = await axios.get('/users/places', {
-      headers: {
-        Authorization: `Bearer ${credential}`
-      }
-    })
+    const response: AxiosResponse<ResponseAllPlaces, ErrorRequest> = await axios.get('/users/places')
 
     return response.data
   } catch (err) {
@@ -100,13 +80,9 @@ export async function getAllPlaces (credential: string): Promise<ResponseAllPlac
   }
 }
 
-export async function postPlace (data: NewPlace, credential: string): Promise<ResponsePlace> {
+export async function postPlace (data: NewPlace): Promise<ResponsePlace> {
   try {
-    const response: AxiosResponse<ResponsePlace, ErrorRequest> = await axios.post('/places', data, {
-      headers: {
-        Authorization: `Bearer ${credential}`
-      }
-    })
+    const response: AxiosResponse<ResponsePlace, ErrorRequest> = await axios.post('/places', data)
 
     return response.data
   } catch (err) {
@@ -114,13 +90,9 @@ export async function postPlace (data: NewPlace, credential: string): Promise<Re
   }
 }
 
-export async function putPlace (id: string, data: UpdatePlace, credential: string): Promise<ResponsePlace> {
+export async function putPlace (id: string, data: UpdatePlace): Promise<ResponsePlace> {
   try {
-    const response: AxiosResponse<ResponsePlace, ErrorRequest> = await axios.put(`/places/${id}/`, data, {
-      headers: {
-        Authorization: `Bearer ${credential}`
-      }
-    })
+    const response: AxiosResponse<ResponsePlace, ErrorRequest> = await axios.put(`/places/${id}/`, data)
 
     return response.data
   } catch (err) {
@@ -128,13 +100,9 @@ export async function putPlace (id: string, data: UpdatePlace, credential: strin
   }
 }
 
-export async function deletePlace (id: string, credential: string): Promise<void> {
+export async function deletePlace (id: string): Promise<void> {
   try {
-    await axios.delete(`/places/${id}`, {
-      headers: {
-        Authorization: `Bearer ${credential}`
-      }
-    })
+    await axios.delete(`/places/${id}`)
   } catch (err) {
     throw managerErrorNetwork(err)
   }

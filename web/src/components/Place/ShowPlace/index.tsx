@@ -6,14 +6,12 @@ import { type MouseEvent, useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Helmet } from 'react-helmet-async'
 
-import { useAuth } from 'hooks/useAuth'
 import { deletePlace, getPlace } from 'services/place'
 import { ShowThinks } from './ShowThinks'
 import { BadRequestError, NotFoundError } from '@/errors/typeErrors'
 
 export function ShowPlaceUI (): JSX.Element {
   const navigate = useNavigate()
-  const { accessToken } = useAuth()
   const { id } = useParams()
 
   const [anchorElPlace, setAnchorElPlace] = useState<HTMLButtonElement | null>(null)
@@ -24,8 +22,8 @@ export function ShowPlaceUI (): JSX.Element {
   useEffect(() => {
     async function getRequestPlace (): Promise<void> {
       try {
-        if (id == null || accessToken == null) return
-        const responsePlace = await getPlace(id, accessToken)
+        if (id == null) return
+        const responsePlace = await getPlace(id)
 
         setNamePlace(responsePlace.name)
       } catch (err) {
@@ -51,9 +49,9 @@ export function ShowPlaceUI (): JSX.Element {
   const onDeletePlace = async (): Promise<void> => {
     setAnchorElPlace(null)
     try {
-      if (id == null || accessToken == null) return
+      if (id == null) return
 
-      await deletePlace(id, accessToken)
+      await deletePlace(id)
 
       navigate('/')
     } catch (err) {

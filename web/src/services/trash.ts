@@ -1,6 +1,6 @@
 import { type AxiosResponse } from 'axios'
 
-import axios from '../api/axios'
+import { apiPrivate as axios } from '../api/axios'
 import { type ResponsePlace } from './place'
 import { type ResponseRelationEmotion } from './think'
 import { type ResponseAccount } from './user'
@@ -21,13 +21,9 @@ export interface ResponseTrash {
 
 export type ResponseTrashes = ResponseTrash[]
 
-export async function getTrash (id: string, credential: string): Promise<ResponseTrash> {
+export async function getTrash (id: string): Promise<ResponseTrash> {
   try {
-    const response: AxiosResponse<ResponseTrash, ErrorRequest> = await axios.get(`/trash/${id}`, {
-      headers: {
-        Authorization: `Bearer ${credential}`
-      }
-    })
+    const response: AxiosResponse<ResponseTrash, ErrorRequest> = await axios.get(`/trash/${id}`)
 
     return response.data
   } catch (err) {
@@ -35,13 +31,9 @@ export async function getTrash (id: string, credential: string): Promise<Respons
   }
 }
 
-export async function getAllTrashes (credential: string): Promise<ResponseTrashes> {
+export async function getAllTrashes (): Promise<ResponseTrashes> {
   try {
-    const response: AxiosResponse<ResponseTrashes, ErrorRequest> = await axios.get('/users/trash', {
-      headers: {
-        Authorization: `Bearer ${credential}`
-      }
-    })
+    const response: AxiosResponse<ResponseTrashes, ErrorRequest> = await axios.get('/users/trash')
 
     return response.data
   } catch (err) {
@@ -49,25 +41,17 @@ export async function getAllTrashes (credential: string): Promise<ResponseTrashe
   }
 }
 
-export async function restoreFromTrash (id: string, credential: string): Promise<void> {
+export async function restoreFromTrash (id: string): Promise<void> {
   try {
-    await axios.put(`/trash/${id}`, {}, {
-      headers: {
-        Authorization: `Bearer ${credential}`
-      }
-    })
+    await axios.put(`/trash/${id}`, {})
   } catch (err) {
     throw managerErrorNetwork(err)
   }
 }
 
-export async function deleteThinkFromTrash (id: string, credential: string): Promise<void> {
+export async function deleteThinkFromTrash (id: string): Promise<void> {
   try {
-    await axios.delete(`/trash/${id}`, {
-      headers: {
-        Authorization: `Bearer ${credential}`
-      }
-    })
+    await axios.delete(`/trash/${id}`)
   } catch (err) {
     throw managerErrorNetwork(err)
   }

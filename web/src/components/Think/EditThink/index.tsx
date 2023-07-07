@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 
-import { useAuth } from 'hooks/useAuth'
 import { getThink, moveToTrash, putAddEmotion, putDeleteEmotion, putThink, type ResponseThink } from 'services/think'
 import { getAllEmotions } from 'services/emotion'
 
@@ -18,7 +17,6 @@ import { BadRequestError, NotFoundError } from '@/errors/typeErrors'
 export function EditThinkUI (): JSX.Element {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { accessToken } = useAuth()
 
   const [think, setThink] = useState<ResponseThink | null>(null)
   const [loadingThink, setLoadingThink] = useState(true)
@@ -37,9 +35,9 @@ export function EditThinkUI (): JSX.Element {
 
   const gettingThink = async (): Promise<void> => {
     try {
-      if (id == null || accessToken == null) return
+      if (id == null) return
 
-      const response = await getThink(id, accessToken)
+      const response = await getThink(id)
       setThink(response)
       if ((response?.emotions) != null) {
         setEmotions(response?.emotions.map(value => {
@@ -68,9 +66,8 @@ export function EditThinkUI (): JSX.Element {
 
   useEffect(() => {
     async function getEmotions (): Promise<void> {
-      if (accessToken == null) return
       try {
-        const response = await getAllEmotions(accessToken)
+        const response = await getAllEmotions()
 
         setAllEmotions(response.map(value => {
           return {
@@ -95,13 +92,13 @@ export function EditThinkUI (): JSX.Element {
   }, [emotions])
 
   const onDelete = async (): Promise<void> => {
-    if (id == null || think == null || accessToken == null) return
+    if (id == null || think == null) return
 
     try {
       setLoadingSave(true)
       setLoadingThink(true)
 
-      await moveToTrash(id, accessToken)
+      await moveToTrash(id)
 
       navigate(`/place/${think.place.id}`, { replace: true })
     } catch (err) {
@@ -113,13 +110,13 @@ export function EditThinkUI (): JSX.Element {
   }
 
   const onArchive = async (): Promise<void> => {
-    if (id == null || think == null || accessToken == null) return
+    if (id == null || think == null) return
 
     try {
       setLoadingSave(true)
       setLoadingThink(true)
 
-      await putThink(id, { isArchive: true }, accessToken)
+      await putThink(id, { isArchive: true })
 
       navigate(`/place/${think.place.id}`, { replace: true })
     } catch (err) {
@@ -131,13 +128,13 @@ export function EditThinkUI (): JSX.Element {
   }
 
   const onSave = async (): Promise<void> => {
-    if (id == null || newEmotionsThink == null || accessToken == null || emotions == null || think == null) return
+    if (id == null || newEmotionsThink == null || emotions == null || think == null) return
 
     setLoadingSave(true)
     if (JSON.stringify(emotions) !== JSON.stringify(newEmotionsThink)) {
       const emotionsList = newEmotionsThink.map(value => value.id)
 
-      await putAddEmotion(id, emotionsList, accessToken)
+      await putAddEmotion(id, emotionsList)
 
       const listRemoveEmotions = []
       for await (const value of emotions) {
@@ -148,7 +145,7 @@ export function EditThinkUI (): JSX.Element {
 
       if (listRemoveEmotions.length > 0) {
         try {
-          await putDeleteEmotion(id, listRemoveEmotions, accessToken)
+          await putDeleteEmotion(id, listRemoveEmotions)
         } catch (err) {
           console.log(err)
         }
@@ -159,7 +156,7 @@ export function EditThinkUI (): JSX.Element {
       try {
         const request = { text: newTextThink.trimEnd() }
 
-        await putThink(id, request, accessToken)
+        await putThink(id, request)
       } catch (err) {
         console.log(err)
       }

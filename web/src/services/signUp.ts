@@ -1,6 +1,6 @@
 import { type AxiosResponse } from 'axios'
 
-import axios from '../api/axios'
+import axios, { apiPrivate } from '../api/axios'
 import { type ErrorRequest } from './login'
 import { DATE_REGEX, GENDER_REGEX, NAMES_REGEX } from '../utils/regex'
 import { type ResponseProfile } from './user'
@@ -34,7 +34,7 @@ export async function postSignUpAccount (password: string, email: string): Promi
   }
 }
 
-export async function postNewProfile (data: dataProfile, credential: string): Promise<ResponseProfile> {
+export async function postNewProfile (data: dataProfile): Promise<ResponseProfile> {
   try {
     const testNames: boolean = NAMES_REGEX.test(data.firstName)
     const testGender: boolean = GENDER_REGEX.test(data.gender)
@@ -51,11 +51,7 @@ export async function postNewProfile (data: dataProfile, credential: string): Pr
       throw new BadRequestError('Please enter a valid date')
     }
 
-    const response: AxiosResponse<ResponseProfile, ErrorRequest> = await axios.post('/users/profile', { ...data }, {
-      headers: {
-        Authorization: `Bearer ${credential}`
-      }
-    })
+    const response: AxiosResponse<ResponseProfile, ErrorRequest> = await apiPrivate.post('/users/profile', { ...data })
 
     return response.data
   } catch (err) {
