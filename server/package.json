@@ -33,6 +33,7 @@
     "@nestjs/mapped-types": "1.2.2",
     "@nestjs/passport": "9.0.3",
     "@nestjs/platform-express": "9.4.2",
+    "@nestjs/throttler": "4.2.1",
     "@nestjs/typeorm": "9.0.1",
     "argon2": "0.30.3",
     "bcrypt": "5.1.0",

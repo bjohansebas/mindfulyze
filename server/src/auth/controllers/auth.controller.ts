@@ -14,12 +14,14 @@ import { CreateUserDto } from 'modules/users/dtos/user.dto';
 import { AuthService } from '../services/auth.service';
 
 import { User } from 'modules/users/entities/user.entity';
+import { Throttle } from '@nestjs/throttler';
 
 @Controller({ path: 'auth', version: '1' })
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @UseGuards(AuthGuard('local'))
+  @Throttle(3, 60)
   @Post('login')
   async login(@Req() req: RequestExpress) {
     return await this.authService.singIn(req.user as User);

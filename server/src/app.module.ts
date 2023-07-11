@@ -13,9 +13,14 @@ import { EmotionsModule } from 'modules/emotions/emotions.module';
 import { PlacesModule } from 'modules/places/places.module';
 import { ThinksModule } from 'modules/thinks/thinks.module';
 import { StatisticsModule } from 'modules/statistics/statistics.module';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
+    ThrottlerModule.forRoot({
+      ttl: 60,
+      limit: 10,
+    }),
     ConfigModule.forRoot({
       envFilePath: enviroments[process.env.NODE_ENV] || '.env',
       load: [config],
