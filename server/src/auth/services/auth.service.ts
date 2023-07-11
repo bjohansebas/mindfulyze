@@ -8,13 +8,13 @@ import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import * as argon2 from 'argon2';
 
-import { UsersService } from '../../modules/users/services/users.service';
+import { UsersService } from 'modules/users/services/users.service';
 
-import { User } from '../../modules/users/entities/user.entity';
+import { User } from 'modules/users/entities/user.entity';
 
-import { CreateUserDto } from '../../modules/users/dtos/user.dto';
+import { CreateUserDto } from 'modules/users/dtos/user.dto';
 
-import config from '../../config';
+import config from '@/config';
 
 @Injectable()
 export class AuthService {

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { Think } from '../../thinks/entities/think.entity';
+import { Think } from 'modules/thinks/entities/think.entity';
 
 @Injectable()
 export class StatisticService {

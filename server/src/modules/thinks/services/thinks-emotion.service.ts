@@ -2,7 +2,7 @@ import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 
-import { Emotion } from '../../emotions/entities/emotion.entity';
+import { Emotion } from 'modules/emotions/entities/emotion.entity';
 import { Think } from '../entities/think.entity';
 import { ThinkEmotion } from '../entities/thinkEmotion.entity';
 

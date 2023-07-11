@@ -6,7 +6,7 @@ import {
   Column,
 } from 'typeorm';
 
-import { Emotion } from '../../emotions/entities/emotion.entity';
+import { Emotion } from 'modules/emotions/entities/emotion.entity';
 import { Think } from './think.entity';
 import { Trash } from './trash.entity';
 

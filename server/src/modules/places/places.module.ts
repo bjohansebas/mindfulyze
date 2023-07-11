@@ -1,8 +1,8 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { ThinksModule } from '../thinks/thinks.module';
-import { UsersModule } from '../users/users.module';
+import { ThinksModule } from 'modules/thinks/thinks.module';
+import { UsersModule } from 'modules/users/users.module';
 
 import { PlaceController } from './controllers/place.controller';
 

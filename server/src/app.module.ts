@@ -2,16 +2,17 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 
-import config from './config';
-import { enviroments } from './enviroments';
+import config from '@/config';
+import { enviroments } from '@/enviroments';
 
-import { DatabaseModule } from './database/database.module';
-import { UsersModule } from './modules/users/users.module';
-import { EmotionsModule } from './modules/emotions/emotions.module';
-import { PlacesModule } from './modules/places/places.module';
-import { ThinksModule } from './modules/thinks/thinks.module';
-import { AuthModule } from './auth/auth.module';
-import { StatisticsModule } from './modules/statistics/statistics.module';
+import { DatabaseModule } from 'database/database.module';
+import { AuthModule } from 'auth/auth.module';
+
+import { UsersModule } from 'modules/users/users.module';
+import { EmotionsModule } from 'modules/emotions/emotions.module';
+import { PlacesModule } from 'modules/places/places.module';
+import { ThinksModule } from 'modules/thinks/thinks.module';
+import { StatisticsModule } from 'modules/statistics/statistics.module';
 
 @Module({
   imports: [

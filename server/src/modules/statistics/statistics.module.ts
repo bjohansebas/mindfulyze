@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { ThinksModule } from '../thinks/thinks.module';
+import { ThinksModule } from 'modules/thinks/thinks.module';
 
 import { StatisticService } from './services/statistic.service';
 

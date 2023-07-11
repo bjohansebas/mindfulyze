@@ -9,11 +9,11 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { Request as RequestExpress } from 'express';
 
-import { CreateUserDto } from '../../modules/users/dtos/user.dto';
+import { CreateUserDto } from 'modules/users/dtos/user.dto';
 
 import { AuthService } from '../services/auth.service';
 
-import { User } from '../../modules/users/entities/user.entity';
+import { User } from 'modules/users/entities/user.entity';
 
 @Controller({ path: 'auth', version: '1' })
 export class AuthController {

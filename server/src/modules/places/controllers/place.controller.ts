@@ -12,8 +12,8 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-import { ThinksService } from '../../thinks/services/thinks.service';
-import { TrashService } from '../../thinks/services/trash.service';
+import { ThinksService } from 'modules/thinks/services/thinks.service';
+import { TrashService } from 'modules/thinks/services/trash.service';
 import { PlacesService } from '../services/places.service';
 
 import { CreatePlaceDto, UpdatePlaceDto } from '../dtos/place.dto';

@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 
 import { Think } from '../entities/think.entity';
-import { Emotion } from '../../emotions/entities/emotion.entity';
+import { Emotion } from 'modules/emotions/entities/emotion.entity';
 import { TrashEmotion } from '../entities/trashEmotion.entity';
 
 import { ThinksService } from './thinks.service';

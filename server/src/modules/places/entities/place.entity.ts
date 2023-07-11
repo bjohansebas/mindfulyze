@@ -9,10 +9,10 @@ import {
   OneToMany,
 } from 'typeorm';
 
-import { Color } from '../../users/entities/color.entity';
-import { Think } from '../../thinks/entities/think.entity';
-import { User } from '../../users/entities/user.entity';
-import { Trash } from '../../thinks/entities/trash.entity';
+import { Color } from 'modules/users/entities/color.entity';
+import { Think } from 'modules/thinks/entities/think.entity';
+import { User } from 'modules/users/entities/user.entity';
+import { Trash } from 'modules/thinks/entities/trash.entity';
 
 @Entity({
   name: 'places',

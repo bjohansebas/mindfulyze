@@ -10,10 +10,10 @@ import {
 } from 'typeorm';
 
 import { Color } from './color.entity';
-import { Place } from '../../places/entities/place.entity';
-import { Think } from '../../thinks/entities/think.entity';
+import { Place } from 'modules/places/entities/place.entity';
+import { Think } from 'modules/thinks/entities/think.entity';
 import { ProfileUser } from './profile.entity';
-import { Trash } from '../../thinks/entities/trash.entity';
+import { Trash } from 'modules/thinks/entities/trash.entity';
 
 @Entity({
   name: 'users',

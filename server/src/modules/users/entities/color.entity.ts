@@ -9,7 +9,7 @@ import {
   OneToMany,
 } from 'typeorm';
 
-import { Emotion } from '../../emotions/entities/emotion.entity';
+import { Emotion } from 'modules/emotions/entities/emotion.entity';
 import { User } from './user.entity';
 
 @Entity({

@@ -7,7 +7,7 @@ import {
   ManyToOne,
 } from 'typeorm';
 
-import { Emotion } from '../../emotions/entities/emotion.entity';
+import { Emotion } from 'modules/emotions/entities/emotion.entity';
 import { Think } from './think.entity';
 
 @Entity({

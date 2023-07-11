@@ -9,8 +9,8 @@ import {
   OneToMany,
 } from 'typeorm';
 
-import { Place } from '../../places/entities/place.entity';
-import { User } from '../../users/entities/user.entity';
+import { Place } from 'modules/places/entities/place.entity';
+import { User } from 'modules/users/entities/user.entity';
 import { ThinkEmotion } from './thinkEmotion.entity';
 
 @Entity({

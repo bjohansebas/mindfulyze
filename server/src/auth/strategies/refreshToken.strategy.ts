@@ -6,11 +6,11 @@ import { Request } from 'express';
 
 import * as argon2 from 'argon2';
 
-import config from '../../config';
+import config from '@/config';
 
-import { User } from '../../modules/users/entities/user.entity';
+import { User } from 'modules/users/entities/user.entity';
 
-import { UsersService } from '../../modules/users/services/users.service';
+import { UsersService } from 'modules/users/services/users.service';
 
 @Injectable()
 export class RefreshTokenStrategy extends PassportStrategy(

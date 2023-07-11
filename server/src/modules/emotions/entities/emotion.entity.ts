@@ -11,9 +11,9 @@ import {
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
 
-import { Color } from '../../users/entities/color.entity';
-import { Think } from '../../thinks/entities/think.entity';
-import { Trash } from '../../thinks/entities/trash.entity';
+import { Color } from 'modules/users/entities/color.entity';
+import { Think } from 'modules/thinks/entities/think.entity';
+import { Trash } from 'modules/thinks/entities/trash.entity';
 
 @Entity({
   name: 'emotions',
