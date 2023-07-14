@@ -50,21 +50,6 @@ export class UsersService {
     return user;
   }
 
-  async findColors(id_user: string) {
-    const user: User = await this.userRepo.findOne({
-      where: {
-        id: id_user,
-      },
-      relations: ['colors'],
-    });
-
-    if (!user) {
-      throw new NotFoundException(`User #${id_user} not found`);
-    }
-
-    return user.colors;
-  }
-
   async findPlaces(id_user: string) {
     const user: User = await this.userRepo.findOne({
       where: {

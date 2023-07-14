@@ -12,7 +12,6 @@ import { UsersService } from 'modules/users/services/users.service';
 import { Place } from '../entities/place.entity';
 import { Color } from 'modules/users/entities/color.entity';
 
-import { CreateColorDto } from 'modules/users/dtos/color.dto';
 import { CreatePlaceDto, UpdatePlaceDto } from '../dtos/place.dto';
 
 @Injectable()
@@ -63,18 +62,7 @@ export class PlacesService {
       throw new ConflictException(`Place with name:"${payload.name}" existed`);
     }
 
-    const color = await this.colorService
-      .findByCodeAndUser(payload.code, id_user)
-      .then((color) => color)
-      .catch(async () => {
-        const colorDto = new CreateColorDto();
-
-        colorDto.code = payload.code;
-
-        const newColor = await this.colorService.createColor(id_user, colorDto);
-
-        return newColor;
-      });
+    const color = await this.colorService.findColorByCode(payload.code);
 
     const newPlace = this.placeRepo.create(payload);
 
@@ -90,21 +78,9 @@ export class PlacesService {
     const updatePlace: Place = await this.findById(id);
 
     if (payload.code) {
-      const color: Color = await this.colorService
-        .findByCodeAndUser(payload.code, id_user)
-        .then((color) => color)
-        .catch(async () => {
-          const colorDto = new CreateColorDto();
-
-          colorDto.code = payload.code;
-
-          const newColor = await this.colorService.createColor(
-            id_user,
-            colorDto,
-          );
-
-          return newColor;
-        });
+      const color: Color = await this.colorService.findColorByCode(
+        payload.code,
+      );
 
       updatePlace.color = color;
     }

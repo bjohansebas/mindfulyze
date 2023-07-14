@@ -34,11 +34,6 @@ export class UsersController {
     return this.userService.findAccount(req.user.sub);
   }
 
-  @Get('colors')
-  getColors(@Request() req) {
-    return this.userService.findColors(req.user.sub);
-  }
-
   @Get('places')
   gePlaces(@Request() req) {
     return this.userService.findPlaces(req.user.sub);

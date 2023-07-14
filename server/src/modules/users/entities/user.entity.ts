@@ -9,7 +9,6 @@ import {
   OneToOne,
 } from 'typeorm';
 
-import { Color } from './color.entity';
 import { Place } from 'modules/places/entities/place.entity';
 import { Think } from 'modules/thinks/entities/think.entity';
 import { ProfileUser } from './profile.entity';
@@ -44,8 +43,6 @@ export class User {
   refreshTokens: string[];
   @OneToOne(() => ProfileUser, (profile) => profile.user, { nullable: true })
   profile: ProfileUser;
-  @OneToMany(() => Color, (color) => color.user)
-  colors: Color[];
   @OneToMany(() => Place, (place) => place.user)
   places: Place[];
   @OneToMany(() => Think, (think) => think.user)
