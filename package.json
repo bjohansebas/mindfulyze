@@ -14,10 +14,6 @@
     "lint:web": "npm run lint -w web",
     "lint:server": "npm run lint -w server"
   },
-  "workspaces": [
-    "web",
-    "server"
-  ],
   "devDependencies": {
     "@s-ui/mono": "2.35.0"
   },
