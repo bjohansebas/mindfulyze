@@ -5,14 +5,7 @@
   "author": "bjohansebas <bjohansebas@gmail.com>",
   "license": "MPL V2",
   "scripts": {
-    "co": "sui-mono commit",
-    "dev:web": "npm run dev -w web",
-    "dev:server": "npm run start:dev -w server",
-    "build:web": "npm run build -w web",
-    "build:server": "npm run build -w server",
-    "preview:web": "npm run preview -w web",
-    "lint:web": "npm run lint -w web",
-    "lint:server": "npm run lint -w server"
+    "co": "sui-mono commit"
   },
   "devDependencies": {
     "@s-ui/mono": "2.35.0"
