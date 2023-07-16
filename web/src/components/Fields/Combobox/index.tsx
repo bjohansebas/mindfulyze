@@ -6,8 +6,7 @@ import Popper from '@mui/material/Popper'
 import MenuItem from '@mui/material/MenuItem'
 import MenuList from '@mui/material/MenuList'
 import { type Dispatch, type SetStateAction, useEffect, useRef, useState, type MouseEvent } from 'react'
-import { Box } from '@mui/system'
-import { Button, ButtonGroup } from '@mui/material'
+import { Button, ButtonGroup, Box } from '@mui/material'
 
 export interface OptionComboboxProps {
   id: string
