@@ -4,11 +4,23 @@
   "description": "mindfulyze is a web application for tracking emotions and thoughts. The application was created with the goal of helping you reflect on your emotions and thoughts, and keep a record of them in a simple and organized way.",
   "author": "bjohansebas <bjohansebas@gmail.com>",
   "license": "MPL V2",
+  "workspaces": [
+    "web",
+    "server"
+  ],
   "scripts": {
-    "co": "sui-mono commit"
+    "co": "sui-mono commit",
+    "dev:server": "pnpm --filter server run start:dev",
+    "dev:web": "pnpm --filter web run dev",
+    "build:server": "pnpm --filter server run build",
+    "build:web": "pnpm --filter web run build",
+    "prod:server": "pnpm --filter server run start:prod"
   },
   "devDependencies": {
     "@s-ui/mono": "2.35.0"
+  },
+  "engines": {
+    "pnpm": ">=8.6.5"
   },
   "repository": {
     "type": "git",
