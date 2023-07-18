@@ -7,6 +7,7 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
+  Relation,
 } from 'typeorm';
 
 import { Color } from 'modules/users/entities/color.entity';
@@ -29,16 +30,16 @@ export class Place {
     onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'color_id', foreignKeyConstraintName: 'fk_color_pl' })
-  color: Color;
+  color: Relation<Color>;
   @ManyToOne(() => User, (user) => user.places, {
     nullable: false,
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'user_id', foreignKeyConstraintName: 'fk_user_pl' })
-  user: User;
+  user: Relation<User>;
   @OneToMany(() => Think, (think) => think.place)
-  thinks: Think[];
+  thinks: Relation<Think>[];
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
   @UpdateDateColumn({ type: 'timestamp', name: 'updated_at' })

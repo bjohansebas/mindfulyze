@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   JoinColumn,
   ManyToOne,
+  Relation,
 } from 'typeorm';
 
 import { Emotion } from 'modules/emotions/entities/emotion.entity';
@@ -27,7 +28,7 @@ export class ThinkEmotion {
     name: 'think_id',
     foreignKeyConstraintName: 'fk_think_thiemo',
   })
-  think: Think;
+  think: Relation<Think>;
   @ManyToOne(() => Emotion, (emotion) => emotion.thinks, {
     nullable: false,
     onDelete: 'CASCADE',
@@ -37,7 +38,7 @@ export class ThinkEmotion {
     name: 'emotion_id',
     foreignKeyConstraintName: 'fk_emotion_thiemo',
   })
-  emotion: Emotion;
+  emotion: Relation<Emotion>;
   @Exclude()
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;

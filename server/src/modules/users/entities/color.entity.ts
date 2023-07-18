@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  Relation,
 } from 'typeorm';
 
 import { Emotion } from 'modules/emotions/entities/emotion.entity';
@@ -21,7 +22,7 @@ export class Color {
   @Column({ type: 'varchar', name: 'code_color', length: 6 })
   code: string;
   @OneToMany(() => Emotion, (emotion) => emotion.color)
-  emotions: Emotion[];
+  emotions: Relation<Emotion>[];
   @Exclude()
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;

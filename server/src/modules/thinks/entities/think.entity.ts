@@ -7,6 +7,7 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
+  Relation,
 } from 'typeorm';
 
 import { Place } from 'modules/places/entities/place.entity';
@@ -29,16 +30,16 @@ export class Think {
     onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'place_id', foreignKeyConstraintName: 'fk_place_tk' })
-  place: Place;
+  place: Relation<Place>;
   @ManyToOne(() => User, (user) => user.places, {
     nullable: false,
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'user_id', foreignKeyConstraintName: 'fk_user_tk' })
-  user: User;
+  user: Relation<User>;
   @OneToMany(() => ThinkEmotion, (emotion) => emotion.think)
-  emotions: ThinkEmotion[];
+  emotions: Relation<ThinkEmotion>[];
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
   @UpdateDateColumn({ type: 'timestamp', name: 'updated_at' })

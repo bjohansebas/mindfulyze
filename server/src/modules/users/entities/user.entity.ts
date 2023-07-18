@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
   OneToMany,
   OneToOne,
+  Relation,
 } from 'typeorm';
 
 import { Place } from 'modules/places/entities/place.entity';
@@ -41,11 +42,11 @@ export class User {
   })
   refreshTokens: string[];
   @OneToOne(() => ProfileUser, (profile) => profile.user, { nullable: true })
-  profile: ProfileUser;
+  profile: Relation<ProfileUser>;
   @OneToMany(() => Place, (place) => place.user)
-  places: Place[];
+  places: Relation<Place>[];
   @OneToMany(() => Think, (think) => think.user)
-  thinks: Think[];
+  thinks: Relation<Think>[];
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
   @UpdateDateColumn({ type: 'timestamp', name: 'updated_at' })

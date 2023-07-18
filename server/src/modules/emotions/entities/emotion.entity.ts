@@ -7,6 +7,7 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
+  Relation,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
 
@@ -36,9 +37,9 @@ export class Emotion {
     onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'color_id', foreignKeyConstraintName: 'fk_color_em' })
-  color: Color;
+  color: Relation<Color>;
   @OneToMany(() => Think, (think) => think.emotions)
-  thinks: Think[];
+  thinks: Relation<Think>[];
   @Exclude()
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
