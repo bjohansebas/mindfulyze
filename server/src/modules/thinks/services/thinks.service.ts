@@ -34,23 +34,10 @@ export class ThinksService {
     return think;
   }
 
-  async findUnarchiveThinksByPlace(id: string) {
+  async findThinksByPlace(id: string) {
     const thinksPlace: Think[] = await this.thinkRepo.find({
       where: {
         place: { id: id },
-        isArchive: false,
-      },
-      relations: ['place'],
-    });
-
-    return thinksPlace;
-  }
-
-  async findArchiveThinksByPlace(id: string) {
-    const thinksPlace: Think[] = await this.thinkRepo.find({
-      where: {
-        place: { id: id },
-        isArchive: true,
       },
       relations: ['place'],
     });
@@ -64,7 +51,6 @@ export class ThinksService {
     const place: Place = await this.placeService.findById(payload.place);
 
     const newThink: Think = this.thinkRepo.create({
-      isArchive: false,
       place: place,
       text: payload.text,
       user: user,
@@ -81,8 +67,6 @@ export class ThinksService {
     if (payload.text) {
       think.text = payload.text;
     }
-
-    think.isArchive = payload.isArchive;
 
     return this.thinkRepo.save(think).catch((e) => e);
   }

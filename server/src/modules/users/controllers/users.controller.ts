@@ -41,17 +41,7 @@ export class UsersController {
 
   @Get('thinks')
   getAllThinks(@Request() req) {
-    return this.userService.findAllThinks(req.user.sub);
-  }
-
-  @Get('thinks/archives')
-  getArchiveThinks(@Request() req) {
-    return this.userService.findArchiveThinks(req.user.sub);
-  }
-
-  @Get('thinks/unarchives')
-  getUnarchiveThinks(@Request() req) {
-    return this.userService.findUnarchiveThinks(req.user.sub);
+    return this.userService.findThinks(req.user.sub);
   }
 
   @Get('profile')

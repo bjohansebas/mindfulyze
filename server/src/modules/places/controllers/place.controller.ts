@@ -32,12 +32,7 @@ export class PlaceController {
 
   @Get(':id/thinks')
   getThinks(@Param('id', ParseUUIDPipe) id: string) {
-    return this.thinkService.findUnarchiveThinksByPlace(id);
-  }
-
-  @Get(':id/thinks/archive')
-  getArchiveThinks(@Param('id', ParseUUIDPipe) id: string) {
-    return this.thinkService.findArchiveThinksByPlace(id);
+    return this.thinkService.findThinksByPlace(id);
   }
 
   @Post('')

@@ -1,12 +1,5 @@
 import { PartialType } from '@nestjs/mapped-types';
-import {
-  IsBoolean,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  IsUUID,
-  Length,
-} from 'class-validator';
+import { IsNotEmpty, IsString, IsUUID, Length } from 'class-validator';
 
 export class CreateThinkDto {
   @IsString()
@@ -18,8 +11,4 @@ export class CreateThinkDto {
   readonly place: string;
 }
 
-export class UpdateThinkDto extends PartialType(CreateThinkDto) {
-  @IsBoolean()
-  @IsOptional()
-  readonly isArchive: boolean;
-}
+export class UpdateThinkDto extends PartialType(CreateThinkDto) {}

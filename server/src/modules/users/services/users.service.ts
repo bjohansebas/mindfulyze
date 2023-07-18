@@ -65,42 +65,10 @@ export class UsersService {
     return user.places;
   }
 
-  async findAllThinks(id_user: string) {
+  async findThinks(id_user: string) {
     const user: User = await this.userRepo.findOne({
       where: {
         id: id_user,
-      },
-      relations: ['thinks'],
-    });
-
-    if (!user) {
-      throw new NotFoundException(`User #${id_user} not found`);
-    }
-
-    return user.thinks;
-  }
-
-  async findArchiveThinks(id_user: string) {
-    const user: User = await this.userRepo.findOne({
-      where: {
-        id: id_user,
-        thinks: {
-          isArchive: true,
-        },
-      },
-      relations: ['thinks'],
-    });
-
-    return user?.thinks || [];
-  }
-
-  async findUnarchiveThinks(id_user: string) {
-    const user: User = await this.userRepo.findOne({
-      where: {
-        id: id_user,
-        thinks: {
-          isArchive: false,
-        },
       },
       relations: ['thinks'],
     });

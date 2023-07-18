@@ -23,8 +23,6 @@ export class Think {
   id: string;
   @Column({ type: 'varchar', name: 'text_think' })
   text: string;
-  @Column({ type: 'boolean', name: 'is_archive' })
-  isArchive: boolean;
   @ManyToOne(() => Place, (place) => place.thinks, {
     nullable: false,
     onDelete: 'CASCADE',
