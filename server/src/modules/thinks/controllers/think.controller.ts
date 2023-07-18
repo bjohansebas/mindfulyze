@@ -58,9 +58,4 @@ export class ThinkController {
   ) {
     return this.thinkEmotionService.deleteEmotion(id, payload);
   }
-
-  @Put(':id/trash')
-  moveTrash(@Param('id', ParseUUIDPipe) id: string) {
-    return this.thinkService.moveToTrash(id);
-  }
 }

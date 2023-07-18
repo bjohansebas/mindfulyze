@@ -80,21 +80,6 @@ export class UsersService {
     return user.thinks;
   }
 
-  async findTrash(id_user: string) {
-    const user: User = await this.userRepo.findOne({
-      where: {
-        id: id_user,
-      },
-      relations: ['trash'],
-    });
-
-    if (!user) {
-      throw new NotFoundException(`User #${id_user} not found`);
-    }
-
-    return user.trash;
-  }
-
   async findArchiveThinks(id_user: string) {
     const user: User = await this.userRepo.findOne({
       where: {

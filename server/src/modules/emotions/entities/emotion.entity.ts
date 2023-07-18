@@ -6,14 +6,12 @@ import {
   UpdateDateColumn,
   JoinColumn,
   ManyToOne,
-  ManyToMany,
   OneToMany,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
 
 import { Color } from 'modules/users/entities/color.entity';
 import { Think } from 'modules/thinks/entities/think.entity';
-import { Trash } from 'modules/thinks/entities/trash.entity';
 
 @Entity({
   name: 'emotions',
@@ -41,8 +39,6 @@ export class Emotion {
   color: Color;
   @OneToMany(() => Think, (think) => think.emotions)
   thinks: Think[];
-  @ManyToMany(() => Trash, (trash) => trash.emotions)
-  trash: Trash[];
   @Exclude()
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;

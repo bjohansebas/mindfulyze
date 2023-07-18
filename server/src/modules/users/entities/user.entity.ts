@@ -12,7 +12,6 @@ import {
 import { Place } from 'modules/places/entities/place.entity';
 import { Think } from 'modules/thinks/entities/think.entity';
 import { ProfileUser } from './profile.entity';
-import { Trash } from 'modules/thinks/entities/trash.entity';
 
 @Entity({
   name: 'users',
@@ -47,8 +46,6 @@ export class User {
   places: Place[];
   @OneToMany(() => Think, (think) => think.user)
   thinks: Think[];
-  @OneToMany(() => Trash, (trash) => trash.user)
-  trash: Trash[];
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
   @UpdateDateColumn({ type: 'timestamp', name: 'updated_at' })

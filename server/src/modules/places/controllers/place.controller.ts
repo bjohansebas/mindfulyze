@@ -13,7 +13,6 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 
 import { ThinksService } from 'modules/thinks/services/thinks.service';
-import { TrashService } from 'modules/thinks/services/trash.service';
 import { PlacesService } from '../services/places.service';
 
 import { CreatePlaceDto, UpdatePlaceDto } from '../dtos/place.dto';
@@ -24,7 +23,6 @@ export class PlaceController {
   constructor(
     private placeService: PlacesService,
     private thinkService: ThinksService,
-    private trashService: TrashService,
   ) {}
 
   @Get(':id')
@@ -40,11 +38,6 @@ export class PlaceController {
   @Get(':id/thinks/archive')
   getArchiveThinks(@Param('id', ParseUUIDPipe) id: string) {
     return this.thinkService.findArchiveThinksByPlace(id);
-  }
-
-  @Get(':id/trash')
-  getTrash(@Param('id', ParseUUIDPipe) id: string) {
-    return this.trashService.findTrashByPlace(id);
   }
 
   @Post('')

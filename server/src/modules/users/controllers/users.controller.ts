@@ -54,11 +54,6 @@ export class UsersController {
     return this.userService.findUnarchiveThinks(req.user.sub);
   }
 
-  @Get('trash')
-  getTrash(@Request() req) {
-    return this.userService.findTrash(req.user.sub);
-  }
-
   @Get('profile')
   getProfile(@Request() req) {
     return this.profileService.findProfile(req.user.sub);
