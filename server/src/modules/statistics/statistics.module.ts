@@ -1,14 +1,14 @@
-import { Module } from '@nestjs/common';
+import { Module } from '@nestjs/common'
 
-import { ThinksModule } from 'modules/thinks/thinks.module';
+import { ThinksModule } from 'modules/thinks/thinks.module'
 
-import { StatisticService } from './services/statistic.service';
+import { StatisticService } from './services/statistic.service'
 
-import { StatisticController } from './controllers/statistic.controller';
+import { StatisticController } from './controllers/statistic.controller'
 
 @Module({
-  imports: [ThinksModule],
-  providers: [StatisticService],
-  controllers: [StatisticController],
+	imports: [ThinksModule],
+	providers: [StatisticService],
+	controllers: [StatisticController],
 })
 export class StatisticsModule {}

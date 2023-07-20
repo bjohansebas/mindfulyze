@@ -1,1 +1,1 @@
-export const DEFAULT_COST = 12;
+export const DEFAULT_COST = 12

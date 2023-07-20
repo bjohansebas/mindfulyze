@@ -1,11 +1,11 @@
-import { MigrationInterface, QueryRunner } from 'typeorm';
+import { MigrationInterface, QueryRunner } from 'typeorm'
 
 export class initProfile1679872587725 implements MigrationInterface {
-  name = 'initProfile1679872587725';
+	name = 'initProfile1679872587725'
 
-  public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(
-      `CREATE TABLE IF NOT EXISTS profile_users ( 
+	public async up(queryRunner: QueryRunner): Promise<void> {
+		await queryRunner.query(
+			`CREATE TABLE IF NOT EXISTS profile_users ( 
         profile_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
         photo_url VARCHAR,
         first_name VARCHAR(20) NOT NULL,
@@ -22,13 +22,11 @@ export class initProfile1679872587725 implements MigrationInterface {
           ON DELETE CASCADE
           ON UPDATE CASCADE
     );`,
-    );
-  }
+		)
+	}
 
-  public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(
-      `ALTER TABLE "profile_users" DROP CONSTRAINT "fk_user_profile"`,
-    );
-    await queryRunner.query(`DROP TABLE "profile_users"`);
-  }
+	public async down(queryRunner: QueryRunner): Promise<void> {
+		await queryRunner.query(`ALTER TABLE "profile_users" DROP CONSTRAINT "fk_user_profile"`)
+		await queryRunner.query(`DROP TABLE "profile_users"`)
+	}
 }
