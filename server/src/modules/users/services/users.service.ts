@@ -70,7 +70,7 @@ export class UsersService {
       where: {
         id: id_user,
       },
-      relations: ['thinks'],
+      relations: ['thinks', 'thinks.emotions.emotion', 'thinks.place'],
     });
 
     return user?.thinks || [];

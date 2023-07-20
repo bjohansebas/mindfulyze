@@ -35,6 +35,11 @@ export class ThinkController {
     return this.thinkService.create(req.user.sub, payload);
   }
 
+  @Post(':id')
+  deleteThink(@Param('id', ParseUUIDPipe) id: string) {
+    return this.thinkService.remove(id);
+  }
+
   @Put(':id')
   updateThink(
     @Param('id', ParseUUIDPipe) id: string,
