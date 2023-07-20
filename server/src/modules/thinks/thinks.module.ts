@@ -6,21 +6,14 @@ import { PlacesModule } from 'modules/places/places.module'
 import { UsersModule } from 'modules/users/users.module'
 
 import { Think } from './entities/think.entity'
-import { ThinkEmotion } from './entities/thinkEmotion.entity'
 
 import { ThinkController } from './controllers/think.controller'
 
-import { ThinksEmotionService } from './services/thinks-emotion.service'
 import { ThinksService } from './services/thinks.service'
 
 @Module({
-	imports: [
-		EmotionsModule,
-		forwardRef(() => PlacesModule),
-		TypeOrmModule.forFeature([Think, ThinkEmotion]),
-		UsersModule,
-	],
-	providers: [ThinksService, ThinksEmotionService],
+	imports: [EmotionsModule, forwardRef(() => PlacesModule), TypeOrmModule.forFeature([Think]), UsersModule],
+	providers: [ThinksService],
 	controllers: [ThinkController],
 	exports: [ThinksService, TypeOrmModule],
 })

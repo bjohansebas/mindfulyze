@@ -62,7 +62,7 @@ export class UsersService {
 			where: {
 				id: id_user,
 			},
-			relations: ['thinks', 'thinks.emotions.emotion', 'thinks.place'],
+			relations: ['thinks', 'thinks.emotions', 'thinks.place'],
 		})
 
 		return user?.thinks || []

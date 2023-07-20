@@ -4,8 +4,8 @@ import {
 	CreateDateColumn,
 	Entity,
 	JoinColumn,
+	ManyToMany,
 	ManyToOne,
-	OneToMany,
 	PrimaryGeneratedColumn,
 	Relation,
 	UpdateDateColumn,
@@ -42,7 +42,7 @@ export class Emotion {
 	)
 	@JoinColumn({ name: 'color_id', foreignKeyConstraintName: 'fk_color_em' })
 	color: Relation<Color>
-	@OneToMany(
+	@ManyToMany(
 		() => Think,
 		(think) => think.emotions,
 	)

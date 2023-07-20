@@ -15,7 +15,7 @@ export class StatisticService {
 					id: userId,
 				},
 			},
-			relations: ['emotions.emotion', 'emotions.emotion.color'],
+			relations: ['emotions', 'emotions.color'],
 		})
 
 		const emotions = thinkPositives.flatMap((value) => {
@@ -32,12 +32,10 @@ export class StatisticService {
 					id: userId,
 				},
 				emotions: {
-					emotion: {
-						type: 'Positive',
-					},
+					type: 'Positive',
 				},
 			},
-			relations: ['emotions.emotion', 'emotions.emotion.color'],
+			relations: ['emotions', 'emotions.color'],
 		})
 
 		const emotions = thinkPositives.flatMap((value) => {
@@ -54,12 +52,10 @@ export class StatisticService {
 					id: userId,
 				},
 				emotions: {
-					emotion: {
-						type: 'Negative',
-					},
+					type: 'Negative',
 				},
 			},
-			relations: ['emotions.emotion', 'emotions.emotion.color'],
+			relations: ['emotions', 'emotions.color'],
 		})
 
 		const emotions = thinkPositives.flatMap((value) => {

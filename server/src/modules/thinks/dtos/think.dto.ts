@@ -1,5 +1,5 @@
 import { PartialType } from '@nestjs/mapped-types'
-import { IsNotEmpty, IsString, IsUUID, Length } from 'class-validator'
+import { IsNotEmpty, IsOptional, IsString, IsUUID, Length } from 'class-validator'
 
 export class CreateThinkDto {
 	@IsString()
@@ -9,6 +9,18 @@ export class CreateThinkDto {
 	@IsNotEmpty()
 	@IsUUID()
 	readonly place: string
+	@IsOptional()
+	@IsUUID('4', { each: true })
+	emotions: string[]
 }
 
 export class UpdateThinkDto extends PartialType(CreateThinkDto) {}
+
+export class UpdateEmotionsDto {
+	@IsOptional()
+	@IsUUID('4', { each: true })
+	add: string[]
+	@IsOptional()
+	@IsUUID('4', { each: true })
+	remove: string[]
+}

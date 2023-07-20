@@ -3,16 +3,17 @@ import {
 	CreateDateColumn,
 	Entity,
 	JoinColumn,
+	JoinTable,
+	ManyToMany,
 	ManyToOne,
-	OneToMany,
 	PrimaryGeneratedColumn,
 	Relation,
 	UpdateDateColumn,
 } from 'typeorm'
 
+import { Emotion } from '@/modules/emotions/entities/emotion.entity'
 import { Place } from 'modules/places/entities/place.entity'
 import { User } from 'modules/users/entities/user.entity'
-import { ThinkEmotion } from './thinkEmotion.entity'
 
 @Entity({
 	name: 'thinks',
@@ -46,11 +47,16 @@ export class Think {
 	)
 	@JoinColumn({ name: 'user_id', foreignKeyConstraintName: 'fk_user_tk' })
 	user: Relation<User>
-	@OneToMany(
-		() => ThinkEmotion,
-		(emotion) => emotion.think,
+	@ManyToMany(
+		() => Emotion,
+		(emotion) => emotion.thinks,
 	)
-	emotions: Relation<ThinkEmotion>[]
+	@JoinTable({
+		name: 'think_emotions',
+		joinColumn: { name: 'think_id', foreignKeyConstraintName: 'fk_think_thiemo' },
+		inverseJoinColumn: { name: 'emotion_id', foreignKeyConstraintName: 'fk_emotion_thiemo' },
+	})
+	emotions: Relation<Emotion>[]
 	@CreateDateColumn({ type: 'timestamp', name: 'created_at' })
 	createdAt: Date
 	@UpdateDateColumn({ type: 'timestamp', name: 'updated_at' })
