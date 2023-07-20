@@ -1,4 +1,4 @@
-import { ShowTrashPage } from './ShowTrash'
 import { ShowThinkTrashPage } from './ShowThinkTrash'
+import { ShowTrashPage } from './ShowTrash'
 
-export { ShowTrashPage, ShowThinkTrashPage }
+export { ShowThinkTrashPage, ShowTrashPage }

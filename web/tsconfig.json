@@ -19,8 +19,6 @@
     "paths": {
       "@/*": [
         "src/*",
-        "dist/*",
-        ""
       ],
       "components/*": [
         "src/components/*"
