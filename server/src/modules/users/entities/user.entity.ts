@@ -10,6 +10,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 
+import { Session } from 'auth/entities/session.entity'
 import { Place } from 'modules/places/entities/place.entity'
 import { Think } from 'modules/thinks/entities/think.entity'
 import { ProfileUser } from './profile.entity'
@@ -33,14 +34,11 @@ export class User {
     default: () => 'CURRENT_TIMESTAMP',
   })
   changedPasswordAt: Date
-  @Exclude()
-  @Column({
-    type: 'varchar',
-    array: true,
-    name: 'refresh_tokens',
-    nullable: true,
-  })
-  refreshTokens: string[]
+  @OneToMany(
+    () => Session,
+    (session) => session.user,
+  )
+  sessions: Relation<Session>[]
   @OneToOne(
     () => ProfileUser,
     (profile) => profile.user,

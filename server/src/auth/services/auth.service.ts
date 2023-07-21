@@ -1,18 +1,18 @@
-import { ForbiddenException, Inject, Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { ConfigType } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
-
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 
-import * as argon2 from 'argon2'
 import * as bcrypt from 'bcrypt'
+import { randomUUID } from 'crypto'
 
+import { SessionsService } from '@/auth/services/session.service'
 import { UsersService } from 'modules/users/services/users.service'
 
 import { User } from 'modules/users/entities/user.entity'
 
-import { CreateUserDto } from 'modules/users/dtos/user.dto'
+import { CreateUserDto } from '@/modules/users/dtos/user.dto'
 
 import config from '@/config'
 
@@ -23,6 +23,7 @@ export class AuthService {
     @Inject(config.KEY)
     private configService: ConfigType<typeof config>,
     private userService: UsersService,
+    private sessionService: SessionsService,
     private jwtService: JwtService,
   ) {}
 
@@ -30,7 +31,7 @@ export class AuthService {
     const newUser: User = await this.userService.createUser(payload)
     const tokens = await this.generateTokens(newUser)
 
-    await this.updateRefreshToken(newUser.id, tokens.refresh_token)
+    await this.sessionService.create({ idUser: newUser.id, token: tokens.refreshToken })
 
     return tokens
   }
@@ -38,7 +39,7 @@ export class AuthService {
   async singIn(user: User) {
     const tokens = await this.generateTokens(user)
 
-    await this.updateRefreshToken(user.id, tokens.refresh_token)
+    await this.sessionService.create({ idUser: user.id, token: tokens.refreshToken })
 
     return {
       id: user.id,
@@ -63,75 +64,22 @@ export class AuthService {
     return user
   }
 
-  async logout(userId: string, token: string) {
-    const existUser: User = await this.userService.findAccount(userId)
-    const encryptTokens: string[] = existUser.refreshTokens
-
-    const newRefreshTokens: string[] = []
-
-    await Promise.all(
-      encryptTokens.map(async (encryptToken) => {
-        const isMatch: boolean = await argon2.verify(encryptToken, token)
-
-        if (!isMatch) {
-          newRefreshTokens.push(encryptToken)
-        }
-      }),
-    )
-
-    this.userRepo.merge(existUser, {
-      refreshTokens: newRefreshTokens,
-    })
-
-    return this.userRepo.save(existUser).catch((e) => e)
+  async logout(token: string) {
+    return this.sessionService.remove(token)
   }
 
-  async updateRefreshToken(userId: string, refreshToken: string) {
-    const hashedRefreshToken: string = await argon2.hash(refreshToken)
+  async refreshAccessToken(refreshToken: string) {
+    const token = this.jwtService.decode(refreshToken)
 
-    const existUser: User = await this.userService.findAccount(userId)
-    let newRefresh: string[]
+    const user = await this.userService.findAccount(token['sub'])
 
-    if (!existUser.refreshTokens) {
-      newRefresh = [hashedRefreshToken]
-    } else {
-      newRefresh = [hashedRefreshToken, ...existUser.refreshTokens]
-    }
+    const { accessToken } = await this.generateTokens(user)
 
-    this.userRepo.merge(existUser, {
-      refreshTokens: newRefresh,
-    })
-
-    return this.userRepo.save(existUser).catch((e) => e)
-  }
-
-  async refreshAccessToken(userId: string, refreshToken: string) {
-    const user = await this.userService.findAccount(userId)
-
-    if (!user || !user.refreshTokens) throw new ForbiddenException('Access Denied')
-
-    const encryptTokens = user.refreshTokens
-    let refreshTokenMatch = false
-
-    await Promise.all(
-      encryptTokens.map(async (encryptToken) => {
-        const isMatch: boolean = await argon2.verify(encryptToken, refreshToken)
-
-        if (isMatch) {
-          refreshTokenMatch = true
-        }
-      }),
-    )
-
-    if (!refreshTokenMatch) throw new ForbiddenException('Access Denied')
-
-    const { access_token } = await this.generateTokens(user)
-
-    return { access_token }
+    return { accessToken }
   }
 
   async generateTokens(user: User) {
-    const [access_token, refresh_token] = await Promise.all([
+    const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(
         {
           sub: user.id,
@@ -144,19 +92,20 @@ export class AuthService {
       ),
       this.jwtService.signAsync(
         {
+          ref: randomUUID(),
           sub: user.id,
           email: user.email,
         },
         {
           secret: this.configService.jwt.refreshSecret,
-          expiresIn: '15d',
+          expiresIn: '1min',
         },
       ),
     ])
 
     return {
-      access_token,
-      refresh_token,
+      accessToken,
+      refreshToken,
     }
   }
 }

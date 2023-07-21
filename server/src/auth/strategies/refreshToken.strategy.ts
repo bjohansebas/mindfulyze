@@ -4,25 +4,21 @@ import { PassportStrategy } from '@nestjs/passport'
 import { Request } from 'express'
 import { ExtractJwt, Strategy } from 'passport-jwt'
 
-import * as argon2 from 'argon2'
+import { PayloadToken } from '../models/token.model'
+import { SessionsService } from '../services/session.service'
 
 import config from '@/config'
-
-import { User } from 'modules/users/entities/user.entity'
-
-import { UsersService } from 'modules/users/services/users.service'
-import { PayloadToken } from '../models/token.model'
 
 @Injectable()
 export class RefreshTokenStrategy extends PassportStrategy(Strategy, 'jwt-refresh') {
   constructor(
     @Inject(config.KEY) private configService: ConfigType<typeof config>,
-    private userService: UsersService,
+    private sessionService: SessionsService,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: configService.jwt.refreshSecret,
-      ignoreExpiration: false,
+      ignoreExpiration: true,
       passReqToCallback: true,
     })
   }
@@ -30,22 +26,9 @@ export class RefreshTokenStrategy extends PassportStrategy(Strategy, 'jwt-refres
   async validate(req: Request, payload: PayloadToken) {
     const refreshToken = req.get('Authorization').replace('Bearer', '').trim()
 
-    const existUser: User = await this.userService.findAccount(payload['sub'])
-    const encryptTokens: string[] = existUser.refreshTokens
+    const isMatch: boolean = await this.sessionService.verifySession(refreshToken)
 
-    let refreshTokenMatch = false
-
-    await Promise.all(
-      encryptTokens.map(async (encryptToken) => {
-        const isMatch: boolean = await argon2.verify(encryptToken, refreshToken)
-
-        if (isMatch) {
-          refreshTokenMatch = true
-        }
-      }),
-    )
-
-    if (!refreshTokenMatch) throw new ForbiddenException('Access Denied')
+    if (!isMatch) throw new ForbiddenException('Access Denied')
 
     return { ...payload, refreshToken }
   }

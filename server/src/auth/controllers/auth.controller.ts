@@ -3,9 +3,9 @@ import { AuthGuard } from '@nestjs/passport'
 import { Throttle } from '@nestjs/throttler'
 import { Request as RequestExpress } from 'express'
 
-import { CreateUserDto } from 'modules/users/dtos/user.dto'
-
 import { AuthService } from '../services/auth.service'
+
+import { CreateUserDto } from 'modules/users/dtos/user.dto'
 
 import { User } from 'modules/users/entities/user.entity'
 
@@ -28,12 +28,12 @@ export class AuthController {
   @UseGuards(AuthGuard('jwt-refresh'))
   @Post('refresh')
   async refreshTokens(@Request() req: RequestExpress) {
-    return this.authService.refreshAccessToken(req.user['sub'], req.user['refreshToken'])
+    return this.authService.refreshAccessToken(req.user['refreshToken'])
   }
 
   @UseGuards(AuthGuard('jwt-refresh'))
   @Post('logout')
   async logOut(@Request() req: RequestExpress) {
-    return this.authService.logout(req.user['sub'], req.user['refreshToken'])
+    return this.authService.logout(req.user['refreshToken'])
   }
 }
