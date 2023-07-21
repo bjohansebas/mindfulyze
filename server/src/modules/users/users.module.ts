@@ -13,9 +13,9 @@ import { ColorController } from './controllers/color.controller'
 import { UsersController } from './controllers/users.controller'
 
 @Module({
-	imports: [TypeOrmModule.forFeature([Color, ProfileUser, User])],
-	controllers: [UsersController, ColorController],
-	providers: [UsersService, ProfileService, ColorService],
-	exports: [ColorService, UsersService, TypeOrmModule],
+  imports: [TypeOrmModule.forFeature([Color, ProfileUser, User])],
+  controllers: [UsersController, ColorController],
+  providers: [UsersService, ProfileService, ColorService],
+  exports: [ColorService, UsersService, TypeOrmModule],
 })
 export class UsersModule {}

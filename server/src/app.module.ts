@@ -15,31 +15,31 @@ import { ThinksModule } from 'modules/thinks/thinks.module'
 import { UsersModule } from 'modules/users/users.module'
 
 @Module({
-	imports: [
-		ThrottlerModule.forRoot({
-			ttl: 60,
-			limit: 10,
-		}),
-		ConfigModule.forRoot({
-			envFilePath: enviroments[process.env.NODE_ENV] || '.env',
-			load: [config],
-			isGlobal: true,
-			validationSchema: Joi.object({
-				JWT_ACCESS_SECRET: Joi.string().required(),
-				JWT_REFRESH_SECRET: Joi.string().required(),
-				POSTGRES_USER: Joi.string().required(),
-				POSTGRES_PASSWORD: Joi.string().required(),
-				POSTGRES_PORT: Joi.number().required(),
-				POSTGRES_HOST: Joi.string().required(),
-			}),
-		}),
-		DatabaseModule,
-		UsersModule,
-		EmotionsModule,
-		PlacesModule,
-		ThinksModule,
-		AuthModule,
-		StatisticsModule,
-	],
+  imports: [
+    ThrottlerModule.forRoot({
+      ttl: 60,
+      limit: 10,
+    }),
+    ConfigModule.forRoot({
+      envFilePath: enviroments[process.env.NODE_ENV] || '.env',
+      load: [config],
+      isGlobal: true,
+      validationSchema: Joi.object({
+        JWT_ACCESS_SECRET: Joi.string().required(),
+        JWT_REFRESH_SECRET: Joi.string().required(),
+        POSTGRES_USER: Joi.string().required(),
+        POSTGRES_PASSWORD: Joi.string().required(),
+        POSTGRES_PORT: Joi.number().required(),
+        POSTGRES_HOST: Joi.string().required(),
+      }),
+    }),
+    DatabaseModule,
+    UsersModule,
+    EmotionsModule,
+    PlacesModule,
+    ThinksModule,
+    AuthModule,
+    StatisticsModule,
+  ],
 })
 export class AppModule {}

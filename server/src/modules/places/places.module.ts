@@ -11,9 +11,9 @@ import { PlacesService } from './services/places.service'
 import { Place } from './entities/place.entity'
 
 @Module({
-	imports: [UsersModule, forwardRef(() => ThinksModule), TypeOrmModule.forFeature([Place])],
-	controllers: [PlaceController],
-	providers: [PlacesService],
-	exports: [PlacesService, TypeOrmModule],
+  imports: [UsersModule, forwardRef(() => ThinksModule), TypeOrmModule.forFeature([Place])],
+  controllers: [PlaceController],
+  providers: [PlacesService],
+  exports: [PlacesService, TypeOrmModule],
 })
 export class PlacesModule {}

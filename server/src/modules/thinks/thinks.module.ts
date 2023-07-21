@@ -12,9 +12,9 @@ import { ThinkController } from './controllers/think.controller'
 import { ThinksService } from './services/thinks.service'
 
 @Module({
-	imports: [EmotionsModule, forwardRef(() => PlacesModule), TypeOrmModule.forFeature([Think]), UsersModule],
-	providers: [ThinksService],
-	controllers: [ThinkController],
-	exports: [ThinksService, TypeOrmModule],
+  imports: [EmotionsModule, forwardRef(() => PlacesModule), TypeOrmModule.forFeature([Think]), UsersModule],
+  providers: [ThinksService],
+  controllers: [ThinkController],
+  exports: [ThinksService, TypeOrmModule],
 })
 export class ThinksModule {}

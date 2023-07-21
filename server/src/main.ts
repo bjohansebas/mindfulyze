@@ -4,28 +4,28 @@ import { NestFactory, Reflector } from '@nestjs/core'
 import { AppModule } from './app.module'
 
 async function bootstrap() {
-	const app = await NestFactory.create(AppModule)
+  const app = await NestFactory.create(AppModule)
 
-	app.enableVersioning({
-		type: VersioningType.URI,
-		defaultVersion: '1',
-	})
+  app.enableVersioning({
+    type: VersioningType.URI,
+    defaultVersion: '1',
+  })
 
-	app.useGlobalPipes(
-		new ValidationPipe({
-			whitelist: true,
-			forbidNonWhitelisted: true,
-			transformOptions: {
-				enableImplicitConversion: true,
-			},
-		}),
-	)
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
+    }),
+  )
 
-	app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)))
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)))
 
-	app.enableCors()
+  app.enableCors()
 
-	await app.listen(process.env.PORT || 8000)
+  await app.listen(process.env.PORT || 8000)
 }
 
 bootstrap()

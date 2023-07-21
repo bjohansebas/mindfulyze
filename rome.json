@@ -1,30 +1,32 @@
 {
-	"$schema": "./node_modules/rome/configuration_schema.json",
-	"vcs": {
-		"enabled": true,
-		"clientKind": "git",
-		"useIgnoreFile": true
-	},
-	"organizeImports": {
-		"enabled": false
-	},
-	"linter": {
-		"enabled": true,
-		"rules": {
-			"recommended": true
-		},
-		"ignore": ["server/dist/*.js", "web/dist/*.js"]
-	},
-	"formatter": {
-		"enabled": true,
-		"indentSize": 2,
-		"lineWidth": 120,
-		"ignore": ["server/dist/*.js", "web/dist/*.js"]
-	},
-	"javascript": {
-		"formatter": {
-			"quoteStyle": "single",
-			"semicolons": "asNeeded"
-		}
-	}
+  "$schema": "./node_modules/rome/configuration_schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "organizeImports": {
+    "enabled": true
+  },
+  "files": {
+    "ignore": ["server/dist/*.js", "web/dist/*.js"]
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true
+    }
+  },
+  "formatter": {
+    "enabled": true,
+    "indentSize": 2,
+    "indentStyle": "space",
+    "lineWidth": 120
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "semicolons": "asNeeded"
+    }
+  }
 }

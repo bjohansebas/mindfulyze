@@ -8,17 +8,17 @@ import { PayloadToken } from '../models/token.model'
 
 @Injectable()
 export class AccessTokenStrategy extends PassportStrategy(Strategy, 'jwt') {
-	constructor(
-		@Inject(config.KEY) private configService: ConfigType<typeof config>,
-	) {
-		super({
-			jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-			ignoreExpiration: false,
-			secretOrKey: configService.jwt.accessSecret,
-		})
-	}
+  constructor(
+    @Inject(config.KEY) private configService: ConfigType<typeof config>,
+  ) {
+    super({
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      ignoreExpiration: false,
+      secretOrKey: configService.jwt.accessSecret,
+    })
+  }
 
-	validate(payload: PayloadToken) {
-		return payload
-	}
+  validate(payload: PayloadToken) {
+    return payload
+  }
 }

@@ -4,17 +4,17 @@ import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
 
 export function EmptyStatistics(): JSX.Element {
-	return (
-		<Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-			<Typography>
-				<FormattedMessage
-					id='dashboard.statistics.empty'
-					defaultMessage="It seems like you don't have any thoughts associated with the selected emotion."
-				/>
-			</Typography>
-			<Button component={Link} to='/think/new'>
-				<FormattedMessage id='menu.add.think' defaultMessage='New think' />
-			</Button>
-		</Box>
-	)
+  return (
+    <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <Typography>
+        <FormattedMessage
+          id='dashboard.statistics.empty'
+          defaultMessage="It seems like you don't have any thoughts associated with the selected emotion."
+        />
+      </Typography>
+      <Button component={Link} to='/think/new'>
+        <FormattedMessage id='menu.add.think' defaultMessage='New think' />
+      </Button>
+    </Box>
+  )
 }

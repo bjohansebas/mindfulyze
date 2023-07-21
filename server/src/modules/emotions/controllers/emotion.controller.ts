@@ -4,15 +4,15 @@ import { EmotionsService } from '../services/emotions.service'
 
 @Controller({ path: 'emotions', version: '1' })
 export class EmotionController {
-	constructor(private emotionService: EmotionsService) {}
+  constructor(private emotionService: EmotionsService) {}
 
-	@Get('')
-	async getAll() {
-		return this.emotionService.findAll()
-	}
+  @Get('')
+  async getAll() {
+    return this.emotionService.findAll()
+  }
 
-	@Get(':id')
-	async getEmotion(@Param('id', ParseUUIDPipe) id: string) {
-		return this.emotionService.findById(id)
-	}
+  @Get(':id')
+  async getEmotion(@Param('id', ParseUUIDPipe) id: string) {
+    return this.emotionService.findById(id)
+  }
 }
