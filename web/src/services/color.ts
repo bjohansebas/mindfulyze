@@ -13,7 +13,7 @@ export interface ResponseColor {
 
 export async function getAllColor(): Promise<ResponseColor[]> {
   try {
-    const response: AxiosResponse<ResponseColor[], ErrorRequest> = await axios.get('/users/colors')
+    const response: AxiosResponse<ResponseColor[], ErrorRequest> = await axios.get('/colors')
 
     return response.data
   } catch (err) {
