@@ -98,7 +98,7 @@ export class AuthService {
         },
         {
           secret: this.configService.jwt.refreshSecret,
-          expiresIn: '1min',
+          expiresIn: '30d',
         },
       ),
     ])
