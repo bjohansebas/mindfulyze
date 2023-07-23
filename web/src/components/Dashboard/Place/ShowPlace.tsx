@@ -85,10 +85,10 @@ export function ShowPlaces(): JSX.Element {
         {!loading && allPlaces.length === 0 && <EmptyPlace />}
         {!loading &&
           allPlaces.length > 0 &&
-          allPlaces.map((data, index) => (
+          allPlaces.map((data) => (
             <ListItem
               sx={{ borderRadius: '10px', boxShadow: `0 0 10px #${data.color.code}80`, background: '#ffffff' }}
-              key={index}
+              key={data.id}
               secondaryAction={
                 <IconButton
                   edge='end'

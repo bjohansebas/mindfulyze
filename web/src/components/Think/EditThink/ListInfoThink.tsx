@@ -4,13 +4,12 @@ import { FormattedMessage } from 'react-intl'
 
 import { type ResponsePlace } from 'services/place'
 import { type ResponseThink } from 'services/think'
-import { type ResponseTrash } from 'services/trash'
 
 export interface ListInfoThinkProps {
   loadingPlace: boolean
   place: ResponsePlace | null
   loadingThink: boolean
-  think: ResponseThink | ResponseTrash | null
+  think: ResponseThink | null
 }
 
 export function ListInfoThink({ loadingPlace, loadingThink, place, think }: ListInfoThinkProps): JSX.Element {

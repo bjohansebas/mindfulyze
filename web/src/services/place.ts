@@ -5,7 +5,6 @@ import { apiPrivate as axios } from '../api/axios'
 import { type ResponseColor } from './color'
 import { type ErrorRequest } from './login'
 import { type ResponseThinks } from './think'
-import { type ResponseTrashes } from './trash'
 import { type ResponseAccount } from './user'
 
 export interface ResponsePlace {
@@ -42,26 +41,6 @@ export async function getPlace(id: string): Promise<ResponsePlace> {
 export async function getThinksPlace(id: string): Promise<ResponseThinks> {
   try {
     const response: AxiosResponse<ResponseThinks, ErrorRequest> = await axios.get(`/places/${id}/thinks`)
-
-    return response.data
-  } catch (err) {
-    throw managerErrorNetwork(err)
-  }
-}
-
-export async function getTrashPlace(id: string): Promise<ResponseTrashes> {
-  try {
-    const response: AxiosResponse<ResponseTrashes, ErrorRequest> = await axios.get(`/places/${id}/trash`)
-
-    return response.data
-  } catch (err) {
-    throw managerErrorNetwork(err)
-  }
-}
-
-export async function getArchiveThinksPlace(id: string): Promise<ResponseThinks> {
-  try {
-    const response: AxiosResponse<ResponseThinks, ErrorRequest> = await axios.get(`/places/${id}/thinks/archive`)
 
     return response.data
   } catch (err) {

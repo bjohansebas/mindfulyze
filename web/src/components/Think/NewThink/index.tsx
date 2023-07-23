@@ -10,7 +10,7 @@ import { Forms } from 'components/Form'
 import { AutocompleteField, type OptionsProps } from 'components/Fields/Autocomplete'
 import { getAllEmotions } from 'services/emotion'
 import { getAllPlaces, type ResponsePlace } from 'services/place'
-import { postThink, putAddEmotion, type NewThink } from 'services/think'
+import { postThink, putEmotionThink, type NewThink } from 'services/think'
 
 export function NewThinkUI(): JSX.Element {
   const navigate = useNavigate()
@@ -86,7 +86,7 @@ export function NewThinkUI(): JSX.Element {
       const emotions = emotionsSelect.map((value) => value.id)
 
       try {
-        await putAddEmotion(thinkId, emotions)
+        await putEmotionThink(thinkId, { add: emotions, remove: [] })
       } catch (e) {
         console.log('error')
       }

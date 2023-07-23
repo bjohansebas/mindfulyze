@@ -1,4 +1,3 @@
-import FilterListIcon from '@mui/icons-material/FilterList'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import SwapVertIcon from '@mui/icons-material/SwapVert'
 import {
@@ -20,9 +19,8 @@ import { FormattedMessage } from 'react-intl'
 import { useNavigate } from 'react-router-dom'
 
 import { BadRequestError, NotFoundError } from '@/errors/typeErrors'
-import { getArchiveThinksPlace, getThinksPlace, getTrashPlace } from 'services/place'
-import { moveToTrash, putThink, type ResponseThinks } from 'services/think'
-import { deleteThinkFromTrash, restoreFromTrash, type ResponseTrashes } from 'services/trash'
+import { getThinksPlace } from 'services/place'
+import { deleteThink, type ResponseThinks } from 'services/think'
 import { EmptyThink } from './EmptyThink'
 
 export interface ShowThinksProps {
@@ -37,14 +35,13 @@ export interface OptionThink {
 export function ShowThinks({ id }: ShowThinksProps): JSX.Element {
   const navigate = useNavigate()
 
-  const [allThink, setAllThink] = useState<ResponseThinks | ResponseTrashes>([])
+  const [allThink, setAllThink] = useState<ResponseThinks>([])
   const [options, setOptions] = useState<OptionThink[]>([])
   const [idSelect, setIdSelect] = useState<string>('')
 
   const [loading, setLoading] = useState(true)
 
   const [anchorElThink, setAnchorElThink] = useState<HTMLButtonElement | null>(null)
-  const [anchorElFilter, setAnchorElFilter] = useState<HTMLButtonElement | null>(null)
   const [anchorElOrder, setAnchorElOrder] = useState<HTMLButtonElement | null>(null)
 
   useEffect(() => {
@@ -53,7 +50,6 @@ export function ShowThinks({ id }: ShowThinksProps): JSX.Element {
 
   const getThinks = async (): Promise<void> => {
     try {
-      setAnchorElFilter(null)
       setLoading(true)
 
       const response = await getThinksPlace(id)
@@ -73,12 +69,6 @@ export function ShowThinks({ id }: ShowThinksProps): JSX.Element {
             await onDelete(idThink)
           },
         },
-        {
-          text: <FormattedMessage id='options.think.archive' defaultMessage='Archive' />,
-          click: async (idThink: string) => {
-            await onArchive(idThink)
-          },
-        },
       ])
 
       setLoading(false)
@@ -88,91 +78,6 @@ export function ShowThinks({ id }: ShowThinksProps): JSX.Element {
       }
     } finally {
       setLoading(false)
-    }
-  }
-
-  const getTrashThinks = async (): Promise<void> => {
-    try {
-      setAnchorElFilter(null)
-      setLoading(true)
-      const response = await getTrashPlace(id)
-
-      setAllThink(response)
-
-      setOptions([
-        {
-          text: <FormattedMessage id='options.think.see' defaultMessage='See thought' />,
-          click: (idThink) => {
-            navigate(`/trash/${idThink}`)
-          },
-        },
-        {
-          text: <FormattedMessage id='options.think.delete' defaultMessage='Delete thought' />,
-          click: async (idThink) => {
-            await onDeleteTrash(idThink)
-          },
-        },
-        {
-          text: <FormattedMessage id='options.think.restore' defaultMessage='Restore thought' />,
-          click: async (idThink) => {
-            await onRestoreId(idThink)
-          },
-        },
-      ])
-
-      setLoading(false)
-    } catch (err) {
-      if (err instanceof NotFoundError || err instanceof BadRequestError) {
-        navigate('/')
-      }
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const getArchiveThinks = async (): Promise<void> => {
-    try {
-      setAnchorElFilter(null)
-      setLoading(true)
-
-      const response = await getArchiveThinksPlace(id)
-
-      setAllThink(response)
-
-      setOptions([
-        {
-          text: <FormattedMessage id='options.think.see' defaultMessage='See thought' />,
-          click: (idThink) => {
-            navigate(`/think/${idThink}`)
-          },
-        },
-        {
-          text: <FormattedMessage id='options.think.delete' defaultMessage='Delete thought' />,
-          click: async (idThink) => {
-            await onDelete(idThink)
-          },
-        },
-        {
-          text: <FormattedMessage id='options.think.unarchive' defaultMessage='Unarchive' />,
-          click: async (idThink) => {
-            await onUnarchiveId(idThink)
-          },
-        },
-      ])
-    } catch (err) {
-      if (err instanceof NotFoundError || err instanceof BadRequestError) {
-        navigate('/')
-      }
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const handleFilterMenu = (event: MouseEvent<HTMLButtonElement>): void => {
-    if (anchorElFilter != null) {
-      setAnchorElFilter(null)
-    } else {
-      setAnchorElFilter(event.currentTarget)
     }
   }
 
@@ -194,54 +99,10 @@ export function ShowThinks({ id }: ShowThinksProps): JSX.Element {
     }
   }
 
-  const onRestoreId = async (idThink: string): Promise<void> => {
-    try {
-      setAnchorElThink(null)
-      await restoreFromTrash(idThink)
-
-      await getTrashThinks()
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  const onDeleteTrash = async (idThink: string): Promise<void> => {
-    try {
-      setAnchorElThink(null)
-      await deleteThinkFromTrash(idThink)
-
-      await getTrashThinks()
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  const onUnarchiveId = async (idThink: string): Promise<void> => {
-    try {
-      setAnchorElThink(null)
-      await putThink(idThink, { isArchive: false })
-
-      await getArchiveThinks()
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  const onArchive = async (idThink: string): Promise<void> => {
-    setAnchorElThink(null)
-    try {
-      await putThink(idThink, { isArchive: true })
-
-      await getThinks()
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
   const onDelete = async (idThink: string): Promise<void> => {
     setAnchorElThink(null)
     try {
-      await moveToTrash(idThink)
+      await deleteThink(idThink)
 
       await getThinks()
     } catch (err) {
@@ -260,9 +121,6 @@ export function ShowThinks({ id }: ShowThinksProps): JSX.Element {
             borderRadius: '10px 10px 0 0',
           }}
         >
-          <Button variant='text' startIcon={<FilterListIcon />} onClick={handleFilterMenu}>
-            <FormattedMessage id='options.filter.text' defaultMessage='Filter' />
-          </Button>
           <Button variant='text' startIcon={<SwapVertIcon />} onClick={handleOrderMenu}>
             <FormattedMessage id='options.order.text' defaultMessage='Order' />
           </Button>
@@ -272,11 +130,11 @@ export function ShowThinks({ id }: ShowThinksProps): JSX.Element {
           {!loading && allThink.length === 0 && <EmptyThink />}
           {!loading &&
             allThink.length > 0 &&
-            allThink.map((value, index) => {
+            allThink.map((value) => {
               return (
                 <ListItem
                   sx={{ height: '25', borderBottom: '1px solid rgba(0,0,0,0.12)' }}
-                  key={index}
+                  key={value.id}
                   secondaryAction={
                     <IconButton
                       edge='end'
@@ -321,6 +179,7 @@ export function ShowThinks({ id }: ShowThinksProps): JSX.Element {
         >
           {options.map((value, index) => (
             <MenuItem
+              // rome-ignore lint/suspicious/noArrayIndexKey: <explanation>
               key={index}
               onClick={() => {
                 value.click(idSelect)
@@ -331,32 +190,6 @@ export function ShowThinks({ id }: ShowThinksProps): JSX.Element {
           ))}
         </Menu>
       </Box>
-      <Menu
-        sx={{ mt: '40px', zIndex: 1202 }}
-        id='menu-appbar'
-        anchorEl={anchorElFilter}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        keepMounted
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        open={Boolean(anchorElFilter)}
-        onClose={handleFilterMenu}
-      >
-        <MenuItem key='1' onClick={getThinks}>
-          <FormattedMessage id='options.filter.think.place' defaultMessage='Only place' />
-        </MenuItem>
-        <MenuItem key='2' onClick={getArchiveThinks}>
-          <FormattedMessage id='options.filter.think.archive' defaultMessage='Only archive' />
-        </MenuItem>
-        <MenuItem key='3' onClick={getTrashThinks}>
-          <FormattedMessage id='options.filter.think.trash' defaultMessage='Only trash' />
-        </MenuItem>
-      </Menu>
       <Menu
         sx={{ mt: '40px', zIndex: 1202 }}
         id='menu-appbar'

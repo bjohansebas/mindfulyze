@@ -1,4 +1,4 @@
-import { Archive as ArchiveIcon, Delete as DeleteIcon } from '@mui/icons-material'
+import { Delete as DeleteIcon } from '@mui/icons-material'
 import { Box, Button, Toolbar } from '@mui/material'
 
 import { useEffect, useState } from 'react'
@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { getAllEmotions } from 'services/emotion'
-import { getThink, moveToTrash, putAddEmotion, putDeleteEmotion, putThink, type ResponseThink } from 'services/think'
+import { deleteThink, getThink, putEmotionThink, putThink, type ResponseThink } from 'services/think'
 
 import { BadRequestError, NotFoundError } from '@/errors/typeErrors'
 import { type ResponsePlace } from 'services/place'
@@ -43,8 +43,8 @@ export function EditThinkUI(): JSX.Element {
         setEmotions(
           response?.emotions.map((value) => {
             return {
-              id: value.emotion.id,
-              text: value.emotion.name,
+              id: value.id,
+              text: value.name,
             }
           }),
         )
@@ -101,25 +101,7 @@ export function EditThinkUI(): JSX.Element {
       setLoadingSave(true)
       setLoadingThink(true)
 
-      await moveToTrash(id)
-
-      navigate(`/place/${think.place.id}`, { replace: true })
-    } catch (err) {
-      console.log(err)
-    } finally {
-      setLoadingSave(false)
-      setLoadingThink(false)
-    }
-  }
-
-  const onArchive = async (): Promise<void> => {
-    if (id == null || think == null) return
-
-    try {
-      setLoadingSave(true)
-      setLoadingThink(true)
-
-      await putThink(id, { isArchive: true })
+      await deleteThink(id)
 
       navigate(`/place/${think.place.id}`, { replace: true })
     } catch (err) {
@@ -134,25 +116,19 @@ export function EditThinkUI(): JSX.Element {
     if (id == null || newEmotionsThink == null || emotions == null || think == null) return
 
     setLoadingSave(true)
-    if (JSON.stringify(emotions) !== JSON.stringify(newEmotionsThink)) {
-      const emotionsList = newEmotionsThink.map((value) => value.id)
 
-      await putAddEmotion(id, emotionsList)
+    if (JSON.stringify(emotions) !== JSON.stringify(newEmotionsThink)) {
+      const addEmotion = [...newEmotionsThink.map((value) => value.id)]
 
       const listRemoveEmotions = []
+
       for await (const value of emotions) {
         if (!newEmotionsThink.some((obj) => obj.id === value.id)) {
           listRemoveEmotions.push(value.id)
         }
       }
 
-      if (listRemoveEmotions.length > 0) {
-        try {
-          await putDeleteEmotion(id, listRemoveEmotions)
-        } catch (err) {
-          console.log(err)
-        }
-      }
+      await putEmotionThink(id, { add: addEmotion, remove: listRemoveEmotions })
     }
 
     if (think.text !== newTextThink.trimEnd()) {
@@ -216,11 +192,7 @@ export function EditThinkUI(): JSX.Element {
             <Button variant='text' startIcon={<DeleteIcon />} disabled={loadingThink} onClick={onDelete}>
               <FormattedMessage id='button.delete' defaultMessage='Delete' />
             </Button>
-            <Button variant='text' startIcon={<ArchiveIcon />} disabled={loadingThink} onClick={onArchive}>
-              <FormattedMessage id='button.archive' defaultMessage='Archive' />
-            </Button>
           </Toolbar>
-
           <Box sx={{ pt: '10px' }}>
             <AutocompleteField
               options={allEmotions}
