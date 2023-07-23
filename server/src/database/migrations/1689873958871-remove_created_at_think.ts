@@ -8,7 +8,7 @@ export class RemoveCreatedAtThink1689873958871 implements MigrationInterface {
             ALTER TABLE "think_emotions" DROP CONSTRAINT "fk_emotion_thiemo"
         `)
     await queryRunner.query(`
-            ALTER TABLE "think_emotions" DROP CONSTRAINT "PK_c189bca2e38971fc6ad055ae97a"
+            ALTER TABLE "think_emotions" DROP CONSTRAINT "think_emotions_pkey"
         `)
     await queryRunner.query(`
             ALTER TABLE "think_emotions" DROP COLUMN "think_emotion_id"
@@ -55,7 +55,7 @@ export class RemoveCreatedAtThink1689873958871 implements MigrationInterface {
         `)
     await queryRunner.query(`
             ALTER TABLE "think_emotions"
-            ADD CONSTRAINT "PK_c189bca2e38971fc6ad055ae97a" PRIMARY KEY ("think_emotion_id")
+            ADD CONSTRAINT "think_emotions_pkey" PRIMARY KEY ("think_emotion_id")
         `)
     await queryRunner.query(`
             ALTER TABLE "think_emotions"
