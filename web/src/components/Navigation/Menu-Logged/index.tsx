@@ -1,9 +1,7 @@
 import { Box, Drawer as MuiDrawer } from '@mui/material'
 import { styled, type CSSObject, type Theme } from '@mui/material/styles'
 
-import ArchiveRoundedIcon from '@mui/icons-material/ArchiveRounded'
 import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded'
-import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded'
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded'
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded'
 
@@ -55,16 +53,6 @@ const pageLogin = [
     text: <FormattedMessage id='menu.list.dashboard' defaultMessage='Dashboard' />,
     route: '/',
     icon: <DashboardRoundedIcon />,
-  },
-  {
-    text: <FormattedMessage id='menu.list.trash' defaultMessage='Trash' />,
-    route: '/trash',
-    icon: <DeleteRoundedIcon />,
-  },
-  {
-    text: <FormattedMessage id='menu.list.archive' defaultMessage='Archive' />,
-    route: '/archive',
-    icon: <ArchiveRoundedIcon />,
   },
 ]
 

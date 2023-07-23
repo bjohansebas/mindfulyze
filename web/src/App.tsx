@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
 import { Loading } from './components/Loading'
 import { ErrorPage } from './routes/Error'
@@ -93,27 +93,6 @@ const router = createBrowserRouter([
             async lazy() {
               const { EditPlacePage } = await import('./routes/Place')
               return { Component: EditPlacePage }
-            },
-          },
-          {
-            path: 'trash/',
-            async lazy() {
-              const { ShowTrashPage } = await import('./routes/Trash')
-              return { Component: ShowTrashPage }
-            },
-          },
-          {
-            path: 'trash/:id',
-            async lazy() {
-              const { ShowThinkTrashPage } = await import('./routes/Trash')
-              return { Component: ShowThinkTrashPage }
-            },
-          },
-          {
-            path: 'archive',
-            async lazy() {
-              const { ArchivePage } = await import('./routes/Archive')
-              return { Component: ArchivePage }
             },
           },
           {
