@@ -4,14 +4,14 @@ import { managerErrorNetwork } from '@/errors'
 import axios from 'api/axios'
 
 export interface ResponseRefresh {
-  access_token: string
+  accessToken: string
 }
 
 export interface ResponseLogin {
   id: string
   email: string
-  access_token: string
-  refresh_token: string
+  accessToken: string
+  refreshToken: string
 }
 
 export interface ErrorRequest {

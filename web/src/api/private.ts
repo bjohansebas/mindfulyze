@@ -54,9 +54,9 @@ const newRefreshToken = async (credential: string | null, setAccessToken: (value
 
   const response = await getAccessToken(credential)
 
-  setAccessToken(response.access_token)
+  setAccessToken(response.accessToken)
 
-  return response.access_token
+  return response.accessToken
 }
 
 export const setupInterceptorsTo = (axiosInstance: AxiosInstance): AxiosInstance => {

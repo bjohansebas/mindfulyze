@@ -34,8 +34,8 @@ export function AppProvider({ children }: React.PropsWithChildren): JSX.Element 
     try {
       const response = await postLogin(email, password)
 
-      setCredential(response.refresh_token)
-      setAccessToken(response.access_token)
+      setCredential(response.refreshToken)
+      setAccessToken(response.accessToken)
       setUserId(response.id)
     } catch (err) {
       console.log('Login failed')
@@ -53,7 +53,7 @@ export function AppProvider({ children }: React.PropsWithChildren): JSX.Element 
   const newAccessToken = async (): Promise<void> => {
     if (credential == null) return
     const getToken = await getAccessToken(credential)
-    setAccessToken(getToken.access_token)
+    setAccessToken(getToken.accessToken)
   }
 
   return (
