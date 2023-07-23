@@ -31,10 +31,10 @@ export const ShowStatistics = (): JSX.Element => {
     try {
       setLoading(true)
 
-      const dataResponse: ResponseRelationEmotion[] = await getStatisticsAll()
+      const dataResponse: ResponseRelationEmotion = await getStatisticsAll()
 
-      const positive = dataResponse.filter(({ emotion }) => emotion.type === 'Positive').length
-      const negative = dataResponse.filter(({ emotion }) => emotion.type === 'Negative').length
+      const positive = dataResponse.filter((emotion) => emotion.type === 'Positive').length
+      const negative = dataResponse.filter((emotion) => emotion.type === 'Negative').length
 
       setDataEmotions([positive, negative])
     } catch (e) {
