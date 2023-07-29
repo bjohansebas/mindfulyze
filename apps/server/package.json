@@ -3,9 +3,9 @@
   "private": true,
   "scripts": {
     "build": "nest build",
+    "dev": "NODE_ENV=development nest start --watch",
     "start": "nest start",
-    "start:dev": "NODE_ENV=development nest start --watch",
-    "start:debug": "NODE_ENV=development nest start --debug --watch",
+    "dev:debug": "NODE_ENV=development nest start --debug --watch",
     "start:prod": "node dist/main",
     "test": "jest",
     "test:watch": "jest --watch",
