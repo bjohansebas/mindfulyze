@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 
 import { Loading } from '@/app/loading'
+import { useApp } from '@/hooks/useApp'
 import { MenuLogged } from 'components/Navigation/Menu-Logged'
-import { useAuth } from 'hooks/useAuth'
 import { getAccount, type ResponseAccount } from 'services/user'
 
 function RequiredAuth(): JSX.Element {
   const location = useLocation()
   const navigate = useNavigate()
-  const { credential, userId, setUserInfo, setCredential, setUserId } = useAuth()
+  const { credential, userId, setUserInfo, setCredential, setUserId } = useApp()
 
   const [loading, setLoading] = useState(true)
 

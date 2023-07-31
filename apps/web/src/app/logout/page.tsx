@@ -3,12 +3,12 @@ import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { Banner } from '@/components/Banner'
-import { useAuth } from '@/hooks/useAuth'
+import { useApp } from '@/hooks/useApp'
 import Layout from './layout'
 
 export const LogoutPage = (): JSX.Element => {
   const navigate = useNavigate()
-  const { logoutAction } = useAuth()
+  const { logoutAction } = useApp()
 
   const cancelAction = (): void => {
     navigate('/')

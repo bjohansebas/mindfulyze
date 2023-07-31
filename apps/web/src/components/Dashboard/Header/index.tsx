@@ -5,10 +5,10 @@ import WorkspacesIcon from '@mui/icons-material/Workspaces'
 
 import { Link } from 'react-router-dom'
 
-import { useAuth } from 'hooks/useAuth'
+import { useApp } from '@/hooks/useApp'
 
 export const UserWelcomeHeader = (): JSX.Element => {
-  const { userInfo } = useAuth()
+  const { userInfo } = useApp()
 
   return (
     <Stack

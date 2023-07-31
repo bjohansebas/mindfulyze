@@ -4,7 +4,7 @@ import { useState, type FormEvent } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Link, useNavigate } from 'react-router-dom'
 
-import { useAuth } from 'hooks/useAuth'
+import { useApp } from '@/hooks/useApp'
 import { postSignUpAccount } from 'services/signUp'
 import { EMAIL_REGEX, PWD_REGEX } from 'utils/regex'
 
@@ -15,7 +15,7 @@ import { HeaderFormSignUp } from './HeaderSignUp'
 import PaletteFormProvider from '../Theme'
 
 export function SignUpForm(): JSX.Element {
-  const { loginAction } = useAuth()
+  const { loginAction } = useApp()
   const navigate = useNavigate()
 
   const [email, setEmail] = useState<string>('')

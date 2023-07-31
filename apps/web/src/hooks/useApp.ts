@@ -2,6 +2,6 @@ import { useContext } from 'react'
 
 import { AppContext, type AppContextProps } from '../context/appContext'
 
-export const useAuth = (): AppContextProps => {
+export const useApp = (): AppContextProps => {
   return useContext<AppContextProps>(AppContext)
 }

@@ -11,7 +11,7 @@ import { EmailField } from 'components/Fields/Email'
 import { NameField } from 'components/Fields/Name'
 import { RadioField, type RadioOption } from 'components/Fields/Radio'
 
-import { useAuth } from 'hooks/useAuth'
+import { useApp } from '@/hooks/useApp'
 import {
   deleteAccountUser,
   getAccount,
@@ -40,7 +40,7 @@ const genderOptions: RadioOption[] = [
 ]
 
 export function AccountForm(): JSX.Element {
-  const { logoutAction } = useAuth()
+  const { logoutAction } = useApp()
 
   const [dataUser, setDataUser] = useState<ResponseAccount | null>()
 

@@ -5,15 +5,15 @@ import { useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { EmailField } from '@/components/Fields/Email'
+import { useApp } from '@/hooks/useApp'
 import { PasswordTextField } from 'components/Fields/Password'
-import { useAuth } from 'hooks/useAuth'
 import { HeaderFormLogin } from './HeaderForm'
 
 import PaletteFormProvider from '../Theme'
 
 export function LoginForm(): JSX.Element {
   const navigate = useNavigate()
-  const { loginAction } = useAuth()
+  const { loginAction } = useApp()
 
   const [email, setEmail] = useState('')
   const [pwd, setPwd] = useState('')
