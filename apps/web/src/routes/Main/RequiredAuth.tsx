@@ -1,9 +1,7 @@
-import { Box } from '@mui/material'
-
 import { useEffect, useState } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 
-import { Loading } from 'components/Loading'
+import { Loading } from '@/app/loading'
 import { MenuLogged } from 'components/Navigation/Menu-Logged'
 import { useAuth } from 'hooks/useAuth'
 import { getAccount, type ResponseAccount } from 'services/user'
@@ -63,10 +61,10 @@ function RequiredAuth(): JSX.Element {
       {loading ? (
         <Loading />
       ) : (
-        <Box sx={{ display: 'flex' }}>
+        <div>
           {!(location.pathname === '/account/new' || location.pathname === '/logout') && <MenuLogged />}
           <Outlet />
-        </Box>
+        </div>
       )}
     </>
   )

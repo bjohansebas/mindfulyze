@@ -5,11 +5,11 @@ import { FormattedMessage } from 'react-intl'
 
 import dayjs, { type Dayjs } from 'dayjs'
 
+import { Loading } from '@/app/loading'
 import { DateField } from 'components/Fields/Date'
 import { EmailField } from 'components/Fields/Email'
 import { NameField } from 'components/Fields/Name'
 import { RadioField, type RadioOption } from 'components/Fields/Radio'
-import { Loading } from 'components/Loading'
 
 import { useAuth } from 'hooks/useAuth'
 import {
@@ -211,10 +211,10 @@ export function AccountForm(): JSX.Element {
             />
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'center', gap: 3 }}>
-            <Button variant='contained'>
+            <Button variant='outlined'>
               <FormattedMessage id='button.password' defaultMessage='Change password' />
             </Button>
-            <Button variant='contained' onClick={onSave} disabled={loadingSave}>
+            <Button variant='outlined' onClick={onSave} disabled={loadingSave}>
               <FormattedMessage id='button.save' defaultMessage='Save' />
             </Button>
           </Box>

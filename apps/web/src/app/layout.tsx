@@ -1,8 +1,10 @@
+import './globals.css'
+
 import { AppProvider } from '@/context/appContext'
 import { Analytics } from '@vercel/analytics/react'
 import { Outlet } from 'react-router-dom'
 
-function MainPage(): JSX.Element {
+export const Layout = (): JSX.Element => {
   return (
     <AppProvider>
       <Outlet />
@@ -11,4 +13,4 @@ function MainPage(): JSX.Element {
   )
 }
 
-export { MainPage }
+export default Layout

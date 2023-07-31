@@ -1,33 +1,34 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
-import { Loading } from './components/Loading'
-import { ErrorPage } from './routes/Error'
+import { Loading } from './loading'
+
+import { ErrorPage } from '../routes/Error'
 
 const router = createBrowserRouter([
   {
     async lazy() {
-      const { MainPage } = await import('./routes/Main')
-      return { Component: MainPage }
+      const { Layout } = await import('./layout')
+      return { Component: Layout }
     },
     errorElement: <ErrorPage />,
     children: [
       {
         async lazy() {
-          const { SignLayoutPage } = await import('./routes/SignLayout')
+          const { SignLayoutPage } = await import('../routes/SignLayout')
           return { Component: SignLayoutPage }
         },
         children: [
           {
             path: '/login',
             async lazy() {
-              const { LoginPage } = await import('./routes/Login')
+              const { LoginPage } = await import('../routes/Login')
               return { Component: LoginPage }
             },
           },
           {
             path: '/signup',
             async lazy() {
-              const { SignUpPage } = await import('./routes/SignUp')
+              const { SignUpPage } = await import('../routes/SignUp')
               return { Component: SignUpPage }
             },
           },
@@ -35,70 +36,70 @@ const router = createBrowserRouter([
       },
       {
         async lazy() {
-          const { RequiredAuth } = await import('./routes/Main/RequiredAuth')
+          const { RequiredAuth } = await import('../routes/Main/RequiredAuth')
           return { Component: RequiredAuth }
         },
         children: [
           {
             index: true,
             async lazy() {
-              const { DashboardPage } = await import('./routes/Dashboard')
+              const { DashboardPage } = await import('../routes/Dashboard')
               return { Component: DashboardPage }
             },
           },
           {
             path: 'account',
             async lazy() {
-              const { AccountPage } = await import('./routes/Account')
+              const { AccountPage } = await import('../routes/Account')
               return { Component: AccountPage }
             },
           },
           {
             path: 'account/new',
             async lazy() {
-              const { NewProfilePage } = await import('./routes/SignUp/NewProfile')
+              const { NewProfilePage } = await import('../routes/SignUp/NewProfile')
               return { Component: NewProfilePage }
             },
           },
           {
             path: 'think/:id',
             async lazy() {
-              const { EditThinkPage } = await import('./routes/Think')
+              const { EditThinkPage } = await import('../routes/Think')
               return { Component: EditThinkPage }
             },
           },
           {
             path: 'think/new',
             async lazy() {
-              const { NewThinkPage } = await import('./routes/Think')
+              const { NewThinkPage } = await import('../routes/Think')
               return { Component: NewThinkPage }
             },
           },
           {
             path: 'place/new',
             async lazy() {
-              const { NewPlacePage } = await import('./routes/Place')
+              const { NewPlacePage } = await import('../routes/Place')
               return { Component: NewPlacePage }
             },
           },
           {
             path: 'place/:id',
             async lazy() {
-              const { ShowPlacePage } = await import('./routes/Place')
+              const { ShowPlacePage } = await import('../routes/Place')
               return { Component: ShowPlacePage }
             },
           },
           {
             path: 'place/:id/edit',
             async lazy() {
-              const { EditPlacePage } = await import('./routes/Place')
+              const { EditPlacePage } = await import('../routes/Place')
               return { Component: EditPlacePage }
             },
           },
           {
             path: 'logout',
             async lazy() {
-              const { LogoutPage } = await import('./routes/Logout')
+              const { LogoutPage } = await import('./logout/page')
               return { Component: LogoutPage }
             },
           },
@@ -108,6 +109,8 @@ const router = createBrowserRouter([
   },
 ])
 
-export function App(): JSX.Element {
+export const App = (): JSX.Element => {
   return <RouterProvider router={router} fallbackElement={<Loading />} />
 }
+
+export default App

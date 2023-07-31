@@ -1,29 +1,13 @@
-import { Box, Typography } from '@mui/material'
-
 import { Banner } from '@/components/Banner'
 
 export function HeaderFormSignUp(): JSX.Element {
   return (
-    <Box component='header' sx={{ display: 'flex', alignItems: 'center', gap: '24px', flexDirection: 'column' }}>
-      <Box>
-        <Banner widthFavicon={40} heightText={24.26} widthText={230} color='#ffffff' />
-      </Box>
-      <Box sx={{ width: '100%', px: '8px', gap: '8px', display: 'flex', flexDirection: 'column' }}>
-        <Typography
-          variant='h1'
-          color='primary.contrastText'
-          sx={{ fontSize: { md: '2.143rem', xs: '1.714rem' }, fontWeight: '600', lineHeight: '120%' }}
-        >
-          Sign Up
-        </Typography>
-        <Typography
-          variant='h2'
-          color='primary.contrastText'
-          sx={{ fontSize: '1.143rem', fontWeight: '600', lineHeight: '120%' }}
-        >
-          Sign up now and begin your journey of self-discovery!
-        </Typography>
-      </Box>
-    </Box>
+    <header className='flex items-center gap-6 flex-col'>
+      <Banner widthFavicon={40} heightText={24.26} widthText={230} />
+      <div className='w-full px-2 gap-2 flex flex-col'>
+        <h1 className='text-3xl font-extrabold'>Sign Up</h1>
+        <h2 className='text-xl font-semibold'>Sign up now and begin your journey of self-discovery!</h2>
+      </div>
+    </header>
   )
 }

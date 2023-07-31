@@ -1,101 +1,80 @@
-import { Box, Drawer as MuiDrawer } from '@mui/material'
-import { styled, type CSSObject, type Theme } from '@mui/material/styles'
+import { ArrowLeftOnRectangleIcon, HomeIcon, UserIcon } from '@heroicons/react/24/outline'
 
-import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded'
-import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded'
-import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded'
-
-import { useState } from 'react'
+import { Menu, Transition } from '@headlessui/react'
 import { FormattedMessage } from 'react-intl'
-import { useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-import { HeaderNavigationLogged } from './header'
+import { Banner } from '@/components/Banner'
+import { Fragment } from 'react'
 import { ListNavigationLogged } from './listMenu'
 
-const drawerWidth = 260
-
-const openedMixin = (theme: Theme): CSSObject => ({
-  width: drawerWidth,
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
-  }),
-  overflowX: 'hidden',
-})
-
-const closedMixin = (theme: Theme): CSSObject => ({
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  overflowX: 'hidden',
-  width: '70px',
-})
-
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })<{ open?: boolean }>(
-  ({ theme, open }) => ({
-    width: drawerWidth,
-    whiteSpace: 'nowrap',
-    boxSizing: 'border-box',
-    ...(open === true && {
-      ...openedMixin(theme),
-      '& .MuiDrawer-paper': openedMixin(theme),
-    }),
-    ...(open === false && {
-      ...closedMixin(theme),
-      '& .MuiDrawer-paper': closedMixin(theme),
-    }),
-  }),
-) as typeof MuiDrawer
-
-const pageLogin = [
+const routes = [
   {
-    text: <FormattedMessage id='menu.list.dashboard' defaultMessage='Dashboard' />,
+    text: <FormattedMessage id='menu.list.dashboard' defaultMessage='Home' />,
     route: '/',
-    icon: <DashboardRoundedIcon />,
+    icon: <HomeIcon />,
   },
 ]
 
-const settings = [
-  {
-    text: <FormattedMessage id='menu.account.setting' defaultMessage='Settings' />,
-    route: '/account',
-    icon: <SettingsRoundedIcon />,
-  },
-  {
-    text: <FormattedMessage id='menu.account.logout' defaultMessage='Logout' />,
-    route: '/logout',
-    icon: <LogoutRoundedIcon />,
-  },
-]
-
-export function MenuLogged(): JSX.Element {
-  const location = useLocation()
-
-  const [open, setOpen] = useState<boolean>(false)
-  const pathNow: string = location.pathname
-
+export const MenuLogged = (): JSX.Element => {
   return (
-    <Drawer variant='permanent' open={open}>
-      <Box
-        sx={{
-          height: '100%',
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          py: '6px',
-          px: '8px',
-        }}
-      >
-        <Box>
-          <HeaderNavigationLogged settingOpen={setOpen} isOpen={open} />
-          <ListNavigationLogged isOpen={open} listButtons={pageLogin} path={pathNow} />
-        </Box>
-        <Box>
-          <ListNavigationLogged isOpen={open} listButtons={settings} path={pathNow} />
-        </Box>
-      </Box>
-    </Drawer>
+    <nav className='h-16 w-screen flex justify-around py-[6px] px-10 min-[400px]:border-b-2  items-center z-50 max-[400px]:fixed max-[400px]:bottom-0 bg-white'>
+      <Link to='/' className='text-main-800 max-[400px]:hidden'>
+        <Banner />
+      </Link>
+      <div className='flex gap-4 font-semibold text-sm text-slate-700 items-center'>
+        <ListNavigationLogged listRoutes={routes} />
+        <Menu as='div' className='relative inline-block text-left z-10'>
+          <Menu.Button className='justify-center items-center py-2 hover:text-main-900'>
+            <UserIcon className='h-6 w-6' aria-hidden='true' />
+            <span className='max-[400px]:inline-block hidden'>
+              <FormattedMessage id='menu.account.profile' defaultMessage='Profile' />
+            </span>
+          </Menu.Button>
+          <Transition
+            as={Fragment}
+            enter='transition ease-out duration-100'
+            enterFrom='transform opacity-0 scale-95'
+            enterTo='transform opacity-100 scale-100'
+            leave='transition ease-in duration-75'
+            leaveFrom='transform opacity-100 scale-100'
+            leaveTo='transform opacity-0 scale-95'
+          >
+            <Menu.Items className='absolute right-0 mt-2 w-56 max-[400px]:bottom-16 max-[400px]:left-0 min-[400px]:origin-top-right max-[400px]:origin-bottom-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+              <div className='px-1 py-1 '>
+                <Menu.Item>
+                  {({ active }) => (
+                    <Link
+                      to='/account'
+                      className={`${
+                        active ? 'text-main-700' : 'text-gray-900'
+                      } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                    >
+                      <UserIcon className='mr-2 h-5 w-5' aria-hidden='true' />
+                      Account
+                    </Link>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <Link
+                      to='/logout'
+                      className={`${
+                        active ? 'text-main-700' : 'text-gray-900'
+                      } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                    >
+                      <ArrowLeftOnRectangleIcon className='mr-2 h-5 w-5' aria-hidden='true' />
+                      Log out
+                    </Link>
+                  )}
+                </Menu.Item>
+              </div>
+            </Menu.Items>
+          </Transition>
+        </Menu>
+      </div>
+    </nav>
   )
 }
+
+export default MenuLogged

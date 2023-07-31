@@ -14,7 +14,7 @@ import { CssBaseline } from '@mui/material'
 import { HelmetProvider } from 'react-helmet-async'
 import { IntlProvider } from 'react-intl'
 import messagesEs from 'translations/es.json'
-import { App } from './App'
+import App from './app/App'
 import PaletteProvider from './context/themeContext'
 
 const language = navigator.language.split(/[-_]/)[0]

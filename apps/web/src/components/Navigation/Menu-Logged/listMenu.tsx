@@ -1,4 +1,3 @@
-import { List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 import { Link } from 'react-router-dom'
 
 export interface ItemListButton {
@@ -8,41 +7,20 @@ export interface ItemListButton {
 }
 
 export interface ListNavigationProps {
-  isOpen: boolean
-  listButtons: ItemListButton[]
-  path: string
+  listRoutes: ItemListButton[]
 }
 
-export function ListNavigationLogged({ isOpen, listButtons, path }: ListNavigationProps): JSX.Element {
+export function ListNavigationLogged({ listRoutes }: ListNavigationProps): JSX.Element {
   return (
-    <List>
-      {listButtons.map(({ text, route, icon }, index) => (
-        <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-          <ListItemButton
-            component={Link}
-            selected={path === route}
-            sx={{
-              minHeight: 40,
-              marginTop: '6px',
-              justifyContent: isOpen ? 'initial' : 'center',
-              px: '15px',
-              borderRadius: '12px',
-            }}
-            to={route}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: isOpen ? 3 : 'auto',
-                justifyContent: 'center',
-              }}
-            >
-              {icon}
-            </ListItemIcon>
-            <ListItemText primary={text} sx={{ opacity: isOpen ? 1 : 0 }} />
-          </ListItemButton>
-        </ListItem>
+    <ul className='flex space-x-7'>
+      {listRoutes.map(({ text, route, icon }) => (
+        <li key={route}>
+          <Link to={route} className='flex flex-col hover:text-main-900 items-center'>
+            <span className='min-[400px]:hidden h-6 w-6'>{icon}</span>
+            {text}
+          </Link>
+        </li>
       ))}
-    </List>
+    </ul>
   )
 }
