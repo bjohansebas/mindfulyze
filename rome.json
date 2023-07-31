@@ -9,7 +9,7 @@
     "enabled": true
   },
   "files": {
-    "ignore": ["server/dist/*.js", "web/dist/*.js"]
+    "ignore": ["/**/dist/*.js"]
   },
   "linter": {
     "enabled": true,
