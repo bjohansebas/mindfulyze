@@ -6,7 +6,6 @@ import { Place } from 'modules/places/entities/place.entity'
 import { User } from 'modules/users/entities/user.entity'
 import { Think } from '../entities/think.entity'
 
-import { PlacesService } from 'modules/places/services/places.service'
 import { UsersService } from 'modules/users/services/users.service'
 
 import { Emotion } from '@/modules/emotions/entities/emotion.entity'
@@ -17,8 +16,8 @@ export class ThinksService {
   constructor(
     @InjectRepository(Think) private thinkRepo: Repository<Think>,
     @InjectRepository(Emotion) private emotionsRepo: Repository<Emotion>,
+    @InjectRepository(Place) private placeRepo: Repository<Place>,
     private userService: UsersService,
-    private placeService: PlacesService,
   ) {}
 
   async findById(id: string): Promise<Think> {
@@ -26,7 +25,7 @@ export class ThinksService {
       where: {
         id,
       },
-      relations: ['emotions', 'user', 'place'],
+      relations: ['emotions', 'user', 'places'],
     })
 
     if (!think) {
@@ -36,27 +35,18 @@ export class ThinksService {
     return think
   }
 
-  async findThinksByPlace(id: string) {
-    const thinksPlace: Think[] = await this.thinkRepo.find({
-      where: {
-        place: { id: id },
-      },
-      relations: ['place'],
-    })
-
-    return thinksPlace
-  }
-
   async create(idUser: string, payload: CreateThinkDto) {
     const user: User = await this.userService.findAccount(idUser)
 
-    const place: Place = await this.placeService.findById(payload.place)
-
     const newThink: Think = this.thinkRepo.create({
-      place: place,
       text: payload.text,
       user: user,
     })
+
+    if (payload?.places?.length > 0) {
+      const places = await this.placeRepo.findBy({ id: In(payload.places) })
+      newThink.places = places
+    }
 
     if (payload?.emotions?.length > 0) {
       const emotions = await this.emotionsRepo.findBy({ id: In(payload.emotions) })
@@ -73,6 +63,16 @@ export class ThinksService {
 
     if (payload.text) {
       think.text = payload.text
+    }
+
+    if (payload?.places?.length > 0) {
+      const places = await this.placeRepo.findBy({ id: In(payload.places) })
+      think.places = places
+    }
+
+    if (payload?.emotions?.length > 0) {
+      const emotions = await this.emotionsRepo.findBy({ id: In(payload.emotions) })
+      think.emotions = emotions
     }
 
     return this.thinkRepo.save(think).catch((e) => e)

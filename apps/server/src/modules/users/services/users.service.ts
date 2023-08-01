@@ -42,27 +42,12 @@ export class UsersService {
     return user
   }
 
-  async findPlaces(id_user: string) {
-    const user: User = await this.userRepo.findOne({
-      where: {
-        id: id_user,
-      },
-      relations: ['places', 'places.color'],
-    })
-
-    if (!user) {
-      throw new NotFoundException(`User #${id_user} not found`)
-    }
-
-    return user.places
-  }
-
   async findThinks(id_user: string) {
     const user: User = await this.userRepo.findOne({
       where: {
         id: id_user,
       },
-      relations: ['thinks', 'thinks.emotions', 'thinks.place'],
+      relations: ['thinks', 'thinks.emotions', 'thinks.places'],
     })
 
     return user?.thinks || []

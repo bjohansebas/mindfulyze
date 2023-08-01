@@ -35,10 +35,19 @@ export class Think {
     },
   )
   @JoinColumn({ name: 'place_id', foreignKeyConstraintName: 'fk_place_tk' })
-  place: Relation<Place>
+  @ManyToMany(
+    () => Place,
+    (place) => place.thinks,
+  )
+  @JoinTable({
+    name: 'think_places',
+    joinColumn: { name: 'think_id', foreignKeyConstraintName: 'fk_think_tk' },
+    inverseJoinColumn: { name: 'place_id', foreignKeyConstraintName: 'fk_place_tk' },
+  })
+  places: Relation<Place>[]
   @ManyToOne(
     () => User,
-    (user) => user.places,
+    (user) => user.thinks,
     {
       nullable: false,
       onDelete: 'CASCADE',

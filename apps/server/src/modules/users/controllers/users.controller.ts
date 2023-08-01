@@ -22,19 +22,9 @@ export class UsersController {
     return this.userService.findAccount(req.user.sub)
   }
 
-  @Get('places')
-  gePlaces(@Request() req) {
-    return this.userService.findPlaces(req.user.sub)
-  }
-
   @Get('thinks')
   getAllThinks(@Request() req) {
     return this.userService.findThinks(req.user.sub)
-  }
-
-  @Get('profile')
-  getProfile(@Request() req) {
-    return this.profileService.findProfile(req.user.sub)
   }
 
   @Post('profile')

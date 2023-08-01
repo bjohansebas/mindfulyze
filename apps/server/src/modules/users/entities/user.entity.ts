@@ -11,7 +11,6 @@ import {
 } from 'typeorm'
 
 import { Session } from 'auth/entities/session.entity'
-import { Place } from 'modules/places/entities/place.entity'
 import { Think } from 'modules/thinks/entities/think.entity'
 import { ProfileUser } from './profile.entity'
 
@@ -45,11 +44,6 @@ export class User {
     { nullable: true },
   )
   profile: Relation<ProfileUser>
-  @OneToMany(
-    () => Place,
-    (place) => place.user,
-  )
-  places: Relation<Place>[]
   @OneToMany(
     () => Think,
     (think) => think.user,

@@ -6,9 +6,9 @@ export class CreateThinkDto {
   @IsNotEmpty()
   @Length(5, 1000)
   readonly text: string
-  @IsNotEmpty()
-  @IsUUID()
-  readonly place: string
+  @IsOptional()
+  @IsUUID('4', { each: true })
+  readonly places: string[]
   @IsOptional()
   @IsUUID('4', { each: true })
   emotions: string[]

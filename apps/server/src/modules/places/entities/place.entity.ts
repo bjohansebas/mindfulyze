@@ -3,8 +3,8 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  ManyToMany,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
   Relation,
   UpdateDateColumn,
@@ -12,7 +12,6 @@ import {
 
 import { Think } from 'modules/thinks/entities/think.entity'
 import { Color } from 'modules/users/entities/color.entity'
-import { User } from 'modules/users/entities/user.entity'
 
 @Entity({
   name: 'places',
@@ -35,20 +34,9 @@ export class Place {
   )
   @JoinColumn({ name: 'color_id', foreignKeyConstraintName: 'fk_color_pl' })
   color: Relation<Color>
-  @ManyToOne(
-    () => User,
-    (user) => user.places,
-    {
-      nullable: false,
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
-    },
-  )
-  @JoinColumn({ name: 'user_id', foreignKeyConstraintName: 'fk_user_pl' })
-  user: Relation<User>
-  @OneToMany(
+  @ManyToMany(
     () => Think,
-    (think) => think.place,
+    (think) => think.places,
   )
   thinks: Relation<Think>[]
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
