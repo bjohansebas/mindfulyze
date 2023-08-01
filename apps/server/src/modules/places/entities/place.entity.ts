@@ -10,6 +10,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 
+import { Exclude } from 'class-transformer'
 import { Think } from 'modules/thinks/entities/think.entity'
 import { Color } from 'modules/users/entities/color.entity'
 
@@ -39,8 +40,10 @@ export class Place {
     (think) => think.places,
   )
   thinks: Relation<Think>[]
+  @Exclude()
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date
+  @Exclude()
   @UpdateDateColumn({ type: 'timestamp', name: 'updated_at' })
   updatedAt: Date
 }

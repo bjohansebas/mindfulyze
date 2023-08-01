@@ -8,6 +8,11 @@ import { PlacesService } from '../services/places.service'
 export class PlaceController {
   constructor(private placeService: PlacesService) {}
 
+  @Get()
+  getAllPlaces() {
+    return this.placeService.findAll()
+  }
+
   @Get(':id')
   getPlace(@Param('id', ParseUUIDPipe) id: string) {
     return this.placeService.findById(id)

@@ -10,6 +10,14 @@ export class PlacesService {
     @InjectRepository(Place) private placeRepo: Repository<Place>,
   ) {}
 
+  async findAll(): Promise<Place[]> {
+    const places: Place[] = await this.placeRepo.find({
+      relations: ['color'],
+    })
+
+    return places
+  }
+
   async findById(id: string): Promise<Place> {
     const place: Place = await this.placeRepo.findOne({
       where: {
