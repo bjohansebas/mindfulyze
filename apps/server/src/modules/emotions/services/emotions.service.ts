@@ -11,7 +11,9 @@ export class EmotionsService {
   ) {}
 
   async findAll(): Promise<Emotion[]> {
-    return this.emotionRepo.find()
+    return this.emotionRepo.find({
+      relations: ['color'],
+    })
   }
 
   async findById(id: string): Promise<Emotion> {

@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer'
 import {
   Column,
   CreateDateColumn,
@@ -8,13 +9,13 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 
-import { Exclude } from 'class-transformer'
 import { Emotion } from 'modules/emotions/entities/emotion.entity'
 
 @Entity({
   name: 'colors',
 })
 export class Color {
+  @Exclude()
   @PrimaryGeneratedColumn('uuid', {
     name: 'color_id',
   })
