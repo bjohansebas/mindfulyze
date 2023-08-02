@@ -5,30 +5,14 @@ import { BadRequestError } from '@/errors/typeErrors'
 
 import axios, { apiPrivate } from '../api/axios'
 
-import { DATE_REGEX, GENDER_REGEX, NAMES_REGEX } from '../utils/regex'
+import { NAMES_REGEX } from '../utils/regex'
 
-import { type ErrorRequest } from './login'
-import { type ResponseProfile } from './user'
+import { ErrorRequest } from '@/types/login'
+import { Account, NewProfile, Profile } from '@/types/user'
 
-export interface ResponseSignUpAccount {
-  email: string
-  id: string
-  changedPasswordAt: string
-  createdAt: string
-  updatedAt: string
-}
-
-export interface dataProfile {
-  firstName: string
-  lastName?: string
-  birth?: string
-  gender: string
-  preferenceLang: string
-}
-
-export async function postSignUpAccount(password: string, email: string): Promise<ResponseSignUpAccount> {
+export async function postSignUpAccount(password: string, email: string): Promise<Account> {
   try {
-    const response: AxiosResponse<ResponseSignUpAccount, ErrorRequest> = await axios.post('/auth/signup', {
+    const response: AxiosResponse<Account, ErrorRequest> = await axios.post('/auth/signup', {
       email,
       password,
     })
@@ -39,24 +23,15 @@ export async function postSignUpAccount(password: string, email: string): Promis
   }
 }
 
-export async function postNewProfile(data: dataProfile): Promise<ResponseProfile> {
+export async function postNewProfile(data: NewProfile): Promise<Profile> {
   try {
-    const testNames: boolean = NAMES_REGEX.test(data.firstName)
-    const testGender: boolean = GENDER_REGEX.test(data.gender)
+    const testName: boolean = NAMES_REGEX.test(data.name)
 
-    if (!testNames || (data.lastName != null && !NAMES_REGEX.test(data.lastName))) {
+    if (!testName) {
       throw new BadRequestError('Please enter a valid name')
     }
 
-    if (!testGender) {
-      throw new BadRequestError('Please enter a valid gender')
-    }
-
-    if (data?.birth != null && !DATE_REGEX.test(data?.birth)) {
-      throw new BadRequestError('Please enter a valid date')
-    }
-
-    const response: AxiosResponse<ResponseProfile, ErrorRequest> = await apiPrivate.post('/users/profile', { ...data })
+    const response: AxiosResponse<Profile, ErrorRequest> = await apiPrivate.post('/users/profile', { ...data })
 
     return response.data
   } catch (err) {

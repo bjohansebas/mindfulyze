@@ -1,13 +1,13 @@
 import { type AxiosResponse } from 'axios'
 
 import { managerErrorNetwork } from '@/errors'
+import { AllEmotions } from '@/types/emotion'
+import { ErrorRequest } from '@/types/login'
 import { apiPrivate as axios } from '../api/axios'
-import { type ErrorRequest } from './login'
-import { type ResponseRelationEmotion } from './think'
 
-export async function getStatisticsAll(): Promise<ResponseRelationEmotion> {
+export async function getStatisticsAll(): Promise<AllEmotions> {
   try {
-    const response: AxiosResponse<ResponseRelationEmotion, ErrorRequest> = await axios.get('/statistics/all')
+    const response: AxiosResponse<AllEmotions, ErrorRequest> = await axios.get('/statistics/all')
 
     return response.data
   } catch (err) {
@@ -15,9 +15,9 @@ export async function getStatisticsAll(): Promise<ResponseRelationEmotion> {
   }
 }
 
-export async function getStatisticsNegative(): Promise<ResponseRelationEmotion> {
+export async function getStatisticsNegative(): Promise<AllEmotions> {
   try {
-    const response: AxiosResponse<ResponseRelationEmotion, ErrorRequest> = await axios.get('/statistics/negative')
+    const response: AxiosResponse<AllEmotions, ErrorRequest> = await axios.get('/statistics/negative')
 
     return response.data
   } catch (err) {
@@ -25,9 +25,9 @@ export async function getStatisticsNegative(): Promise<ResponseRelationEmotion> 
   }
 }
 
-export async function getStatisticsPositive(): Promise<ResponseRelationEmotion> {
+export async function getStatisticsPositive(): Promise<AllEmotions> {
   try {
-    const response: AxiosResponse<ResponseRelationEmotion, ErrorRequest> = await axios.get('/statistics/positive')
+    const response: AxiosResponse<AllEmotions, ErrorRequest> = await axios.get('/statistics/positive')
 
     return response.data
   } catch (err) {

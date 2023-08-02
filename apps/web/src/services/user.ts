@@ -2,47 +2,14 @@ import { type AxiosResponse } from 'axios'
 
 import { managerErrorNetwork } from '@/errors'
 import { BadRequestError } from '@/errors/typeErrors'
+import { ErrorRequest } from '@/types/login'
+import { Account, Profile, UpdateAccount, UpdateProfile } from '@/types/user'
 import { apiPrivate as axios } from '../api/axios'
-import { DATE_REGEX, GENDER_REGEX, NAMES_REGEX } from '../utils/regex'
-import { type ErrorRequest } from './login'
+import { NAMES_REGEX } from '../utils/regex'
 
-export interface ResponseAccount {
-  id: string
-  email: string
-  changedPasswordAt: string
-  createdAt: string
-  updatedAt: string
-  profile?: ResponseProfile | null
-}
-
-export interface ResponseProfile {
-  firstName: string
-  lastName: string | null
-  birth: string | null
-  preferenceLang: string
-  gender: string
-  user: ResponseAccount
-  photo: string | null
-  id: string
-  createdAt: string
-  updatedAt: string
-}
-
-export interface UpdateAccount {
-  email: string
-}
-
-export interface UpdateProfile {
-  firstName?: string
-  lastName?: string | null
-  birth?: string | null
-  gender?: string
-  preferenceLang?: string
-}
-
-export async function getAccount(): Promise<ResponseAccount> {
+export async function getAccount(): Promise<Account> {
   try {
-    const response: AxiosResponse<ResponseAccount, ErrorRequest> = await axios.get('users/')
+    const response: AxiosResponse<Account, ErrorRequest> = await axios.get('users/')
 
     return response.data
   } catch (err) {
@@ -50,9 +17,9 @@ export async function getAccount(): Promise<ResponseAccount> {
   }
 }
 
-export async function putAccount(data: UpdateAccount): Promise<ResponseAccount> {
+export async function putAccount(data: UpdateAccount): Promise<Account> {
   try {
-    const response: AxiosResponse<ResponseAccount, ErrorRequest> = await axios.put('/users/account', data)
+    const response: AxiosResponse<Account, ErrorRequest> = await axios.put('/users/account', data)
 
     return response.data
   } catch (err) {
@@ -60,24 +27,13 @@ export async function putAccount(data: UpdateAccount): Promise<ResponseAccount> 
   }
 }
 
-export async function putProfile(data: UpdateProfile): Promise<ResponseProfile> {
+export async function putProfile(data: UpdateProfile): Promise<Profile> {
   try {
-    if (
-      (data.firstName != null && !NAMES_REGEX.test(data.firstName)) ||
-      (data.lastName != null && !NAMES_REGEX.test(data.lastName))
-    ) {
+    if (data.name != null && !NAMES_REGEX.test(data.name)) {
       throw new BadRequestError('Please enter a valid name')
     }
 
-    if (data.gender != null && GENDER_REGEX.test(data.gender)) {
-      throw new BadRequestError('Please enter a valid gender')
-    }
-
-    if (data?.birth != null && !DATE_REGEX.test(data?.birth)) {
-      throw new BadRequestError('Please enter a valid date')
-    }
-
-    const response: AxiosResponse<ResponseProfile, ErrorRequest> = await axios.put('/users/profile', data)
+    const response: AxiosResponse<Profile, ErrorRequest> = await axios.put('/users/profile', data)
 
     return response.data
   } catch (err) {
