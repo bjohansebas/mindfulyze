@@ -2,18 +2,18 @@ import { createContext, type Dispatch, type SetStateAction } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useLocalStorage, useSessionStorage } from 'usehooks-ts'
 
-import { type ResponseAccount } from '@/services/user'
+import { Account } from '@/types/user'
 import { getAccessToken, postLogin } from '../services/login'
 
 export interface AppContextProps {
   accessToken: string | null
   credential: string | null
   userId: string | null
-  userInfo: ResponseAccount | null
+  userInfo: Account | null
   setCredential: Dispatch<SetStateAction<string | null>>
   setAccessToken: Dispatch<SetStateAction<string | null>>
   setUserId: Dispatch<SetStateAction<string | null>>
-  setUserInfo: Dispatch<SetStateAction<ResponseAccount | null>>
+  setUserInfo: Dispatch<SetStateAction<Account | null>>
   loginAction: (email: string, password: string) => Promise<void>
   logoutAction: () => void
   newAccessToken: () => Promise<void>
@@ -28,7 +28,7 @@ export function AppProvider({ children }: React.PropsWithChildren): JSX.Element 
 
   const [credential, setCredential] = useLocalStorage<string | null>('credential', null)
   const [userId, setUserId] = useLocalStorage<string | null>('userId', null)
-  const [userInfo, setUserInfo] = useLocalStorage<ResponseAccount | null>('userInfo', null)
+  const [userInfo, setUserInfo] = useLocalStorage<Account | null>('userInfo', null)
 
   const loginAction = async (email: string, password: string): Promise<void> => {
     try {

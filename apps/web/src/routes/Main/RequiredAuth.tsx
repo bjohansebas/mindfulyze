@@ -3,8 +3,9 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 
 import { Loading } from '@/app/loading'
 import { useApp } from '@/hooks/useApp'
+import { Account } from '@/types/user'
 import { MenuLogged } from 'components/Navigation/Menu-Logged'
-import { getAccount, type ResponseAccount } from 'services/user'
+import { getAccount } from 'services/user'
 
 function RequiredAuth(): JSX.Element {
   const location = useLocation()
@@ -14,7 +15,7 @@ function RequiredAuth(): JSX.Element {
   const [loading, setLoading] = useState(true)
 
   const processLogin = async (): Promise<void> => {
-    let data: ResponseAccount
+    let data: Account
 
     if (credential == null || userId == null) {
       navigate('/login', { replace: true })
@@ -22,7 +23,7 @@ function RequiredAuth(): JSX.Element {
     }
 
     try {
-      const dataUser: ResponseAccount = await getAccount()
+      const dataUser: Account = await getAccount()
 
       data = dataUser
     } catch (err) {
