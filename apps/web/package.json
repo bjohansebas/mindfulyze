@@ -9,16 +9,16 @@
   "dependencies": {
     "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
-    "@fontsource/poppins": "5.0.5",
+    "@fontsource/poppins": "5.0.7",
     "@formatjs/intl-pluralrules": "5.2.4",
     "@headlessui/react": "1.7.16",
     "@heroicons/react": "2.0.18",
-    "@mui/icons-material": "5.14.1",
-    "@mui/material": "5.14.1",
+    "@mui/icons-material": "5.14.3",
+    "@mui/material": "5.14.3",
     "@nextui-org/react": "2.0.1",
     "@vercel/analytics": "1.0.1",
     "axios": "1.4.0",
-    "chart.js": "4.3.0",
+    "chart.js": "4.3.3",
     "framer-motion": "10.15.0",
     "jwt-decode": "3.1.2",
     "react": "18.2.0",
@@ -31,14 +31,14 @@
   },
   "devDependencies": {
     "@mui/types": "7.2.4",
-    "@types/react": "18.2.15",
+    "@types/react": "18.2.18",
     "@types/react-dom": "18.2.7",
-    "@vitejs/plugin-react": "4.0.3",
+    "@vitejs/plugin-react": "4.0.4",
     "autoprefixer": "10.4.14",
     "postcss": "8.4.27",
     "tailwindcss": "3.3.3",
     "typescript": "5.1.6",
-    "vite": "4.4.5",
+    "vite": "4.4.8",
     "vite-plugin-svgr": "3.2.0"
   }
 }
