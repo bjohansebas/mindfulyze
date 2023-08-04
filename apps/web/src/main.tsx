@@ -10,7 +10,7 @@ import '@formatjs/intl-pluralrules/locale-data/en'
 import '@formatjs/intl-pluralrules/locale-data/es'
 import '@formatjs/intl-pluralrules/polyfill'
 
-import { CssBaseline } from '@mui/material'
+import { NextUIProvider } from '@nextui-org/react'
 import { HelmetProvider } from 'react-helmet-async'
 import { IntlProvider } from 'react-intl'
 import messagesEs from 'translations/es.json'
@@ -21,10 +21,11 @@ const language = navigator.language.split(/[-_]/)[0]
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <IntlProvider locale={language} messages={messagesEs}>
-      <HelmetProvider>
-        <CssBaseline />
-        <App />
-      </HelmetProvider>
+      <NextUIProvider>
+        <HelmetProvider>
+          <App />
+        </HelmetProvider>
+      </NextUIProvider>
     </IntlProvider>
   </React.StrictMode>,
 )
