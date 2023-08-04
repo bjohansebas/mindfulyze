@@ -1,4 +1,5 @@
 import { Box, Button } from '@mui/material'
+import { Helmet } from 'react-helmet-async'
 
 import { useState, type FormEvent } from 'react'
 import { FormattedMessage } from 'react-intl'
@@ -8,13 +9,11 @@ import { useApp } from '@/hooks/useApp'
 import { postSignUpAccount } from 'services/signUp'
 import { EMAIL_REGEX, PWD_REGEX } from 'utils/regex'
 
+import { Banner } from '@/components/Banner'
 import { EmailField } from '@/components/Fields/Email'
 import { PasswordTextField } from 'components/Fields/Password'
-import { HeaderFormSignUp } from './HeaderSignUp'
 
-import PaletteFormProvider from '../Theme'
-
-export function SignUpForm(): JSX.Element {
+export const SignUpPage = (): JSX.Element => {
   const { loginAction } = useApp()
   const navigate = useNavigate()
 
@@ -55,41 +54,50 @@ export function SignUpForm(): JSX.Element {
   }
 
   return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        width: '100vw',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column',
-        background: 'linear-gradient(45deg, #00575C 0%, #002d32 100%)',
-        backgroundPosition: '0 0',
-        backgroundSize: '100% 100%',
-        py: { sm: '40px', xs: '0' },
-      }}
-    >
+    <>
+      <Helmet>
+        <title>Sign up | Mindfulyze</title>
+      </Helmet>
       <Box
         sx={{
+          minHeight: '100vh',
+          width: '100vw',
           display: 'flex',
-          justifyContent: ' center',
+          justifyContent: 'center',
+          alignItems: 'center',
           flexDirection: 'column',
-          width: { xs: '90%', sm: '60%', md: '50%', lg: '40%' },
-          gap: 4,
-          p: { sm: '40px 32px', xs: '40px 16px' },
-          borderRadius: '12px',
+          background: 'linear-gradient(45deg, #00575C 0%, #002d32 100%)',
+          backgroundPosition: '0 0',
+          backgroundSize: '100% 100%',
+          py: { sm: '40px', xs: '0' },
         }}
       >
-        <HeaderFormSignUp />
         <Box
-          component='form'
-          autoComplete='off'
-          onSubmit={async (e) => {
-            await handleSubmit(e)
+          sx={{
+            display: 'flex',
+            justifyContent: ' center',
+            flexDirection: 'column',
+            width: { xs: '90%', sm: '60%', md: '50%', lg: '40%' },
+            gap: 4,
+            p: { sm: '40px 32px', xs: '40px 16px' },
+            borderRadius: '12px',
           }}
-          sx={{ display: 'flex', flexDirection: 'column', gap: '32px' }}
         >
-          <PaletteFormProvider>
+          <header className='flex items-center gap-6 flex-col'>
+            <Banner widthFavicon={40} heightText={24.26} widthText={230} />
+            <div className='w-full px-2 gap-2 flex flex-col'>
+              <h1 className='text-3xl font-extrabold'>Sign Up</h1>
+              <h2 className='text-xl font-semibold'>Sign up now and begin your journey of self-discovery!</h2>
+            </div>
+          </header>
+          <Box
+            component='form'
+            autoComplete='off'
+            onSubmit={async (e) => {
+              await handleSubmit(e)
+            }}
+            sx={{ display: 'flex', flexDirection: 'column', gap: '32px' }}
+          >
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <EmailField
                 text={email}
@@ -140,9 +148,11 @@ export function SignUpForm(): JSX.Element {
                 <FormattedMessage id='signup.login.link' defaultMessage='Log in' />
               </Button>
             </Box>
-          </PaletteFormProvider>
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </>
   )
 }
+
+export default SignUpPage

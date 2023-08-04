@@ -1,7 +1,7 @@
-import { Box } from '@mui/material'
+import { Box, Stack } from '@mui/material'
 import { Helmet } from 'react-helmet-async'
-
-import { DashboardUI } from '@/components/Dashboard'
+import { UserWelcomeHeader } from './Header'
+import { ShowStatistics } from './Statistics/ShowStatistics'
 
 export function DashboardPage(): JSX.Element {
   return (
@@ -9,7 +9,10 @@ export function DashboardPage(): JSX.Element {
       <Helmet>
         <title>Dashboard | Mindfulyze</title>
       </Helmet>
-      <DashboardUI />
+      <Stack spacing={2} px='4px'>
+        <UserWelcomeHeader />
+        <ShowStatistics />
+      </Stack>
     </Box>
   )
 }

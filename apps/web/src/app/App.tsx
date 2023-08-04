@@ -14,21 +14,21 @@ const router = createBrowserRouter([
     children: [
       {
         async lazy() {
-          const { SignLayoutPage } = await import('../routes/SignLayout')
+          const { SignLayoutPage } = await import('./signup/layout')
           return { Component: SignLayoutPage }
         },
         children: [
           {
             path: '/login',
             async lazy() {
-              const { LoginPage } = await import('../routes/Login')
+              const { LoginPage } = await import('./login/page')
               return { Component: LoginPage }
             },
           },
           {
             path: '/signup',
             async lazy() {
-              const { SignUpPage } = await import('../routes/SignUp')
+              const { SignUpPage } = await import('./signup/page')
               return { Component: SignUpPage }
             },
           },
@@ -43,57 +43,15 @@ const router = createBrowserRouter([
           {
             index: true,
             async lazy() {
-              const { DashboardPage } = await import('../routes/Dashboard')
+              const { DashboardPage } = await import('./dashboard/page')
               return { Component: DashboardPage }
-            },
-          },
-          {
-            path: 'account',
-            async lazy() {
-              const { AccountPage } = await import('../routes/Account')
-              return { Component: AccountPage }
             },
           },
           {
             path: 'account/new',
             async lazy() {
-              const { NewProfilePage } = await import('../routes/SignUp/NewProfile')
+              const { NewProfilePage } = await import('./account/new/page')
               return { Component: NewProfilePage }
-            },
-          },
-          {
-            path: 'think/:id',
-            async lazy() {
-              const { EditThinkPage } = await import('../routes/Think')
-              return { Component: EditThinkPage }
-            },
-          },
-          {
-            path: 'think/new',
-            async lazy() {
-              const { NewThinkPage } = await import('../routes/Think')
-              return { Component: NewThinkPage }
-            },
-          },
-          {
-            path: 'place/new',
-            async lazy() {
-              const { NewPlacePage } = await import('../routes/Place')
-              return { Component: NewPlacePage }
-            },
-          },
-          {
-            path: 'place/:id',
-            async lazy() {
-              const { ShowPlacePage } = await import('../routes/Place')
-              return { Component: ShowPlacePage }
-            },
-          },
-          {
-            path: 'place/:id/edit',
-            async lazy() {
-              const { EditPlacePage } = await import('../routes/Place')
-              return { Component: EditPlacePage }
             },
           },
           {

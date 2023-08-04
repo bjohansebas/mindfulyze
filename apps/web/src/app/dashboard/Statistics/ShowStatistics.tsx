@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react'
 import { Doughnut } from 'react-chartjs-2'
 
 import { getStatisticsAll } from 'services/statistics'
-import { type ResponseRelationEmotion } from 'services/think'
 
+import { AllEmotions } from '@/types/emotion'
 import { EmptyStatistics } from './EmptyStatistics'
 import { StatisticsHeader } from './StatisticsHeader'
 
@@ -31,7 +31,7 @@ export const ShowStatistics = (): JSX.Element => {
     try {
       setLoading(true)
 
-      const dataResponse: ResponseRelationEmotion = await getStatisticsAll()
+      const dataResponse: AllEmotions = await getStatisticsAll()
 
       const positive = dataResponse.filter((emotion) => emotion.type === 'Positive').length
       const negative = dataResponse.filter((emotion) => emotion.type === 'Negative').length
