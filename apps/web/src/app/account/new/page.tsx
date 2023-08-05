@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { Banner } from '@/components/Banner'
 import { NameField } from '@/components/Fields/Name'
 import { NewProfile } from '@/types/user'
+import { Button } from '@nextui-org/react'
 import { postNewProfile } from 'services/signUp'
 import { NAMES_REGEX } from 'utils/regex'
 
@@ -12,22 +13,17 @@ export const NewProfilePage = (): JSX.Element => {
   const navigate = useNavigate()
 
   const [name, setName] = useState<string>('')
-  const [validFirstName, setValidFirstName] = useState<boolean>(false)
 
   const [loading, setLoading] = useState<boolean>(false)
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
     setLoading(true)
-    if (name != null) {
-      setLoading(false)
-      return
-    }
-    if (name != null && !NAMES_REGEX.test(name)) {
-      setLoading(false)
-      return
-    }
 
+    if (!NAMES_REGEX.test(name)) {
+      setLoading(false)
+      return
+    }
     const request: NewProfile = { name: name }
 
     try {
@@ -40,7 +36,7 @@ export const NewProfilePage = (): JSX.Element => {
   }
 
   return (
-    <div className='min-h-screen h-full w-screen flex items-center flex-col py-10 max-sm:px-0 bg-gradient-to-r from-main-900 to-main-950 text-white'>
+    <div className='min-h-screen h-full w-screen flex items-center flex-col py-10 max-sm:px-0 '>
       <div className='flex justify-center flex-col gap-4 rounded-xl lg:max-w-[40%] md:max-w-[50%] sm:max-w-[60%] w-[90%] sm:px-8 px-4 py-10        '>
         <header className='flex items-center gap-6 flex-col'>
           <Banner widthFavicon={40} heightText={24.26} widthText={230} />
@@ -56,15 +52,13 @@ export const NewProfilePage = (): JSX.Element => {
             <NameField
               text={name}
               setText={setName}
-              setValid={setValidFirstName}
-              errorRequest=''
               requiredValid={true}
               errorText='Please enter a real name.'
               label={<FormattedMessage id='profile.new.name.first' defaultMessage='First name *' />}
             />
-            <button disabled={!validFirstName || loading} type='submit'>
+            <Button disabled={loading} type='submit'>
               <FormattedMessage id='profile.new.submit' defaultMessage='Continue' />
-            </button>
+            </Button>
           </div>
         </form>
       </div>

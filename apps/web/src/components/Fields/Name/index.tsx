@@ -1,79 +1,51 @@
-import { Box, FormControl, FormHelperText, FormLabel, OutlinedInput } from '@mui/material'
+import { Input } from '@nextui-org/react'
 
-import { useEffect, useId, useState, type Dispatch, type SetStateAction } from 'react'
+import { useState, type Dispatch, type SetStateAction } from 'react'
 
 import { NAMES_REGEX } from 'utils/regex'
 
 export interface NameFieldProps {
   text: string
-  setText: Dispatch<SetStateAction<string>>
   label: JSX.Element
-  requiredValid?: boolean
-  errorRequest?: string
-  errorText?: string
   isDisable?: boolean
-  setValid?: Dispatch<SetStateAction<boolean>>
+  requiredValid?: boolean
+  errorText?: string
+  setText: Dispatch<SetStateAction<string>>
 }
 
 export function NameField({
   text,
   errorText,
-  errorRequest,
   setText,
   label,
   isDisable,
   requiredValid = false,
-  setValid,
 }: NameFieldProps): JSX.Element {
-  const fieldId = useId()
-  const [validityError, setValidityError] = useState<boolean>(true)
+  const [isValid, setIsValid] = useState<boolean>(true)
 
-  useEffect(() => {
-    if (requiredValid) {
-      setValidityError(NAMES_REGEX.test(text))
-      if (setValid !== undefined) {
-        setValid(NAMES_REGEX.test(text))
-      }
-    }
-  }, [text])
+  const validEmail = (input: string) => {
+    setIsValid(NAMES_REGEX.test(input))
+  }
+
+  const isError = !isValid ? 'invalid' : 'valid'
 
   return (
-    <FormControl variant='outlined'>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <FormLabel
-          htmlFor={`name-${fieldId}`}
-          error={(!validityError && text !== '') || errorRequest !== ''}
-          sx={{
-            pl: '8px',
-            '&.MuiFormLabel-root.Mui-error ~ .MuiInputBase-root .MuiSvgIcon-root': {
-              color: '#D25959',
-            },
-          }}
-        >
-          {label}
-        </FormLabel>
-        <OutlinedInput
-          id={`name-${fieldId}`}
-          value={text}
-          type='text'
-          onChange={(e) => {
-            setText(e.target.value)
-          }}
-          disabled={isDisable}
-          error={(!validityError && text !== '') || errorRequest !== ''}
-          placeholder=''
-        />
-      </Box>
-      {!validityError && text !== '' && (
-        <FormHelperText error id={`component-error-${fieldId}`}>
-          {errorText}
-        </FormHelperText>
-      )}
-      {errorRequest !== '' && (
-        <FormHelperText error id={`component-error-${fieldId}`}>
-          {errorRequest}
-        </FormHelperText>
-      )}
-    </FormControl>
+    <Input
+      type='text'
+      color='primary'
+      label={label}
+      value={text}
+      onChange={(e) => {
+        if (requiredValid && text != null) {
+          validEmail(e.target.value)
+        }
+        setText(e.target.value)
+      }}
+      disabled={isDisable}
+      variant='bordered'
+      errorMessage={!isValid ? errorText : ''}
+      validationState={requiredValid ? isError : 'valid'}
+      required
+    />
   )
 }

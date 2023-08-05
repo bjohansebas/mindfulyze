@@ -1,86 +1,46 @@
-import EmailRoundedIcon from '@mui/icons-material/EmailRounded'
-import { Box, FormControl, FormHelperText, FormLabel, InputAdornment, OutlinedInput } from '@mui/material'
+import { Input } from '@nextui-org/react'
 
-import { useEffect, useId, useState, type Dispatch, type SetStateAction } from 'react'
+import { useState, type Dispatch, type SetStateAction } from 'react'
 
 import { EMAIL_REGEX } from 'utils/regex'
 
 export interface EmailFieldProps {
-  text: string
-  setText: Dispatch<SetStateAction<string>>
+  text: string | undefined
   label: JSX.Element
-  requiredValid?: boolean
-  errorRequest?: string
-  errorText?: string
   isDisable?: boolean
-  setValid?: Dispatch<SetStateAction<boolean>>
+  requiredValid?: boolean
+  errorText?: string
+  setText: Dispatch<SetStateAction<string | undefined>>
 }
 
-export function EmailField({
-  text,
-  errorText,
-  errorRequest,
-  setText,
-  label,
-  isDisable,
-  requiredValid = false,
-  setValid,
-}: EmailFieldProps): JSX.Element {
-  const fieldId = useId()
-  const [validityError, setValidityError] = useState<boolean>(true)
+export const EmailField = ({ text, errorText, label, isDisable, requiredValid = false, setText }: EmailFieldProps) => {
+  const [isValid, setIsValid] = useState<boolean>(true)
 
-  useEffect(() => {
-    if (requiredValid) {
-      setValidityError(EMAIL_REGEX.test(text))
-      if (setValid !== undefined) {
-        setValid(EMAIL_REGEX.test(text))
-      }
-    }
-  }, [text])
+  const validEmail = (input: string) => {
+    setIsValid(EMAIL_REGEX.test(input))
+  }
+
+  const isError = !isValid ? 'invalid' : 'valid'
 
   return (
-    <FormControl variant='outlined'>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <FormLabel
-          htmlFor={`email-${fieldId}`}
-          error={(!validityError && text !== '') || errorRequest !== ''}
-          sx={{
-            pl: '8px',
-            '&.MuiFormLabel-root.Mui-error ~ .MuiInputBase-root .MuiSvgIcon-root': {
-              color: '#D25959',
-            },
-          }}
-        >
-          {label}
-        </FormLabel>
-        <OutlinedInput
-          id={`email-${fieldId}`}
-          value={text}
-          type='email'
-          onChange={(e) => {
-            setText(e.target.value)
-          }}
-          disabled={isDisable}
-          error={(!validityError && text !== '') || errorRequest !== ''}
-          placeholder='lorem@gmail.com'
-          required
-          startAdornment={
-            <InputAdornment position='start'>
-              <EmailRoundedIcon />
-            </InputAdornment>
-          }
-        />
-      </Box>
-      {!validityError && text !== '' && (
-        <FormHelperText error id={`component-error-${fieldId}`}>
-          {errorText}
-        </FormHelperText>
-      )}
-      {errorRequest !== '' && (
-        <FormHelperText error id={`component-error-${fieldId}`}>
-          {errorRequest}
-        </FormHelperText>
-      )}
-    </FormControl>
+    <Input
+      type='email'
+      color='primary'
+      label={label}
+      value={text}
+      onChange={(e) => {
+        if (requiredValid && text != null) {
+          validEmail(e.target.value)
+        }
+        setText(e.target.value)
+      }}
+      disabled={isDisable}
+      variant='bordered'
+      errorMessage={!isValid ? errorText : ''}
+      validationState={requiredValid ? isError : 'valid'}
+      required
+    />
   )
 }
+
+export default EmailField

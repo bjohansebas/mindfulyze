@@ -1,10 +1,10 @@
-import { VisibilityOffRounded, VisibilityRounded } from '@mui/icons-material'
-import KeyRoundedIcon from '@mui/icons-material/KeyRounded'
-import { Box, FormControl, FormHelperText, FormLabel, IconButton, InputAdornment, OutlinedInput } from '@mui/material'
+import { useEffect, useState, type Dispatch, type SetStateAction } from 'react'
 
-import { useEffect, useId, useState, type Dispatch, type SetStateAction } from 'react'
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline'
 
-import { PWD_REGEX } from 'utils/regex'
+import { Input } from '@nextui-org/react'
+
+import { PWD_REGEX } from '@/utils/regex'
 
 export interface PasswordTextFieldProps {
   text: string
@@ -12,122 +12,71 @@ export interface PasswordTextFieldProps {
   setText: Dispatch<SetStateAction<string>>
   requiredValid?: boolean
   comparePassword?: string
-  errorRequest?: string
   errorText?: string
   isDisable?: boolean
-  setValid?: Dispatch<SetStateAction<boolean>>
 }
 
-export function PasswordTextField({
+export const PasswordTextField = ({
   text,
   errorText,
-  errorRequest,
   comparePassword = '',
   setText,
   label,
   isDisable = false,
   requiredValid = false,
-  setValid,
-}: PasswordTextFieldProps): JSX.Element {
-  const fieldId = useId()
+}: PasswordTextFieldProps): JSX.Element => {
+  const [isValid, setIsValid] = useState<boolean>(true)
 
-  const [validityError, setValidityError] = useState<boolean>(false)
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [disable, setDisable] = useState<boolean>(isDisable)
 
-  const handleClickShowPassword = (): void => {
+  const toggleVisibility = (): void => {
     setShowPassword((show) => !show)
   }
 
+  const isError = !isValid ? 'invalid' : 'valid'
+
   useEffect(() => {
-    if (requiredValid) {
-      setValidityError(!PWD_REGEX.test(text))
-      if (setValid !== undefined) {
-        setValid(PWD_REGEX.test(text))
-      }
-    } else if (comparePassword !== '') {
-      setValidityError(text === comparePassword)
-      if (setValid !== undefined) {
-        setValid(text === comparePassword)
-      }
+    if (comparePassword !== '' && text !== '') {
+      setIsValid(text === comparePassword)
+    } else if (requiredValid && text !== '') {
+      setIsValid(PWD_REGEX.test(text))
     }
-  }, [text, comparePassword])
+  })
 
   useEffect(() => {
     if (isDisable) {
       setDisable(
-        (comparePassword !== text && !PWD_REGEX.test(text) && !PWD_REGEX.test(comparePassword)) ||
+        (comparePassword !== text && !PWD_REGEX.test(comparePassword) && !PWD_REGEX.test(text)) ||
           !PWD_REGEX.test(comparePassword),
       )
     }
-  }, [comparePassword, text])
+  }, [text, comparePassword])
 
   return (
-    <FormControl variant='outlined' disabled={disable}>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <FormLabel
-          htmlFor={`password-${fieldId}`}
-          error={
-            (((requiredValid && validityError && text !== '') ||
-              (PWD_REGEX.test(comparePassword) && comparePassword !== text)) &&
-              text !== '') ||
-            errorRequest !== ''
-          }
-          sx={{
-            pl: '8px',
-            '&.MuiFormLabel-root.Mui-error ~ .MuiInputBase-root .MuiSvgIcon-root': {
-              color: '#D25959',
-            },
-          }}
-        >
-          {label}
-        </FormLabel>
-        <OutlinedInput
-          id={`password-${fieldId}`}
-          value={text}
-          type={showPassword ? 'text' : 'password'}
-          onChange={(e) => {
-            setText(e.target.value)
-          }}
-          error={
-            (((requiredValid && validityError && text !== '') ||
-              (PWD_REGEX.test(comparePassword) && comparePassword !== text)) &&
-              text !== '') ||
-            errorRequest !== ''
-          }
-          placeholder='••••••••••••••'
-          required
-          startAdornment={
-            <InputAdornment position='start' sx={{ color: disable ? '#002d32' : '#EBF3F0' }}>
-              <KeyRoundedIcon />
-            </InputAdornment>
-          }
-          endAdornment={
-            <InputAdornment position='start'>
-              <IconButton
-                aria-label='toggle password visibility'
-                onClick={handleClickShowPassword}
-                color='primary'
-                edge='end'
-                disabled={disable}
-              >
-                {showPassword ? <VisibilityOffRounded /> : <VisibilityRounded />}
-              </IconButton>
-            </InputAdornment>
-          }
-        />
-      </Box>
-      {((requiredValid && validityError) || (PWD_REGEX.test(comparePassword) && comparePassword !== text)) &&
-        text !== '' && (
-          <FormHelperText error id={`error-text-${fieldId}`}>
-            {errorText}
-          </FormHelperText>
-        )}
-      {errorRequest !== '' && (
-        <FormHelperText error id={`error-text-${fieldId}`}>
-          {errorRequest}
-        </FormHelperText>
-      )}
-    </FormControl>
+    <Input
+      type={showPassword ? 'text' : 'password'}
+      label={label}
+      variant='bordered'
+      isDisabled={disable}
+      color='primary'
+      errorMessage={!isValid && !disable ? errorText : ''}
+      value={text}
+      validationState={requiredValid ? isError : 'valid'}
+      onChange={(e) => {
+        setText(e.target.value)
+      }}
+      endContent={
+        <button className='focus:outline-none' type='button' onClick={toggleVisibility}>
+          {showPassword ? (
+            <EyeSlashIcon className='text-2xl text-default-400 pointer-events-none' />
+          ) : (
+            <EyeIcon className='text-2xl text-default-400 pointer-events-none' />
+          )}
+        </button>
+      }
+    />
   )
 }
+
+export default PasswordTextField
