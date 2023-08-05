@@ -1,112 +1,78 @@
-import { Box, Button } from '@mui/material'
-import { Helmet } from 'react-helmet-async'
-import { FormattedMessage } from 'react-intl'
+import { Button } from '@nextui-org/react'
 
 import { useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
+import { FormattedMessage } from 'react-intl'
+
 import { Banner } from '@/components/Banner'
 import { EmailField } from '@/components/Fields/Email'
-import { useApp } from '@/hooks/useApp'
 import { PasswordTextField } from 'components/Fields/Password'
-export function LoginPage(): JSX.Element {
+
+import { useApp } from '@/hooks/useApp'
+import LayoutLogin from './layout'
+
+export const LoginPage = (): JSX.Element => {
   const navigate = useNavigate()
   const { loginAction } = useApp()
 
-  const [email, setEmail] = useState('')
-  const [pwd, setPwd] = useState('')
+  const [email, setEmail] = useState<string | undefined>('')
+  const [pwd, setPwd] = useState<string>('')
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
     setLoading(true)
     try {
+      if (email == null) return
       await loginAction(email, pwd)
       navigate('/')
     } catch (e) {
       setLoading(false)
     }
   }
+
   return (
-    <>
-      <Helmet>
-        <title>Log in | Mindfulyze</title>
-      </Helmet>
-      <Box
-        sx={{
-          minHeight: '100vh',
-          width: '100vw',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'column',
-          background: 'linear-gradient(45deg, #00575C 0%, #002d32 100%)',
-          backgroundPosition: '0 0',
-          backgroundSize: '100% 100%',
-          py: { sm: '40px', xs: '0' },
-        }}
-      >
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: ' center',
-            flexDirection: 'column',
-            width: { xs: '90%', sm: '60%', md: '50%', lg: '40%' },
-            gap: 4,
-            p: { sm: '40px 32px', xs: '40px 16px' },
-            borderRadius: '12px',
-          }}
-        >
-          <header className='flex items-center gap-6 flex-col text-white'>
-            <Banner widthFavicon={40} heightText={24.26} widthText={230} />
+    <LayoutLogin>
+      <div className='min-h-screen w-screen flex justify-center items-center flex-col sm:py-10'>
+        <div className='shadow-xl border flex justify-center flex-col gap-8 rounded-xl max-w-[90%] sm:max-w-[60%] md:max-w-[50%] lg:max-w-[40%] py-10 px-8 max-[640px]:px-4'>
+          <header className='flex items-center gap-6 flex-col text-primary-800'>
+            <Link to='/'>
+              <Banner widthFavicon={40} heightText={24.26} widthText={230} />
+            </Link>
             <div className='w-full px-2 gap-2 flex flex-col'>
               <h1 className='text-3xl font-extrabold'>Log in</h1>
               <h2 className='text-xl font-semibold'>Welcome back! Please enter your details.</h2>
             </div>
           </header>
-          <Box
-            component='form'
-            autoComplete='off'
-            onSubmit={handleSubmit}
-            sx={{ display: 'flex', flexDirection: 'column', gap: '32px' }}
-          >
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <form autoComplete='off' onSubmit={handleSubmit} className='flex flex-col gap-8'>
+            <div className='flex flex-col gap-4'>
               <EmailField
                 text={email}
                 setText={setEmail}
                 label={<FormattedMessage id='login.email' defaultMessage='Email' />}
-                errorRequest=''
               />
               <PasswordTextField
                 text={pwd}
                 setText={setPwd}
                 label={<FormattedMessage id='login.password' defaultMessage='Password' />}
-                errorRequest=''
               />
-            </Box>
-            <Box display='flex' sx={{ gap: { sm: '32px', xs: '16px' }, flexDirection: { xs: 'column', sm: 'row' } }}>
-              <Button
-                type='submit'
-                variant='contained'
-                size='large'
-                disabled={loading}
-                sx={{ width: '100%', borderRadius: '12px' }}
-              >
+            </div>
+            <div className='flex gap-4 max-[640px]:gap-4 flex-row max-[640px]:flex-col'>
+              <Button type='submit' color='primary' variant='solid' size='lg' disabled={loading} className='w-full'>
                 <FormattedMessage id='login.submit' defaultMessage='Log in' />
               </Button>
-              <Button
-                component={Link}
-                variant='outlined'
-                size='large'
-                to='/signup'
-                sx={{ width: { sm: '160px', sx: '100%' }, borderRadius: '12px' }}
-              >
-                <FormattedMessage id='login.signup.link' defaultMessage='Sign up' />
-              </Button>
-            </Box>
-          </Box>
-        </Box>
-      </Box>{' '}
-    </>
+              <Link to='/signup'>
+                <Button size='lg' color='primary'>
+                  <FormattedMessage id='login.signup.link' defaultMessage='Sign up' />
+                </Button>
+              </Link>
+            </div>
+          </form>
+        </div>
+      </div>
+    </LayoutLogin>
   )
 }
+
+export default LoginPage
