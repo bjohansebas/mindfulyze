@@ -1,4 +1,3 @@
-import { Box, Typography } from '@mui/material'
 import { isRouteErrorResponse, useRouteError } from 'react-router-dom'
 
 export function ErrorPage(): JSX.Element {
@@ -16,21 +15,10 @@ export function ErrorPage(): JSX.Element {
   }
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        height: '100vh',
-      }}
-    >
-      <Typography variant='h1'>Oops!</Typography>
-      <Typography paragraph>Sorry, an unexpected error has occurred.</Typography>
-      <Typography paragraph fontWeight={600}>
-        {errorMessage}
-      </Typography>
-    </Box>
+    <div className='flex flex-col items-center justify-center w-screen min-h-screen'>
+      <h1>Oops!</h1>
+      <p>Sorry, an unexpected error has occurred.</p>
+      <p className='font-bold'>{errorMessage}</p>
+    </div>
   )
 }

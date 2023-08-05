@@ -1,11 +1,12 @@
-import { CircularProgress } from '@mui/material'
+import { CircularProgress } from '@nextui-org/react'
+
 import { Banner } from '../components/Banner'
 
 export const Loading = (): JSX.Element => {
   return (
-    <div className='min-h-screen w-full flex relative bg-gradient-to-r from-main-900 to-main-950 justify-center items-center flex-col'>
-      <CircularProgress sx={{ color: '#EBF3F0' }} />
-      <div className='absolute bottom-[100px] text-white'>
+    <div className='min-h-screen w-full flex relative justify-center items-center flex-col'>
+      <CircularProgress aria-label='Loading...' size='lg' color='primary' />
+      <div className='absolute bottom-[100px] text-primary-900'>
         <Banner />
       </div>
     </div>

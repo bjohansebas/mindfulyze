@@ -23,7 +23,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <IntlProvider locale={language} messages={messagesEs}>
       <NextUIProvider>
         <HelmetProvider>
-          <App />
+          <main className='bg-background'>
+            <App />
+          </main>
         </HelmetProvider>
       </NextUIProvider>
     </IntlProvider>
