@@ -40,7 +40,7 @@ export class AuthService {
     const accessTokenExpires = dayjs.unix(accessTokentoken['exp']).toDate()
 
     const refreshToken: Session = await this.sessionService.create({ idUser: user.id, token: tokens.refreshToken })
-    
+
     return {
       id: user.id,
       email: user.email,

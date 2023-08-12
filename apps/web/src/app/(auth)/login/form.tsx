@@ -35,15 +35,15 @@ export function LoginForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col space-y-3 px-6 py-8 sm:px-16">
+      <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col space-y-3 px-6 py-8 sm:px-16'>
         <FormField
           control={form.control}
-          name="email"
+          name='email'
           render={({ field }) => (
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="" {...field} />
+                <Input placeholder='' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -51,18 +51,18 @@ export function LoginForm() {
         />
         <FormField
           control={form.control}
-          name="password"
+          name='password'
           render={({ field }) => (
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="" {...field} />
+                <Input type='password' placeholder='' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">Sign in</Button>
+        <Button type='submit'>Sign in</Button>
       </form>
     </Form>
   )
