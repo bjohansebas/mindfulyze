@@ -11,6 +11,7 @@ export class Session {
     name: 'session_id',
   })
   id: string
+  @Exclude()
   @Column({ type: 'varchar', name: 'token' })
   token: string
   @ManyToOne(
@@ -26,7 +27,6 @@ export class Session {
   user: Relation<User>
   @Column({ type: 'timestamp', name: 'expire' })
   expires: Date
-  @Exclude()
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date
 }

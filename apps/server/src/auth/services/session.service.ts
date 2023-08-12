@@ -35,8 +35,8 @@ export class SessionsService {
     return session
   }
 
-  async findSessionsByUser(idUser: string): Promise<Session> {
-    const session: Session = await this.sessionRepo.findOne({
+  async findSessionsByUser(idUser: string): Promise<Session[]> {
+    const session: Session[] = await this.sessionRepo.find({
       where: {
         user: {
           id: idUser,
