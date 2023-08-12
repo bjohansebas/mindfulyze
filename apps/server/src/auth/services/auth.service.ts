@@ -1,8 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { ConfigType } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
-import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
 
 import * as bcrypt from 'bcrypt'
 import { randomUUID } from 'crypto'
@@ -13,13 +11,14 @@ import { UsersService } from 'modules/users/services/users.service'
 import { User } from 'modules/users/entities/user.entity'
 
 import { CreateUserDto } from '@/modules/users/dtos/user.dto'
+import dayjs from 'dayjs'
 
 import config from '@/config'
+import { Session } from '../entities/session.entity'
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(User) private userRepo: Repository<User>,
     @Inject(config.KEY)
     private configService: ConfigType<typeof config>,
     private userService: UsersService,
@@ -29,21 +28,24 @@ export class AuthService {
 
   async createAccount(payload: CreateUserDto) {
     const newUser: User = await this.userService.createUser(payload)
-    const tokens = await this.generateTokens(newUser)
 
-    await this.sessionService.create({ idUser: newUser.id, token: tokens.refreshToken })
-
-    return tokens
+    return newUser
   }
 
   async singIn(user: User) {
     const tokens = await this.generateTokens(user)
 
-    await this.sessionService.create({ idUser: user.id, token: tokens.refreshToken })
+    const accessTokentoken = this.jwtService.decode(tokens.accessToken)
 
+    const accessTokenExpires = dayjs.unix(accessTokentoken['exp']).toDate()
+
+    const refreshToken: Session = await this.sessionService.create({ idUser: user.id, token: tokens.refreshToken })
+    
     return {
       id: user.id,
       email: user.email,
+      refreshTokenExpires: refreshToken.expires,
+      accessTokenExpires,
       ...tokens,
     }
   }
@@ -74,8 +76,10 @@ export class AuthService {
     const user = await this.userService.findAccount(token['sub'])
 
     const { accessToken } = await this.generateTokens(user)
+    const accessTokentoken = this.jwtService.decode(accessToken)
 
-    return { accessToken }
+    const accessTokenExpires = dayjs.unix(accessTokentoken['exp']).toDate()
+    return { accessToken, accessTokenExpires }
   }
 
   async generateTokens(user: User) {
