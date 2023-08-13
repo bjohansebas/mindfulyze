@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES2017",
     "lib": [
       "dom",
       "dom.iterable",
@@ -28,27 +28,6 @@
       "@/*": [
         "src/*",
       ],
-      "components/*": [
-        "src/components/*"
-      ],
-      "@/lib/utils": [
-        "src/lib/utils"
-      ],
-      "services/*": [
-        "src/services/*"
-      ],
-      "assets/*": [
-        "src/assets/*"
-      ],
-      "translations/*": [
-        "src/translations/*"
-      ],
-      "utils/*": [
-        "src/utils/*"
-      ],
-      "api/*": [
-        "src/api/*"
-      ]
     },
   },
   "include": [
