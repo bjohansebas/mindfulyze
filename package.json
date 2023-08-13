@@ -3,18 +3,25 @@
   "workspaces": ["apps/**", "packages/**"],
   "scripts": {
     "co": "sui-mono commit",
-    "dev": "turbo run dev --parallel",
-    "dev:server": "pnpm --filter server run dev",
-    "dev:web": "pnpm --filter web run dev",
+    "clean": "git clean -xdf node_modules",
+    "clean:workspaces": "turbo clean",
+    "db:docker:startup": "docker compose --profile db up -d",
+    "db:docker:shutdown": "docker compose --profile db down",
+    "db:generate": "turbo db:generate",
+    "db:push": "turbo db:push db:generate",
+    "app:docker:startup": "pnpm i && docker compose --profile dev up -d",
+    "app:docker:shutdown": "pnpm clean:workspaces && docker compose --profile dev down",
     "build": "turbo run build",
-    "build:server": "pnpm --filter server run build",
-    "build:web": "pnpm --filter web run build",
-    "prod:server": "pnpm --filter server run start:prod",
-    "format": "rome format . --write",
-    "lint": "rome check . --apply"
+    "dev": "turbo run dev --parallel",
+    "dev:web": "pnpm --filter web run dev",
+    "format": "rome format .",
+    "format:fix": "rome format . --write",
+    "lint": "rome check . && turbo lint",
+    "lint:fix": "rome check . --apply"
   },
   "devDependencies": {
     "@s-ui/mono": "2.35.0",
+    "husky": "8.0.3",
     "rome": "12.1.3",
     "turbo": "1.10.12"
   },
