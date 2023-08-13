@@ -1,58 +1,89 @@
+import prisma from '@/lib/prisma'
+import { PrismaAdapter } from '@next-auth/prisma-adapter'
+
 import { AuthOptions } from 'next-auth'
-import CredentialsProvider from 'next-auth/providers/credentials'
+import GoogleProvider from 'next-auth/providers/google'
+
+// const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL
+
 export const authOptions: AuthOptions = {
   session: {
     strategy: 'jwt',
   },
-  pages: {
-    signIn: '/login',
-  },
+
   providers: [
-    CredentialsProvider({
-      id: 'credentials',
-      name: 'Credential',
-      type: 'credentials',
-      credentials: {
-        email: { label: 'Email', type: 'email' },
-        password: { label: 'Password', type: 'password' },
-      },
-      async authorize(credentials, req) {
-        const res = await fetch(`${process.env.API_URL}/auth/login`, {
-          method: 'POST',
-          body: JSON.stringify(credentials),
-          headers: { 'Content-type': 'application/json' },
-        })
-
-        const user = await res.json()
-
-        if (res.ok && user) {
-          return user
-        }
-
-        return null
-      },
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      allowDangerousEmailAccountLinking: true,
     }),
   ],
+  adapter: PrismaAdapter(prisma),
+  // cookies: {
+  //   sessionToken: {
+  //     name: `${VERCEL_DEPLOYMENT ? '__Secure-' : ''}next-auth.session-token`,
+  //     options: {
+  //       httpOnly: true,
+  //       sameSite: 'lax',
+  //       path: '/',
+  //       // When working on localhost, the cookie domain must be omitted entirely (https://stackoverflow.com/a/1188145)
+  //       domain: VERCEL_DEPLOYMENT ? '.mindfulyze.com' : undefined,
+  //       secure: VERCEL_DEPLOYMENT,
+  //     },
+  //   },
+  // },
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        const { accessToken, refreshToken } = user
-        token.accessToken = accessToken
-        token.refreshToken = refreshToken
+    signIn: async ({ user, account, profile }) => {
+      if (!user.email) {
+        return false
       }
-      // if (Date.now() < token.accessTokenExpires) {
-      return token
-      // }
+      if (account?.provider === 'google') {
+        const userExists = await prisma.user.findUnique({
+          where: { email: user.email },
+          select: { name: true },
+        })
+        // if the user already exists via email,
+        // update the user with their name and image from Google
+        if (userExists && !userExists.name) {
+          await prisma.user.update({
+            where: { email: user.email },
+            data: {
+              name: profile?.name,
+              // @ts-ignore - this is a bug in the types, `picture` is a valid on the `Profile` type
+              image: profile?.picture,
+            },
+          })
+        }
+      }
 
-      // const updatedToken = await refreshAccessToken(token)
-
-      // return updatedToken
+      return true
     },
-    async session({ session, token }) {
-      session.user.accessToken = token.accessToken
-      // session.accessTokenExpiry = token.accessTokenExpiry
-      return Promise.resolve(session)
+    jwt: async ({ token, user, trigger }) => {
+      if (!token.email) {
+        return {}
+      }
+      if (user) {
+        token.user = user
+      }
+
+      if (trigger === 'update') {
+        const refreshedUser = await prisma.user.findUnique({
+          where: { id: token.sub },
+        })
+        token.user = refreshedUser
+        token.name = refreshedUser?.name
+        token.email = refreshedUser?.email
+        token.image = refreshedUser?.image
+      }
+      return token
+    },
+    session: async ({ session, token }) => {
+      session.user = {
+        // @ts-ignore
+        id: token.sub,
+        ...session.user,
+      }
+      return session
     },
   },
-  secret: process.env.NEXTAUTH_SECRET,
 }
