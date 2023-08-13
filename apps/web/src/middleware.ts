@@ -1,20 +1,38 @@
-import { parse } from '@/lib/middleware/utils'
 import { getToken } from 'next-auth/jwt'
-import { type NextRequest, NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
+import { User } from './@types/user'
+import { PRIVATE_ROUTES } from './lib/constants'
+import { parse } from './lib/middleware/utils'
 
-export async function middleware(req: NextRequest) {
-  const { path } = parse(req)
+export default async function middleware(req: NextRequest) {
+  const { key, path } = parse(req)
 
-  const session = await getToken({
+  const session = (await getToken({
     req,
     secret: process.env.NEXTAUTH_SECRET,
-  })
+  })) as {
+    email?: string
+    user?: User
+  }
 
-  // if there's a session
-  if (session?.email) {
-    // if the path is /login or /signup, redirect to "/"
-    if (path === '/login' || path === '/signup') {
-      return NextResponse.redirect(new URL('/', req.url))
+  // if there's no session and the path isn't /login or /register, redirect to /login
+  if (!session?.email && PRIVATE_ROUTES.has(key)) {
+    return NextResponse.redirect(new URL(`/login${path !== '/' ? `?next=${encodeURIComponent(path)}` : ''}`, req.url))
+
+    // if there's a session
+  } else if (session?.email) {
+    // if the user was created in the last 10s and the path isn't /welcome, redirect to /welcome
+    // (this is a workaround because the `isNewUser` flag is triggered when a user does `dangerousEmailAccountLinking`)
+    if (
+      session?.user?.createdAt &&
+      new Date(session?.user?.createdAt).getTime() > Date.now() - 10000 &&
+      path !== '/welcome'
+    ) {
+      return NextResponse.redirect(new URL('/welcome', req.url))
+
+      // if the path is /login or /signup, redirect to "/home"
+    } else if (path === '/login' || path === '/signup') {
+      return NextResponse.redirect(new URL('/home', req.url))
     }
   }
 
