@@ -3,15 +3,16 @@ import './globals.css'
 import { Analytics } from '@vercel/analytics/react'
 
 import type { Metadata } from 'next'
-import { Poppins } from 'next/font/google'
+import { Inter, Poppins } from 'next/font/google'
 
 import { Toaster } from '@/components/ui/toaster'
 
+import { cn } from '@/lib/utils'
 import { NextAuthProvider } from './providers'
 
 const poppins = Poppins({
   subsets: ['latin'],
-  weight: ['600', '700', '400'],
+  weight: ['400', '500', '600'],
   display: 'swap',
   variable: '--font-poppins',
 })
@@ -29,7 +30,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body className={poppins.variable}>
+      <body className={cn(poppins.variable)}>
         <NextAuthProvider>{children}</NextAuthProvider>
         <Toaster />
         <Analytics />
