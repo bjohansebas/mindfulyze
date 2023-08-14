@@ -1,69 +1,38 @@
 'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import * as z from 'zod'
+import { useSearchParams } from 'next/navigation'
 
+import Google from '@/components/icons/google'
 import { Button } from '@/components/ui/button'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
+import { useToast } from '@/components/ui/use-toast'
 import { signIn } from 'next-auth/react'
-
-const FormSchema = z.object({
-  email: z
-    .string()
-    .min(1, {
-      message: 'This is not a valid Email',
-    })
-    .email('This is not a valid Email'),
-  password: z.string().min(8, { message: 'Password must be at least 8 characters.' }).max(50),
-})
+import { useEffect } from 'react'
 
 export function LoginForm() {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      email: '',
-      password: '',
-    },
-  })
+  const searchParams = useSearchParams()
+  const { toast } = useToast()
+  const next = searchParams?.get('next')
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    const { email, password } = data
-    signIn('credentials', { email, password, callbackUrl: '/' })
-  }
+  useEffect(() => {
+    const error = searchParams?.get('error')
+    if (error) {
+      toast({ description: error, variant: 'destructive' })
+    }
+  }, [searchParams])
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col space-y-3 px-6 py-8 sm:px-16'>
-        <FormField
-          control={form.control}
-          name='email'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input placeholder='' {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='password'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <Input type='password' placeholder='' {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type='submit'>Sign in</Button>
-      </form>
-    </Form>
+    <div>
+      <Button
+        onClick={() => {
+          signIn('google', {
+            ...(next && next.length > 0 ? { callbackUrl: next } : {}),
+          })
+        }}
+        className='w-full'
+        size='lg'
+      >
+        <Google className='mr-2 h-4 w-4' /> Continue with Google
+      </Button>
+    </div>
   )
 }
