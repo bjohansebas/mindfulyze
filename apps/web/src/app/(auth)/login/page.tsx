@@ -1,8 +1,13 @@
 import Logo from '@/components/icons/logo'
 import { Button } from '@/components/ui/button'
+import { Metadata } from 'next'
 import Link from 'next/link'
 import { Suspense } from 'react'
 import { LoginForm } from './form'
+
+export const metadata: Metadata = {
+  title: 'Sign in to Mindfulyze',
+}
 
 export default function Login() {
   return (
@@ -19,7 +24,6 @@ export default function Login() {
           fallback={
             <div className='flex flex-col space-y-3 bg-gray-50 px-4 py-8 sm:px-16'>
               <Button disabled={true} variant='secondary' className='w-full' size='lg' />
-              <div className='mx-auto h-5 w-3/4 rounded-lg bg-gray-100' />
             </div>
           }
         >

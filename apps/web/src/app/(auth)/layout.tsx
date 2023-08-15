@@ -1,9 +1,4 @@
 import Background from '@/components/background'
-import type { Metadata } from 'next'
-
-export const metadata: Metadata = {
-  title: 'Sign in to Mindfulyze',
-}
 
 export default function AuthLayout({
   children,
