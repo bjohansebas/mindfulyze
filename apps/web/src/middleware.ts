@@ -1,7 +1,7 @@
 import { getToken } from 'next-auth/jwt'
 import { NextRequest, NextResponse } from 'next/server'
 import { User } from './@types/user'
-import { PRIVATE_ROUTES } from './lib/constants'
+import { PRIVATE_APP_ROUTES } from './lib/constants'
 import { parse } from './lib/middleware/utils'
 
 export default async function middleware(req: NextRequest) {
@@ -16,7 +16,7 @@ export default async function middleware(req: NextRequest) {
   }
 
   // if there's no session and the path isn't /login or /register, redirect to /login
-  if (!session?.email && PRIVATE_ROUTES.has(key)) {
+  if (!session?.email && PRIVATE_APP_ROUTES.has(key)) {
     return NextResponse.redirect(new URL(`/login${path !== '/' ? `?next=${encodeURIComponent(path)}` : ''}`, req.url))
 
     // if there's a session

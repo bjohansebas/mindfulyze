@@ -1,1 +1,1 @@
-export const PRIVATE_ROUTES = new Set(['home', 'stats', 'settings', 'welcome'])
+export const PRIVATE_APP_ROUTES = new Set(['home', 'stats', 'settings', 'welcome'])
