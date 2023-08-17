@@ -3,12 +3,11 @@ import './globals.css'
 import { Analytics } from '@vercel/analytics/react'
 
 import type { Metadata } from 'next'
-import { Inter, Poppins } from 'next/font/google'
+import { Poppins } from 'next/font/google'
 
-import { Toaster } from '@/components/ui/toaster'
+import { Toaster } from 'components/ui/toaster'
 
 import { cn } from '@/lib/utils'
-import Head from 'next/head'
 import { NextAuthProvider } from './providers'
 
 const poppins = Poppins({

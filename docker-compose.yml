@@ -15,12 +15,6 @@ services:
     volumes:
       - ./:/app
       - /app/node_modules
-      - /app/packages/api/node_modules
-      - /app/packages/auth/node_modules
-      - /app/packages/config/node_modules
-      - /app/packages/db/node_modules
-      - /app/apps/nextjs/node_modules
-      - /app/apps/nextjs/.next
     networks:
       - startedProject
     depends_on:

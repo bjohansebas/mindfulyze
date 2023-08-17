@@ -2,15 +2,23 @@
 
 import { useSearchParams } from 'next/navigation'
 
-import Google from '@/components/icons/google'
-import { Button } from '@/components/ui/button'
-import { useToast } from '@/components/ui/use-toast'
+import Google from 'components/icons/google'
+import { Button } from 'components/ui/button'
+import { useToast } from 'components/ui/use-toast'
 import { signIn } from 'next-auth/react'
+import { useEffect } from 'react'
 
-export function SignUpForm() {
+export function LoginForm() {
   const searchParams = useSearchParams()
   const { toast } = useToast()
   const next = searchParams?.get('next')
+
+  useEffect(() => {
+    const error = searchParams?.get('error')
+    if (error) {
+      toast({ description: error, variant: 'destructive' })
+    }
+  }, [searchParams])
 
   return (
     <div>

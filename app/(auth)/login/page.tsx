@@ -1,5 +1,5 @@
-import Logo from '@/components/icons/logo'
-import { Button } from '@/components/ui/button'
+import Logo from 'components/icons/logo'
+import { Button } from 'components/ui/button'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { Suspense } from 'react'

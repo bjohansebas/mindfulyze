@@ -4,7 +4,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
-import { capitalize } from './src/lib/utils'
+import { capitalize } from './lib/utils'
 
 export const BlogPost = defineDocumentType(() => ({
   name: 'BlogPost',

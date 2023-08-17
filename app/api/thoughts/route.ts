@@ -1,9 +1,9 @@
 import { authOptions } from '@/lib/auth'
 import prisma from '@/lib/prisma'
 
-import { validateThought } from '@/schemas/thought'
 import { getServerSession } from 'next-auth'
 import { NextResponse } from 'next/server'
+import { validateThought } from 'schemas/thought'
 
 // POST /api/thoughts
 export async function POST(req: Request) {
