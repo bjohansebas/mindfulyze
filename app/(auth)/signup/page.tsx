@@ -1,13 +1,13 @@
-import Logo from 'components/icons/logo'
-import { Button } from 'components/ui/button'
-import { Metadata } from 'next'
+import Logo from '@/components/shared/icons/logo'
+import { constructMetadata } from '@/lib/metadata'
+import { Button } from '@/ui/button'
 import Link from 'next/link'
 import { Suspense } from 'react'
 import { SignUpForm } from './form'
 
-export const metadata: Metadata = {
+export const metadata = constructMetadata({
   title: 'Sign up to Mindfulyze',
-}
+})
 
 export default function SignUp() {
   return (

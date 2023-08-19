@@ -2,9 +2,9 @@
 
 import { useSearchParams } from 'next/navigation'
 
-import Google from 'components/icons/google'
-import { Button } from 'components/ui/button'
-import { useToast } from 'components/ui/use-toast'
+import Google from '@/components/shared/icons/google'
+import { Button } from '@/ui/button'
+import { useToast } from '@/ui/use-toast'
 import { signIn } from 'next-auth/react'
 import { useEffect } from 'react'
 
@@ -25,7 +25,7 @@ export function LoginForm() {
       <Button
         onClick={() => {
           signIn('google', {
-            ...(next && next.length > 0 ? { callbackUrl: next } : {}),
+            ...(next && next.length > 0 ? { callbackUrl: next } : { callbackUrl: '/home' }),
           })
         }}
         className='w-full'
