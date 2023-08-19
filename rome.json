@@ -8,8 +8,14 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "recommended": true,
+      "a11y": {
+        "noSvgWithoutTitle": "off"
+      }
     }
+  },
+  "files": {
+    "ignore": ["./ui/editor/*.ts"]
   },
   "formatter": {
     "enabled": true,
