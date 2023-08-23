@@ -4,7 +4,7 @@ import useLocalStorage from '@/lib/hooks/useLocalStorage'
 import { EditorContent, useEditor } from '@tiptap/react'
 import { useEffect, useState } from 'react'
 import { useDebouncedCallback } from 'use-debounce'
-// import { EditorBubbleMenu } from "./components/bubble-menu";
+import { EditorBubbleMenu } from './components/bubble-menu'
 import { TiptapExtensions } from './extensions'
 import { TiptapEditorProps } from './props'
 
@@ -16,7 +16,7 @@ export default function Editor() {
   const debouncedUpdates = useDebouncedCallback(async ({ editor }) => {
     const json = editor.getJSON()
     setContent(json)
-  }, 500)
+  }, 250)
 
   const editor = useEditor({
     extensions: TiptapExtensions,
@@ -41,9 +41,10 @@ export default function Editor() {
       onClick={() => {
         editor?.chain().focus().run()
       }}
-      className='relative min-h-[500px] w-full max-w-screen-lg border-stone-200 bg-white p-12 px-8 sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:px-12 sm:shadow-lg'
+      className='
+      overflow-y-auto overflow-hidden relative min-h-48 h-48 w-full max-w-screen-sm max-h-56 border-stone-200 bg-white p-6 sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:px-6 sm:shadow-lg'
     >
-      {/* {editor && <EditorBubbleMenu editor={editor} />} */}
+      {editor && <EditorBubbleMenu editor={editor} />}
       <EditorContent editor={editor} />
     </div>
   )
