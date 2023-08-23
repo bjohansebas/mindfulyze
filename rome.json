@@ -14,9 +14,6 @@
       }
     }
   },
-  "files": {
-    "ignore": ["./ui/editor/*.ts"]
-  },
   "formatter": {
     "enabled": true,
     "indentSize": 2,

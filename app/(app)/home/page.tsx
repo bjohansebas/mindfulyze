@@ -1,3 +1,5 @@
+import Editor from '@/ui/editor'
+
 export default function Page() {
-  return <h1>Soon home</h1>
+  return <Editor />
 }
