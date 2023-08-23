@@ -1,3 +1,5 @@
+import '@/styles/prosemirror.css'
+
 import Background from '@/ui/background'
 import Nav from '@/ui/home/nav'
 
