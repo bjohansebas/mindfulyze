@@ -1,14 +1,10 @@
 import '@/styles/globals.css'
 
-import { Analytics } from '@vercel/analytics/react'
-
 import { Poppins } from 'next/font/google'
-
-import { Toaster } from '@/ui/toaster'
 
 import { constructMetadata } from '@/lib/metadata'
 import { cn } from '@/lib/utils'
-import { NextAuthProvider } from './providers'
+import { Provider } from './providers'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -27,9 +23,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={cn(poppins.variable)}>
-        <NextAuthProvider>{children}</NextAuthProvider>
-        <Toaster />
-        <Analytics />
+        <Provider>{children}</Provider>
       </body>
     </html>
   )

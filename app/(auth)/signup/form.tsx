@@ -4,12 +4,10 @@ import { useSearchParams } from 'next/navigation'
 
 import Google from '@/components/shared/icons/google'
 import { Button } from '@/ui/button'
-import { useToast } from '@/ui/use-toast'
 import { signIn } from 'next-auth/react'
 
 export function SignUpForm() {
   const searchParams = useSearchParams()
-  const { toast } = useToast()
   const next = searchParams?.get('next')
 
   return (

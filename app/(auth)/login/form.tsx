@@ -4,20 +4,17 @@ import { useSearchParams } from 'next/navigation'
 
 import Google from '@/components/shared/icons/google'
 import { Button } from '@/ui/button'
-import { useToast } from '@/ui/use-toast'
 import { signIn } from 'next-auth/react'
 import { useEffect } from 'react'
+import { toast } from 'sonner'
 
 export function LoginForm() {
   const searchParams = useSearchParams()
-  const { toast } = useToast()
   const next = searchParams?.get('next')
 
   useEffect(() => {
     const error = searchParams?.get('error')
-    if (error) {
-      toast({ description: error, variant: 'destructive' })
-    }
+    if (error != null) toast.error(error)
   }, [searchParams])
 
   return (
