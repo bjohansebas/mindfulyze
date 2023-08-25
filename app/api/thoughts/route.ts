@@ -48,8 +48,9 @@ export async function POST(req: Request) {
   try {
     const response = await prisma.thought.create({
       data: {
-        text: result.data.text,
+        text: result.data.text.withFormat,
         userId: session.user.id,
+        createdAt: result.data.created,
       },
     })
 

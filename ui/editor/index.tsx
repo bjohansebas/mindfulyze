@@ -1,39 +1,27 @@
 'use client'
 
-import useLocalStorage from '@/lib/hooks/useLocalStorage'
 import { EditorContent, useEditor } from '@tiptap/react'
-import { useEffect, useState } from 'react'
-import { useDebouncedCallback } from 'use-debounce'
+import { Dispatch, SetStateAction } from 'react'
 import { EditorBubbleMenu } from './components/bubble-menu'
 import { TiptapExtensions } from './extensions'
 import { TiptapEditorProps } from './props'
 
-export default function Editor() {
-  const [content, setContent] = useLocalStorage('content', {})
+export interface EditorProps {
+  onChange: Dispatch<SetStateAction<object>>
+}
 
-  const [hydrated, setHydrated] = useState(false)
-
-  const debouncedUpdates = useDebouncedCallback(async ({ editor }) => {
-    const json = editor.getJSON()
-    setContent(json)
-  }, 250)
-
+export default function Editor({ onChange }: EditorProps) {
   const editor = useEditor({
     extensions: TiptapExtensions,
     editorProps: TiptapEditorProps,
-    onUpdate: (e) => {
-      debouncedUpdates(e)
+    onUpdate: ({ editor }) => {
+      const textHTML = editor.getHTML()
+      const textPlain = editor.getText()
+
+      onChange({ withFormat: textHTML, withoutFormat: textPlain })
     },
     autofocus: 'end',
   })
-
-  // Hydrate the editor with the content from localStorage.
-  useEffect(() => {
-    if (editor && content && !hydrated) {
-      editor.commands.setContent(content)
-      setHydrated(true)
-    }
-  }, [editor, content, hydrated])
 
   return (
     // rome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
