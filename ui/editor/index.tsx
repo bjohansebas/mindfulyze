@@ -42,7 +42,7 @@ export default function Editor() {
         editor?.chain().focus().run()
       }}
       className='
-      overflow-y-auto overflow-hidden relative min-h-48 h-48 w-full max-w-screen-sm max-h-56 border-stone-200 bg-white p-6 sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:px-6 sm:shadow-lg'
+      overflow-y-auto overflow-hidden relative min-h-48 h-48 w-full min-w-[300px] max-h-56 border-b-stone-200 bg-white p-6 sm:border-b'
     >
       {editor && <EditorBubbleMenu editor={editor} />}
       <EditorContent editor={editor} />

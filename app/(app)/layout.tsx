@@ -9,7 +9,7 @@ export default function AppLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className='flex min-h-screen flex-col justify-between'>
+    <div className='flex min-h-screen flex-col'>
       <Nav />
       <main>{children}</main>
       <Background />
