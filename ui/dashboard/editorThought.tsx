@@ -4,8 +4,14 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { format } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import * as z from 'zod'
 
+import { TiptapExtensions } from '@/ui/editor/extensions'
+import { TiptapEditorProps } from '@/ui/editor/props'
+import { useEditor } from '@tiptap/react'
+
+import Spinner from '@/components/shared/icons/spinner'
 import { cn } from '@/lib/utils'
 import { ThoughtSchema } from '@/schemas/thought'
 import { Button } from '@/ui/button'
@@ -15,12 +21,48 @@ import { Form, FormControl, FormField, FormItem } from '@/ui/form'
 import { Popover, PopoverContent, PopoverTrigger } from '@/ui/popover'
 
 export function EditorThought() {
+  const editor = useEditor({
+    extensions: TiptapExtensions,
+    editorProps: TiptapEditorProps,
+    onUpdate: ({ editor }) => {
+      const textHTML = editor.getHTML()
+      const textPlain = editor.getText()
+
+      form.setValue('text', { withFormat: textHTML, withoutFormat: textPlain })
+    },
+    autofocus: 'end',
+  })
+
   const form = useForm<z.infer<typeof ThoughtSchema>>({
     resolver: zodResolver(ThoughtSchema),
   })
+  const { isSubmitting } = form.formState
 
-  function onSubmit(data: z.infer<typeof ThoughtSchema>) {
-    console.log(data)
+  async function onSubmit(data: z.infer<typeof ThoughtSchema>) {
+    editor?.setEditable(false)
+
+    try {
+      const response = await fetch('/api/thoughts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+
+      if (response.ok) {
+        editor?.commands.setContent('')
+        form.setValue('text', { withFormat: '', withoutFormat: '' })
+
+        toast.success('Thought was created')
+      } else {
+        toast.error("The thought couldn't be created, try again anew.")
+      }
+    } catch (e) {
+      console.log(e)
+    } finally {
+      editor?.setEditable(true)
+    }
   }
 
   return (
@@ -29,7 +71,7 @@ export function EditorThought() {
         onSubmit={form.handleSubmit(onSubmit)}
         className='flex flex-col bg-white gap-1 sm:w-2/4 min-w-[300px] w-screen rounded-lg'
       >
-        <FormField control={form.control} name='text' render={({ field }) => <Editor onChange={field.onChange} />} />
+        <FormField control={form.control} name='text' render={() => <Editor editor={editor} />} />
         <div className='flex justify-between items-center px-6 py-2'>
           <FormField
             control={form.control}
@@ -61,7 +103,10 @@ export function EditorThought() {
               </FormItem>
             )}
           />
-          <Button type='submit'>Create</Button>
+          <Button type='submit' disabled={isSubmitting}>
+            {isSubmitting && <Spinner className='mr-2 h-4 w-4 animate-spin' />}
+            Create
+          </Button>
         </div>
       </form>
     </Form>

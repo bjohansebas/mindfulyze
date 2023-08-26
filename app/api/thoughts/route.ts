@@ -39,7 +39,9 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: 'You must be logged in.' }, { status: 401 })
   }
 
-  const result = validateThought(await req.json())
+  const response = await req.json()
+
+  const result = validateThought({ created: new Date(response.created), text: response.text })
 
   if (!result.success) {
     return NextResponse.json({ error: JSON.parse(result.error.message) }, { status: 422 })
