@@ -2,7 +2,6 @@ import { InputRule } from '@tiptap/core'
 import { Color } from '@tiptap/extension-color'
 import Highlight from '@tiptap/extension-highlight'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
-import TiptapLink from '@tiptap/extension-link'
 import Placeholder from '@tiptap/extension-placeholder'
 import TaskItem from '@tiptap/extension-task-item'
 import TaskList from '@tiptap/extension-task-list'
@@ -73,11 +72,6 @@ export const TiptapExtensions = [
   }).configure({
     HTMLAttributes: {
       class: 'mt-4 mb-6 border-t border-stone-300',
-    },
-  }),
-  TiptapLink.configure({
-    HTMLAttributes: {
-      class: 'text-stone-400 underline underline-offset-[3px] hover:text-stone-600 transition-colors cursor-pointer',
     },
   }),
   Placeholder.configure({

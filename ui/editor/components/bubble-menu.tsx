@@ -5,7 +5,6 @@ import { FC, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { Editor } from '@tiptap/core'
 import { ColorSelector } from './color-selector'
-import { LinkSelector } from './link-selector'
 import { NodeSelector } from './node-selector'
 
 export interface BubbleMenuItem {
@@ -61,14 +60,12 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps & { editor: Editor }> = 
       onHidden: () => {
         setIsNodeSelectorOpen(false)
         setIsColorSelectorOpen(false)
-        setIsLinkSelectorOpen(false)
       },
     },
   }
 
   const [isNodeSelectorOpen, setIsNodeSelectorOpen] = useState(false)
   const [isColorSelectorOpen, setIsColorSelectorOpen] = useState(false)
-  const [isLinkSelectorOpen, setIsLinkSelectorOpen] = useState(false)
 
   return (
     <BubbleMenu
@@ -81,16 +78,6 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps & { editor: Editor }> = 
         setIsOpen={() => {
           setIsNodeSelectorOpen(!isNodeSelectorOpen)
           setIsColorSelectorOpen(false)
-          setIsLinkSelectorOpen(false)
-        }}
-      />
-      <LinkSelector
-        editor={props.editor}
-        isOpen={isLinkSelectorOpen}
-        setIsOpen={() => {
-          setIsLinkSelectorOpen(!isLinkSelectorOpen)
-          setIsColorSelectorOpen(false)
-          setIsNodeSelectorOpen(false)
         }}
       />
       <div className='flex'>
@@ -116,7 +103,6 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps & { editor: Editor }> = 
         setIsOpen={() => {
           setIsColorSelectorOpen(!isColorSelectorOpen)
           setIsNodeSelectorOpen(false)
-          setIsLinkSelectorOpen(false)
         }}
       />
     </BubbleMenu>
