@@ -2,9 +2,9 @@ import { Metadata } from 'next'
 import { HOME_DOMAIN } from './constants'
 
 export function constructMetadata({
-  title = 'Mindfulyze - Web application for tracking emotions and thoughts',
-  description = 'Mindfulyze is a web application for tracking emotions and thoughts. The application was created with the goal of helping you reflect on your emotions and thoughts, and keep a record of them in a simple and organized way.',
-  image = `${HOME_DOMAIN}/_static/thumbnail.png`,
+  title = 'Mindfulyze - Record moments from your day, free your thoughts and emotions in a safe way.',
+  description = 'Capture the moments that shape your day. Express yourself freely, alleviate your thoughts, and release your emotions in a secure and private environment. Our platform offers a safe space for you to document your day, helping you gain perspectives, preserve memories, and foster personal growth. Start your journey of self-expression and reflection today.                           ',
+  image = 'https://res.cloudinary.com/mindfulyze/image/upload/v1693177063/thumbnail.png',
   icons = '/favicon.ico',
 }: {
   title?: string
