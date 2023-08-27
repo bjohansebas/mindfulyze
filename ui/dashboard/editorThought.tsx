@@ -11,6 +11,7 @@ import { TiptapExtensions } from '@/ui/editor/extensions'
 import { TiptapEditorProps } from '@/ui/editor/props'
 import { useEditor } from '@tiptap/react'
 
+import { createThought } from '@/app/actions/thought'
 import Spinner from '@/components/shared/icons/spinner'
 import { cn } from '@/lib/utils'
 import { ThoughtSchema } from '@/schemas/thought'
@@ -42,15 +43,9 @@ export function EditorThought() {
     editor?.setEditable(false)
 
     try {
-      const response = await fetch('/api/thoughts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
+      const res = await createThought(data)
 
-      if (response.ok) {
+      if (res.status === 201) {
         editor?.commands.setContent('')
         form.setValue('text', { withFormat: '', withoutFormat: '' })
 
