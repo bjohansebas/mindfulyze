@@ -36,6 +36,13 @@ export function EditorThought() {
 
   const form = useForm<z.infer<typeof ThoughtSchema>>({
     resolver: zodResolver(ThoughtSchema),
+    defaultValues: {
+      text: {
+        withFormat: '',
+        withoutFormat: '',
+      },
+      created: new Date(),
+    },
   })
   const { isSubmitting } = form.formState
 
@@ -98,7 +105,7 @@ export function EditorThought() {
               </FormItem>
             )}
           />
-          <Button type='submit' disabled={isSubmitting}>
+          <Button type='submit' disabled={isSubmitting || form.getValues()?.text?.withoutFormat.length < 20}>
             {isSubmitting && <Spinner className='mr-2 h-4 w-4 animate-spin' />}
             Create
           </Button>
