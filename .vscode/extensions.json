@@ -1,3 +1,8 @@
 {
-  "recommendations": ["rome.rome", "Prisma.prisma", "dbaeumer.vscode-eslint", "bradlc.vscode-tailwindcss"]
+  "recommendations": [
+    "prisma.prisma",
+    "dbaeumer.vscode-eslint",
+    "bradlc.vscode-tailwindcss",
+    "biomejs.biome"
+  ]
 }
