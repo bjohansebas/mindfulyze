@@ -71,15 +71,15 @@ export function EditorThought() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className='flex flex-col bg-white gap-1 sm:w-2/4 min-w-[300px] w-screen rounded-lg'
+        className="flex flex-col bg-white gap-1 sm:w-2/4 min-w-[300px] w-screen rounded-lg"
       >
-        <FormField control={form.control} name='text' render={() => <Editor editor={editor} />} />
-        <div className='flex justify-between items-center px-6 py-2'>
+        <FormField control={form.control} name="text" render={() => <Editor editor={editor} />} />
+        <div className="flex justify-between items-center px-6 py-2">
           <FormField
             control={form.control}
-            name='created'
+            name="created"
             render={({ field }) => (
-              <FormItem className='flex flex-col'>
+              <FormItem className="flex flex-col">
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -88,13 +88,13 @@ export function EditorThought() {
                         className={cn('w-[240px] pl-3 text-left font-normal', !field.value && 'text-muted-foreground')}
                       >
                         {field.value ? format(field.value, 'PPP') : format(new Date(), 'PPP')}
-                        <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
-                  <PopoverContent className='w-auto p-0' align='start'>
+                  <PopoverContent className="w-auto p-0" align="start">
                     <Calendar
-                      mode='single'
+                      mode="single"
                       selected={field.value}
                       onSelect={field.onChange}
                       disabled={(date) => date > new Date() || date < new Date('1900-01-01')}
@@ -105,8 +105,8 @@ export function EditorThought() {
               </FormItem>
             )}
           />
-          <Button type='submit' disabled={isSubmitting || form.getValues()?.text?.withoutFormat.length < 20}>
-            {isSubmitting && <Spinner className='mr-2 h-4 w-4 animate-spin' />}
+          <Button type="submit" disabled={isSubmitting || form.getValues()?.text?.withoutFormat.length < 20}>
+            {isSubmitting && <Spinner className="mr-2 h-4 w-4 animate-spin" />}
             Create
           </Button>
         </div>

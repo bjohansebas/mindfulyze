@@ -15,8 +15,8 @@ export default function Editor({ editor }: EditorContentProps) {
       onClick={() => {
         editor?.chain().focus().run()
       }}
-      className='
-      overflow-y-auto overflow-hidden relative min-h-48 h-48 w-full min-w-[300px] max-h-56 border-b-stone-200 bg-white p-6 border-b'
+      className="
+      overflow-y-auto overflow-hidden relative min-h-48 h-48 w-full min-w-[300px] max-h-56 border-b-stone-200 bg-white p-6 border-b"
     >
       {editor && <EditorBubbleMenu editor={editor} />}
       <EditorContent editor={editor} />

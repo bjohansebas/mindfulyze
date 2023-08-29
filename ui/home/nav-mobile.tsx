@@ -40,18 +40,18 @@ export default function MobileNav() {
       className={`fixed inset-0 z-50 w-full lg:hidden ${isOpen ? '' : 'pointer-events-none'}`}
       ref={containerRef}
     >
-      <motion.div className='absolute inset-0 right-0 w-full bg-white' variants={sidebar} />
-      <motion.ul variants={variants} className='absolute grid w-full gap-3 px-10 py-16'>
+      <motion.div className="absolute inset-0 right-0 w-full bg-white" variants={sidebar} />
+      <motion.ul variants={variants} className="absolute grid w-full gap-3 px-10 py-16">
         {navItems.map(({ name, slug, isPrivate }) => {
           if (!isPrivate || (isPrivate && status === 'authenticated')) {
             return (
-              <div key={slug} className='grid gap-3'>
+              <div key={slug} className="grid gap-3">
                 <MenuItem>
-                  <Link href={`/${slug}`} onClick={() => toggleOpen()} className='flex w-full font-semibold capitalize'>
+                  <Link href={`/${slug}`} onClick={() => toggleOpen()} className="flex w-full font-semibold capitalize">
                     {name}
                   </Link>
                 </MenuItem>
-                <MenuItem className='my-3 h-px w-full bg-gray-300' />
+                <MenuItem className="my-3 h-px w-full bg-gray-300" />
               </div>
             )
           }
@@ -59,15 +59,15 @@ export default function MobileNav() {
 
         {status === 'unauthenticated' ? (
           <>
-            <MenuItem key='Login'>
-              <Link href='/login' className='flex w-full font-semibold capitalize'>
+            <MenuItem key="Login">
+              <Link href="/login" className="flex w-full font-semibold capitalize">
                 Log in
               </Link>
             </MenuItem>
-            <MenuItem className='my-3 h-px w-full bg-gray-300' />
+            <MenuItem className="my-3 h-px w-full bg-gray-300" />
 
-            <MenuItem key='Signup'>
-              <Link href='/signup' className='flex w-full font-semibold capitalize'>
+            <MenuItem key="Signup">
+              <Link href="/signup" className="flex w-full font-semibold capitalize">
                 Sign Up
               </Link>
             </MenuItem>
@@ -81,8 +81,8 @@ export default function MobileNav() {
 
 // rome-ignore lint/suspicious/noExplicitAny: <explanation>
 const MenuToggle = ({ toggle }: { toggle: any }) => (
-  <button type='button' onClick={toggle} className='pointer-events-auto absolute right-5 top-5 z-20'>
-    <svg width='23' height='23' viewBox='0 0 23 23'>
+  <button type="button" onClick={toggle} className="pointer-events-auto absolute right-5 top-5 z-20">
+    <svg width="23" height="23" viewBox="0 0 23 23">
       <Path
         variants={{
           closed: { d: 'M 2 2.5 L 20 2.5' },
@@ -90,7 +90,7 @@ const MenuToggle = ({ toggle }: { toggle: any }) => (
         }}
       />
       <Path
-        d='M 2 9.423 L 20 9.423'
+        d="M 2 9.423 L 20 9.423"
         variants={{
           closed: { opacity: 1 },
           open: { opacity: 0 },
@@ -109,7 +109,7 @@ const MenuToggle = ({ toggle }: { toggle: any }) => (
 
 // rome-ignore lint/suspicious/noExplicitAny: <explanation>
 const Path = (props: any) => (
-  <motion.path fill='transparent' strokeWidth='2' stroke='hsl(0, 0%, 18%)' strokeLinecap='round' {...props} />
+  <motion.path fill="transparent" strokeWidth="2" stroke="hsl(0, 0%, 18%)" strokeLinecap="round" {...props} />
 )
 
 const MenuItem = ({

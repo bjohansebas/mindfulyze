@@ -14,28 +14,28 @@ export default function UserDropdown() {
   const { data: session } = useSession()
 
   return (
-    <div className='relative inline-block'>
+    <div className="relative inline-block">
       <Popover>
         <PopoverTrigger asChild>
-          <button type='button' className='group relative'>
-            <Suspense fallback={<Skeleton className='h-9 w-9 rounded-full' />}>
+          <button type="button" className="group relative">
+            <Suspense fallback={<Skeleton className="h-9 w-9 rounded-full" />}>
               <Avatar>
                 <AvatarImage
                   src={`${session?.user.image}`}
-                  className='h-9 w-9 transition-all duration-75 group-focus:outline-none group-active:scale-95 sm:h-10 sm:w-10'
+                  className="h-9 w-9 transition-all duration-75 group-focus:outline-none group-active:scale-95 sm:h-10 sm:w-10"
                 />
                 <AvatarFallback>{stringAvatar(`${session?.user.name}`)}</AvatarFallback>
               </Avatar>
             </Suspense>
           </button>
         </PopoverTrigger>
-        <PopoverContent className='w-auto p-0' align='start'>
-          <div className='flex w-full flex-col gap-3 rounded-md bg-white p-3 sm:w-56'>
-            <div className='p-2'>
+        <PopoverContent className="w-auto p-0" align="start">
+          <div className="flex w-full flex-col gap-3 rounded-md bg-white p-3 sm:w-56">
+            <div className="p-2">
               {session?.user?.name && (
-                <p className='truncate text-sm font-medium text-gray-900'>{session?.user?.name}</p>
+                <p className="truncate text-sm font-medium text-gray-900">{session?.user?.name}</p>
               )}
-              <p className='truncate text-sm text-gray-500'>{session?.user?.email}</p>
+              <p className="truncate text-sm text-gray-500">{session?.user?.email}</p>
             </div>
             {/* <button
               className="w-full rounded-md p-2 text-sm transition-all duration-75 hover:bg-gray-100 active:bg-gray-200"
@@ -61,7 +61,7 @@ export default function UserDropdown() {
               <IconMenu text="Changelog" icon={<Edit3 className="h-4 w-4" />} />
             </Link> */}
             <Button
-              className='w-full rounded-md text-sm'
+              className="w-full rounded-md text-sm"
               onClick={() => {
                 signOut({
                   callbackUrl: '/login',
@@ -69,7 +69,7 @@ export default function UserDropdown() {
                 // track logout event
               }}
             >
-              <Logout className='h-4 w-4 mr-2' />
+              <Logout className="h-4 w-4 mr-2" />
               Logout
             </Button>
           </div>

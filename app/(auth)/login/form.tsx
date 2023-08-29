@@ -25,10 +25,10 @@ export function LoginForm() {
             ...(next && next.length > 0 ? { callbackUrl: next } : { callbackUrl: '/home' }),
           })
         }}
-        className='w-full'
-        size='lg'
+        className="w-full"
+        size="lg"
       >
-        <Google className='mr-2 h-4 w-4' /> Continue with Google
+        <Google className="mr-2 h-4 w-4" /> Continue with Google
       </Button>
     </div>
   )

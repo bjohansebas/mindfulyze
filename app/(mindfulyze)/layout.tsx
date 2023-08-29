@@ -9,7 +9,7 @@ export default function MindfulyzeLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className='flex min-h-screen flex-col justify-between'>
+    <div className="flex min-h-screen flex-col justify-between">
       <MobileNav />
       <Nav />
       <main>{children}</main>
