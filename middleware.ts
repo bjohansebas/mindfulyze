@@ -12,6 +12,7 @@ export default async function middleware(req: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET,
   })) as {
     email?: string
+    pw?: string
     user?: User
   }
 
@@ -34,6 +35,10 @@ export default async function middleware(req: NextRequest) {
     // } else
     if (path === '/login' || path === '/signup' || path === '/') {
       return NextResponse.redirect(new URL('/home', req.url))
+    }
+
+    if (!session?.pw && path !== '/settings/password') {
+      return NextResponse.redirect(new URL('/settings/password', req.url))
     }
   }
 

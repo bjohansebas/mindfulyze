@@ -40,11 +40,13 @@ export const authOptions: AuthOptions = {
       if (!user.email) {
         return false
       }
+
       if (account?.provider === 'google') {
         const userExists = await prisma.user.findUnique({
           where: { email: user.email },
           select: { name: true },
         })
+
         // if the user already exists via email,
         // update the user with their name and image from Google
         if (userExists && !userExists.name) {
@@ -61,29 +63,42 @@ export const authOptions: AuthOptions = {
 
       return true
     },
-    jwt: async ({ token, user, trigger }) => {
+    jwt: async ({ token, user, trigger, session }) => {
       if (!token.email) {
         return {}
       }
+
       if (user) {
         token.user = user
       }
 
+      if (!token?.pw) {
+        token.pw = null
+      }
+
       if (trigger === 'update') {
+        if (session?.pw) {
+          token.pw = session.pw
+        }
+
         const refreshedUser = await prisma.user.findUnique({
           where: { id: token.sub },
         })
+
         token.user = refreshedUser
         token.name = refreshedUser?.name
         token.email = refreshedUser?.email
         token.image = refreshedUser?.image
       }
+
       return token
     },
     session: async ({ session, token }) => {
       session.user = {
         // @ts-ignore
         id: token.sub,
+        // @ts-ignore
+        pw: token.pw || null,
         ...session.user,
       }
       return session
