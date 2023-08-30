@@ -22,7 +22,8 @@ const encryptionIV = crypto.createHash('sha512').update(SECRET_IV).digest('hex')
 
 // Encrypt data
 export function encryptData({ key, data }: EncryptDataProps) {
-  const cipher = crypto.createCipheriv(ENCRYPTION_METHOD, key, encryptionIV)
+  const encryptKey = generateKey(key)
+  const cipher = crypto.createCipheriv(ENCRYPTION_METHOD, encryptKey, encryptionIV)
 
   // Encrypts data and converts to hex and base64
   return Buffer.from(cipher.update(data, 'utf8', 'hex') + cipher.final('hex')).toString('base64')
@@ -30,8 +31,10 @@ export function encryptData({ key, data }: EncryptDataProps) {
 
 // Decrypt data
 export function decryptData({ key, data }: EncryptDataProps) {
+  const encryptKey = generateKey(key)
+
   const buff = Buffer.from(data, 'base64')
-  const decipher = crypto.createDecipheriv(ENCRYPTION_METHOD, key, encryptionIV)
+  const decipher = crypto.createDecipheriv(ENCRYPTION_METHOD, encryptKey, encryptionIV)
 
   // Decrypts data and converts to utf8
   return decipher.update(buff.toString('utf8'), 'hex', 'utf8') + decipher.final('utf8')
