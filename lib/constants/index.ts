@@ -16,3 +16,6 @@ export const SECRET_IV = process.env.SECRET_IV!
 export const NEXT_SECRET = process.env.NEXTAUTH_SECRET!
 
 export const DEFAULT_COST_SALT = 12
+
+export const MIN_LENGTH_PW = 8
+export const MAX_LENGTH_PW = 30
