@@ -1,7 +1,11 @@
 'use server'
 
 import { authOptions } from '@/lib/auth'
+import { NEXT_SECRET } from '@/lib/constants'
+import { decryptData, encryptData } from '@/lib/encrypt'
 import prisma from '@/lib/prisma'
+import { createFile, downloadFile } from '@/lib/supabase'
+import { createId } from '@/lib/utils'
 import { ThoughtSchema, validateThought } from '@/schemas/thought'
 import { getServerSession } from 'next-auth'
 import { revalidatePath } from 'next/cache'
@@ -12,7 +16,7 @@ import * as z from 'zod'
 export async function createThought(data: z.infer<typeof ThoughtSchema>) {
   const session = await getServerSession(authOptions)
 
-  if (!session?.user) {
+  if (!session?.user || !session.user.pw) {
     return { message: 'You must be logged in.', status: 401 }
   }
 
@@ -23,9 +27,19 @@ export async function createThought(data: z.infer<typeof ThoughtSchema>) {
   }
 
   try {
+    const password = decryptData({ key: NEXT_SECRET, data: session.user.pw })
+    const textEncrypt = encryptData({ key: password, data: data.text.withFormat })
+    const uid = createId()
+    const file = await createFile({ name: `${uid}.html`, text: textEncrypt })
+
+    if (!file.data?.path) {
+      return { message: "The thought couldn't be created, try again anew.", status: 400 }
+    }
+
     const response = await prisma.thought.create({
       data: {
-        text: result.data.text.withFormat,
+        id: uid,
+        url: file.data?.path,
         userId: session.user.id,
         createdAt: result.data.created,
       },
@@ -43,7 +57,7 @@ export async function createThought(data: z.infer<typeof ThoughtSchema>) {
 export async function getThoughts() {
   const session = await getServerSession(authOptions)
 
-  if (!session?.user.id) {
+  if (!session?.user.id || !session.user.pw) {
     return { message: 'You must be logged in.', status: 401, data: [] }
   }
 
@@ -57,7 +71,22 @@ export async function getThoughts() {
       },
     })
 
-    return { data: response, status: 200 }
+    const password = decryptData({ key: NEXT_SECRET, data: session.user.pw })
+
+    const thoughts = await Promise.all(
+      response.map(async ({ url, ...res }) => {
+        const data = await downloadFile({ name: url })
+        const textEncrypt = await data.data?.text()
+
+        if (!textEncrypt) return { text: '', ...res }
+
+        const textDecrypt = decryptData({ key: password, data: textEncrypt })
+
+        return { text: textDecrypt, ...res }
+      }),
+    )
+
+    return { data: thoughts, status: 200 }
   } catch (e) {
     return { message: 'Not found thoughts', status: 404, data: [] }
   }

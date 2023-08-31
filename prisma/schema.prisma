@@ -72,8 +72,7 @@ model VerificationToken {
 
 model Thought {
   id        String   @id @default(cuid())
-  text      String   @db.Text()
-  isSecure  Boolean  @default(false) // If thought is encrypted.
+  url       String
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   user      User     @relation(fields: [userId], references: [id])

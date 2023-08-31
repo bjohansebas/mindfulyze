@@ -1,10 +1,16 @@
 import { createClient } from '@supabase/supabase-js'
 import { SUPABASE_ANON_KEY, SUPABASE_BUCKET, SUPABASE_URL } from './constants/supabase'
 
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  auth: {
+    persistSession: false,
+  },
+})
 
 export const createFile = async ({ name, text }: { name: string; text: string }) => {
-  const { data, error } = await supabase.storage.from(SUPABASE_BUCKET).upload(name, text)
+  const { data, error } = await supabase.storage.from(SUPABASE_BUCKET).upload(name, text, {
+    contentType: 'text/html',
+  })
   return { data, error }
 }
 
