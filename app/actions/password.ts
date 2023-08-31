@@ -9,6 +9,7 @@ import prisma from '@/lib/prisma'
 import bcrypt from 'bcrypt'
 import { getServerSession } from 'next-auth'
 import z from 'zod'
+import { getUser } from './user'
 
 // Create new password for user
 export async function createPassword(data: z.infer<typeof NewPasswordSchema>) {
@@ -24,7 +25,11 @@ export async function createPassword(data: z.infer<typeof NewPasswordSchema>) {
     return { message: result.error.message, status: 422, data: null }
   }
 
-  // TODO: Check that it doesn't already have a password in the database.
+  const user = await getUser()
+
+  if (user.data?.password != null) {
+    return { message: 'The password cannot be overwritten.', status: 409, data: null }
+  }
 
   try {
     const hashedPassword = await bcrypt.hash(data.password, DEFAULT_COST_SALT)
@@ -38,10 +43,16 @@ export async function createPassword(data: z.infer<typeof NewPasswordSchema>) {
       },
     })
 
-    const pwEncrypt = encryptData({ key: NEXT_SECRET, data: data.password })
+    const pwEncrypt = await encryptPassword(data.password)
 
     return { data: pwEncrypt, status: 201 }
   } catch (e) {
-    return { message: "The password couldn't be created, try again anew.", status: 400 }
+    return { message: "The password couldn't be created, try again anew.", status: 400, data: null }
   }
+}
+
+export async function encryptPassword(password: string) {
+  const dataEncrypt = encryptData({ key: NEXT_SECRET, data: password })
+
+  return dataEncrypt
 }
