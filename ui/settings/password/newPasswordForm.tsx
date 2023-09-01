@@ -35,6 +35,8 @@ export function NewPasswordForm() {
       if (res.status === 201 && res.data != null) {
         await updatePassword(res.data)
 
+        toast.success('The password was created, we will redirect you in a moment.')
+
         router.push('/home')
       } else {
         toast.error('The password could not be created, please try again.')
