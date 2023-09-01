@@ -1,8 +1,11 @@
 import Logo from '@/components/shared/icons/logo'
 import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
 import UserDropdown from './userDropdown'
+import { ButtonFeedBack } from './button-feedback'
+import { Skeleton } from '@/ui/skeleton'
 
 import Link from 'next/link'
+import { Suspense } from 'react'
 
 export default function NavigationApp() {
   return (
@@ -29,7 +32,12 @@ export default function NavigationApp() {
                 >
                   Help
                 </button> */}
-              <UserDropdown />
+              <Suspense fallback={<Skeleton className="w-[119.5px] h-9" />}>
+                <ButtonFeedBack />
+              </Suspense>
+              <Suspense fallback={<Skeleton className="h-9 w-9 rounded-full" />}>
+                <UserDropdown />
+              </Suspense>
             </div>
           </div>
         </MaxWidthWrapper>

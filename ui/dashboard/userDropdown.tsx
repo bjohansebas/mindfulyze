@@ -4,11 +4,9 @@ import { stringAvatar } from '@/lib/utils'
 import { Avatar, AvatarFallback, AvatarImage } from '@/ui/avatar'
 import { Button } from '@/ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/ui/popover'
-import { Skeleton } from '@/ui/skeleton'
-
 import { ArrowLeftOnRectangleIcon as Logout } from '@heroicons/react/24/solid'
+
 import { signOut, useSession } from 'next-auth/react'
-import { Suspense } from 'react'
 
 export default function UserDropdown() {
   const { data: session } = useSession()
@@ -18,15 +16,13 @@ export default function UserDropdown() {
       <Popover>
         <PopoverTrigger asChild>
           <button type="button" className="group relative">
-            <Suspense fallback={<Skeleton className="h-9 w-9 rounded-full" />}>
-              <Avatar>
-                <AvatarImage
-                  src={`${session?.user.image}`}
-                  className="h-9 w-9 transition-all duration-75 group-focus:outline-none group-active:scale-95 sm:h-10 sm:w-10"
-                />
-                <AvatarFallback>{stringAvatar(`${session?.user.name}`)}</AvatarFallback>
-              </Avatar>
-            </Suspense>
+            <Avatar>
+              <AvatarImage
+                src={`${session?.user.image}`}
+                className="h-9 w-9 transition-all duration-75 group-focus:outline-none group-active:scale-95 sm:h-10 sm:w-10"
+              />
+              <AvatarFallback>{stringAvatar(`${session?.user.name}`)}</AvatarFallback>
+            </Avatar>
           </button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
