@@ -13,11 +13,11 @@ export async function PasswordForm() {
         <h3 className="text-xl font-semibold">
           {user.data?.password != null ? 'Unlock your thoughts' : 'Safe password'}
         </h3>
-        {user.data?.password != null ? null : (
-          <p className="text-sm text-gray-500">
-            Before we begin, first create a password to keep all your thoughts secure.
-          </p>
-        )}
+        <p className="text-sm text-gray-500">
+          {user.data?.password != null
+            ? 'Please enter the password to unlock your thoughts.'
+            : 'Before we begin, first create a password to keep all your thoughts secure.'}
+        </p>
       </div>
       <div className="flex flex-col space-y-3 px-4 py-8 sm:px-16">
         {user.data?.password != null ? <SetPasswordForm /> : <NewPasswordForm />}
