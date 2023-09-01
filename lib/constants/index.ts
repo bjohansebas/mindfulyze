@@ -19,3 +19,6 @@ export const DEFAULT_COST_SALT = 12
 
 export const MIN_LENGTH_PW = 8
 export const MAX_LENGTH_PW = 30
+
+export const MINDFULYZE_LOGO = 'https://res.cloudinary.com/mindfulyze/image/upload/v1693525482/logo.png'
+export const MINDFULYZE_THUMBNAIL = 'https://res.cloudinary.com/mindfulyze/image/upload/v1693177063/thumbnail.png'
