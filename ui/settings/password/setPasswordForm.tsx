@@ -35,7 +35,9 @@ export function SetPasswordForm() {
       if (res) {
         const pwHash = await encryptPassword(data.password)
 
-        updatePassword(pwHash)
+        await updatePassword(pwHash)
+
+        toast.success('The password is correct, we will redirect you in a moment.')
 
         router.push('/home')
       } else {
