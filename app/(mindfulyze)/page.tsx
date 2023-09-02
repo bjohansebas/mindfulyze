@@ -1,3 +1,9 @@
+import Hero from '@/ui/home/hero'
+
 export default function Page() {
-  return <h1>Soon</h1>
+  return (
+    <>
+      <Hero />
+    </>
+  )
 }
