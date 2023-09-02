@@ -3,7 +3,7 @@ import { HOME_DOMAIN, MINDFULYZE_THUMBNAIL } from './constants'
 
 export function constructMetadata({
   title = 'Mindfulyze - Record moments from your day, free your thoughts and emotions in a safe way.',
-  description = 'Capture the moments that shape your day. Express yourself freely, alleviate your thoughts, and release your emotions in a secure and private environment. Our platform offers a safe space for you to document your day, helping you gain perspectives, preserve memories, and foster personal growth. Start your journey of self-expression and reflection today.                           ',
+  description = 'Capture, express, and reflect on your day in a secure and private space. Start your journey of self-expression and personal growth',
   image = MINDFULYZE_THUMBNAIL,
   icons = '/favicon.ico',
 }: {
