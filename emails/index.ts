@@ -23,7 +23,7 @@ export const sendEmail = async ({
   }
 
   return resend.emails.send({
-    // from: marketing ? 'Sebastian from Dub <contact@mindfulyze.com>' : 'Mindfulyze <contact@mindfulyze.com>',
+    // from: marketing ? 'Sebastian from Mindfulyze <contact@mindfulyze.com>' : 'Mindfulyze <contact@mindfulyze.com>',
     from: 'onboarding@resend.dev',
     // to: test ? 'delivered@resend.dev' : email,
     to: 'bjohansebas@gmail.com',
