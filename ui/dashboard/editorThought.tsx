@@ -114,3 +114,5 @@ export function EditorThought() {
     </Form>
   )
 }
+
+export default EditorThought
