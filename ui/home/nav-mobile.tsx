@@ -1,11 +1,16 @@
 'use client'
 
 import { motion, useCycle } from 'framer-motion'
-import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { ReactNode, useEffect, useRef } from 'react'
 
 import { navItems } from './nav'
+import { Skeleton } from '../skeleton'
+import dynamic from 'next/dynamic'
+
+const ButtonNavMobile = dynamic(() => import('./button-nav-mobile'), {
+  loading: () => <Skeleton className="w-[119.5px] h-9" />,
+})
 
 const sidebar = {
   open: (height = 1000) => ({
@@ -30,7 +35,6 @@ export default function MobileNav() {
   const [isOpen, toggleOpen] = useCycle(false, true)
   const containerRef = useRef(null)
   const { height } = useDimensions(containerRef)
-  const { status } = useSession()
 
   return (
     <motion.nav
@@ -42,8 +46,7 @@ export default function MobileNav() {
     >
       <motion.div className="absolute inset-0 right-0 w-full bg-white" variants={sidebar} />
       <motion.ul variants={variants} className="absolute grid w-full gap-3 px-10 py-16">
-        {navItems.map(({ name, slug, isPrivate }) => {
-          if (!isPrivate || (isPrivate && status === 'authenticated')) {
+        {navItems.map(({ name, slug }) => {
             return (
               <div key={slug} className="grid gap-3">
                 <MenuItem>
@@ -54,25 +57,9 @@ export default function MobileNav() {
                 <MenuItem className="my-3 h-px w-full bg-gray-300" />
               </div>
             )
-          }
         })}
-
-        {status === 'unauthenticated' ? (
-          <>
-            <MenuItem key="Login">
-              <Link href="/login" className="flex w-full font-semibold capitalize">
-                Log in
-              </Link>
-            </MenuItem>
-            <MenuItem className="my-3 h-px w-full bg-gray-300" />
-
-            <MenuItem key="Signup">
-              <Link href="/signup" className="flex w-full font-semibold capitalize">
-                Sign Up
-              </Link>
-            </MenuItem>
-          </>
-        ) : null}
+<ButtonNavMobile/>
+       
       </motion.ul>
       <MenuToggle toggle={toggleOpen} />
     </motion.nav>
@@ -112,7 +99,7 @@ const Path = (props: any) => (
   <motion.path fill="transparent" strokeWidth="2" stroke="hsl(0, 0%, 18%)" strokeLinecap="round" {...props} />
 )
 
-const MenuItem = ({
+export const MenuItem = ({
   className,
   children,
 }: {

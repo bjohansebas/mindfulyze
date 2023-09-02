@@ -19,22 +19,22 @@ export default function NavigationApp() {
               </Link>
             </div>
             <div className="flex items-center space-x-6">
-              {/* <Link
+              <Suspense fallback={<Skeleton className="w-[119.5px] h-9" />}>
+                <ButtonFeedBack />
+              </Suspense>
+              <Link
                   href="/changelog"
                   className="hidden text-sm text-gray-500 transition-colors hover:text-gray-700 md:block"
                   target="_blank"
                 >
                   Changelog
-                </Link> */}
+                </Link>
               {/* <button
                   onClick={() => setShowCMDK(true)}
                   className="hidden text-sm text-gray-500 transition-colors hover:text-gray-700 md:block"
                 >
                   Help
                 </button> */}
-              <Suspense fallback={<Skeleton className="w-[119.5px] h-9" />}>
-                <ButtonFeedBack />
-              </Suspense>
               <Suspense fallback={<Skeleton className="h-9 w-9 rounded-full" />}>
                 <UserDropdown />
               </Suspense>

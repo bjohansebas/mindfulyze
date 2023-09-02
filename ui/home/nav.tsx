@@ -1,6 +1,6 @@
 import { LogoType } from '@/components/shared/icons'
 import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
-// import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { Skeleton } from '@/ui/skeleton'
@@ -8,7 +8,6 @@ import { Skeleton } from '@/ui/skeleton'
 
 const ButtonNav = dynamic(() => import('./button-nav'), {
   loading: () => <Skeleton className="w-[119.5px] h-9" />,
-  ssr: false,
 })
 
 export const navItems = [
@@ -21,11 +20,10 @@ export const navItems = [
   //   slug: 'home',
   //   isPrivate: true,
   // },
-  // {
-  //   name: 'Changelog',
-  //   slug: 'changelog',
-  //   isPrivate: false,
-  // },
+  {
+    name: 'Changelog',
+    slug: 'changelog',
+  },
   // {
   //   name: 'Blog',
   //   slug: 'blog',
@@ -63,33 +61,28 @@ export default function Nav() {
               </div>
             )} */}
             {/* {!helpCenter && ( */}
-            {/* <div className="hidden items-center space-x-3 lg:flex">
-              {navItems.map(({ name, slug, isPrivate }) => {
-                if (!isPrivate || (isPrivate && status === 'authenticated')) {
+            <div className="hidden items-center space-x-3 lg:flex">
+              {navItems.map(({ name, slug }) => {
                   return (
                     <Link
                       id={`nav-${slug}`}
                       key={slug}
                       href={`/${slug}`}
-                      className={cn(
-                        'z-10 rounded-full px-4 py-1.5 text-sm font-medium capitalize text-gray-500 transition-colors ease-out hover:text-black',
-                        {
-                          'text-black': selectedLayout === slug,
-                        },
-                      )}
+                      className=
+                        'z-10 rounded-full px-4 py-1.5 text-sm font-medium capitalize text-gray-500 transition-colors ease-out hover:text-black'
                     >
                       {name}
                     </Link>
                   )
-                }
               })}
-            </div> */}
+            </div>
             {/* )} */}
           </div>
-          {/* <div className="hidden lg:block"> */}
+          <div className="hidden lg:block">
           <div>
             <ButtonNav />
           </div>
+        </div>
         </div>
       </MaxWidthWrapper>
     </nav>
