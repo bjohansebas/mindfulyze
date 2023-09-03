@@ -1,33 +1,32 @@
-import { getServerSession } from "next-auth"
+import { getServerSession } from 'next-auth'
 
-import { authOptions } from "@/lib/auth"
+import { authOptions } from '@/lib/auth'
 import { NEXT_SECRET } from '@/lib/constants'
 import prisma from '@/lib/prisma'
 import { decryptData, encryptData } from '@/lib/encrypt'
-import { createFile, downloadFile } from "@/lib/supabase"
-import { NextResponse } from "next/server"
-import { getThoughtsByUser } from "@/lib/api/utils"
-import { validateThought } from "@/schemas/thought"
-import { createId } from "@/lib/utils"
-
+import { createFile, downloadFile } from '@/lib/supabase'
+import { NextResponse } from 'next/server'
+import { getThoughtsByUser } from '@/lib/api/utils'
+import { validateThought } from '@/schemas/thought'
+import { createId } from '@/lib/utils'
 
 export async function GET(request: Request) {
   const session = await getServerSession(authOptions)
 
   if (!session?.user.id || !session.user.pw) {
-    return NextResponse.json({ message: 'You must be logged in.', data: [] },{ status: 401 })
+    return NextResponse.json({ message: 'You must be logged in.', data: [] }, { status: 401 })
   }
 
-  const { searchParams} = new URL(request.url)
+  const { searchParams } = new URL(request.url)
   // const sort = searchParams.get("sort");
-  const page= searchParams.get('page')
+  const page = searchParams.get('page')
 
   try {
     const response = await getThoughtsByUser({
       // sort,
       page,
       userId: session.user.id,
-    });
+    })
 
     const password = decryptData({ key: NEXT_SECRET, data: session.user.pw })
 
@@ -44,20 +43,18 @@ export async function GET(request: Request) {
       }),
     )
 
-
-    return NextResponse.json(thoughts,{status: 200})
+    return NextResponse.json(thoughts, { status: 200 })
   } catch (e) {
     return NextResponse.json({ message: 'Not found thoughts', data: [] }, { status: 400 })
   }
 }
-
 
 // Get thoughts of user
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions)
 
   if (!session?.user || !session.user.pw) {
-    return NextResponse.json({ message: 'You must be logged in.',data:null},{ status: 401 })
+    return NextResponse.json({ message: 'You must be logged in.', data: null }, { status: 401 })
   }
 
   const data = await request.json()
@@ -76,7 +73,10 @@ export async function POST(request: Request) {
     const file = await createFile({ name: `${uid}.html`, text: textEncrypt })
 
     if (!file.data?.path) {
-      return NextResponse.json({ message: "The thought couldn't be created, try again anew.",data:null}, {status: 400 })
+      return NextResponse.json(
+        { message: "The thought couldn't be created, try again anew.", data: null },
+        { status: 400 },
+      )
     }
 
     const response = await prisma.thought.create({
@@ -88,8 +88,11 @@ export async function POST(request: Request) {
       },
     })
 
-    return NextResponse.json({ data: response}, {status: 201 })
+    return NextResponse.json({ data: response }, { status: 201 })
   } catch (e) {
-    return NextResponse.json({ message: "The thought couldn't be created, try again anew.",data:null}, {status: 400 })
+    return NextResponse.json(
+      { message: "The thought couldn't be created, try again anew.", data: null },
+      { status: 400 },
+    )
   }
 }

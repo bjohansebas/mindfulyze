@@ -53,23 +53,19 @@ export function EditorThought() {
       const response = await fetch('api/thoughts', {
         method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
       })
-      
-      
-        if (response.ok) {        
-          editor?.commands.setContent('')
-          form.reset()
-          
-          mutate(`/api/thoughts`);
-          
-          toast.success('Thought was created')
-        }
-      
 
-      else {
+      if (response.ok) {
+        editor?.commands.setContent('')
+        form.reset()
+
+        mutate(`/api/thoughts`)
+
+        toast.success('Thought was created')
+      } else {
         toast.error("The thought couldn't be created, try again anew.")
       }
     } catch (e) {

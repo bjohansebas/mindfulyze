@@ -1,5 +1,5 @@
 import prisma from '@/lib/prisma'
-import {Thought as ThoughtProps} from '@prisma/client'
+import { Thought as ThoughtProps } from '@prisma/client'
 
 export async function getThoughtsByUser({
   // sort = "createdAt",
@@ -7,20 +7,20 @@ export async function getThoughtsByUser({
   userId,
 }: {
   // sort: "createdAt"; // always descending
-  page: string | null;
-  userId: string;
+  page: string | null
+  userId: string
 }): Promise<ThoughtProps[]> {
   return await prisma.thought.findMany({
     where: {
-      userId
+      userId,
     },
     orderBy: {
       // [sort]: "desc",
-      createdAt: "desc"
+      createdAt: 'desc',
     },
     take: 30,
     ...(page && {
       skip: (parseInt(page) - 1) * 30,
     }),
-  });
+  })
 }
