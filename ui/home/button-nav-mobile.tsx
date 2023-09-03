@@ -9,32 +9,28 @@ export function ButtonNav() {
 
   return (
     <>
-      {status === 'authenticated' ?
-      (<MenuItem key="Dashboard">
-      <Link
-        href="/home"
-        className="flex w-full font-semibold capitalize"
-      >
-        Dashboard
-      </Link>
-    </MenuItem>):
-      (
+      {status === 'authenticated' ? (
+        <MenuItem key="Dashboard">
+          <Link href="/home" className="flex w-full font-semibold capitalize">
+            Dashboard
+          </Link>
+        </MenuItem>
+      ) : (
+        <>
+          <MenuItem key="Login">
+            <Link href="/login" className="flex w-full font-semibold capitalize">
+              Log in
+            </Link>
+          </MenuItem>
+          <MenuItem className="my-3 h-px w-full bg-gray-300" />
 
-          <>
-            <MenuItem key="Login">
-              <Link href="/login" className="flex w-full font-semibold capitalize">
-                Log in
-              </Link>
-            </MenuItem>
-            <MenuItem className="my-3 h-px w-full bg-gray-300" />
-
-            <MenuItem key="Signup">
-              <Link href="/signup" className="flex w-full font-semibold capitalize">
-                Sign Up
-              </Link>
-            </MenuItem>
-          </>
-        )  }
+          <MenuItem key="Signup">
+            <Link href="/signup" className="flex w-full font-semibold capitalize">
+              Sign Up
+            </Link>
+          </MenuItem>
+        </>
+      )}
     </>
   )
 }

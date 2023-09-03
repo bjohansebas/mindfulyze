@@ -47,19 +47,18 @@ export default function MobileNav() {
       <motion.div className="absolute inset-0 right-0 w-full bg-white" variants={sidebar} />
       <motion.ul variants={variants} className="absolute grid w-full gap-3 px-10 py-16">
         {navItems.map(({ name, slug }) => {
-            return (
-              <div key={slug} className="grid gap-3">
-                <MenuItem>
-                  <Link href={`/${slug}`} onClick={() => toggleOpen()} className="flex w-full font-semibold capitalize">
-                    {name}
-                  </Link>
-                </MenuItem>
-                <MenuItem className="my-3 h-px w-full bg-gray-300" />
-              </div>
-            )
+          return (
+            <div key={slug} className="grid gap-3">
+              <MenuItem>
+                <Link href={`/${slug}`} onClick={() => toggleOpen()} className="flex w-full font-semibold capitalize">
+                  {name}
+                </Link>
+              </MenuItem>
+              <MenuItem className="my-3 h-px w-full bg-gray-300" />
+            </div>
+          )
         })}
-<ButtonNavMobile/>
-       
+        <ButtonNavMobile />
       </motion.ul>
       <MenuToggle toggle={toggleOpen} />
     </motion.nav>

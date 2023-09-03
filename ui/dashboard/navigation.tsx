@@ -23,12 +23,12 @@ export default function NavigationApp() {
                 <ButtonFeedBack />
               </Suspense>
               <Link
-                  href="/changelog"
-                  className="hidden text-sm text-gray-500 transition-colors hover:text-gray-700 md:block"
-                  target="_blank"
-                >
-                  Changelog
-                </Link>
+                href="/changelog"
+                className="hidden text-sm text-gray-500 transition-colors hover:text-gray-700 md:block"
+                target="_blank"
+              >
+                Changelog
+              </Link>
               {/* <button
                   onClick={() => setShowCMDK(true)}
                   className="hidden text-sm text-gray-500 transition-colors hover:text-gray-700 md:block"

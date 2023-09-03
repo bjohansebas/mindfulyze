@@ -63,26 +63,25 @@ export default function Nav() {
             {/* {!helpCenter && ( */}
             <div className="hidden items-center space-x-3 lg:flex">
               {navItems.map(({ name, slug }) => {
-                  return (
-                    <Link
-                      id={`nav-${slug}`}
-                      key={slug}
-                      href={`/${slug}`}
-                      className=
-                        'z-10 rounded-full px-4 py-1.5 text-sm font-medium capitalize text-gray-500 transition-colors ease-out hover:text-black'
-                    >
-                      {name}
-                    </Link>
-                  )
+                return (
+                  <Link
+                    id={`nav-${slug}`}
+                    key={slug}
+                    href={`/${slug}`}
+                    className="z-10 rounded-full px-4 py-1.5 text-sm font-medium capitalize text-gray-500 transition-colors ease-out hover:text-black"
+                  >
+                    {name}
+                  </Link>
+                )
               })}
             </div>
             {/* )} */}
           </div>
           <div className="hidden lg:block">
-          <div>
-            <ButtonNav />
+            <div>
+              <ButtonNav />
+            </div>
           </div>
-        </div>
         </div>
       </MaxWidthWrapper>
     </nav>

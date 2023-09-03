@@ -17,6 +17,12 @@
   "organizeImports": {
     "enabled": true
   },
+  "files": {},
+  "json": {
+    "parser": {
+      "allowComments": true
+    }
+  },
   "formatter": {
     "enabled": true,
     "indentSize": 2,
