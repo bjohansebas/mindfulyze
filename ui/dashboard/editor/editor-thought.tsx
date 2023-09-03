@@ -11,7 +11,6 @@ import { TiptapExtensions } from '@/ui/editor/extensions'
 import { TiptapEditorProps } from '@/ui/editor/props'
 import { useEditor } from '@tiptap/react'
 
-import { createThought } from '@/app/actions/thought'
 import Spinner from '@/components/shared/icons/spinner'
 import { cn } from '@/lib/utils'
 import { ThoughtSchema } from '@/schemas/thought'
@@ -20,6 +19,7 @@ import { Calendar } from '@/ui/calendar'
 import Editor from '@/ui/editor'
 import { Form, FormControl, FormField, FormItem } from '@/ui/form'
 import { Popover, PopoverContent, PopoverTrigger } from '@/ui/popover'
+import { mutate } from 'swr'
 
 export function EditorThought() {
   const editor = useEditor({
@@ -50,14 +50,26 @@ export function EditorThought() {
     editor?.setEditable(false)
 
     try {
-      const res = await createThought(data)
+      const response = await fetch('api/thoughts', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+      
+      
+        if (response.ok) {        
+          editor?.commands.setContent('')
+          form.reset()
+          
+          mutate(`/api/thoughts`);
+          
+          toast.success('Thought was created')
+        }
+      
 
-      if (res.status === 201) {
-        editor?.commands.setContent('')
-        form.setValue('text', { withFormat: '', withoutFormat: '' })
-
-        toast.success('Thought was created')
-      } else {
+      else {
         toast.error("The thought couldn't be created, try again anew.")
       }
     } catch (e) {
