@@ -133,23 +133,23 @@ export const ChangelogPost = defineDocumentType(() => ({
 //   computedFields: computedFields('help'),
 // }))
 
-// export const LegalPost = defineDocumentType(() => ({
-//   name: 'LegalPost',
-//   filePathPattern: '**/legal/*.mdx',
-//   contentType: 'mdx',
-//   fields: {
-//     title: {
-//       type: 'string',
-//       required: true,
-//     },
-//     updatedAt: {
-//       type: 'string',
-//       required: true,
-//     },
-//   },
-//   // @ts-ignore
-//   computedFields: computedFields('legal'),
-// }))
+export const LegalPost = defineDocumentType(() => ({
+  name: 'LegalPost',
+  filePathPattern: '**/legal/*.mdx',
+  contentType: 'mdx',
+  fields: {
+    title: {
+      type: 'string',
+      required: true,
+    },
+    updatedAt: {
+      type: 'string',
+      required: true,
+    },
+  },
+  // @ts-ignore
+  computedFields: computedFields('legal'),
+}))
 
 const computedFields = (type: 'blog' | 'changelog' | 'help' | 'legal') => ({
   slug: {
@@ -206,7 +206,7 @@ const computedFields = (type: 'blog' | 'changelog' | 'help' | 'legal') => ({
 
 export default makeSource({
   contentDirPath: 'content',
-  documentTypes: [ChangelogPost],
+  documentTypes: [ChangelogPost, LegalPost],
   // documentTypes: [BlogPost, ChangelogPost, LegalPost, HelpPost],
   mdx: {
     remarkPlugins: [remarkGfm],
