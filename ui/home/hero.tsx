@@ -1,12 +1,13 @@
 import Link from 'next/link'
+import { Button } from '../button'
 
 const Hero = () => {
   return (
     <div className="mx-auto mb-10 max-w-md px-2.5 text-center sm:max-w-lg sm:px-0">
-      <h1 className="mt-5 font-display text-4xl font-extrabold leading-[1.15] text-black sm:text-6xl sm:leading-[1.15]">
+      <h1 className="mt-5 font-display text-4xl font-bold leading-[1.15] text-black sm:text-6xl sm:leading-[1.15]">
         Store moments from your day
         <br />
-        <span className="bg-gradient-to-r from-primary-600 via-primary-500 to-primary-800 bg-clip-text text-transparent">
+        <span className="bg-gradient-to-r from-primary-800 via-primary-600 to-primary-800 bg-clip-text text-transparent">
           Securely
         </span>
       </h1>
@@ -16,12 +17,14 @@ const Hero = () => {
       </h2>
 
       <div className="mx-auto mt-10 flex max-w-fit space-x-4">
-        <Link
-          href="/signup"
-          className="rounded-full border border-black bg-black px-5 py-2 text-sm text-white shadow-lg transition-all hover:bg-white hover:text-black"
-        >
-          Start For Free
-        </Link>
+        <Button asChild>
+
+          <Link
+            href="/signup"
+          >
+            Start For Free
+          </Link>
+        </Button>
       </div>
     </div>
   )

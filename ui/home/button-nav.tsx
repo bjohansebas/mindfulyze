@@ -2,6 +2,7 @@
 
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
+import { Button } from '../button'
 
 export function ButtonNav() {
   const { status } = useSession()
@@ -9,12 +10,13 @@ export function ButtonNav() {
   return (
     <>
       {status === 'authenticated' ? (
+        <Button asChild>
         <Link
           href="/home"
-          className="animate-fade-in rounded-full border border-black bg-black px-4 py-1.5 text-sm text-white transition-all hover:bg-white hover:text-black"
-        >
+          >
           Dashboard
         </Link>
+          </Button>
       ) : (
         <>
           <Link
