@@ -49,8 +49,8 @@ export default function Nav() {
       >
         <div className="flex h-14 items-center justify-between">
           <div className="flex items-center space-x-4">
-            <Link href={'/'}>
-              <LogoType className="w-auto h-10" />
+            <Link href="/">
+              <LogoType className="w-auto h-10 text-primary-600" />
             </Link>
             {/* {helpCenter && (
               <div className="flex items-center">

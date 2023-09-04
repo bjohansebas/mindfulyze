@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils'
 
 export default function LogoType({ className }: { className?: string }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 735 236" className={cn('h-10 w-10 text-black', className)}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 735 236" className={cn('h-10 w-10', className)}>
       <defs>
         <clipPath id="a">
           <path d="M0 0h735v236H0z" />
