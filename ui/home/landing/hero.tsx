@@ -1,13 +1,13 @@
 import Link from 'next/link'
-import { Button } from '../button'
+import { Button } from '@/ui/button'
 
 const Hero = () => {
   return (
-    <div className="mx-auto mb-10 max-w-md px-2.5 text-center sm:max-w-lg sm:px-0">
-      <h1 className="mt-5 font-display text-4xl font-bold leading-[1.15] text-black sm:text-6xl sm:leading-[1.15]">
+    <div className="mx-auto max-w-md px-2.5 text-center sm:max-w-lg sm:px-0 h-[calc(100vh-57px)] flex justify-center flex-col">
+      <h1 className="font-display text-4xl font-bold leading-[1.15] text-gray-800 sm:text-6xl sm:leading-[1.15]">
         Store moments from your day
         <br />
-        <span className="bg-gradient-to-r from-primary-800 via-primary-600 to-primary-800 bg-clip-text text-transparent">
+        <span className="bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-transparent">
           Securely
         </span>
       </h1>
@@ -15,10 +15,8 @@ const Hero = () => {
         Capture, express, and reflect on your day in a secure and private space. Start your journey of self-expression
         and personal growth
       </h2>
-
       <div className="mx-auto mt-10 flex max-w-fit space-x-4">
-        <Button asChild>
-
+        <Button asChild className='rounded-full'>
           <Link
             href="/signup"
           >
