@@ -10,11 +10,24 @@ export default async function Sitemap() {
     {
       url: `https://${domain}`,
       lastModified: new Date(),
+      priority: 1,
     },
     {
-      url: `https://${domain}/pricing`,
+      url: `https://${domain}/login`,
       lastModified: new Date(),
+      priority: 0.8,
+      changeFrequency: 'yearly',
     },
+    {
+      url: `https://${domain}/signup`,
+      lastModified: new Date(),
+      priority: 0.8,
+      changeFrequency: 'yearly',
+    },
+    // {
+    //   url: `https://${domain}/pricing`,
+    //   lastModified: new Date(),
+    // },
     // {
     //   url: `https://${domain}/blog`,
     //   lastModified: new Date(),
@@ -42,14 +55,20 @@ export default async function Sitemap() {
     {
       url: `https://${domain}/changelog`,
       lastModified: new Date(),
+      priority: 0.8,
+      changeFrequency: 'weekly',
     },
     ...allChangelogPosts.map((post) => ({
       url: `https://${domain}/changelog/${post.slug}`,
       lastModified: new Date(post.publishedAt),
+      priority: 0.6,
+      changeFrequency: 'never',
     })),
     ...allLegalPosts.map((post) => ({
       url: `https://${domain}/${post.slug}`,
       lastModified: new Date(post.updatedAt),
+      priority: 0.8,
+      changeFrequency: 'yearly',
     })),
   ]
 }
