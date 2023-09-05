@@ -10,24 +10,28 @@ const SentimentAnalysis = () => {
           width="100"
           height="100"
           className="absolute left-4 top-3"
+          alt="Disappointed Face"
         />
         <Image
           src="/_static/emojis/frowning_face_3d.png"
           width="100"
           height="100"
           className="absolute right-7 bottom-2"
+          alt="Frowning face"
         />
         <Image
           src="/_static/emojis/grinning_face_3d.png"
           width="100"
           height="100"
           className="absolute left-7 bottom-20"
+          alt="Grinning face"
         />
         <Image
           src="/_static/emojis/slightly_smiling_face_3d.png"
           width="100"
           height="100"
           className="absolute right-1 top-7"
+          alt="Slightly smiling face"
         />
       </div>
 
