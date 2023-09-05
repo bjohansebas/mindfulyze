@@ -8,12 +8,9 @@ const navigation = {
     // { name: 'Pricing', href: '/pricing' }
     { name: 'Changelog', href: '/changelog' },
   ],
-  company: [{ name: 'Blog', href: '/blog' }],
-  resources: [{ name: 'Help Center', href: '/help' }],
-  legal: [
-    { name: 'Privacy', href: '/privacy' },
-    { name: 'Terms', href: '/terms' },
-  ],
+  // company: [{ name: 'Blog', href: '/blog' }],
+  // resources: [{ name: 'Help Center', href: '/help' }],
+  legal: [{ name: 'Privacy', href: '/privacy' }],
 }
 
 export default function Footer() {
@@ -29,7 +26,7 @@ export default function Footer() {
             <p className="max-w-xs text-sm text-gray-500">A modern diary, for your day-to-day</p>
             <div className="flex items-center space-x-2">
               <a
-                href="https://twitter.com/bjohansebas"
+                href="https://twitter.com/mindfulyze"
                 target="_blank"
                 rel="noreferrer"
                 className="group rounded-md p-2 transition-colors hover:bg-gray-100 active:bg-gray-200"
@@ -53,7 +50,7 @@ export default function Footer() {
                   ))}
                 </ul>
               </div>
-              <div className="mt-10 md:mt-0">
+              {/* <div className="mt-10 md:mt-0">
                 <h3 className="text-sm font-semibold text-gray-600">Company</h3>
                 <ul role="list" className="mt-4 space-y-4">
                   {navigation.company.map((item) => (
@@ -64,10 +61,10 @@ export default function Footer() {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </div> */}
             </div>
             <div className="md:grid md:grid-cols-2 md:gap-8">
-              <div>
+              {/* <div>
                 <h3 className="text-sm font-semibold text-gray-600">Resources</h3>
                 <ul role="list" className="mt-4 space-y-4">
                   {navigation.resources.map((item) => (
@@ -78,7 +75,7 @@ export default function Footer() {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </div> */}
               <div className="mt-10 md:mt-0">
                 <h3 className="text-sm font-semibold text-gray-600">Legal</h3>
                 <ul role="list" className="mt-4 space-y-4">
