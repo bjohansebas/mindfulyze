@@ -2,10 +2,10 @@ export const PRIVATE_APP_ROUTES = new Set(['home', 'stats', 'settings', 'welcome
 
 export const HOME_DOMAIN =
   process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
-    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` // 'https://mindfulyze.com'
+    ? 'https://mindfulyze.com'
     : process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
     ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-    : 'http://localhost:8888'
+    : 'http://localhost:3000'
 
 export const ENCRYPTION_METHOD = 'aes-256-cbc'
 
