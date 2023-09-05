@@ -6,8 +6,8 @@ export default function Page() {
   return (
     <>
       <Hero />
-      <SecureData/>
-      <SentimentAnalysis/>
+      <SecureData />
+      <SentimentAnalysis />
     </>
   )
 }

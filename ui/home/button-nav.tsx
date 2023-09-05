@@ -11,12 +11,8 @@ export function ButtonNav() {
     <>
       {status === 'authenticated' ? (
         <Button asChild>
-        <Link
-          href="/home"
-          >
-          Dashboard
-        </Link>
-          </Button>
+          <Link href="/home">Dashboard</Link>
+        </Button>
       ) : (
         <>
           <Link
@@ -25,10 +21,8 @@ export function ButtonNav() {
           >
             Log in
           </Link>
-          <Button className='rounded-full' asChild>
-            <Link href="/signup">
-              Sign Up
-            </Link>
+          <Button className="rounded-full" asChild>
+            <Link href="/signup">Sign Up</Link>
           </Button>
         </>
       )}
