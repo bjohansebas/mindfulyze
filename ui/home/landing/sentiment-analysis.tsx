@@ -3,7 +3,7 @@ import { Badge } from '@/ui/badge'
 
 const SentimentAnalysis = () => {
   return (
-    <div className="relative h-screen mx-auto max-w-lg px-2.5 text-center sm:max-w-4xl sm:px-0 flex justify-center flex-col gap-5 items-center">
+    <div className="relative h-[80vh] mx-auto max-w-lg px-2.5 text-center sm:max-w-4xl sm:px-0 flex justify-center flex-col gap-5 items-center">
       <div>
         <Image
           src="/_static/emojis/disappointed_face_3d.png"
