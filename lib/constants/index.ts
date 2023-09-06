@@ -22,3 +22,25 @@ export const MAX_LENGTH_PW = 70
 
 export const MINDFULYZE_LOGO = 'https://res.cloudinary.com/mindfulyze/image/upload/v1693525482/logo.png'
 export const MINDFULYZE_THUMBNAIL = 'https://res.cloudinary.com/mindfulyze/image/upload/v1693177063/thumbnail.png'
+
+export const BLOG_CATEGORIES: {
+  title: string
+  slug: 'company' | 'education' | 'customer-stories'
+  description: string
+}[] = [
+  {
+    title: 'Company News',
+    slug: 'company',
+    description: 'Updates and announcements from Mindfulyze.',
+  },
+  // {
+  //   title: "Education",
+  //   slug: "education",
+  //   description: "Educational content about link management.",
+  // },
+  // {
+  //   title: "Customer Stories",
+  //   slug: "customer-stories",
+  //   description: "Learn how Mindfulyze customers use Mindfulyze.",
+  // },
+]

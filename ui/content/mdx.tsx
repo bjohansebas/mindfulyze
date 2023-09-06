@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { useMDXComponent } from 'next-contentlayer/hooks'
 import { cn } from '@/lib/utils'
+import Image from 'next/image'
 
 // rome-ignore lint/suspicious/noExplicitAny: <explanation>
 const CustomLink = (props: any) => {
@@ -72,6 +73,7 @@ export function MDX({ code, className }: MDXProps) {
       <Component
         components={{
           ...components,
+          Image,
         }}
       />
     </article>

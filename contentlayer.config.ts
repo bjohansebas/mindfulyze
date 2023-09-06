@@ -8,56 +8,56 @@ import GithubSlugger from 'github-slugger'
 import { capitalize } from './lib/utils'
 import { HOME_DOMAIN } from './lib/constants'
 
-// export const BlogPost = defineDocumentType(() => ({
-//   name: 'BlogPost',
-//   filePathPattern: '**/blog/*.mdx',
-//   contentType: 'mdx',
-//   fields: {
-//     title: {
-//       type: 'string',
-//       required: true,
-//     },
-//     seoTitle: {
-//       type: 'string',
-//     },
-//     publishedAt: {
-//       type: 'string',
-//       required: true,
-//     },
-//     summary: {
-//       type: 'string',
-//       required: true,
-//     },
-//     seoDescription: {
-//       type: 'string',
-//     },
-//     image: {
-//       type: 'string',
-//       required: true,
-//     },
-//     author: {
-//       type: 'string',
-//       required: true,
-//     },
-//     categories: {
-//       type: 'list',
-//       of: {
-//         type: 'enum',
-//         options: ['company', 'education', 'customer-stories'],
-//         default: 'company',
-//       },
-//       required: true,
-//     },
-//     related: {
-//       type: 'list',
-//       of: {
-//         type: 'string',
-//       },
-//     },
-//   },
-//   // @ts-ignore
-//   computedFields: computedFields('blog'),
-// }))
+export const BlogPost = defineDocumentType(() => ({
+  name: 'BlogPost',
+  filePathPattern: '**/blog/*.mdx',
+  contentType: 'mdx',
+  fields: {
+    title: {
+      type: 'string',
+      required: true,
+    },
+    seoTitle: {
+      type: 'string',
+    },
+    publishedAt: {
+      type: 'string',
+      required: true,
+    },
+    summary: {
+      type: 'string',
+      required: true,
+    },
+    seoDescription: {
+      type: 'string',
+    },
+    image: {
+      type: 'string',
+      required: true,
+    },
+    author: {
+      type: 'string',
+      required: true,
+    },
+    categories: {
+      type: 'list',
+      of: {
+        type: 'enum',
+        options: ['company', 'education', 'customer-stories'],
+        default: 'company',
+      },
+      required: true,
+    },
+    related: {
+      type: 'list',
+      of: {
+        type: 'string',
+      },
+    },
+  },
+  // @ts-ignore
+  computedFields: computedFields('blog'),
+}))
 
 export const ChangelogPost = defineDocumentType(() => ({
   name: 'ChangelogPost',
@@ -173,12 +173,12 @@ const computedFields = (type: 'blog' | 'changelog' | 'help' | 'legal') => ({
       )
     },
   },
-  // images: {
-  //   type: 'array',
-  //   resolve: (doc) => {
-  //     return doc.body.raw.match(/(?<=<Image[^>]*\bsrc=")[^"]+(?="[^>]*\/>)/g) || []
-  //   },
-  // },
+  images: {
+    type: 'array',
+    resolve: (doc) => {
+      return doc.body.raw.match(/(?<=<Image[^>]*\bsrc=")[^"]+(?="[^>]*\/>)/g) || []
+    },
+  },
   // tweetIds: {
   //   type: 'array',
   //   resolve: (doc) => {
@@ -195,6 +195,7 @@ const computedFields = (type: 'blog' | 'changelog' | 'help' | 'legal') => ({
       datePublished: doc.publishedAt,
       dateModified: doc.publishedAt,
       description: doc.summary,
+      image: doc.image,
       url: `${HOME_DOMAIN}/${doc._raw.flattenedPath}`,
       author: {
         '@type': 'Person',
@@ -206,7 +207,7 @@ const computedFields = (type: 'blog' | 'changelog' | 'help' | 'legal') => ({
 
 export default makeSource({
   contentDirPath: 'content',
-  documentTypes: [ChangelogPost, LegalPost],
+  documentTypes: [BlogPost, ChangelogPost, LegalPost],
   // documentTypes: [BlogPost, ChangelogPost, LegalPost, HelpPost],
   mdx: {
     remarkPlugins: [remarkGfm],
