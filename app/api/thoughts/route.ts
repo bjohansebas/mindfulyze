@@ -9,6 +9,7 @@ import { NextResponse } from 'next/server'
 import { getThoughtsByUser } from '@/lib/api/utils'
 import { validateThought } from '@/schemas/thought'
 import { createId } from '@/lib/utils'
+import { revalidatePath } from 'next/cache'
 
 export async function GET(request: Request) {
   const session = await getServerSession(authOptions)
@@ -87,6 +88,8 @@ export async function POST(request: Request) {
         createdAt: result.data.created,
       },
     })
+
+    revalidatePath(`/api/thoughts`)
 
     return NextResponse.json({ data: response }, { status: 201 })
   } catch (e) {

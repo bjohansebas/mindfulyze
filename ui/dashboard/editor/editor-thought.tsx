@@ -62,8 +62,6 @@ export function EditorThought() {
         editor?.commands.setContent('')
         form.reset()
 
-        mutate(`/api/thoughts`)
-
         toast.success('Thought was created')
       } else {
         toast.error("The thought couldn't be created, try again anew.")
