@@ -1,15 +1,15 @@
 import { getServerSession } from 'next-auth'
 
+import { getThoughtsByUser } from '@/lib/api/utils'
 import { authOptions } from '@/lib/auth'
 import { NEXT_SECRET } from '@/lib/constants'
-import prisma from '@/lib/prisma'
 import { decryptData, encryptData } from '@/lib/encrypt'
+import prisma from '@/lib/prisma'
 import { createFile, downloadFile } from '@/lib/supabase'
-import { NextResponse } from 'next/server'
-import { getThoughtsByUser } from '@/lib/api/utils'
-import { validateThought } from '@/schemas/thought'
 import { createId } from '@/lib/utils'
+import { validateThought } from '@/schemas/thought'
 import { revalidatePath } from 'next/cache'
+import { NextResponse } from 'next/server'
 
 export async function GET(request: Request) {
   const session = await getServerSession(authOptions)
@@ -89,7 +89,7 @@ export async function POST(request: Request) {
       },
     })
 
-    revalidatePath(`/api/thoughts`)
+    revalidatePath('/api/thoughts')
 
     return NextResponse.json({ data: response }, { status: 201 })
   } catch (e) {

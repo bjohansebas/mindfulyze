@@ -9,13 +9,13 @@ export const HOME_DOMAIN =
 
 export const ENCRYPTION_METHOD = 'aes-256-cbc'
 
-// rome-ignore lint/style/noNonNullAssertion: <explanation>
+// biome-ignore lint/style/noNonNullAssertion: <explanation>
 export const SECRET_IV = process.env.SECRET_IV!
 
-// rome-ignore lint/style/noNonNullAssertion: <explanation>
+// biome-ignore lint/style/noNonNullAssertion: <explanation>
 export const NEXT_SECRET = process.env.NEXTAUTH_SECRET!
-// rome-ignore lint/style/noNonNullAssertion: <explanation>
 
+// biome-ignore lint/style/noNonNullAssertion: <explanation>
 export const NEXT_URL = process.env.NEXTAUTH_URL!
 
 export const DEFAULT_COST_SALT = 12

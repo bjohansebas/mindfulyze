@@ -1,9 +1,9 @@
-import { notFound } from 'next/navigation'
-import { allBlogPosts } from 'contentlayer/generated'
 import { BLOG_CATEGORIES } from '@/lib/constants'
-import { Metadata } from 'next'
-import BlogCard from '@/ui/content/blog-card'
 import { constructMetadata } from '@/lib/metadata'
+import BlogCard from '@/ui/content/blog-card'
+import { allBlogPosts } from 'contentlayer/generated'
+import { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 
 export async function generateStaticParams() {
   return BLOG_CATEGORIES.map((category) => ({

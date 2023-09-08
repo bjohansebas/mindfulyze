@@ -40,7 +40,7 @@ const Command = Extension.create({
         }: {
           editor: Editor
           range: Range
-          // rome-ignore lint/suspicious/noExplicitAny: <explanation>
+          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
           props: any
         }) => {
           props.command({ editor, range })
@@ -180,9 +180,9 @@ const CommandList = ({
   editor,
 }: {
   items: CommandItemProps[]
-  // rome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   command: any
-  // rome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   editor: any
 }) => {
   const [selectedIndex, setSelectedIndex] = useState(0)
@@ -250,7 +250,7 @@ const CommandList = ({
             className={`flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm text-stone-900 hover:bg-stone-100 ${
               index === selectedIndex ? 'bg-stone-100 text-stone-900' : ''
             }`}
-            // rome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
             key={index}
             onClick={() => selectItem(index)}
           >
@@ -270,7 +270,7 @@ const CommandList = ({
 
 const renderItems = () => {
   let component: ReactRenderer | null = null
-  // rome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   let popup: any | null = null
 
   return {

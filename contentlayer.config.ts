@@ -1,12 +1,12 @@
 import { defineDocumentType, makeSource } from 'contentlayer/source-files'
-import remarkGfm from 'remark-gfm'
+import GithubSlugger from 'github-slugger'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeSlug from 'rehype-slug'
-import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-import GithubSlugger from 'github-slugger'
+import remarkGfm from 'remark-gfm'
 
-import { capitalize } from './lib/utils'
 import { HOME_DOMAIN } from './lib/constants'
+import { capitalize } from './lib/utils'
 
 export const BlogPost = defineDocumentType(() => ({
   name: 'BlogPost',

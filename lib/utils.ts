@@ -1,6 +1,6 @@
+import { init } from '@paralleldrive/cuid2'
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
-import { init } from '@paralleldrive/cuid2'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -73,19 +73,6 @@ export const formatDate = (dateString: string) => {
   })
 }
 
-export async function fetcher<JSON = any>(input: RequestInfo, init?: RequestInit): Promise<JSON> {
-  const res = await fetch(input, init)
-
-  if (!res.ok) {
-    const error = await res.text()
-    const err = new Error(error) as SWRError
-    err.status = res.status
-    throw err
-  }
-
-  return res.json()
-}
-
 // export const getQueryString = (
 //   req: Request,
 //   opts?: Record<string, string>,
@@ -98,7 +85,3 @@ export async function fetcher<JSON = any>(input: RequestInfo, init?: RequestInit
 //   }).toString();
 //   return `${queryString ? "?" : ""}${queryString}`;
 // };
-
-interface SWRError extends Error {
-  status: number
-}

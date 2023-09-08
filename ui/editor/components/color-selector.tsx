@@ -124,7 +124,7 @@ export const ColorSelector: FC<ColorSelectorProps> = ({ editor, isOpen, setIsOpe
           <div className="my-1 px-2 text-sm text-stone-500">Color</div>
           {TEXT_COLORS.map(({ name, color }, index) => (
             <button
-              // rome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+              // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
               key={index}
               onClick={() => {
                 editor.commands.unsetColor()
@@ -148,7 +148,7 @@ export const ColorSelector: FC<ColorSelectorProps> = ({ editor, isOpen, setIsOpe
 
           {HIGHLIGHT_COLORS.map(({ name, color }, index) => (
             <button
-              // rome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+              // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
               key={index}
               onClick={() => {
                 editor.commands.unsetHighlight()

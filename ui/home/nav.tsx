@@ -1,9 +1,9 @@
 import { LogoType } from '@/components/shared/icons'
 import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
 import { cn } from '@/lib/utils'
-import Link from 'next/link'
-import dynamic from 'next/dynamic'
 import { Skeleton } from '@/ui/skeleton'
+import dynamic from 'next/dynamic'
+import Link from 'next/link'
 // import { useSelectedLayoutSegment } from 'next/navigation'
 
 const ButtonNav = dynamic(() => import('./button-nav'), {

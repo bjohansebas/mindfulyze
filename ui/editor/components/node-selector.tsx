@@ -103,7 +103,7 @@ export const NodeSelector: FC<NodeSelectorProps> = ({ editor, isOpen, setIsOpen 
         >
           {items.map((item, index) => (
             <button
-              // rome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+              // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
               key={index}
               onClick={() => {
                 item.command()

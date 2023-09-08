@@ -1,6 +1,6 @@
+import { Thought } from '@/@types/thought'
 import { ContentThoughts } from './editor/content-thoughts'
 import { ThoughtsEmpty } from './editor/empty-thoughts'
-import { Thought } from '@/@types/thought'
 
 interface ListOfThoughtsProps {
   thoughts: Promise<Thought[]>

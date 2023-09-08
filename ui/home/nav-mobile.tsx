@@ -4,9 +4,9 @@ import { motion, useCycle } from 'framer-motion'
 import Link from 'next/link'
 import { ReactNode, useEffect, useRef } from 'react'
 
-import { navItems } from './nav'
-import { Skeleton } from '../skeleton'
 import dynamic from 'next/dynamic'
+import { Skeleton } from '../skeleton'
+import { navItems } from './nav'
 
 const ButtonNavMobile = dynamic(() => import('./button-nav-mobile'), {
   loading: () => <Skeleton className="w-[119.5px] h-9" />,
@@ -65,7 +65,7 @@ export default function MobileNav() {
   )
 }
 
-// rome-ignore lint/suspicious/noExplicitAny: <explanation>
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const MenuToggle = ({ toggle }: { toggle: any }) => (
   <button type="button" onClick={toggle} className="pointer-events-auto absolute right-5 top-5 z-20">
     <svg width="23" height="23" viewBox="0 0 23 23">
@@ -93,7 +93,7 @@ const MenuToggle = ({ toggle }: { toggle: any }) => (
   </button>
 )
 
-// rome-ignore lint/suspicious/noExplicitAny: <explanation>
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const Path = (props: any) => (
   <motion.path fill="transparent" strokeWidth="2" stroke="hsl(0, 0%, 18%)" strokeLinecap="round" {...props} />
 )
@@ -139,7 +139,7 @@ const variants = {
   },
 }
 
-// rome-ignore lint/suspicious/noExplicitAny: <explanation>
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const useDimensions = (ref: any) => {
   const dimensions = useRef({ width: 0, height: 0 })
 

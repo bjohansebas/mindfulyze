@@ -1,9 +1,9 @@
-import Link from 'next/link'
-import { useMDXComponent } from 'next-contentlayer/hooks'
 import { cn } from '@/lib/utils'
+import { useMDXComponent } from 'next-contentlayer/hooks'
 import Image from 'next/image'
+import Link from 'next/link'
 
-// rome-ignore lint/suspicious/noExplicitAny: <explanation>
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const CustomLink = (props: any) => {
   const href = props.href
 
@@ -23,22 +23,22 @@ const CustomLink = (props: any) => {
 }
 
 const components = {
-  // rome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   h2: (props: any) => <h2 className="text-2xl underline-offset-4 hover:underline" {...props} />,
-  // rome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   a: (props: any) => (
     <CustomLink className="font-medium text-gray-500 underline-offset-4 hover:text-black" {...props} />
   ),
-  // rome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   code: (props: any) => (
     <code
       className="rounded-md border border-gray-200 bg-gray-50 px-2 py-1 font-medium text-gray-600 before:hidden after:hidden"
       {...props}
     />
   ),
-  // rome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   thead: (props: any) => <thead className="text-lg" {...props} />,
-  // rome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   Note: (props: any) => (
     <div
       className={cn(

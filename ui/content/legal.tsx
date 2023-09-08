@@ -1,8 +1,8 @@
 import { LegalPost } from 'contentlayer/generated'
 
-import { MDX } from '@/ui/content/mdx'
-import { formatDate } from '@/lib/utils'
 import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
+import { formatDate } from '@/lib/utils'
+import { MDX } from '@/ui/content/mdx'
 
 export default function LegalPage({ post }: { post: LegalPost }) {
   return (

@@ -1,14 +1,14 @@
 import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
-import { allBlogPosts } from 'contentlayer/generated'
-import { notFound } from 'next/navigation'
-import Link from 'next/link'
-import Author from '@/ui/content/author'
-import { MDX } from '@/ui/content/mdx'
-import { Metadata } from 'next'
-import { formatDate } from '@/lib/utils'
 import { BLOG_CATEGORIES } from '@/lib/constants'
 import { constructMetadata } from '@/lib/metadata'
+import { formatDate } from '@/lib/utils'
+import Author from '@/ui/content/author'
+import { MDX } from '@/ui/content/mdx'
+import { allBlogPosts } from 'contentlayer/generated'
+import { Metadata } from 'next'
 import Image from 'next/image'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
 
 export async function generateStaticParams() {
   return allBlogPosts.map((post) => ({
@@ -48,7 +48,7 @@ export default async function BlogArticle({
     notFound()
   }
 
-  // rome-ignore lint/style/noNonNullAssertion: <explanation>
+  // biome-ignore lint/style/noNonNullAssertion: <explanation>
   const category = BLOG_CATEGORIES.find((category) => category.slug === data.categories[0])!
 
   // const relatedArticles = data?.related?.map(

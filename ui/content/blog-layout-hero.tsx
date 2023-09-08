@@ -1,8 +1,8 @@
 'use client'
 
+import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
 import { BLOG_CATEGORIES } from '@/lib/constants'
 import { cn } from '@/lib/utils'
-import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 

@@ -1,5 +1,5 @@
-import { headers } from 'next/headers'
 import { allChangelogPosts, allLegalPosts } from 'contentlayer/generated'
+import { headers } from 'next/headers'
 
 export default async function Sitemap() {
   const headersList = headers()

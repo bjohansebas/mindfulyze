@@ -84,7 +84,7 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps & { editor: Editor }> = 
         {items.map((item, index) => (
           <button
             type="button"
-            // rome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
             key={index}
             onClick={item.command}
             className="p-2 text-stone-600 hover:bg-stone-100 active:bg-stone-200"

@@ -1,14 +1,14 @@
-import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
-import { allChangelogPosts } from 'contentlayer/generated'
-import { MDX } from '@/ui/content/mdx'
-import Link from 'next/link'
-import { formatDate } from '@/lib/utils'
 import { Twitter } from '@/components/shared/icons'
 import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
-import { constructMetadata } from '@/lib/metadata'
 import { HOME_DOMAIN } from '@/lib/constants'
+import { constructMetadata } from '@/lib/metadata'
+import { formatDate } from '@/lib/utils'
+import { MDX } from '@/ui/content/mdx'
+import { allChangelogPosts } from 'contentlayer/generated'
 import { Facebook } from 'lucide-react'
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
 
 export async function generateStaticParams() {
   return allChangelogPosts.map((post) => ({

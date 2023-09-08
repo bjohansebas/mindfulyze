@@ -4,15 +4,15 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/ui/form'
-import { Button } from '@/ui/button'
-import { SetPasswordSchema } from '@/schemas/password'
-import { Input } from '@/ui/input'
-import usePassword from '@/lib/hooks/usePassword'
-import { verifyPassword } from '@/app/actions/user'
-import { toast } from 'sonner'
 import { encryptPassword } from '@/app/actions/password'
+import { verifyPassword } from '@/app/actions/user'
+import usePassword from '@/lib/hooks/usePassword'
+import { SetPasswordSchema } from '@/schemas/password'
+import { Button } from '@/ui/button'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/ui/form'
+import { Input } from '@/ui/input'
 import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 
 export function SetPasswordForm() {
   const router = useRouter()

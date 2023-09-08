@@ -1,8 +1,8 @@
-import { BlogPost } from 'contentlayer/generated'
-import Author from './author'
 import { formatDate } from '@/lib/utils'
-import Link from 'next/link'
+import { BlogPost } from 'contentlayer/generated'
 import Image from 'next/image'
+import Link from 'next/link'
+import Author from './author'
 
 export default function BlogCard({
   data,

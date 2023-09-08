@@ -1,7 +1,7 @@
-import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
-import Link from 'next/link'
-import { Button } from '@/ui/button'
 import { LogoType } from '@/components/shared/icons'
+import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
+import { Button } from '@/ui/button'
+import Link from 'next/link'
 
 export default function CTA() {
   return (

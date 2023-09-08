@@ -10,7 +10,7 @@ export function ContentThoughts({ text, createdAt }) {
     <div className="border-b-stone-200 bg-white flex flex-col border-b shadow-sm rounded-lg">
       <div
         className="overflow-y-auto break-words p-6 py-2 min-h-48 h-48 max-h-56 w-full border-b border-b-stone-200"
-        // rome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
         dangerouslySetInnerHTML={{ __html: text }}
       />
       <div className="flex justify-between items-center px-6 py-0">

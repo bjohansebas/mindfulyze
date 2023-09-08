@@ -10,7 +10,7 @@ export interface EditorProps {
 
 export default function Editor({ editor }: EditorContentProps) {
   return (
-    // rome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
+    // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
     <div
       onClick={() => {
         editor?.chain().focus().run()

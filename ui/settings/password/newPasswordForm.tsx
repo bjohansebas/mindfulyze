@@ -1,17 +1,17 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import * as z from 'zod'
-import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import * as z from 'zod'
 
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/ui/form'
-import { Button } from '@/ui/button'
-import { NewPasswordSchema } from '@/schemas/password'
-import { Input } from '@/ui/input'
-import usePassword from '@/lib/hooks/usePassword'
 import { createPassword } from '@/app/actions/password'
+import usePassword from '@/lib/hooks/usePassword'
+import { NewPasswordSchema } from '@/schemas/password'
+import { Button } from '@/ui/button'
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/ui/form'
+import { Input } from '@/ui/input'
 
 export function NewPasswordForm() {
   const router = useRouter()

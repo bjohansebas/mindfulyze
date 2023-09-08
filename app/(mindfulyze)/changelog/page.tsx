@@ -1,10 +1,10 @@
-import { allChangelogPosts } from 'contentlayer/generated'
-import { formatDate } from '@/lib/utils'
-import Link from 'next/link'
-import { MDX } from '@/ui/content/mdx'
 import { Twitter } from '@/components/shared/icons'
 import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
 import { constructMetadata } from '@/lib/metadata'
+import { formatDate } from '@/lib/utils'
+import { MDX } from '@/ui/content/mdx'
+import { allChangelogPosts } from 'contentlayer/generated'
+import Link from 'next/link'
 
 export const metadata = constructMetadata({
   title: 'Changelog – Mindfulyze',
@@ -37,7 +37,7 @@ export default function Changelog() {
         {allChangelogPosts
           .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
           .map(async (post, idx) => (
-            // rome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
             <div key={idx} className="grid py-20 md:grid-cols-4 md:px-5 xl:px-0">
               <div className="sticky top-20 hidden self-start md:col-span-1 md:block">
                 <Link href={`/changelog/${post.slug}`}>
