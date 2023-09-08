@@ -1,7 +1,7 @@
 import { HOME_DOMAIN } from '@/lib/constants'
 
 export async function getThoughts() {
-  const response = await fetch(`${HOME_DOMAIN}/api/thoughts`)
+  const response = await fetch(`${HOME_DOMAIN}/api/thoughts`, { cache: 'no-store' })
 
   return response.json()
 }

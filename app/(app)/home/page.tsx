@@ -1,4 +1,3 @@
-import { getThoughts } from '@/lib/api/fetch/thought'
 import ThoughtsPlaceholder from '@/ui/dashboard/editor/placeholder-thoughts'
 import { ListOfThoughts } from '@/ui/dashboard/listOfThoughts'
 import { Skeleton } from '@/ui/skeleton'
@@ -19,13 +18,11 @@ const EditorThought = dynamic(() => import('@/ui/dashboard/editor/editor-thought
 })
 
 export default async function Page() {
-  const thoughts = getThoughts()
-
   return (
     <div className="flex flex-col items-center w-full mt-6 gap-4">
       <EditorThought />
       <Suspense fallback={<ThoughtsPlaceholder />}>
-        <ListOfThoughts thoughts={thoughts} />
+        <ListOfThoughts />
       </Suspense>
     </div>
   )
