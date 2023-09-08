@@ -19,7 +19,6 @@ import { Calendar } from '@/ui/calendar'
 import Editor from '@/ui/editor'
 import { Form, FormControl, FormField, FormItem } from '@/ui/form'
 import { Popover, PopoverContent, PopoverTrigger } from '@/ui/popover'
-import { mutate } from 'swr'
 
 export function EditorThought() {
   const editor = useEditor({
