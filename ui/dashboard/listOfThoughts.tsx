@@ -6,14 +6,15 @@ interface ListOfThoughtsProps {
   thoughts: Promise<ThoughtResponse>
 }
 
-export async function ListOfThoughts({thoughts}:ListOfThoughtsProps) {
+export async function ListOfThoughts({ thoughts }: ListOfThoughtsProps) {
   const thoughtsData = await thoughts
-  
 
   return (
     <div className="sm:w-2/4 min-w-[300px] flex flex-col gap-4 prose-sm prose-stone dark:prose-invert prose-headings:font-display font-default focus:outline-none">
       {thoughtsData.data.length > 0 ? (
-        thoughtsData.data.map(({ id, text, createdAt }) => <ContentThoughts key={id} text={text} createdAt={createdAt} />)
+        thoughtsData.data.map(({ id, text, createdAt }) => (
+          <ContentThoughts key={id} text={text} createdAt={createdAt} />
+        ))
       ) : (
         <ThoughtsEmpty />
       )}

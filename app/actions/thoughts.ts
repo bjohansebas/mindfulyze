@@ -36,7 +36,7 @@ export async function createThought(data: z.infer<typeof ThoughtSchema>) {
     const file = await createFile({ name: `${uid}.html`, text: textEncrypt })
 
     if (!file.data?.path) {
-      return { message: "The thought couldn't be created, try again anew.", status: 400,data:null }
+      return { message: "The thought couldn't be created, try again anew.", status: 400, data: null }
     }
 
     const response = await prisma.thought.create({
@@ -52,15 +52,14 @@ export async function createThought(data: z.infer<typeof ThoughtSchema>) {
 
     return { data: response, status: 201 }
   } catch (e) {
-    return { message: "The thought couldn't be created, try again anew.", status: 400, data: null}
+    return { message: "The thought couldn't be created, try again anew.", status: 400, data: null }
   }
 }
 
 export interface ThoughtResponse {
-  data: Thought[],
-  message?: string,
+  data: Thought[]
+  message?: string
   status: number
-
 }
 
 // Get thoughts of user

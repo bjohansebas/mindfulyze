@@ -51,7 +51,7 @@ export function EditorThought() {
 
     try {
       const response = await createThought(data)
-       
+
       if (response.status === 201) {
         editor?.commands.setContent('')
         form.reset()

@@ -20,12 +20,12 @@ const EditorThought = dynamic(() => import('@/ui/dashboard/editor/editor-thought
 
 export default async function Page() {
   const thoughts = getThoughts()
-  
+
   return (
     <div className="flex flex-col items-center w-full mt-6 gap-4">
       <EditorThought />
       <Suspense fallback={<ThoughtsPlaceholder />}>
-        <ListOfThoughts thoughts={thoughts}/>
+        <ListOfThoughts thoughts={thoughts} />
       </Suspense>
     </div>
   )
