@@ -19,6 +19,7 @@ import { Calendar } from '@/ui/calendar'
 import Editor from '@/ui/editor'
 import { Form, FormControl, FormField, FormItem } from '@/ui/form'
 import { Popover, PopoverContent, PopoverTrigger } from '@/ui/popover'
+import { createThought } from '@/app/actions/thoughts'
 
 export function EditorThought() {
   const editor = useEditor({
@@ -49,15 +50,9 @@ export function EditorThought() {
     editor?.setEditable(false)
 
     try {
-      const response = await fetch('api/thoughts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-
-      if (response.ok) {
+      const response = await createThought(data)
+       
+      if (response.status === 201) {
         editor?.commands.setContent('')
         form.reset()
 
