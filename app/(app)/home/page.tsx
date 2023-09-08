@@ -24,11 +24,7 @@ export default async function Page() {
   return (
     <div className="flex flex-col items-center w-full mt-6 gap-4">
       <EditorThought />
-      <Suspense
-        fallback={
-          <ThoughtsPlaceholder />
-        }
-      >
+      <Suspense fallback={<ThoughtsPlaceholder />}>
         <ListOfThoughts thoughts={thoughts} />
       </Suspense>
     </div>

@@ -1,5 +1,5 @@
-import { Badge } from "@/ui/badge"
-import { LayoutTemplateIcon } from "lucide-react"
+import { Badge } from '@/ui/badge'
+import { LayoutTemplateIcon } from 'lucide-react'
 
 const Templates = () => {
   return (
@@ -9,13 +9,13 @@ const Templates = () => {
           Journal Templates <Badge>Soon</Badge>
         </h2>
         <p>
-          With the help of templates, you will have the ease of starting to write a journal and reflect on the things that matter most.
+          With the help of templates, you will have the ease of starting to write a journal and reflect on the things
+          that matter most.
         </p>
       </div>
       <div className="">
         <LayoutTemplateIcon className="sm:w-48 sm:h-48 w-32 h-32" />
       </div>
-
     </div>
   )
 }

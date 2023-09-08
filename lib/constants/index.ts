@@ -18,7 +18,6 @@ export const NEXT_SECRET = process.env.NEXTAUTH_SECRET!
 
 export const NEXT_URL = process.env.NEXTAUTH_URL!
 
-
 export const DEFAULT_COST_SALT = 12
 
 export const MIN_LENGTH_PW = 8

@@ -7,8 +7,8 @@ interface ListOfThoughtsProps {
 }
 
 export async function ListOfThoughts({ thoughts }: ListOfThoughtsProps) {
-  const thoughtsData = await thoughts 
-  
+  const thoughtsData = await thoughts
+
   return (
     <div className="sm:w-2/4 min-w-[300px] flex flex-col gap-4 prose-sm prose-stone dark:prose-invert prose-headings:font-display font-default focus:outline-none">
       {thoughtsData.length > 0 ? (
