@@ -4,6 +4,7 @@ import { Thought } from '@/@types/thought'
 import { getThoughtsByUser } from '@/lib/api/utils'
 import { authOptions } from '@/lib/auth'
 import { NEXT_SECRET } from '@/lib/constants'
+import { SUPABASE_BUCKET_THOUGHTS } from '@/lib/constants/supabase'
 import { decryptData, encryptData } from '@/lib/encrypt'
 import prisma from '@/lib/prisma'
 import { createFile, downloadFile } from '@/lib/supabase'
@@ -33,7 +34,7 @@ export async function createThought(data: z.infer<typeof ThoughtSchema>) {
     const textEncrypt = encryptData({ key: password, data: data.text.withFormat })
 
     const uid = createId()
-    const file = await createFile({ name: `${uid}.html`, text: textEncrypt })
+    const file = await createFile({ name: `${uid}.html`, text: textEncrypt, bucket: SUPABASE_BUCKET_THOUGHTS })
 
     if (!file.data?.path) {
       return { message: "The thought couldn't be created, try again anew.", status: 400, data: null }
@@ -43,6 +44,7 @@ export async function createThought(data: z.infer<typeof ThoughtSchema>) {
       data: {
         id: uid,
         url: file.data?.path,
+        bucket: SUPABASE_BUCKET_THOUGHTS,
         userId: session.user.id,
         createdAt: result.data.created,
       },
@@ -80,8 +82,8 @@ export async function getThoughts(): Promise<ThoughtResponse> {
     const password = decryptData({ key: NEXT_SECRET, data: session.user.pw })
 
     const thoughts = await Promise.all(
-      response.map(async ({ url, ...res }) => {
-        const data = await downloadFile({ name: url })
+      response.map(async ({ url, bucket, ...res }) => {
+        const data = await downloadFile({ name: url, bucket })
         const textEncrypt = await data.data?.text()
 
         if (!textEncrypt) return { text: '', ...res }
