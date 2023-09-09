@@ -65,10 +65,7 @@ export function EditorTemplate() {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col bg-white gap-1 sm:w-2/4 min-w-[300px] w-screen rounded-lg"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col bg-white rounded-lg h-full max-h-[80vh] gap-5">
         <FormField
           control={form.control}
           name="title"
@@ -87,13 +84,12 @@ export function EditorTemplate() {
           name="text"
           render={() => (
             <FormItem>
-              <FormLabel>Title</FormLabel>
-              <Editor editor={editor} />
+              <Editor editor={editor} className='border rounded-xl h-[60vh]' />
               <FormMessage />
             </FormItem>
           )}
         />
-        <div className="flex justify-between items-center px-6 py-2">
+        <div className="flex justify-between items-center">
           <Button type="submit" disabled={isSubmitting || form.getValues()?.text?.withoutFormat.length < 20}>
             {isSubmitting && <Spinner className="mr-2 h-4 w-4 animate-spin" />}
             Create

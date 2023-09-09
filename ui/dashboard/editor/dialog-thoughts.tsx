@@ -2,21 +2,21 @@ import { Button } from '@/ui/button'
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from '@/ui/dialog'
-import { Input } from '@/ui/input'
-import { Label } from '@/ui/label'
 import EditorThought from './editor-thought'
+import { Dispatch, SetStateAction } from 'react'
 
-export function DialogThought() {
+interface DialogThoughtProps {
+  isOpen: boolean
+  setIsOpen: Dispatch<SetStateAction<boolean>>
+}
+
+export function DialogThought({ isOpen, setIsOpen }: DialogThoughtProps) {
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button>Create thought</Button>
+        <Button className='rounded-r-none'>Create thought</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-2xl h-[70vh]">
         <EditorThought />
