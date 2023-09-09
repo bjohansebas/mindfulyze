@@ -10,6 +10,7 @@
     "db:docker:startup": "docker compose --profile db up -d",
     "db:generate": "pnpm with-env prisma generate",
     "db:push": "pnpm with-env prisma db push --skip-generate --accept-data-loss",
+    "db:migrate": "pnpm with-env prisma migrate dev",
     "dev": "prisma generate & next dev",
     "dev:db": "pnpm prisma studio --browser none",
     "format": "biome format .",
