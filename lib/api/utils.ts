@@ -1,5 +1,6 @@
 import prisma from '@/lib/prisma'
-import { Thought as ThoughtProps } from '@prisma/client'
+import { Template as TemplateProps, Thought as ThoughtProps } from '@prisma/client'
+
 
 export async function getThoughtsByUser({
   // sort = "createdAt",
@@ -31,8 +32,8 @@ export async function getTemplatesByUser({
 }: {
   // sort: "createdAt"; // always descending
   userId: string
-}): Promise<ThoughtProps[]> {
-  return await prisma.thought.findMany({
+}): Promise<TemplateProps[]> {
+  return await prisma.template.findMany({
     where: {
       userId,
     },
