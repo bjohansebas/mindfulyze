@@ -24,3 +24,21 @@ export async function getThoughtsByUser({
     }),
   })
 }
+
+export async function getTemplatesByUser({
+  // sort = "createdAt",
+  userId,
+}: {
+  // sort: "createdAt"; // always descending
+  userId: string
+}): Promise<ThoughtProps[]> {
+  return await prisma.thought.findMany({
+    where: {
+      userId,
+    },
+    orderBy: {
+      // [sort]: "desc",
+      createdAt: 'desc',
+    },
+  })
+}
