@@ -40,7 +40,7 @@ export function ButtonFeedBack() {
   }
 
   return (
-    <Popover open={isOpen}>
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
         <Button onClick={() => setIsOpen((prev) => !prev)} variant="outline">
           <ChatBubbleBottomCenterTextIcon className="mr-2 h-4 w-4" /> Feedback
