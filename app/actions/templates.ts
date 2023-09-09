@@ -29,13 +29,17 @@ export async function createTemplate(data: z.infer<typeof TemplateSchema>) {
 
   const templatesUser = await getTemplates()
 
-  if (templatesUser.data.length>=1) {
+  if (templatesUser.data.length >= 1) {
     return { message: '"You cannot create new templates until you improve your plan."', status: 400, data: null }
   }
 
   try {
     const uid = createId()
-    const file = await createFile({ name: `${uid}.html`, text: data.text.withFormat, bucket: SUPABASE_BUCKET_TEMPLATES })
+    const file = await createFile({
+      name: `${uid}.html`,
+      text: data.text.withFormat,
+      bucket: SUPABASE_BUCKET_TEMPLATES,
+    })
 
     if (!file.data?.path) {
       return { message: "The template couldn't be created, try again anew.", status: 400, data: null }
@@ -84,7 +88,6 @@ export async function getTemplates(): Promise<TemplateResponse> {
         const text = await data.data?.text()
 
         if (!text) return { text: '', ...res }
-
 
         return { text, ...res }
       }),

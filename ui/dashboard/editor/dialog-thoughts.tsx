@@ -1,4 +1,4 @@
-import { Button } from "@/ui/button"
+import { Button } from '@/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -7,10 +7,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/ui/dialog"
-import { Input } from "@/ui/input"
-import { Label } from "@/ui/label"
-import EditorThought from "./editor-thought"
+} from '@/ui/dialog'
+import { Input } from '@/ui/input'
+import { Label } from '@/ui/label'
+import EditorThought from './editor-thought'
 
 export function DialogThought() {
   return (

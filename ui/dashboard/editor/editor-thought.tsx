@@ -11,6 +11,12 @@ import { TiptapExtensions } from '@/ui/editor/extensions'
 import { TiptapEditorProps } from '@/ui/editor/props'
 import { useEditor } from '@tiptap/react'
 
+import { createThought } from '@/app/actions/thoughts'
+import Spinner from '@/components/shared/icons/spinner'
+import { cn } from '@/lib/utils'
+import { ThoughtSchema } from '@/schemas/thought'
+import { Button } from '@/ui/button'
+import { Calendar } from '@/ui/calendar'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,16 +24,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/ui/dropdown-menu"
-import Spinner from '@/components/shared/icons/spinner'
-import { cn } from '@/lib/utils'
-import { ThoughtSchema } from '@/schemas/thought'
-import { Button } from '@/ui/button'
-import { Calendar } from '@/ui/calendar'
+} from '@/ui/dropdown-menu'
 import Editor from '@/ui/editor'
 import { Form, FormControl, FormField, FormItem } from '@/ui/form'
 import { Popover, PopoverContent, PopoverTrigger } from '@/ui/popover'
-import { createThought } from '@/app/actions/thoughts'
 
 export function EditorThought() {
   const editor = useEditor({
@@ -77,10 +77,7 @@ export function EditorThought() {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col bg-white rounded-lg h-full max-h-[60vh]"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col bg-white rounded-lg h-full max-h-[60vh]">
         <FormField control={form.control} name="text" render={() => <Editor editor={editor} />} />
         <div className="flex justify-between items-center px-6 py-2">
           <FormField
@@ -89,25 +86,25 @@ export function EditorThought() {
             render={({ field }) => (
               <FormItem className="flex flex-col">
                 <DropdownMenu>
-  <DropdownMenuTrigger>
-  <Button
-                        variant={'outline'}
-                        className={cn('w-[240px] pl-3 text-left font-normal', !field.value && 'text-muted-foreground')}
-                      >
-                        {field.value ? format(field.value, 'PPP') : format(new Date(), 'PPP')}
-                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                      </Button>
-  </DropdownMenuTrigger>
-  <DropdownMenuContent>
-  <Calendar
+                  <DropdownMenuTrigger>
+                    <Button
+                      variant={'outline'}
+                      className={cn('w-[240px] pl-3 text-left font-normal', !field.value && 'text-muted-foreground')}
+                    >
+                      {field.value ? format(field.value, 'PPP') : format(new Date(), 'PPP')}
+                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <Calendar
                       mode="single"
                       selected={field.value}
                       onSelect={field.onChange}
                       disabled={(date) => date > new Date() || date < new Date('1900-01-01')}
                       initialFocus
                     />
-  </DropdownMenuContent>
-</DropdownMenu>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </FormItem>
             )}
           />
