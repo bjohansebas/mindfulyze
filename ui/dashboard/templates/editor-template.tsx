@@ -65,7 +65,10 @@ export function EditorTemplate() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col bg-white rounded-lg h-full max-h-[80vh] gap-5">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col bg-white rounded-lg h-full max-h-[80vh] gap-5"
+      >
         <FormField
           control={form.control}
           name="title"
@@ -84,7 +87,7 @@ export function EditorTemplate() {
           name="text"
           render={() => (
             <FormItem>
-              <Editor editor={editor} className='border rounded-xl h-[60vh]' />
+              <Editor editor={editor} className="border rounded-xl h-[60vh]" />
               <FormMessage />
             </FormItem>
           )}

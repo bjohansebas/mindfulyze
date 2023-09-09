@@ -1,7 +1,6 @@
 import prisma from '@/lib/prisma'
 import { Template as TemplateProps, Thought as ThoughtProps } from '@prisma/client'
 
-
 export async function getThoughtsByUser({
   // sort = "createdAt",
   page,

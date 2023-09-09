@@ -17,10 +17,13 @@ export default function Editor({ editor, className }: EditorContentProps) {
       onClick={() => {
         editor?.chain().focus().run()
       }}
-      className={cn("overflow-y-auto overflow-hidden relative min-h-48 h-full max-h-[calc(70vh)] w-full min-w-[300px] border-b-stone-200 bg-white p-6 border-b", className)}
+      className={cn(
+        'overflow-y-auto overflow-hidden relative min-h-48 h-full max-h-[calc(70vh)] w-full min-w-[300px] border-b-stone-200 bg-white p-6 border-b',
+        className,
+      )}
     >
       {editor && <EditorBubbleMenu editor={editor} />}
       <EditorContent editor={editor} />
-    </div >
+    </div>
   )
 }

@@ -1,7 +1,4 @@
-import {
-  Dialog,
-  DialogContent,
-} from '@/ui/dialog'
+import { Dialog, DialogContent } from '@/ui/dialog'
 import { Dispatch, SetStateAction } from 'react'
 import EditorTemplate from './editor-template'
 
