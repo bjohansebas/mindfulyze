@@ -11,6 +11,14 @@ import { TiptapExtensions } from '@/ui/editor/extensions'
 import { TiptapEditorProps } from '@/ui/editor/props'
 import { useEditor } from '@tiptap/react'
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/ui/dropdown-menu"
 import Spinner from '@/components/shared/icons/spinner'
 import { cn } from '@/lib/utils'
 import { ThoughtSchema } from '@/schemas/thought'
@@ -71,7 +79,7 @@ export function EditorThought() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col bg-white gap-1 sm:w-2/4 min-w-[300px] w-screen rounded-lg"
+        className="flex flex-col bg-white rounded-lg h-full max-h-[60vh]"
       >
         <FormField control={form.control} name="text" render={() => <Editor editor={editor} />} />
         <div className="flex justify-between items-center px-6 py-2">
@@ -80,28 +88,26 @@ export function EditorThought() {
             name="created"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
+                <DropdownMenu>
+  <DropdownMenuTrigger>
+  <Button
                         variant={'outline'}
                         className={cn('w-[240px] pl-3 text-left font-normal', !field.value && 'text-muted-foreground')}
                       >
                         {field.value ? format(field.value, 'PPP') : format(new Date(), 'PPP')}
                         <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                       </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
+  </DropdownMenuTrigger>
+  <DropdownMenuContent>
+  <Calendar
                       mode="single"
                       selected={field.value}
                       onSelect={field.onChange}
                       disabled={(date) => date > new Date() || date < new Date('1900-01-01')}
                       initialFocus
                     />
-                  </PopoverContent>
-                </Popover>
+  </DropdownMenuContent>
+</DropdownMenu>
               </FormItem>
             )}
           />
