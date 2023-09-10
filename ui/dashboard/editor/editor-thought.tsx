@@ -82,7 +82,7 @@ export function EditorThought() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col bg-white rounded-lg h-full max-h-[80vh] gap-5"
+        className="flex flex-col bg-white rounded-lg h-full max-h-[80vh] gap-3"
       >
         <FormField control={form.control} name="textWithoutFormat" render={() =>
           <FormItem className="flex flex-col w-full">
