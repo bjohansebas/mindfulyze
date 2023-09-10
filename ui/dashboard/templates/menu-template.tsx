@@ -1,7 +1,7 @@
 'use client'
 import { Button } from '@/ui/button'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import { ChevronDownIcon, PlusIcon } from '@heroicons/react/24/solid'
+import { ChevronDownIcon, EllipsisHorizontalIcon, PlusIcon } from '@heroicons/react/24/solid'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,13 +12,15 @@ import {
   DropdownMenuTrigger,
 } from '@/ui/dropdown-menu'
 import { useApp } from '@/lib/hooks/useApp'
+import { OptionsMenuTemplate } from './options-menu-template'
+import { Skeleton } from '@/ui/skeleton'
 
 interface DialogTemplateProps {
   setIsOpen: Dispatch<SetStateAction<boolean>>
 }
 
 export function MenuTemplate({ setIsOpen }: DialogTemplateProps) {
-  const { templates } = useApp()
+  const { templates, loadingTemplate } = useApp()
 
   const handleOpenTemplate = () => setIsOpen((prev) => !prev)
 
@@ -32,11 +34,16 @@ export function MenuTemplate({ setIsOpen }: DialogTemplateProps) {
       <DropdownMenuContent className="w-[360px]">
         <DropdownMenuLabel>Templates for thoughts</DropdownMenuLabel>
         <DropdownMenuGroup>
-          {templates.length > 0 ? (
+          {loadingTemplate ? <Skeleton></Skeleton> : templates.length > 0 ? (
             templates.map((data) => (
-              <DropdownMenuItem className="flex justify-between">
-                <span>{data.title}</span>
-              </DropdownMenuItem>
+              <OptionsMenuTemplate id={data.id} setIsOpen={handleOpenTemplate} key={data.id}>
+                <div className='flex items-center w-full justify-between'>
+                  <span>{data.title}</span>
+                  <div>
+                    {data.default ? <span className='text-sm'>DEFAULT</span> : null}
+                  </div>
+                </div>
+              </OptionsMenuTemplate>
             ))
           ) : (
             <div className="p-5 flex items-center flex-col gap-5">
@@ -56,3 +63,5 @@ export function MenuTemplate({ setIsOpen }: DialogTemplateProps) {
     </DropdownMenu>
   )
 }
+
+export default MenuTemplate

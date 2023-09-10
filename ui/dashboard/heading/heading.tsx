@@ -3,7 +3,11 @@
 import { useState } from 'react'
 import { DialogThought } from '../editor/dialog-thoughts'
 import { DialogTemaplate } from '../templates/dialog-template'
-import { MenuTemplate } from '../templates/menu-template'
+import dynamic from 'next/dynamic'
+
+const MenuTemplate = dynamic(() => import('../templates/menu-template'), {
+  // ssr: false
+})
 
 export function HeadDashboard() {
   const [isOpenThoughts, setIsOpenThoughts] = useState(false)

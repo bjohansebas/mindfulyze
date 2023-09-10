@@ -18,54 +18,6 @@ export interface TemplateResponse {
   status: number
 }
 
-// Create new template for user
-export async function createTemplate(data: z.infer<typeof TemplateSchema>) {
-  const session = await getServerSession(authOptions)
-
-  if (!session?.user || !session.user.pw) {
-    return { message: 'You must be logged in.', status: 401, data: null }
-  }
-
-  const result = validateTemplate(data)
-
-  if (!result.success) {
-    return { message: result.error.message, status: 422 }
-  }
-
-  const templatesUser = await getTemplates()
-
-  if (templatesUser.data.length >= 1) {
-    return { message: '"You cannot create new templates until you improve your plan."', status: 400, data: null }
-  }
-
-  try {
-    const uid = createId()
-    const file = await createFile({
-      name: `${uid}.html`,
-      text: data.text.withFormat,
-      bucket: SUPABASE_BUCKET_TEMPLATES,
-    })
-
-    if (!file.data?.path) {
-      return { message: "The template couldn't be created, try again anew.", status: 400, data: null }
-    }
-
-    const { url, bucket, ...res } = await prisma.template.create({
-      data: {
-        id: uid,
-        url: file.data?.path,
-        title: data.title,
-        bucket: SUPABASE_BUCKET_TEMPLATES,
-        userId: session.user.id,
-      },
-    })
-
-    return { data: { text: data.text.withFormat, ...res }, status: 201 }
-  } catch (e) {
-    return { message: "The template couldn't be created, try again anew.", status: 400, data: null }
-  }
-}
-
 // Get template of user
 export async function getTemplates(): Promise<TemplateResponse> {
   const session = await getServerSession(authOptions)
@@ -129,6 +81,93 @@ export async function getTemplateById(id: string) {
     return { data: { text, ...res, url, bucket }, status: 200 }
   } catch (e) {
     return { message: 'Not found template', status: 404, data: null }
+  }
+}
+
+
+// Create new template for user
+export async function createTemplate(data: z.infer<typeof TemplateSchema>) {
+  const session = await getServerSession(authOptions)
+
+  if (!session?.user || !session.user.pw) {
+    return { message: 'You must be logged in.', status: 401, data: null }
+  }
+
+  const result = validateTemplate(data)
+
+  if (!result.success) {
+    return { message: result.error.message, status: 422 }
+  }
+
+  const templatesUser = await getTemplates()
+
+  // if (templatesUser.data.length >= 1) {
+  //   return { message: 'You cannot create new templates until you improve your plan.', status: 400, data: null }
+  // }
+
+  try {
+    const uid = createId()
+    const file = await createFile({
+      name: `${uid}.html`,
+      text: data.text.withFormat,
+      bucket: SUPABASE_BUCKET_TEMPLATES,
+    })
+
+    if (!file.data?.path) {
+      return { message: "The template couldn't be created, try again anew.", status: 400, data: null }
+    }
+
+    const { url, bucket, ...res } = await prisma.template.create({
+      data: {
+        id: uid,
+        url: file.data?.path,
+        title: data.title,
+        bucket: SUPABASE_BUCKET_TEMPLATES,
+        userId: session.user.id,
+        default: templatesUser.data.length === 0
+      },
+    })
+
+    return { data: { text: data.text.withFormat, ...res }, status: 201 }
+  } catch (e) {
+    return { message: "The template couldn't be created, try again anew.", status: 400, data: null }
+  }
+}
+
+// Create new template for user
+export async function duplicateTemplate(id: string) {
+  const session = await getServerSession(authOptions)
+
+  if (!session?.user || !session.user.pw) {
+    return { message: 'You must be logged in.', status: 401, data: null }
+  }
+
+  if (id === '') {
+    return { message: 'The ID is empty.', status: 400, data: null }
+  }
+
+  try {
+    const template = await getTemplateById(id)
+
+    if (!(template.status === 200 && template.data != null)) {
+      return { data: null, status: 400 }
+    }
+
+    const response = await createTemplate({
+      text: {
+        withFormat: template.data.text,
+        withoutFormat: template.data.text
+      },
+      title: `${template.data.title} Copied`
+    })
+
+    if (response.status === 201 && response.data) {
+      return { data: response.data, status: 201 }
+    } else {
+      return { message: "The template couldn't be created, try again anew.", status: 400, data: null }
+    }
+  } catch (e) {
+    return { message: "The template couldn't be created, try again anew.", status: 400, data: null }
   }
 }
 

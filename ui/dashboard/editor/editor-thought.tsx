@@ -20,17 +20,16 @@ import { Calendar } from '@/ui/calendar'
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/ui/dropdown-menu'
 import Editor from '@/ui/editor'
-import { Form, FormControl, FormField, FormItem } from '@/ui/form'
-import { Popover, PopoverContent, PopoverTrigger } from '@/ui/popover'
+import { Form, FormField, FormItem } from '@/ui/form'
+import { useApp } from '@/lib/hooks/useApp'
 
 export function EditorThought() {
+  const { templateSelect } = useApp()
   const editor = useEditor({
+    // content: () => textTemplate(),
     extensions: TiptapExtensions,
     editorProps: TiptapEditorProps,
     onUpdate: ({ editor }) => {
@@ -42,10 +41,20 @@ export function EditorThought() {
     autofocus: 'end',
   })
 
+  // const textTemplate = () => {
+  //   console.log(templateSelect)
+  //   if (templateSelect) {
+  //     return templateSelect.text
+  //   }
+  //   return ''
+  // }
+
   const form = useForm<z.infer<typeof ThoughtSchema>>({
     resolver: zodResolver(ThoughtSchema),
     defaultValues: {
       text: {
+        // withFormat: textTemplate(),
+        // withoutFormat: textTemplate(),
         withFormat: '',
         withoutFormat: '',
       },
