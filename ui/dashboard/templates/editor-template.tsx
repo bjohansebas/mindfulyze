@@ -54,7 +54,7 @@ export function EditorTemplate() {
 
         toast.success('Template was created')
       } else {
-        toast.error("The template couldn't be created, try again anew.")
+        toast.error(response.message)
       }
     } catch (e) {
       console.log(e)

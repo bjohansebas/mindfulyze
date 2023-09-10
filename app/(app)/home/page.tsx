@@ -1,4 +1,3 @@
-import { getTemplates } from '@/app/actions/templates'
 import { getThoughts } from '@/app/actions/thoughts'
 import ThoughtsPlaceholder from '@/ui/dashboard/editor/placeholder-thoughts'
 import { HeadDashboard } from '@/ui/dashboard/heading/heading'
@@ -9,9 +8,7 @@ import { Suspense } from 'react'
 export default async function Page() {
   return (
     <div className="flex flex-col items-center w-full mt-6 gap-4">
-      <Suspense fallback={<ThoughtsPlaceholder />}>
-        <HeadDashboard templates={getTemplates()} />
-      </Suspense>
+      <HeadDashboard />
       <Suspense fallback={<ThoughtsPlaceholder />}>
         <ListOfThoughts thoughts={getThoughts()} />
       </Suspense>

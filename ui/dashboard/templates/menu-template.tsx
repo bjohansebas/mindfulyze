@@ -1,5 +1,6 @@
+'use client'
 import { Button } from '@/ui/button'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { ChevronDownIcon, PlusIcon } from '@heroicons/react/24/solid'
 import {
   DropdownMenu,
@@ -10,15 +11,30 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/ui/dropdown-menu'
-import { TemplateResponse } from '@/app/actions/templates'
+import { Template } from '@/@types/template'
+import { getTemplates } from '@/app/actions/templates'
+import { toast } from 'sonner'
 
 interface DialogTemplateProps {
-  templates: Promise<TemplateResponse>
   setIsOpen: Dispatch<SetStateAction<boolean>>
 }
 
-export async function MenuTemaplate({ setIsOpen, templates }: DialogTemplateProps) {
-  const templatesData = await templates
+export function MenuTemplate({ setIsOpen }: DialogTemplateProps) {
+  const [templates, setTemplates] = useState<Template[]>([])
+
+  const getThoughtsUser = async () => {
+    const response = await getTemplates()
+    if (response.status === 200) {
+      setTemplates(response.data)
+    } else {
+      toast.error(response.message)
+    }
+
+  }
+
+  useEffect(() => {
+    getThoughtsUser()
+  }, [])
 
   const handleOpenTemplate = () => setIsOpen((prev) => !prev)
 
@@ -32,8 +48,8 @@ export async function MenuTemaplate({ setIsOpen, templates }: DialogTemplateProp
       <DropdownMenuContent className="w-[360px]">
         <DropdownMenuLabel>Templates for thoughts</DropdownMenuLabel>
         <DropdownMenuGroup>
-          {templatesData.data.length > 0 ? (
-            templatesData.data.map((data) => (
+          {templates.length > 0 ? (
+            templates.map((data) => (
               <DropdownMenuItem className="flex justify-between">
                 <span>{data.title}</span>
               </DropdownMenuItem>
