@@ -16,9 +16,9 @@ import { toast } from 'sonner'
 import { Dispatch, SetStateAction } from 'react'
 
 interface DialogTemplateProps {
-  id: string,
-  children: JSX.Element,
-  setIsOpen: Dispatch<SetStateAction<boolean>>,
+  id: string
+  children: JSX.Element
+  setIsOpen: Dispatch<SetStateAction<boolean>>
   onClick: () => void
 }
 
@@ -55,7 +55,7 @@ export function OptionsMenuTemplate({ id, children, setIsOpen, onClick }: Dialog
     if (response.status === 201 && response.data) {
       setTemplates((prev) => prev.filter((value) => value.id !== id))
 
-      toast.success("The template has been deleted.")
+      toast.success('The template has been deleted.')
     } else {
       toast.error(response.message)
     }
@@ -67,7 +67,7 @@ export function OptionsMenuTemplate({ id, children, setIsOpen, onClick }: Dialog
     if (response.status === 201 && response.data) {
       setTemplates((prev) => prev.concat([{ isSelect: false, ...response.data }]))
 
-      toast.success("The template has been duplicated.")
+      toast.success('The template has been duplicated.')
     } else {
       toast.error(response.message)
     }
@@ -97,7 +97,7 @@ export function OptionsMenuTemplate({ id, children, setIsOpen, onClick }: Dialog
         return templates
       })
 
-      toast.success("The default template has been changed.")
+      toast.success('The default template has been changed.')
     } else {
       toast.error(response.message)
     }
@@ -108,19 +108,19 @@ export function OptionsMenuTemplate({ id, children, setIsOpen, onClick }: Dialog
       <DropdownMenuSubTrigger onClick={onClick}>{children}</DropdownMenuSubTrigger>
       <DropdownMenuPortal>
         <DropdownMenuSubContent className="w-[230px]">
-          <DropdownMenuItem onClick={handleOpenTemplate} >
+          <DropdownMenuItem onClick={handleOpenTemplate}>
             <PencilSquareIcon className="mr-2 h-4 w-4" />
             Edit
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={handleSetDefaultTemplate} >
+          <DropdownMenuItem onClick={handleSetDefaultTemplate}>
             <FlagIcon className="mr-2 h-4 w-4" />
             Set as default
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={handleDuplicateTemplate} >
+          <DropdownMenuItem onClick={handleDuplicateTemplate}>
             <DocumentDuplicateIcon className="mr-2 h-4 w-4" />
             Duplicate
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={handleDeleteTemplate} >
+          <DropdownMenuItem onClick={handleDeleteTemplate}>
             <TrashIcon className="mr-2 h-4 w-4" />
             Delete
           </DropdownMenuItem>

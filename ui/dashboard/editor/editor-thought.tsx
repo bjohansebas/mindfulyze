@@ -18,11 +18,7 @@ import { cn } from '@/lib/utils'
 import { ThoughtSchema } from '@/schemas/thought'
 import { Button } from '@/ui/button'
 import { Calendar } from '@/ui/calendar'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from '@/ui/dropdown-menu'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/ui/dropdown-menu'
 import Editor from '@/ui/editor'
 import { Form, FormField, FormItem, FormMessage } from '@/ui/form'
 import { useApp } from '@/lib/hooks/useApp'
@@ -81,15 +77,19 @@ export function EditorThought() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col bg-white rounded-lg h-full max-h-[80vh] gap-3"
       >
-        <FormField control={form.control} name="textWithoutFormat" render={() =>
-          <FormItem className="flex flex-col w-full">
-            <Editor editor={editor} className='border rounded-xl h-[70vh]' />
-            <FormMessage />
-          </FormItem>
-        }
+        <FormField
+          control={form.control}
+          name="textWithoutFormat"
+          render={() => (
+            <FormItem className="flex flex-col w-full">
+              <Editor editor={editor} className="border rounded-xl h-[70vh]" />
+              <FormMessage />
+            </FormItem>
+          )}
         />
         <div className="flex justify-between items-center px-6">
           <FormField

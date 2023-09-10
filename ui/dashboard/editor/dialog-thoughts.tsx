@@ -14,27 +14,30 @@ export function DialogThought({ isOpen, setIsOpen }: DialogThoughtProps) {
   const { setTemplates } = useApp()
 
   return (
-    <Dialog open={isOpen} onOpenChange={(value) => {
-      setTemplates((prev) => {
-        const templates = [...prev]
+    <Dialog
+      open={isOpen}
+      onOpenChange={(value) => {
+        setTemplates((prev) => {
+          const templates = [...prev]
 
-        const templateSelect = templates.find((value) => value.isSelect)
+          const templateSelect = templates.find((value) => value.isSelect)
 
-        if (templateSelect != null) {
-          templateSelect.isSelect = false
-        }
+          if (templateSelect != null) {
+            templateSelect.isSelect = false
+          }
 
-        const newSelect = templates.find((value) => value.default)
+          const newSelect = templates.find((value) => value.default)
 
-        if (newSelect != null) {
-          newSelect.isSelect = true
-        }
+          if (newSelect != null) {
+            newSelect.isSelect = true
+          }
 
-        return templates
-      })
+          return templates
+        })
 
-      setIsOpen(value.valueOf())
-    }}>
+        setIsOpen(value.valueOf())
+      }}
+    >
       <DialogTrigger asChild>
         <Button className="rounded-r-none">Create thought</Button>
       </DialogTrigger>

@@ -65,15 +65,17 @@ export async function getTemplateById(id: string) {
     const { url, bucket, ...res } = await prisma.template.findUniqueOrThrow({
       where: {
         id: id,
-        userId: session.user.id
-      }
+        userId: session.user.id,
+      },
     })
 
     const dataTemplate = await downloadFile({ name: url, bucket })
 
     if (dataTemplate.data == null) {
       return {
-        message: "The template was not found.", data: null, status: 404
+        message: 'The template was not found.',
+        data: null,
+        status: 404,
       }
     }
 
@@ -84,7 +86,6 @@ export async function getTemplateById(id: string) {
     return { message: 'Not found template', status: 404, data: null }
   }
 }
-
 
 // Create new template for user
 export async function createTemplate(data: z.infer<typeof TemplateSchema>) {
@@ -125,7 +126,7 @@ export async function createTemplate(data: z.infer<typeof TemplateSchema>) {
         title: data.title,
         bucket: SUPABASE_BUCKET_TEMPLATES,
         userId: session.user.id,
-        default: templatesUser.data.length === 0
+        default: templatesUser.data.length === 0,
       },
     })
 
@@ -174,8 +175,8 @@ export async function updateTemplate(id: string, data: z.infer<typeof TemplateSc
           title: data.title,
         },
         where: {
-          id: template.data.id
-        }
+          id: template.data.id,
+        },
       })
     }
 
@@ -207,7 +208,7 @@ export async function duplicateTemplate(id: string) {
     const response = await createTemplate({
       textWithFormat: template.data.text,
       textWithoutFormat: template.data.text,
-      title: `${template.data.title} Copied`
+      title: `${template.data.title} Copied`,
     })
 
     if (response.status === 201 && response.data) {
@@ -227,7 +228,6 @@ export async function setDefaultTemplate(id: string) {
     return { message: 'You must be logged in.', status: 401, data: false }
   }
 
-
   if (id === '') {
     return { message: 'The ID is empty.', status: 400, data: false }
   }
@@ -235,38 +235,37 @@ export async function setDefaultTemplate(id: string) {
   const templatesUser = await getTemplates()
 
   if (templatesUser.data.length === 0) {
-    return { message: 'You don\'t have any templates to convert into defaults.', status: 400, data: false }
+    return { message: "You don't have any templates to convert into defaults.", status: 400, data: false }
   }
 
   try {
-    const template = templatesUser.data.find((data) => data.id === id);
+    const template = templatesUser.data.find((data) => data.id === id)
 
     if (template == null) {
       return { message: 'The template was not found.', status: 400, data: false }
     }
 
-    const getTemplateDefault = templatesUser.data.find((data) => data.default === true);
+    const getTemplateDefault = templatesUser.data.find((data) => data.default === true)
 
     if (getTemplateDefault != null) {
       await prisma.template.update({
         data: {
-          default: false
+          default: false,
         },
         where: {
-          id: getTemplateDefault.id
-        }
+          id: getTemplateDefault.id,
+        },
       })
     }
 
     await prisma.template.update({
       data: {
-        default: true
+        default: true,
       },
       where: {
-        id: template.id
-      }
+        id: template.id,
+      },
     })
-
 
     return { data: true, status: 201 }
   } catch (e) {
@@ -274,14 +273,12 @@ export async function setDefaultTemplate(id: string) {
   }
 }
 
-
 export async function deleteTemplate(id: string) {
   const session = await getServerSession(authOptions)
 
   if (!session?.user || !session.user.pw) {
     return { message: 'You must be logged in.', status: 401, data: false }
   }
-
 
   if (id === '') {
     return { message: 'The ID is empty.', status: 400, data: false }
@@ -302,8 +299,8 @@ export async function deleteTemplate(id: string) {
 
     await prisma.template.delete({
       where: {
-        id: template.data.id
-      }
+        id: template.data.id,
+      },
     })
 
     return { data: true, status: 201 }

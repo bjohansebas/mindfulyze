@@ -24,7 +24,11 @@ export async function createThought(data: z.infer<typeof ThoughtSchema>) {
     return { message: 'You must be logged in.', status: 401, data: null }
   }
 
-  const result = validateThought({ created: new Date(data.created), textWithFormat: data.textWithFormat, textWithoutFormat: data.textWithoutFormat })
+  const result = validateThought({
+    created: new Date(data.created),
+    textWithFormat: data.textWithFormat,
+    textWithoutFormat: data.textWithoutFormat,
+  })
 
   if (!result.success) {
     return { message: result.error.message, status: 422 }

@@ -61,14 +61,21 @@ export function MenuTemplate({ setIsOpen, setIsOpenThought }: DialogTemplateProp
       <DropdownMenuContent className="w-[360px]">
         <DropdownMenuLabel>Templates for thoughts</DropdownMenuLabel>
         <DropdownMenuGroup>
-          {loadingTemplate ? <Skeleton></Skeleton> : templates.length > 0 ? (
+          {loadingTemplate ? (
+            <Skeleton></Skeleton>
+          ) : templates.length > 0 ? (
             templates.map((data) => (
-              <OptionsMenuTemplate id={data.id} setIsOpen={handleOpenTemplate} key={data.id} onClick={() => { return handleOpenThought(data.id) }}>
-                <div className='flex items-center w-full justify-between' >
+              <OptionsMenuTemplate
+                id={data.id}
+                setIsOpen={handleOpenTemplate}
+                key={data.id}
+                onClick={() => {
+                  return handleOpenThought(data.id)
+                }}
+              >
+                <div className="flex items-center w-full justify-between">
                   <span>{data.title}</span>
-                  <div>
-                    {data.default ? <span className='text-sm'>DEFAULT</span> : null}
-                  </div>
+                  <div>{data.default ? <span className="text-sm">DEFAULT</span> : null}</div>
                 </div>
               </OptionsMenuTemplate>
             ))
@@ -82,10 +89,13 @@ export function MenuTemplate({ setIsOpen, setIsOpenThought }: DialogTemplateProp
           )}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => {
-          setNewTemplate(true)
-          handleOpenTemplate()
-        }} className="text-primary-700">
+        <DropdownMenuItem
+          onClick={() => {
+            setNewTemplate(true)
+            handleOpenTemplate()
+          }}
+          className="text-primary-700"
+        >
           <PlusIcon className="mr-2 h-4 w-4" />
           New template
         </DropdownMenuItem>

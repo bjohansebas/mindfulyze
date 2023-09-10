@@ -1,10 +1,10 @@
-import { TemplateApp } from "@/@types/template";
-import { getTemplates } from "@/app/actions/templates";
+import { TemplateApp } from '@/@types/template'
+import { getTemplates } from '@/app/actions/templates'
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from 'react'
 
 export default function useTemplates() {
-  const [templates, setTemplates] = useState<TemplateApp[]>([]);
+  const [templates, setTemplates] = useState<TemplateApp[]>([])
   const [isLoadingTemplates, setIsLoadingTemplates] = useState(true)
 
   const getThoughtsUser = async () => {
@@ -26,16 +26,15 @@ export default function useTemplates() {
     setIsLoadingTemplates(true)
 
     void getThoughtsUser()
-  }, []);
+  }, [])
 
   const templateSelect = useMemo(() => {
     return templates.find((value) => value.isSelect)
   }, [templates])
 
   return {
-    isLoadingTemplates, templateSelect, ...useMemo(
-      () => ({ templates, setTemplates }),
-      [templates],
-    )
+    isLoadingTemplates,
+    templateSelect,
+    ...useMemo(() => ({ templates, setTemplates }), [templates]),
   }
 }

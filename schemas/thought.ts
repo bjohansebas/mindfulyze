@@ -8,8 +8,7 @@ export const ThoughtSchema = z.object({
       required_error: 'Thought text is required.',
     })
     .max(5000, 'The thought must have a maximum of 5000 characters.')
-    .min(1, 'The thought should have a minimum of 1 characters.')
-  ,
+    .min(1, 'The thought should have a minimum of 1 characters.'),
   created: z.date().default(new Date()),
 })
 
