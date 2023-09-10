@@ -20,4 +20,11 @@ export const downloadFile = async ({ name, bucket }: { name: string; bucket: str
   return { data, error }
 }
 
+export const deleteFile = async ({ name, bucket }: { name: string; bucket: string }) => {
+  const { data, error } = await supabase.storage.from(bucket).remove([name])
+
+  return { data, error }
+}
+
+
 export default supabase
