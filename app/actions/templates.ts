@@ -45,7 +45,7 @@ export async function createTemplate(data: z.infer<typeof TemplateSchema>) {
       return { message: "The template couldn't be created, try again anew.", status: 400, data: null }
     }
 
-    const response = await prisma.template.create({
+    const { url, bucket, ...res } = await prisma.template.create({
       data: {
         id: uid,
         url: file.data?.path,
@@ -57,7 +57,7 @@ export async function createTemplate(data: z.infer<typeof TemplateSchema>) {
 
     revalidatePath('/home')
 
-    return { data: response, status: 201 }
+    return { data: { text: data.text.withFormat, ...res }, status: 201 }
   } catch (e) {
     return { message: "The template couldn't be created, try again anew.", status: 400, data: null }
   }

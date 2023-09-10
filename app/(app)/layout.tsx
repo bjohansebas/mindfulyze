@@ -2,6 +2,7 @@ import '@/styles/prosemirror.css'
 
 import Background from '@/ui/background'
 import NavigationApp from '@/ui/dashboard/navigation'
+import ProviderApp from './provider'
 
 export default function AppLayout({
   children,
@@ -11,7 +12,9 @@ export default function AppLayout({
   return (
     <div className="flex min-h-screen flex-col">
       <NavigationApp />
-      <main>{children}</main>
+      <ProviderApp>
+        <main>{children}</main>
+      </ProviderApp>
       <Background />
     </div>
   )

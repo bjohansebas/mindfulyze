@@ -16,8 +16,11 @@ import { Button } from '@/ui/button'
 import Editor from '@/ui/editor'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/ui/form'
 import { Input } from '@/ui/input'
+import { useApp } from '@/lib/hooks/useApp'
 
 export function EditorTemplate() {
+  const { setTemplates } = useApp()
+
   const editor = useEditor({
     extensions: TiptapExtensions,
     editorProps: TiptapEditorProps,
@@ -48,9 +51,11 @@ export function EditorTemplate() {
     try {
       const response = await createTemplate(data)
 
-      if (response.status === 201) {
+      if (response.status === 201 && response.data != null) {
         editor?.commands.setContent('')
         form.reset()
+
+        setTemplates((prev) => prev.concat([response.data]))
 
         toast.success('Template was created')
       } else {

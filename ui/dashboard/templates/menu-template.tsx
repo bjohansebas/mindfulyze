@@ -11,30 +11,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/ui/dropdown-menu'
-import { Template } from '@/@types/template'
-import { getTemplates } from '@/app/actions/templates'
-import { toast } from 'sonner'
+import { useApp } from '@/lib/hooks/useApp'
 
 interface DialogTemplateProps {
   setIsOpen: Dispatch<SetStateAction<boolean>>
 }
 
 export function MenuTemplate({ setIsOpen }: DialogTemplateProps) {
-  const [templates, setTemplates] = useState<Template[]>([])
-
-  const getThoughtsUser = async () => {
-    const response = await getTemplates()
-    if (response.status === 200) {
-      setTemplates(response.data)
-    } else {
-      toast.error(response.message)
-    }
-
-  }
-
-  useEffect(() => {
-    getThoughtsUser()
-  }, [])
+  const { templates } = useApp()
 
   const handleOpenTemplate = () => setIsOpen((prev) => !prev)
 
