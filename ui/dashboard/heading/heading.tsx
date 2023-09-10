@@ -16,7 +16,7 @@ export function HeadDashboard() {
   return (
     <div className="bg-white sm:w-2/4 w-screen flex p-4 rounded-lg shadow justify-end border bor">
       <DialogThought isOpen={isOpenThoughts} setIsOpen={setIsOpenThoughts} />
-      <MenuTemplate setIsOpen={setIsOpenTemplates} />
+      <MenuTemplate setIsOpen={setIsOpenTemplates} setIsOpenThought={setIsOpenThoughts} />
       <DialogTemaplate isOpen={isOpenTemplates} setIsOpen={setIsOpenTemplates} />
     </div>
   )

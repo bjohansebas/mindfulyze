@@ -6,10 +6,11 @@ import { CalendarIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import * as z from 'zod'
+import { useMemo } from 'react'
 
 import { TiptapExtensions } from '@/ui/editor/extensions'
 import { TiptapEditorProps } from '@/ui/editor/props'
-import { useEditor } from '@tiptap/react'
+import { generateJSON, useEditor } from '@tiptap/react'
 
 import { createThought } from '@/app/actions/thoughts'
 import Spinner from '@/components/shared/icons/spinner'
@@ -23,41 +24,35 @@ import {
   DropdownMenuTrigger,
 } from '@/ui/dropdown-menu'
 import Editor from '@/ui/editor'
-import { Form, FormField, FormItem } from '@/ui/form'
+import { Form, FormField, FormItem, FormMessage } from '@/ui/form'
 import { useApp } from '@/lib/hooks/useApp'
 
 export function EditorThought() {
   const { templateSelect } = useApp()
+
+  const initialText = useMemo(() => {
+    return generateJSON(templateSelect?.text || '', TiptapExtensions)
+  }, [templateSelect])
+
   const editor = useEditor({
-    // content: () => textTemplate(),
+    content: initialText,
     extensions: TiptapExtensions,
     editorProps: TiptapEditorProps,
     onUpdate: ({ editor }) => {
       const textHTML = editor.getHTML()
       const textPlain = editor.getText()
 
-      form.setValue('text', { withFormat: textHTML, withoutFormat: textPlain })
+      form.setValue('textWithFormat', textHTML)
+      form.setValue('textWithoutFormat', textPlain)
     },
     autofocus: 'end',
   })
 
-  // const textTemplate = () => {
-  //   console.log(templateSelect)
-  //   if (templateSelect) {
-  //     return templateSelect.text
-  //   }
-  //   return ''
-  // }
-
   const form = useForm<z.infer<typeof ThoughtSchema>>({
     resolver: zodResolver(ThoughtSchema),
     defaultValues: {
-      text: {
-        // withFormat: textTemplate(),
-        // withoutFormat: textTemplate(),
-        withFormat: '',
-        withoutFormat: '',
-      },
+      textWithFormat: templateSelect?.text,
+      textWithoutFormat: templateSelect?.text,
       created: new Date(),
     },
   })
@@ -86,9 +81,17 @@ export function EditorThought() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col bg-white rounded-lg h-full max-h-[60vh]">
-        <FormField control={form.control} name="text" render={() => <Editor editor={editor} />} />
-        <div className="flex justify-between items-center px-6 py-2">
+      <form onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col bg-white rounded-lg h-full max-h-[80vh] gap-5"
+      >
+        <FormField control={form.control} name="textWithoutFormat" render={() =>
+          <FormItem className="flex flex-col w-full">
+            <Editor editor={editor} className='border rounded-xl h-[70vh]' />
+            <FormMessage />
+          </FormItem>
+        }
+        />
+        <div className="flex justify-between items-center px-6">
           <FormField
             control={form.control}
             name="created"
@@ -117,7 +120,7 @@ export function EditorThought() {
               </FormItem>
             )}
           />
-          <Button type="submit" disabled={isSubmitting || form.getValues()?.text?.withoutFormat.length < 20}>
+          <Button type="submit" disabled={isSubmitting}>
             {isSubmitting && <Spinner className="mr-2 h-4 w-4 animate-spin" />}
             Create
           </Button>

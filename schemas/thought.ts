@@ -1,17 +1,15 @@
 import z from 'zod'
 
 export const ThoughtSchema = z.object({
-  text: z.object({
-    withFormat: z.string().min(10),
-    withoutFormat: z
-      .string({
-        invalid_type_error: 'Thought text must be a string',
-        required_error: 'Thought text is required.',
-      })
-      .max(5000, 'The thought must have a maximum of 5000 characters.')
-      .min(20, 'The thought should have a minimum of 20 characters.')
-      .trim(),
-  }),
+  textWithFormat: z.string(),
+  textWithoutFormat: z
+    .string({
+      invalid_type_error: 'Thought text must be a string',
+      required_error: 'Thought text is required.',
+    })
+    .max(5000, 'The thought must have a maximum of 5000 characters.')
+    .min(1, 'The thought should have a minimum of 1 characters.')
+  ,
   created: z.date().default(new Date()),
 })
 

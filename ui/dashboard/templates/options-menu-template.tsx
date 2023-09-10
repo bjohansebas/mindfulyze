@@ -1,28 +1,28 @@
 'use client'
 
-import { Dispatch, SetStateAction } from 'react'
+import { DocumentDuplicateIcon, FlagIcon, PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid'
+
 import {
-  DropdownMenu,
-  DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuPortal,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
 } from '@/ui/dropdown-menu'
-import { DocumentDuplicateIcon, FlagIcon, PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid'
 import { deleteTemplate, duplicateTemplate, setDefaultTemplate } from '@/app/actions/templates'
-import { toast } from 'sonner'
 import { useApp } from '@/lib/hooks/useApp'
+
+import { toast } from 'sonner'
+import { Dispatch, SetStateAction } from 'react'
 
 interface DialogTemplateProps {
   id: string,
   children: JSX.Element,
-  setIsOpen: Dispatch<SetStateAction<boolean>>
+  setIsOpen: Dispatch<SetStateAction<boolean>>,
+  onClick: () => void
 }
 
-export function OptionsMenuTemplate({ id, children, setIsOpen }: DialogTemplateProps) {
+export function OptionsMenuTemplate({ id, children, setIsOpen, onClick }: DialogTemplateProps) {
   const { setTemplates } = useApp()
 
   const handleOpenTemplate = () => setIsOpen((prev) => !prev)
@@ -43,7 +43,7 @@ export function OptionsMenuTemplate({ id, children, setIsOpen }: DialogTemplateP
     const response = await duplicateTemplate(id)
 
     if (response.status === 201 && response.data) {
-      setTemplates((prev) => prev.concat([response.data]))
+      setTemplates((prev) => prev.concat([{ isSelect: false, ...response.data }]))
 
       toast.success("The template has been duplicated.")
     } else {
@@ -59,10 +59,18 @@ export function OptionsMenuTemplate({ id, children, setIsOpen }: DialogTemplateP
         const templates = [...prev]
 
         const deleteDefault = templates.find((value) => value.default === true)
-        if (deleteDefault != null) deleteDefault.default = false
+
+        if (deleteDefault != null) {
+          deleteDefault.default = false
+          deleteDefault.isSelect = false
+        }
 
         const addDefault = templates.find((value) => value.id === id)
-        if (addDefault != null) addDefault.default = true
+
+        if (addDefault != null) {
+          addDefault.default = true
+          addDefault.isSelect = true
+        }
 
         return templates
       })
@@ -75,8 +83,7 @@ export function OptionsMenuTemplate({ id, children, setIsOpen }: DialogTemplateP
 
   return (
     <DropdownMenuSub>
-
-      <DropdownMenuSubTrigger>{children}</DropdownMenuSubTrigger>
+      <DropdownMenuSubTrigger onClick={onClick}>{children}</DropdownMenuSubTrigger>
       <DropdownMenuPortal>
         <DropdownMenuSubContent className="w-[230px]">
           <DropdownMenuItem onClick={handleOpenTemplate} >

@@ -10,6 +10,7 @@ import prisma from '@/lib/prisma'
 import { createFile, downloadFile } from '@/lib/supabase'
 import { createId } from '@/lib/utils'
 import { ThoughtSchema, validateThought } from '@/schemas/thought'
+
 import { getServerSession } from 'next-auth'
 import { revalidatePath } from 'next/cache'
 
@@ -23,7 +24,7 @@ export async function createThought(data: z.infer<typeof ThoughtSchema>) {
     return { message: 'You must be logged in.', status: 401, data: null }
   }
 
-  const result = validateThought({ created: new Date(data.created), text: data.text })
+  const result = validateThought({ created: new Date(data.created), textWithFormat: data.textWithFormat, textWithoutFormat: data.textWithoutFormat })
 
   if (!result.success) {
     return { message: result.error.message, status: 422 }
@@ -31,7 +32,7 @@ export async function createThought(data: z.infer<typeof ThoughtSchema>) {
 
   try {
     const password = decryptData({ key: NEXT_SECRET, data: session.user.pw })
-    const textEncrypt = encryptData({ key: password, data: data.text.withFormat })
+    const textEncrypt = encryptData({ key: password, data: data.textWithFormat })
 
     const uid = createId()
     const file = await createFile({ name: `${uid}.html`, text: textEncrypt, bucket: SUPABASE_BUCKET_THOUGHTS })

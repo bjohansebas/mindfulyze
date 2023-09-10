@@ -55,7 +55,7 @@ export function EditorTemplate() {
         editor?.commands.setContent('')
         form.reset()
 
-        setTemplates((prev) => prev.concat([response.data]))
+        setTemplates((prev) => prev.concat([{ isSelect: response.data.default, ...response.data }]))
 
         toast.success('Template was created')
       } else {

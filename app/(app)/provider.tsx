@@ -1,31 +1,30 @@
 'use client'
 
-import { Template } from "@/@types/template";
+import { TemplateApp } from "@/@types/template";
 import useTemplates from "@/lib/hooks/useTemplates";
-import { Dispatch, ReactNode, SetStateAction, createContext, useMemo, useState } from "react";
+
+import { Dispatch, ReactNode, SetStateAction, createContext } from "react";
 
 export const AppContext = createContext<{
-  templates: Template[];
+  templates: TemplateApp[];
   loadingTemplate: boolean;
-  setTemplates: Dispatch<SetStateAction<Template[]>>;
-  templateSelect: string | undefined;
-  setTemplateSelect: Dispatch<SetStateAction<string | undefined>>;
+  setTemplates: Dispatch<SetStateAction<TemplateApp[]>>;
+  templateSelect: TemplateApp | undefined;
 }>({
   templates: [],
   setTemplates: () => { },
   loadingTemplate: true,
   templateSelect: undefined,
-  setTemplateSelect: () => { }
 });
 
 export default function ProviderApp({ children }: { children: ReactNode }) {
-  const { setTemplates, templates, isLoadingTemplates, setTemplateSelect, templateSelect } = useTemplates();
+  const { setTemplates, templates, isLoadingTemplates, templateSelect } = useTemplates();
 
   return (
     <AppContext.Provider
       value={{
         setTemplates, templates, loadingTemplate: isLoadingTemplates,
-        templateSelect, setTemplateSelect
+        templateSelect
       }}
     >
       {children}

@@ -1,7 +1,7 @@
 'use client'
+
 import { Button } from '@/ui/button'
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import { ChevronDownIcon, EllipsisHorizontalIcon, PlusIcon } from '@heroicons/react/24/solid'
+import { ChevronDownIcon, PlusIcon } from '@heroicons/react/24/solid'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,17 +15,44 @@ import { useApp } from '@/lib/hooks/useApp'
 import { OptionsMenuTemplate } from './options-menu-template'
 import { Skeleton } from '@/ui/skeleton'
 
+import { Dispatch, SetStateAction, useState } from 'react'
+
 interface DialogTemplateProps {
   setIsOpen: Dispatch<SetStateAction<boolean>>
+  setIsOpenThought: Dispatch<SetStateAction<boolean>>
 }
 
-export function MenuTemplate({ setIsOpen }: DialogTemplateProps) {
-  const { templates, loadingTemplate } = useApp()
+export function MenuTemplate({ setIsOpen, setIsOpenThought }: DialogTemplateProps) {
+  const { setTemplates, templates, loadingTemplate } = useApp()
+  const [openMenu, setOpenMenu] = useState(false)
 
   const handleOpenTemplate = () => setIsOpen((prev) => !prev)
 
+  const handleOpenThought = (id: string) => {
+    setTemplates((prev) => {
+      const templates = [...prev]
+
+      const templateSelect = templates.find((value) => value.isSelect)
+
+      if (templateSelect != null) {
+        templateSelect.isSelect = false
+      }
+
+      const newSelect = templates.find((value) => value.id === id)
+
+      if (newSelect != null) {
+        newSelect.isSelect = true
+      }
+
+      return templates
+    })
+
+    setOpenMenu(false)
+    setIsOpenThought(true)
+  }
+
   return (
-    <DropdownMenu>
+    <DropdownMenu open={openMenu} onOpenChange={setOpenMenu}>
       <DropdownMenuTrigger>
         <Button className="p-1 rounded-l-none">
           <ChevronDownIcon className="h-4 w-4" />
@@ -36,8 +63,8 @@ export function MenuTemplate({ setIsOpen }: DialogTemplateProps) {
         <DropdownMenuGroup>
           {loadingTemplate ? <Skeleton></Skeleton> : templates.length > 0 ? (
             templates.map((data) => (
-              <OptionsMenuTemplate id={data.id} setIsOpen={handleOpenTemplate} key={data.id}>
-                <div className='flex items-center w-full justify-between'>
+              <OptionsMenuTemplate id={data.id} setIsOpen={handleOpenTemplate} key={data.id} onClick={() => { return handleOpenThought(data.id) }}>
+                <div className='flex items-center w-full justify-between' >
                   <span>{data.title}</span>
                   <div>
                     {data.default ? <span className='text-sm'>DEFAULT</span> : null}
