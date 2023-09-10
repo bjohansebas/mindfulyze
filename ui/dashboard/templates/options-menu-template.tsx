@@ -23,9 +23,31 @@ interface DialogTemplateProps {
 }
 
 export function OptionsMenuTemplate({ id, children, setIsOpen, onClick }: DialogTemplateProps) {
-  const { setTemplates } = useApp()
+  const { setTemplates, setNewTemplate } = useApp()
 
-  const handleOpenTemplate = () => setIsOpen((prev) => !prev)
+  const handleOpenTemplate = () => {
+    setTemplates((prev) => {
+      const templates = [...prev]
+
+      const templateSelect = templates.find((value) => value.isSelect)
+
+      if (templateSelect != null) {
+        templateSelect.isSelect = false
+      }
+
+      const newSelect = templates.find((value) => value.id === id)
+
+      if (newSelect != null) {
+        newSelect.isSelect = true
+      }
+
+      return templates
+    })
+
+    setNewTemplate(false)
+
+    setIsOpen((prev) => !prev)
+  }
 
   const handleDeleteTemplate = async () => {
     const response = await deleteTemplate(id)

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { DialogThought } from '../editor/dialog-thoughts'
-import { DialogTemaplate } from '../templates/dialog-template'
+import { DialogTemplate } from '../templates/dialog-template'
 import dynamic from 'next/dynamic'
 
 const MenuTemplate = dynamic(() => import('../templates/menu-template'), {
@@ -17,7 +17,7 @@ export function HeadDashboard() {
     <div className="bg-white sm:w-2/4 w-screen flex p-4 rounded-lg shadow justify-end border bor">
       <DialogThought isOpen={isOpenThoughts} setIsOpen={setIsOpenThoughts} />
       <MenuTemplate setIsOpen={setIsOpenTemplates} setIsOpenThought={setIsOpenThoughts} />
-      <DialogTemaplate isOpen={isOpenTemplates} setIsOpen={setIsOpenTemplates} />
+      <DialogTemplate isOpen={isOpenTemplates} setIsOpen={setIsOpenTemplates} />
     </div>
   )
 }

@@ -23,7 +23,7 @@ interface DialogTemplateProps {
 }
 
 export function MenuTemplate({ setIsOpen, setIsOpenThought }: DialogTemplateProps) {
-  const { setTemplates, templates, loadingTemplate } = useApp()
+  const { setTemplates, templates, loadingTemplate, setNewTemplate } = useApp()
   const [openMenu, setOpenMenu] = useState(false)
 
   const handleOpenTemplate = () => setIsOpen((prev) => !prev)
@@ -82,7 +82,10 @@ export function MenuTemplate({ setIsOpen, setIsOpenThought }: DialogTemplateProp
           )}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleOpenTemplate} className="text-primary-700">
+        <DropdownMenuItem onClick={() => {
+          setNewTemplate(true)
+          handleOpenTemplate()
+        }} className="text-primary-700">
           <PlusIcon className="mr-2 h-4 w-4" />
           New template
         </DropdownMenuItem>

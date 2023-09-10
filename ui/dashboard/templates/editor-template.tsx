@@ -7,9 +7,10 @@ import * as z from 'zod'
 
 import { TiptapExtensions } from '@/ui/editor/extensions'
 import { TiptapEditorProps } from '@/ui/editor/props'
-import { useEditor } from '@tiptap/react'
+import { generateJSON, useEditor } from '@tiptap/react'
+import { Dispatch, SetStateAction, useMemo } from 'react'
 
-import { createTemplate } from '@/app/actions/templates'
+import { createTemplate, updateTemplate } from '@/app/actions/templates'
 import Spinner from '@/components/shared/icons/spinner'
 import { TemplateSchema } from '@/schemas/template'
 import { Button } from '@/ui/button'
@@ -18,17 +19,27 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/ui/input'
 import { useApp } from '@/lib/hooks/useApp'
 
-export function EditorTemplate() {
-  const { setTemplates } = useApp()
+interface EditorTemplateProps {
+  setIsOpen: Dispatch<SetStateAction<boolean>>
+}
+
+export function EditorTemplate({ setIsOpen }: EditorTemplateProps) {
+  const { setTemplates, templateSelect, newTemplate } = useApp()
+
+  const initialText = useMemo(() => {
+    return generateJSON(templateSelect?.text || '', TiptapExtensions)
+  }, [templateSelect])
 
   const editor = useEditor({
+    content: newTemplate ? '' : initialText,
     extensions: TiptapExtensions,
     editorProps: TiptapEditorProps,
     onUpdate: ({ editor }) => {
       const textHTML = editor.getHTML()
       const textPlain = editor.getText()
 
-      form.setValue('text', { withFormat: textHTML, withoutFormat: textPlain })
+      form.setValue('textWithFormat', textHTML)
+      form.setValue('textWithoutFormat', textPlain)
     },
     autofocus: 'end',
   })
@@ -36,11 +47,9 @@ export function EditorTemplate() {
   const form = useForm<z.infer<typeof TemplateSchema>>({
     resolver: zodResolver(TemplateSchema),
     defaultValues: {
-      text: {
-        withFormat: '',
-        withoutFormat: '',
-      },
-      title: '',
+      textWithFormat: newTemplate ? '' : templateSelect?.text,
+      textWithoutFormat: newTemplate ? '' : templateSelect?.text,
+      title: newTemplate ? '' : templateSelect?.title,
     },
   })
   const { isSubmitting } = form.formState
@@ -49,21 +58,48 @@ export function EditorTemplate() {
     editor?.setEditable(false)
 
     try {
-      const response = await createTemplate(data)
+      if (!newTemplate && templateSelect != null) {
+        const response = await updateTemplate(templateSelect?.id, data)
 
-      if (response.status === 201 && response.data != null) {
-        editor?.commands.setContent('')
-        form.reset()
+        if (response.status === 201 && response.data == true) {
+          editor?.commands.setContent('')
+          form.reset()
 
-        setTemplates((prev) => prev.concat([{ isSelect: response.data.default, ...response.data }]))
+          setTemplates((prev) => {
+            const templates = [...prev]
 
-        toast.success('Template was created')
+            const templateUpdated = templates.find((value) => value.id === templateSelect.id)
+
+            if (templateUpdated != null) {
+              templateUpdated.text = data.textWithFormat
+              templateUpdated.title = data.title
+            }
+
+            return templates
+          })
+
+          toast.success('Template was updated')
+        } else {
+          toast.error(response.message)
+        }
       } else {
-        toast.error(response.message)
+        const response = await createTemplate(data)
+
+        if (response.status === 201 && response.data != null) {
+          editor?.commands.setContent('')
+          form.reset()
+
+          setTemplates((prev) => prev.concat([{ isSelect: response.data.default, ...response.data }]))
+
+          toast.success('Template was created')
+        } else {
+          toast.error(response.message)
+        }
       }
     } catch (e) {
       console.log(e)
     } finally {
+      setIsOpen(false)
       editor?.setEditable(true)
     }
   }
@@ -72,7 +108,7 @@ export function EditorTemplate() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col bg-white rounded-lg h-full max-h-[80vh] gap-5"
+        className="flex flex-col bg-white rounded-lg h-full max-h-[90vh] gap-3"
       >
         <FormField
           control={form.control}
@@ -89,7 +125,7 @@ export function EditorTemplate() {
         />
         <FormField
           control={form.control}
-          name="text"
+          name="textWithoutFormat"
           render={() => (
             <FormItem>
               <Editor editor={editor} className="border rounded-xl h-[60vh]" />
@@ -98,9 +134,9 @@ export function EditorTemplate() {
           )}
         />
         <div className="flex justify-between items-center">
-          <Button type="submit" disabled={isSubmitting || form.getValues()?.text?.withoutFormat.length < 20}>
+          <Button type="submit" disabled={isSubmitting}>
             {isSubmitting && <Spinner className="mr-2 h-4 w-4 animate-spin" />}
-            Create
+            {newTemplate ? 'Create' : 'Update'}
           </Button>
         </div>
       </form>

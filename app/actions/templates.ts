@@ -5,9 +5,10 @@ import { getTemplatesByUser } from '@/lib/api/utils'
 import { authOptions } from '@/lib/auth'
 import { SUPABASE_BUCKET_TEMPLATES } from '@/lib/constants/supabase'
 import prisma from '@/lib/prisma'
-import { createFile, deleteFile, downloadFile } from '@/lib/supabase'
+import { createFile, deleteFile, downloadFile, updateFile } from '@/lib/supabase'
 import { createId } from '@/lib/utils'
-import { TemplateSchema, validateTemplate } from '@/schemas/template'
+import { TemplateSchema, validatePartialTemplate, validateTemplate } from '@/schemas/template'
+
 import { getServerSession } from 'next-auth'
 
 import * as z from 'zod'
@@ -109,7 +110,7 @@ export async function createTemplate(data: z.infer<typeof TemplateSchema>) {
     const uid = createId()
     const file = await createFile({
       name: `${uid}.html`,
-      text: data.text.withFormat,
+      text: data.textWithFormat,
       bucket: SUPABASE_BUCKET_TEMPLATES,
     })
 
@@ -128,9 +129,59 @@ export async function createTemplate(data: z.infer<typeof TemplateSchema>) {
       },
     })
 
-    return { data: { text: data.text.withFormat, ...res }, status: 201 }
+    return { data: { text: data.textWithFormat, ...res }, status: 201 }
   } catch (e) {
     return { message: "The template couldn't be created, try again anew.", status: 400, data: null }
+  }
+}
+
+// Create new template for user
+export async function updateTemplate(id: string, data: z.infer<typeof TemplateSchema>) {
+  const session = await getServerSession(authOptions)
+
+  if (!session?.user || !session.user.pw) {
+    return { message: 'You must be logged in.', status: 401, data: false }
+  }
+
+  const result = validatePartialTemplate(data)
+
+  if (!result.success) {
+    return { message: result.error.message, status: 422, data: false }
+  }
+
+  const template = await getTemplateById(id)
+
+  if (template.status !== 200 || template.data == null) {
+    return { ...template, data: false }
+  }
+
+  try {
+    if (data.textWithFormat !== template.data?.text) {
+      const file = await updateFile({
+        name: `${template.data?.id}.html`,
+        text: data.textWithFormat,
+        bucket: template.data.bucket,
+      })
+
+      if (!file.data?.path) {
+        return { message: "The template couldn't be updated, try again anew.", status: 400, data: false }
+      }
+    }
+
+    if (data.title !== template.data?.title) {
+      await prisma.template.update({
+        data: {
+          title: data.title,
+        },
+        where: {
+          id: template.data.id
+        }
+      })
+    }
+
+    return { data: true, status: 201 }
+  } catch (e) {
+    return { message: "The template couldn't be updated, try again anew.", status: 400, data: false }
   }
 }
 
@@ -154,10 +205,8 @@ export async function duplicateTemplate(id: string) {
     }
 
     const response = await createTemplate({
-      text: {
-        withFormat: template.data.text,
-        withoutFormat: template.data.text
-      },
+      textWithFormat: template.data.text,
+      textWithoutFormat: template.data.text,
       title: `${template.data.title} Copied`
     })
 
