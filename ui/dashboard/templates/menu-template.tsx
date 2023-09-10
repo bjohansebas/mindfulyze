@@ -62,7 +62,7 @@ export function MenuTemplate({ setIsOpen, setIsOpenThought }: DialogTemplateProp
         <DropdownMenuLabel>Templates for thoughts</DropdownMenuLabel>
         <DropdownMenuGroup>
           {loadingTemplate ? (
-            <Skeleton></Skeleton>
+            <Skeleton className="h-4 w-full" />
           ) : templates.length > 0 ? (
             templates.map((data) => (
               <OptionsMenuTemplate
@@ -82,7 +82,13 @@ export function MenuTemplate({ setIsOpen, setIsOpenThought }: DialogTemplateProp
           ) : (
             <div className="p-5 flex items-center flex-col gap-5">
               <p className="text-center">Oops, it looks like you don't have any templates.</p>
-              <DropdownMenuItem onClick={handleOpenTemplate} className="text-primary-700">
+              <DropdownMenuItem
+                onClick={() => {
+                  setNewTemplate(true)
+                  handleOpenTemplate()
+                }}
+                className="text-primary-700"
+              >
                 Create your first template.
               </DropdownMenuItem>
             </div>
