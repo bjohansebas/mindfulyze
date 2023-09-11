@@ -18,7 +18,7 @@ export default function Editor({ editor, className }: EditorContentProps) {
         editor?.chain().focus().run()
       }}
       className={cn(
-        'overflow-y-auto overflow-hidden relative min-h-48 h-full max-h-[calc(70vh)] w-full min-w-[300px] border-b-stone-200 bg-white p-6 border-b',
+        "overflow-y-scroll relative min-h-48 h-full max-h-[calc(70vh)] w-full min-w-[300px] border-b-stone-200 bg-white p-6 border-b",
         className,
       )}
     >

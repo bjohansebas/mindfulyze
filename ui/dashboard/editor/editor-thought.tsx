@@ -79,19 +79,19 @@ export function EditorThought() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col bg-white rounded-lg h-full max-h-[80vh] gap-3"
+        className="flex flex-col bg-white rounded-lg h-full max-h-[80vh] gap-3 overflow-x-hidden"
       >
         <FormField
           control={form.control}
           name="textWithoutFormat"
           render={() => (
-            <FormItem className="flex flex-col w-full">
-              <Editor editor={editor} className="border rounded-xl h-[70vh]" />
+            <FormItem>
+              <Editor editor={editor} className="border rounded-xl sm:h-[70vh] h-[65vh]" />
               <FormMessage />
             </FormItem>
           )}
         />
-        <div className="flex justify-between items-center px-6">
+        <div className="flex justify-between items-center flex-wrap gap-4">
           <FormField
             control={form.control}
             name="created"

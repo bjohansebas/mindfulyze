@@ -108,7 +108,7 @@ export function EditorTemplate({ setIsOpen }: EditorTemplateProps) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col bg-white rounded-lg h-full max-h-[90vh] gap-3"
+        className="flex flex-col bg-white rounded-lg h-full max-h-[90vh] gap-3 w-full overflow-x-hidden"
       >
         <FormField
           control={form.control}

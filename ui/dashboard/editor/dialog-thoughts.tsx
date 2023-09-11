@@ -41,7 +41,7 @@ export function DialogThought({ isOpen, setIsOpen }: DialogThoughtProps) {
       <DialogTrigger asChild>
         <Button className="rounded-r-none">Create thought</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-3xl h-[90vh] pt-10">
+      <DialogContent className="sm:max-w-3xl h-[90vh] pt-10 overflow-x-hidden">
         <EditorThought />
       </DialogContent>
     </Dialog>

@@ -37,7 +37,7 @@ export function DialogTemplate({ isOpen, setIsOpen }: DialogTemplateProps) {
         setIsOpen(value.valueOf())
       }}
     >
-      <DialogContent className="sm:max-w-3xl h-[95vh]">
+      <DialogContent className="sm:max-w-3xl h-[95vh] w-[90vw] overflow-x-hidden">
         <EditorTemplate setIsOpen={setIsOpen} />
       </DialogContent>
     </Dialog>
