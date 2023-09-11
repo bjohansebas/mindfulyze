@@ -247,9 +247,8 @@ const CommandList = ({
         return (
           <button
             type="button"
-            className={`flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm text-stone-900 hover:bg-stone-100 ${
-              index === selectedIndex ? 'bg-stone-100 text-stone-900' : ''
-            }`}
+            className={`flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm text-stone-900 hover:bg-stone-100 ${index === selectedIndex ? 'bg-stone-100 text-stone-900' : ''
+              }`}
             // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
             key={index}
             onClick={() => selectItem(index)}
@@ -281,9 +280,9 @@ const renderItems = () => {
       })
 
       // @ts-ignore
-      popup = tippy('body', {
+      popup = tippy('#dialog', {
         getReferenceClientRect: props.clientRect,
-        appendTo: () => document.body,
+        appendTo: () => document.querySelector("#dialog"),
         content: component.element,
         showOnCreate: true,
         interactive: true,
