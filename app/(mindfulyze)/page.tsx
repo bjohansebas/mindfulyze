@@ -10,8 +10,8 @@ export default function Page() {
     <>
       <Hero />
       <SecureData />
-      <SentimentAnalysis />
       <Templates />
+      <SentimentAnalysis />
       <Chat />
       <CTA />
     </>
