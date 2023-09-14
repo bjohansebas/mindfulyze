@@ -1,5 +1,20 @@
 import prisma from '@/lib/prisma'
-import { Template as TemplateProps, Thought as ThoughtProps } from '@prisma/client'
+import { Template as TemplateProps, Thought as ThoughtProps, User as UserProps } from '@prisma/client'
+
+export async function getUserById({
+  id,
+}: {
+  id: string
+}) {
+  return await prisma.user.findUniqueOrThrow({
+    where: {
+      id,
+    },
+    include: {
+      Subscription: true,
+    },
+  })
+}
 
 export async function getThoughtsByUser({
   // sort = "createdAt",
