@@ -85,3 +85,5 @@ export const formatDate = (dateString: string) => {
 //   }).toString();
 //   return `${queryString ? "?" : ""}${queryString}`;
 // };
+
+export const toTimestamp = (strDate: string) => Date.parse(strDate)

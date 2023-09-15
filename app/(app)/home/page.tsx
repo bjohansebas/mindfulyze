@@ -1,4 +1,4 @@
-import { getThoughts } from '@/app/actions/thoughts'
+import { getThoughts } from '@/lib/api/thoughts'
 import ThoughtsPlaceholder from '@/ui/dashboard/editor/placeholder-thoughts'
 import { HeadDashboard } from '@/ui/dashboard/heading/heading'
 import { ListOfThoughts } from '@/ui/dashboard/listOfThoughts'
