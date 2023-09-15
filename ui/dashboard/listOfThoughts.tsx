@@ -1,4 +1,4 @@
-import { ThoughtResponse, getThoughts } from '@/app/actions/thoughts'
+import { ThoughtResponse } from '@/app/actions/thoughts'
 import { ContentThoughts } from './editor/content-thoughts'
 import { ThoughtsEmpty } from './editor/empty-thoughts'
 
