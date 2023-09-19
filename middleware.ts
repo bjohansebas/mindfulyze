@@ -30,15 +30,18 @@ export default async function middleware(req: NextRequest) {
     //   path !== '/welcome'
     // ) {
     //   return NextResponse.redirect(new URL('/welcome', req.url))
-
-    // if the path is /login or /signup, redirect to "/home"
     // } else
-    if (path === '/login' || path === '/signup' || path === '/') {
-      return NextResponse.redirect(new URL('/home', req.url))
+    if (
+      !session?.pw &&
+      path !== '/settings/password' &&
+      (path === '/login' || path === '/signup' || path === '/' || path === '/home')
+    ) {
+      return NextResponse.redirect(new URL('/settings/password', req.url))
     }
 
-    if (!session?.pw && path !== '/settings/password' && (path === '/login' || path === '/signup' || path === '/')) {
-      return NextResponse.redirect(new URL('/settings/password', req.url))
+    // if the path is /login or /signup, redirect to "/home"
+    if (path === '/login' || path === '/signup' || path === '/') {
+      return NextResponse.redirect(new URL('/home', req.url))
     }
 
     if (session?.pw != null && path === '/settings/password') {
