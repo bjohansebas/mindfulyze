@@ -1,16 +1,18 @@
 'use client'
 
+import { Button } from '@/ui/button'
+import { ChevronDownIcon } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
 import { DialogThought } from '../editor/dialog-thoughts'
 import { DialogTemplate } from '../templates/dialog-template'
-import { Button } from '@/ui/button'
-import { ChevronDownIcon } from 'lucide-react'
 
 const MenuTemplate = dynamic(() => import('../templates/menu-template'), {
-  loading: () => <Button className="p-1 rounded-l-none" disabled>
-    <ChevronDownIcon className="h-4 w-4" />
-  </Button>
+  loading: () => (
+    <Button className="p-1 rounded-l-none" disabled>
+      <ChevronDownIcon className="h-4 w-4" />
+    </Button>
+  ),
 })
 
 export function HeadDashboard() {
