@@ -1,9 +1,9 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import { useState } from 'react'
 import { DialogThought } from '../editor/dialog-thoughts'
 import { DialogTemplate } from '../templates/dialog-template'
-import dynamic from 'next/dynamic'
 
 const MenuTemplate = dynamic(() => import('../templates/menu-template'), {
   // ssr: false

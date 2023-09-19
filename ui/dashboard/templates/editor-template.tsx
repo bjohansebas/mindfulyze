@@ -12,12 +12,12 @@ import { Dispatch, SetStateAction, useMemo } from 'react'
 
 import { createTemplate, updateTemplate } from '@/app/actions/templates'
 import Spinner from '@/components/shared/icons/spinner'
+import { useApp } from '@/lib/hooks/useApp'
 import { TemplateSchema } from '@/schemas/template'
 import { Button } from '@/ui/button'
 import Editor from '@/ui/editor'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/ui/form'
 import { Input } from '@/ui/input'
-import { useApp } from '@/lib/hooks/useApp'
 
 interface EditorTemplateProps {
   setIsOpen: Dispatch<SetStateAction<boolean>>
@@ -61,7 +61,7 @@ export function EditorTemplate({ setIsOpen }: EditorTemplateProps) {
       if (!newTemplate && templateSelect != null) {
         const response = await updateTemplate(templateSelect?.id, data)
 
-        if (response.status === 201 && response.data == true) {
+        if (response.status === 201 && response.data === true) {
           editor?.commands.setContent('')
           form.reset()
 

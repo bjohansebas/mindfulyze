@@ -1,9 +1,9 @@
 'use client'
 
+import { cn } from '@/lib/utils'
 import { EditorContent, EditorContentProps } from '@tiptap/react'
 import { Dispatch, SetStateAction } from 'react'
 import { EditorBubbleMenu } from './components/bubble-menu'
-import { cn } from '@/lib/utils'
 
 export interface EditorProps {
   onChange: Dispatch<SetStateAction<object>>

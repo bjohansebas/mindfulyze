@@ -3,10 +3,10 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { format } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
+import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import * as z from 'zod'
-import { useMemo } from 'react'
 
 import { TiptapExtensions } from '@/ui/editor/extensions'
 import { TiptapEditorProps } from '@/ui/editor/props'
@@ -14,6 +14,7 @@ import { generateJSON, useEditor } from '@tiptap/react'
 
 import { createThought } from '@/app/actions/thoughts'
 import Spinner from '@/components/shared/icons/spinner'
+import { useApp } from '@/lib/hooks/useApp'
 import { cn } from '@/lib/utils'
 import { ThoughtSchema } from '@/schemas/thought'
 import { Button } from '@/ui/button'
@@ -21,7 +22,6 @@ import { Calendar } from '@/ui/calendar'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/ui/dropdown-menu'
 import Editor from '@/ui/editor'
 import { Form, FormField, FormItem, FormMessage } from '@/ui/form'
-import { useApp } from '@/lib/hooks/useApp'
 
 export function EditorThought() {
   const { templateSelect } = useApp()

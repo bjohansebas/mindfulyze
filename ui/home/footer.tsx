@@ -40,7 +40,7 @@ export default function Footer() {
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div>
                 <h3 className="text-sm font-semibold text-gray-600">Product</h3>
-                <ul role="list" className="mt-4 space-y-4">
+                <ul className="mt-4 space-y-4">
                   {navigation.product.map((item) => (
                     <li key={item.name}>
                       <Link href={item.href} className="text-sm text-gray-500 hover:text-gray-900">
@@ -78,7 +78,7 @@ export default function Footer() {
               </div> */}
               <div className="mt-10 md:mt-0">
                 <h3 className="text-sm font-semibold text-gray-600">Legal</h3>
-                <ul role="list" className="mt-4 space-y-4">
+                <ul className="mt-4 space-y-4">
                   {navigation.legal.map((item) => (
                     <li key={item.name}>
                       <Link href={item.href} className="text-sm text-gray-500 hover:text-gray-900">

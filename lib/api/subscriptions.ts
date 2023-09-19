@@ -1,7 +1,7 @@
 import prisma from '@/lib/prisma'
 
-import { z } from 'zod'
 import type { AddUserSubscriptionType } from '@/schemas/subscriptions'
+import { z } from 'zod'
 import { getUserById } from './utils'
 
 export const getUserSubscription = async ({ userId }: { userId: string }) =>

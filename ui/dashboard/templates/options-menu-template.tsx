@@ -2,6 +2,8 @@
 
 import { DocumentDuplicateIcon, FlagIcon, PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid'
 
+import { deleteTemplate, duplicateTemplate, setDefaultTemplate } from '@/app/actions/templates'
+import { useApp } from '@/lib/hooks/useApp'
 import {
   DropdownMenuItem,
   DropdownMenuPortal,
@@ -9,11 +11,9 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
 } from '@/ui/dropdown-menu'
-import { deleteTemplate, duplicateTemplate, setDefaultTemplate } from '@/app/actions/templates'
-import { useApp } from '@/lib/hooks/useApp'
 
-import { toast } from 'sonner'
 import { Dispatch, SetStateAction } from 'react'
+import { toast } from 'sonner'
 
 interface DialogTemplateProps {
   id: string

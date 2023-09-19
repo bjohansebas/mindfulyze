@@ -1,6 +1,6 @@
+import { useApp } from '@/lib/hooks/useApp'
 import { Dialog, DialogContent } from '@/ui/dialog'
 import EditorTemplate from './editor-template'
-import { useApp } from '@/lib/hooks/useApp'
 
 import { Dispatch, SetStateAction } from 'react'
 

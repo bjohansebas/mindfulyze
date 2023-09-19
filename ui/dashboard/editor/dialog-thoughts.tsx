@@ -1,7 +1,7 @@
+import { useApp } from '@/lib/hooks/useApp'
 import { Button } from '@/ui/button'
 import { Dialog, DialogContent, DialogTrigger } from '@/ui/dialog'
 import EditorThought from './editor-thought'
-import { useApp } from '@/lib/hooks/useApp'
 
 import { Dispatch, SetStateAction } from 'react'
 

@@ -1,10 +1,10 @@
 import { ThoughtResponse } from '@/app/actions/thoughts'
 import prisma from '@/lib/prisma'
 import { Thought as ThoughtProps } from '@prisma/client'
-import { authOptions } from '../auth'
 import { getServerSession } from 'next-auth'
-import { decryptData } from '../encrypt'
+import { authOptions } from '../auth'
 import { NEXT_SECRET } from '../constants'
+import { decryptData } from '../encrypt'
 import { downloadFile } from '../supabase'
 import { toTimestamp } from '../utils'
 
@@ -31,7 +31,6 @@ export async function getThoughtsByUser({
     }),
   })
 }
-
 
 // Get thoughts of user
 export async function getThoughts(): Promise<ThoughtResponse> {
