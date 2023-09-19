@@ -37,7 +37,7 @@ export default async function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL('/home', req.url))
     }
 
-    if (!session?.pw && path !== '/settings/password') {
+    if (!session?.pw && path !== '/settings/password' && (path === '/login' || path === '/signup' || path === '/')) {
       return NextResponse.redirect(new URL('/settings/password', req.url))
     }
 
