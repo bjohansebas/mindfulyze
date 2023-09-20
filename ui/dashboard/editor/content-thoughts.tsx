@@ -1,24 +1,80 @@
+'use client'
+
+import { updateThought } from '@/app/actions/thoughts'
+import { cn } from '@/lib/utils'
+import { Button } from '@/ui/button'
+import { Calendar } from '@/ui/calendar'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/ui/dropdown-menu'
+import { useDebouncedCallback } from "use-debounce";
+import Editor from '@/ui/editor'
+import { TiptapExtensions } from '@/ui/editor/extensions'
+import { TiptapEditorProps } from '@/ui/editor/props'
+import { generateJSON, useEditor } from '@tiptap/react'
 import { format } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
+import { useState } from 'react'
+import { z } from 'zod'
+import { ThoughtSchema } from '@/schemas/thought'
 
 export interface ContentThoughtsProps {
   text: string
-  createdAt: Date
+  createdAt: Date,
+  id: string
 }
-export function ContentThoughts({ text, createdAt }) {
+export function ContentThoughts({ text, createdAt, id }: ContentThoughtsProps) {
+  const [newDate, setNewDate] = useState(createdAt)
+  const debouncedUpdates = useDebouncedCallback(async ({ data }: { data: z.infer<typeof ThoughtSchema> }) => {
+    try {
+      await updateThought(id, data)
+    } catch (e) {
+      console.log(e)
+    }
+  }, 1000);
+
+  const editor = useEditor({
+    content: generateJSON(text || '', TiptapExtensions),
+    extensions: TiptapExtensions,
+    editorProps: TiptapEditorProps,
+    onUpdate: ({ editor }) => {
+      const textHTML = editor.getHTML()
+      const textPlain = editor.getText()
+
+      debouncedUpdates({ data: { textWithFormat: textHTML, textWithoutFormat: textPlain, created: newDate } })
+    },
+    autofocus: 'end',
+  })
+
   return (
-    <div className="border-b-stone-200 bg-white flex flex-col border-b shadow-sm rounded-lg">
-      <div
-        className="overflow-y-auto break-words p-6 py-2 min-h-48 h-48 max-h-56 w-full border-b border-b-stone-200"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
-        dangerouslySetInnerHTML={{ __html: text }}
-      />
-      <div className="flex justify-between items-center px-6 py-0">
-        <p className="border border-input bg-transparent shadow-sm h-9 px-4 py-2 pl-3 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors">
-          <CalendarIcon className="mr-3 h-4 w-4 opacity-50" />
-          {format(new Date(createdAt), 'PPP')}
-        </p>
+    <form
+      className="flex flex-col bg-white rounded-lg h-full max-h-[80vh] gap-3 overflow-x-hidden"
+    >
+      <Editor editor={editor} className="border rounded-xl sm:h-[70vh] h-[65vh]" />
+      <div className="flex justify-between items-center flex-wrap gap-4">
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Button
+              variant={'outline'}
+              className={cn('w-[240px] pl-3 text-left font-normal')}
+            >
+              {format(newDate, 'PPP')}
+              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <Calendar
+              mode="single"
+              selected={newDate}
+              onSelect={async (date) => {
+                setNewDate(date || createdAt)
+                const response = await updateThought(id, { textWithFormat: editor?.getHTML() || '', textWithoutFormat: editor?.getText() || '', created: date || createdAt })
+
+              }}
+              disabled={(date) => date > new Date() || date < new Date('1900-01-01')}
+              initialFocus
+            />
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
-    </div>
+    </form>
   )
 }

@@ -13,7 +13,7 @@ export async function ListOfThoughts({ thoughts }: ListOfThoughtsProps) {
     <div className="sm:w-2/4 min-w-[300px] w-full flex flex-col gap-4 prose-sm prose-stone dark:prose-invert prose-headings:font-display font-default focus:outline-none">
       {thoughtsData.data.length > 0 ? (
         thoughtsData.data.map(({ id, text, createdAt }) => (
-          <ContentThoughts key={id} text={text} createdAt={createdAt} />
+          <ContentThoughts key={id} text={text} id={id} createdAt={createdAt} />
         ))
       ) : (
         <ThoughtsEmpty />

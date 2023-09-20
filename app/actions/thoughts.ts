@@ -111,13 +111,12 @@ export interface ThoughtResponse {
 // Create new thought for user
 export async function updateThought(id: string, data: z.infer<typeof ThoughtSchema>) {
   const session = await getServerSession(authOptions)
-
   if (!session?.user || !session.user.pw) {
     return { message: 'You must be logged in.', status: 401, data: null }
   }
 
   const result = validatePartialThought({
-    created: new Date(data.created),
+    created: data.created,
     textWithFormat: data.textWithFormat,
     textWithoutFormat: data.textWithoutFormat,
   })
