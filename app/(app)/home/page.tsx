@@ -5,6 +5,8 @@ import { ListOfThoughts } from '@/ui/dashboard/listOfThoughts'
 
 import { Suspense } from 'react'
 
+export const dynamic = 'force-dynamic'
+
 export default async function Page() {
   return (
     <div className="flex flex-col items-center w-screen mt-6 gap-4">
