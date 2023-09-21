@@ -16,39 +16,54 @@ import { ChevronDownIcon, PlusIcon } from '@heroicons/react/24/solid'
 import { OptionsMenuTemplate } from './options-menu-template'
 
 import { Dispatch, SetStateAction, useState } from 'react'
+import { handleCreateThought } from '../editor/create-thoughts'
 
 interface DialogTemplateProps {
   setIsOpen: Dispatch<SetStateAction<boolean>>
-  setIsOpenThought: Dispatch<SetStateAction<boolean>>
 }
 
-export function MenuTemplate({ setIsOpen, setIsOpenThought }: DialogTemplateProps) {
-  const { setTemplates, templates, loadingTemplate, setNewTemplate } = useApp()
+export function MenuTemplate({ setIsOpen }: DialogTemplateProps) {
+  const { setTemplates, templates, loadingTemplate, setNewTemplate, templateSelect } = useApp()
   const [openMenu, setOpenMenu] = useState(false)
 
   const handleOpenTemplate = () => setIsOpen((prev) => !prev)
 
-  const handleOpenThought = (id: string) => {
+  const handleOpenThought = async (id: string) => {
     setTemplates((prev) => {
       const templates = [...prev]
 
-      const templateSelect = templates.find((value) => value.isSelect)
+      const templateSelect = templates.findIndex((value) => value.isSelect)
+
+      templates[templateSelect].isSelect = false
+
+      const newSelect = templates.findIndex((value) => value.id === id)
+
+      templates[newSelect].isSelect = true
+      console.log(templates)
+      return templates
+    })
+
+    await handleCreateThought(templateSelect)
+
+    setTemplates((prev) => {
+      const templates = [...prev]
+
+      const templateSelect = templates.findIndex((value) => value.isSelect)
 
       if (templateSelect != null) {
-        templateSelect.isSelect = false
+        templates[templateSelect].isSelect = false
       }
 
-      const newSelect = templates.find((value) => value.id === id)
+      const newSelect = templates.findIndex((value) => value.default)
 
       if (newSelect != null) {
-        newSelect.isSelect = true
+        templates[newSelect].isSelect = true
       }
 
       return templates
     })
 
     setOpenMenu(false)
-    setIsOpenThought(true)
   }
 
   return (

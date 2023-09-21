@@ -1,7 +1,6 @@
 'use client'
 
 import { updateThought } from '@/app/actions/thoughts'
-import { cn } from '@/lib/utils'
 import { Button } from '@/ui/button'
 import { Calendar } from '@/ui/calendar'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/ui/dropdown-menu'
@@ -11,7 +10,6 @@ import { TiptapExtensions } from '@/ui/editor/extensions'
 import { TiptapEditorProps } from '@/ui/editor/props'
 import { generateJSON, useEditor } from '@tiptap/react'
 import { format } from 'date-fns'
-import { CalendarIcon } from 'lucide-react'
 import { useState } from 'react'
 import { z } from 'zod'
 import { ThoughtSchema } from '@/schemas/thought'
@@ -45,18 +43,17 @@ export function ContentThoughts({ text, createdAt, id }: ContentThoughtsProps) {
 
   return (
     <form
-      className="flex flex-col bg-white rounded-lg h-full max-h-[80vh] gap-3 overflow-x-hidden"
+      className="flex flex-col bg-white w-full h-full min-h-[200px] gap-3 overflow-x-hidden"
     >
-      <Editor editor={editor} className="border rounded-xl sm:h-[70vh] h-[65vh]" />
-      <div className="flex justify-between items-center flex-wrap gap-4">
+      <div className="flex justify-between w-full items-center flex-wrap gap-4">
         <DropdownMenu>
-          <DropdownMenuTrigger>
+          <DropdownMenuTrigger asChild>
             <Button
-              variant={'outline'}
-              className={cn('w-[240px] pl-3 text-left font-normal')}
+              variant='ghost'
+              className='w-full py-4 text-left font-bold'
+              size="lg"
             >
               {format(newDate, 'PPP')}
-              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
@@ -74,6 +71,7 @@ export function ContentThoughts({ text, createdAt, id }: ContentThoughtsProps) {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
+      <Editor editor={editor} className="h-full min-h-[200px]" />
     </form>
   )
 }
