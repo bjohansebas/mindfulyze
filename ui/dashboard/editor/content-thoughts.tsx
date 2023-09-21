@@ -37,9 +37,8 @@ export function ContentThoughts({ text, createdAt, id }: ContentThoughtsProps) {
     editorProps: TiptapEditorProps,
     onUpdate: ({ editor }) => {
       const textHTML = editor.getHTML()
-      const textPlain = editor.getText()
 
-      debouncedUpdates({ data: { textWithFormat: textHTML, textWithoutFormat: textPlain, created: newDate } })
+      debouncedUpdates({ data: { textWithFormat: textHTML, created: newDate } })
     },
     autofocus: 'end',
   })
@@ -66,7 +65,7 @@ export function ContentThoughts({ text, createdAt, id }: ContentThoughtsProps) {
               selected={newDate}
               onSelect={async (date) => {
                 setNewDate(date || createdAt)
-                const response = await updateThought(id, { textWithFormat: editor?.getHTML() || '', textWithoutFormat: editor?.getText() || '', created: date || createdAt })
+                await updateThought(id, { textWithFormat: editor?.getHTML() || '', created: date || createdAt })
 
               }}
               disabled={(date) => date > new Date() || date < new Date('1900-01-01')}

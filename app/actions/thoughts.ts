@@ -66,7 +66,6 @@ export async function createThought(data: z.infer<typeof ThoughtSchema>) {
   const result = validateThought({
     created: new Date(data.created),
     textWithFormat: data.textWithFormat,
-    textWithoutFormat: data.textWithoutFormat,
   })
 
   if (!result.success) {
@@ -118,7 +117,6 @@ export async function updateThought(id: string, data: z.infer<typeof ThoughtSche
   const result = validatePartialThought({
     created: data.created,
     textWithFormat: data.textWithFormat,
-    textWithoutFormat: data.textWithoutFormat,
   })
 
   if (!result.success) {

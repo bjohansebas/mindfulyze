@@ -39,7 +39,6 @@ export function EditorThought() {
       const textPlain = editor.getText()
 
       form.setValue('textWithFormat', textHTML)
-      form.setValue('textWithoutFormat', textPlain)
     },
     autofocus: 'end',
   })
@@ -48,7 +47,6 @@ export function EditorThought() {
     resolver: zodResolver(ThoughtSchema),
     defaultValues: {
       textWithFormat: templateSelect?.text,
-      textWithoutFormat: templateSelect?.text,
       created: new Date(),
     },
   })
@@ -83,7 +81,7 @@ export function EditorThought() {
       >
         <FormField
           control={form.control}
-          name="textWithoutFormat"
+          name="textWithFormat"
           render={() => (
             <FormItem>
               <Editor editor={editor} className="border rounded-xl sm:h-[70vh] h-[65vh]" />
