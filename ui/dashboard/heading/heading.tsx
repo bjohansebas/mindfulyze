@@ -19,7 +19,7 @@ export function HeadDashboard() {
   const [isOpenTemplates, setIsOpenTemplates] = useState(false)
 
   return (
-    <div className="bg-white sm:w-2/4 w-screen flex p-4 rounded-lg shadow justify-end border bor">
+    <div className="bg-white sm:w-9/12 md:w-2/4 w-screen flex p-4 rounded-lg shadow justify-end border bor">
       <CreateThought />
       <MenuTemplate setIsOpen={setIsOpenTemplates} />
       <DialogTemplate isOpen={isOpenTemplates} setIsOpen={setIsOpenTemplates} />
