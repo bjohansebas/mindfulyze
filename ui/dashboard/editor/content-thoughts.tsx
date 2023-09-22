@@ -20,10 +20,19 @@ export interface ContentThoughtsProps {
   id: string
 }
 export function ContentThoughts({ text, createdAt, id }: ContentThoughtsProps) {
+  const [saveStatus, setSaveStatus] = useState("");
+
   const [newDate, setNewDate] = useState(createdAt)
   const debouncedUpdates = useDebouncedCallback(async ({ data }: { data: z.infer<typeof ThoughtSchema> }) => {
     try {
-      await updateThought(id, data)
+      setSaveStatus("Saving...");
+      const response = await updateThought(id, data)
+      // Simulate a delay in saving.
+      if (response.data) {
+        setSaveStatus("");
+      } else {
+        setSaveStatus("Unsaved");
+      }
     } catch (e) {
       console.log(e)
     }
@@ -36,6 +45,7 @@ export function ContentThoughts({ text, createdAt, id }: ContentThoughtsProps) {
     onUpdate: ({ editor }) => {
       const textHTML = editor.getHTML()
 
+      setSaveStatus("Unsaved");
       debouncedUpdates({ data: { textWithFormat: textHTML, created: newDate } })
     },
     autofocus: 'end',
@@ -54,6 +64,7 @@ export function ContentThoughts({ text, createdAt, id }: ContentThoughtsProps) {
               size="lg"
             >
               {format(newDate, 'PPP')}
+              {` ${saveStatus}`}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
