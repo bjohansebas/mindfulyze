@@ -26,7 +26,6 @@ export function ButtonFeedBack() {
     try {
       const res = await sendFeedback(data)
       if (res.status === 201) {
-        console.log(res.response)
         toast.success('Your feedback has been received! Thank you for your help.')
       } else {
         toast.success("Oops, your feedback couldn't be sent, please try again.")
