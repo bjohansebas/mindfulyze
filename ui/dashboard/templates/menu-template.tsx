@@ -23,45 +23,16 @@ interface DialogTemplateProps {
 }
 
 export function MenuTemplate({ setIsOpen }: DialogTemplateProps) {
-  const { setTemplates, templates, loadingTemplate, setNewTemplate, templateSelect } = useApp()
+  const { templates, loadingTemplate, setNewTemplate } = useApp()
   const [openMenu, setOpenMenu] = useState(false)
 
   const handleOpenTemplate = () => setIsOpen((prev) => !prev)
 
   const handleOpenThought = async (id: string) => {
-    setTemplates((prev) => {
-      const templates = [...prev]
-
-      const templateSelect = templates.findIndex((value) => value.isSelect)
-
-      templates[templateSelect].isSelect = false
-
-      const newSelect = templates.findIndex((value) => value.id === id)
-
-      templates[newSelect].isSelect = true
-      console.log(templates)
-      return templates
-    })
-
-    await handleCreateThought(templateSelect)
-
-    setTemplates((prev) => {
-      const templates = [...prev]
-
-      const templateSelect = templates.findIndex((value) => value.isSelect)
-
-      if (templateSelect != null) {
-        templates[templateSelect].isSelect = false
-      }
-
-      const newSelect = templates.findIndex((value) => value.default)
-
-      if (newSelect != null) {
-        templates[newSelect].isSelect = true
-      }
-
-      return templates
-    })
+    const findTemplate = templates.find((data) => data.id === id)
+    if (findTemplate) {
+      await handleCreateThought(findTemplate)
+    }
 
     setOpenMenu(false)
   }
