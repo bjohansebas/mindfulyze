@@ -13,21 +13,22 @@ export async function handleCreateThought(templateSelect) {
   }
 
   try {
+    toast.message('The thought is being created.')
+
     const response = await createThought(data)
 
     if (response.status === 201) {
-      toast.success('Thought was created')
+      toast.success('Thought was created.')
     } else {
       toast.error("The thought couldn't be created, try again anew.")
     }
   } catch (e) {
     toast.error("The thought couldn't be created, try again anew.")
-  } finally { }
+  }
 }
 
 export function CreateThought() {
   const { setTemplates, templateSelect } = useApp()
-
 
   return (
     <Button className="rounded-r-none" onClick={async () => {
