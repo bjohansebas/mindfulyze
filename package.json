@@ -5,7 +5,6 @@
     "app:docker:startup": "pnpm i && docker compose --profile dev up -d",
     "build": "prisma generate & next build",
     "clean": "git clean -xdf node_modules",
-    "co": "pnpm run format && sui-mono commit",
     "db:docker:shutdown": "docker compose --profile db down",
     "db:docker:startup": "docker compose --profile db up -d",
     "db:generate": "pnpm with-env prisma generate",
@@ -18,6 +17,7 @@
     "lint": "biome check .",
     "lint:fix": "biome check . --apply",
     "lint:next": "next lint",
+    "prepare": "npx husky install",
     "start": "next start",
     "with-env": "dotenv -e .env --"
   },
@@ -81,6 +81,8 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.2.2",
+    "@commitlint/cli": "17.7.1",
+    "@commitlint/config-conventional": "17.7.0",
     "@s-ui/mono": "2.39.0",
     "@tailwindcss/typography": "0.5.10",
     "@types/bcrypt": "5.0.0",
@@ -93,6 +95,7 @@
     "eslint": "8.49.0",
     "eslint-config-next": "13.5.2",
     "husky": "8.0.3",
+    "lint-staged": "14.0.1",
     "postcss": "8.4.30",
     "prisma": "5.3.1",
     "tailwindcss": "3.3.3",
