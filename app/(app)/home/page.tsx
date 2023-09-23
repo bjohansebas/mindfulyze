@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic'
 
 export default async function Page() {
   return (
-    <div className="flex flex-col items-center w-screen mt-6 gap-4">
+    <div className="flex flex-col items-center w-full mt-6 gap-4">
       <HeadDashboard />
       <Suspense fallback={<ThoughtsPlaceholder />}>
         <ListOfThoughts thoughts={getThoughts()} />
