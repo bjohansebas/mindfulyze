@@ -6,7 +6,7 @@ import { NEXT_SECRET } from '@/lib/constants'
 import { SUPABASE_BUCKET_THOUGHTS } from '@/lib/constants/supabase'
 import { decryptData, encryptData } from '@/lib/encrypt'
 import prisma from '@/lib/prisma'
-import { createFile, downloadFile, updateFile } from '@/lib/supabase'
+import { createFile, deleteFile, downloadFile, updateFile } from '@/lib/supabase'
 import { createId, toTimestamp } from '@/lib/utils'
 import { ThoughtSchema, validateThought } from '@/schemas/thought'
 import { validatePartialThought } from '@/schemas/thought'
@@ -159,5 +159,36 @@ export async function updateThought(id: string, data: z.infer<typeof ThoughtSche
     return { data: true, status: 201 }
   } catch (e) {
     return { message: "The template couldn't be updated, try again anew.", status: 400, data: false }
+  }
+}
+
+// Create new thought for user
+export async function deleteThought(id: string) {
+  const session = await getServerSession(authOptions)
+
+  if (!session?.user || !session.user.pw) {
+    return { message: 'You must be logged in.', status: 401, data: false }
+  }
+
+  try {
+    const thought = await getThoughtById(id)
+
+    if (!thought.data) {
+      return { message: "The thought couldn't be deleted, try again anew.", status: 400, data: false }
+    }
+
+    await prisma.thought.delete({
+      where: {
+        id: thought.data.id,
+      },
+    })
+
+    await deleteFile({ name: thought.data.url, bucket: thought.data.bucket })
+
+    revalidatePath('/home')
+
+    return { data: true, status: 201 }
+  } catch (e) {
+    return { message: "The thought couldn't be deleted, try again anew.", status: 400, data: false }
   }
 }
