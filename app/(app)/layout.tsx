@@ -1,7 +1,6 @@
 import '@/styles/prosemirror.css'
 
-import Background from '@/ui/background'
-import NavigationApp from '@/ui/dashboard/navigation'
+import NavigationApp from '@/ui/dashboard/menu/navigation'
 import ProviderApp from './provider'
 
 export default function AppLayout({
@@ -10,12 +9,11 @@ export default function AppLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex min-h-screen flex-col">
-      <NavigationApp />
+    <div className="flex h-screen flex-col sm:flex-row bg-background w-full">
       <ProviderApp>
-        <main>{children}</main>
+        <NavigationApp />
+        <main className="w-full">{children}</main>
       </ProviderApp>
-      <Background />
     </div>
   )
 }
