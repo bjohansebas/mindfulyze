@@ -207,7 +207,6 @@ export async function duplicateTemplate(id: string) {
 
     const response = await createTemplate({
       textWithFormat: template.data.text,
-      textWithoutFormat: template.data.text,
       title: `${template.data.title} Copied`,
     })
 

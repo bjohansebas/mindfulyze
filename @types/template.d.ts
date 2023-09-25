@@ -7,7 +7,3 @@ export interface Template {
   updatedAt: Date
   userId: string
 }
-
-export interface TemplateApp extends Template {
-  isSelect: boolean
-}

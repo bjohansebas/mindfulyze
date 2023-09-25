@@ -1,15 +1,15 @@
 'use client'
 
-import { TemplateApp } from '@/@types/template'
+import { Template } from '@/@types/template'
 import useTemplates from '@/lib/hooks/useTemplates'
 
 import { Dispatch, ReactNode, SetStateAction, createContext, useState } from 'react'
 
 export const AppContext = createContext<{
-  templates: TemplateApp[]
+  templates: Template[]
   loadingTemplate: boolean
-  setTemplates: Dispatch<SetStateAction<TemplateApp[]>>
-  templateSelect: TemplateApp | undefined
+  setTemplates: Dispatch<SetStateAction<Template[]>>
+  templateSelect: Template | undefined
   newTemplate: boolean
   setNewTemplate: Dispatch<SetStateAction<boolean>>
 }>({

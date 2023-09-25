@@ -39,7 +39,6 @@ export function EditorTemplate({ setIsOpen }: EditorTemplateProps) {
       const textPlain = editor.getText()
 
       form.setValue('textWithFormat', textHTML)
-      form.setValue('textWithoutFormat', textPlain)
     },
     autofocus: 'end',
   })
@@ -48,7 +47,6 @@ export function EditorTemplate({ setIsOpen }: EditorTemplateProps) {
     resolver: zodResolver(TemplateSchema),
     defaultValues: {
       textWithFormat: newTemplate ? '' : templateSelect?.text,
-      textWithoutFormat: newTemplate ? '' : templateSelect?.text,
       title: newTemplate ? '' : templateSelect?.title,
     },
   })
@@ -89,7 +87,7 @@ export function EditorTemplate({ setIsOpen }: EditorTemplateProps) {
           editor?.commands.setContent('')
           form.reset()
 
-          setTemplates((prev) => prev.concat([{ isSelect: response.data.default, ...response.data }]))
+          setTemplates((prev) => prev.concat([{ ...response.data }]))
 
           toast.success('Template was created')
         } else {
@@ -125,7 +123,7 @@ export function EditorTemplate({ setIsOpen }: EditorTemplateProps) {
         />
         <FormField
           control={form.control}
-          name="textWithoutFormat"
+          name="textWithFormat"
           render={() => (
             <FormItem>
               <Editor editor={editor} className="border rounded-xl h-[60vh]" />
