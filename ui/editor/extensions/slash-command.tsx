@@ -177,7 +177,6 @@ export const updateScrollView = (container: HTMLElement, item: HTMLElement) => {
 const CommandList = ({
   items,
   command,
-  editor,
 }: {
   items: CommandItemProps[]
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
@@ -194,7 +193,7 @@ const CommandList = ({
         command(item)
       }
     },
-    [command, editor, items],
+    [command, items],
   )
 
   useEffect(() => {
@@ -241,25 +240,23 @@ const CommandList = ({
     <div
       id="slash-command"
       ref={commandListContainer}
-      className="z-50 h-auto max-h-[330px] w-72 overflow-y-auto rounded-md border border-stone-200 bg-white px-1 py-2 shadow-md transition-all"
+      className="z-50 h-auto max-h-[330px] w-72 overflow-y-auto rounded-md border px-1 py-2 shadow-md transition-all bg-background"
     >
       {items.map((item: CommandItemProps, index: number) => {
         return (
           <button
             type="button"
-            className={`flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm text-stone-900 hover:bg-stone-100 ${
-              index === selectedIndex ? 'bg-stone-100 text-stone-900' : ''
+            className={`flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm hover:bg-card ${
+              index === selectedIndex ? 'bg-card' : ''
             }`}
             // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
             key={index}
             onClick={() => selectItem(index)}
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-md border border-stone-200 bg-white">
-              {item.icon}
-            </div>
+            <div className="flex h-10 w-10 items-center justify-center rounded-md border bg-card">{item.icon}</div>
             <div>
-              <p className="font-medium">{item.title}</p>
-              <p className="text-xs text-stone-500">{item.description}</p>
+              <p className="font-bold">{item.title}</p>
+              <p className="text-xs">{item.description}</p>
             </div>
           </button>
         )
@@ -281,9 +278,9 @@ const renderItems = () => {
       })
 
       // @ts-ignore
-      popup = tippy('#dialog, body', {
+      popup = tippy('body', {
         getReferenceClientRect: props.clientRect,
-        appendTo: () => document.querySelector('#dialog') || document.body,
+        appendTo: () => document.body,
         content: component.element,
         showOnCreate: true,
         interactive: true,

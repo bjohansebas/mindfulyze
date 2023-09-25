@@ -1,6 +1,6 @@
 import { ThoughtResponse } from '@/app/actions/thoughts'
-import { ContentThoughts } from './editor/content-thoughts'
-import { ThoughtsEmpty } from './editor/empty-thoughts'
+import { ContentThoughts } from './content-thoughts'
+import { ThoughtsEmpty } from './empty-thoughts'
 
 interface ListOfThoughtsProps {
   thoughts: Promise<ThoughtResponse>
@@ -10,7 +10,7 @@ export async function ListOfThoughts({ thoughts }: ListOfThoughtsProps) {
   const thoughtsData = await thoughts
 
   return (
-    <div className="sm:w-9/12 md:w-2/4 min-w-[300px] border-x border-y w-full flex flex-col prose-sm prose-stone dark:prose-invert prose-headings:font-display font-default focus:outline-none">
+    <div className="border w-full flex flex-col rounded-2xl bg-card max-h-full overflow-y-auto">
       {thoughtsData.data.length > 0 ? (
         thoughtsData.data.map(({ id, text, createdAt }) => (
           <ContentThoughts key={id} text={text} id={id} createdAt={createdAt} />

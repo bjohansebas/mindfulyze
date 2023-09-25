@@ -1,5 +1,3 @@
-'use client'
-
 import { cn } from '@/lib/utils'
 import { EditorContent, EditorContentProps } from '@tiptap/react'
 import { Dispatch, SetStateAction } from 'react'
@@ -17,10 +15,7 @@ export default function Editor({ editor, className }: EditorContentProps) {
       onClick={() => {
         editor?.chain().focus().run()
       }}
-      className={cn(
-        'overflow-y-scroll relative min-h-48 h-full max-h-[calc(70vh)] w-full min-w-[300px] border-b-stone-200 bg-white p-6 border-b',
-        className,
-      )}
+      className={cn('overflow-y-scroll relative min-h-48 h-full w-full p-6 border-b', className)}
     >
       {editor && <EditorBubbleMenu editor={editor} />}
       <EditorContent editor={editor} />
