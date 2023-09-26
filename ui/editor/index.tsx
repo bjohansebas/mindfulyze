@@ -1,3 +1,5 @@
+'use client'
+
 import { cn } from '@/lib/utils'
 import { EditorContent, EditorContentProps } from '@tiptap/react'
 import { Dispatch, SetStateAction } from 'react'
