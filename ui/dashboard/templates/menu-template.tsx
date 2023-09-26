@@ -1,6 +1,5 @@
 'use client'
 
-import { useApp } from '@/lib/hooks/useApp'
 import { Button } from '@/ui/button'
 import {
   DropdownMenu,
@@ -11,14 +10,19 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/ui/dropdown-menu'
-import { Skeleton } from '@/ui/skeleton'
 import { ChevronDownIcon, PlusIcon } from '@heroicons/react/24/solid'
 
+import { Template } from '@/@types/template'
 import { useState } from 'react'
+import { experimental_useOptimistic as useOptimistic } from 'react'
 import { handleCreateThought } from '../thoughts/create-thoughts'
 
-export function MenuTemplate() {
-  const { templates, loadingTemplate, setNewTemplate } = useApp()
+export function MenuTemplate({ templates }: { templates: Template[] }) {
+  const [optimisticTemplates, addOptimisticTemplates] = useOptimistic<Template[]>(
+    templates || [],
+    // @ts-ignore
+    (template: Template[], newTemplate: Template) => [...template, newTemplate],
+  )
   const [openMenu, setOpenMenu] = useState(false)
 
   const handleOpenThought = async (id: string) => {
@@ -40,10 +44,8 @@ export function MenuTemplate() {
       <DropdownMenuContent className="w-[300px]">
         <DropdownMenuLabel>Templates for thoughts</DropdownMenuLabel>
         <DropdownMenuGroup>
-          {loadingTemplate ? (
-            <Skeleton className="h-4 w-full" />
-          ) : templates.length > 0 ? (
-            templates.map((data) => (
+          {optimisticTemplates.length > 0 ? (
+            optimisticTemplates.map((data) => (
               <DropdownMenuItem
                 className="flex items-center w-full justify-between"
                 key={data.id}
@@ -64,16 +66,6 @@ export function MenuTemplate() {
             </div>
           )}
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem
-          onClick={() => {
-            setNewTemplate(true)
-          }}
-          className="text-primary-700"
-        >
-          <PlusIcon className="mr-2 h-4 w-4" />
-          New template
-        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )

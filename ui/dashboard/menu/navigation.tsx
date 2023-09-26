@@ -4,6 +4,7 @@ import { ButtonFeedBack } from './button-feedback'
 
 import UserDropdown from './user-dropdown'
 
+import { Template } from '@/@types/template'
 import { ChatBubbleOvalLeftIcon } from '@heroicons/react/24/solid'
 import { LayoutTemplateIcon, PenLineIcon } from 'lucide-react'
 import Link from 'next/link'
@@ -11,9 +12,8 @@ import { usePathname } from 'next/navigation'
 import { Button } from '../../button'
 // import { LogoType } from '@/components/shared/icons'
 import { CreateThought } from '../thoughts/create-thoughts'
-import { MenuLinks } from './links-menu'
 
-export default function NavigationApp() {
+export default function NavigationApp({ templates }: { templates: Template[] }) {
   const pathname = usePathname()
   return (
     <aside className="sticky top-0 h-screen w-full sm:w-[300px] bg-background p-4">
@@ -24,7 +24,7 @@ export default function NavigationApp() {
       </div> */}
       <nav className="flex justify-between h-full w-full flex-col">
         <div className="space-y-2">
-          {pathname === '/home' ? <CreateThought /> : null}
+          {pathname === '/home' ? <CreateThought templates={templates} /> : null}
           <Button variant="ghost" asChild className="justify-start w-[auto]">
             <Link
               className={`${pathname === '/home' ? 'text-primary-600 hover:text-primary-600' : ''} sm:w-full `}

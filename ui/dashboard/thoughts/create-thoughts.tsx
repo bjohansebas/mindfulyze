@@ -1,8 +1,6 @@
-'use client'
-
-import { useApp } from '@/lib/hooks/useApp'
 import { Button } from '@/ui/button'
 
+import { Template } from '@/@types/template'
 import { createThought } from '@/app/actions/thoughts'
 import { ThoughtSchema } from '@/schemas/thought'
 import { PencilIcon } from '@heroicons/react/24/solid'
@@ -31,21 +29,19 @@ export async function handleCreateThought(templateSelect) {
   }
 }
 
-export function CreateThought() {
-  const { templateSelect } = useApp()
-
+export function CreateThought({ templates }: { templates: Template[] }) {
   return (
     <div className="flex">
       <Button
         className="sm:w-full rounded-r-none"
         onClick={async () => {
-          await handleCreateThought(templateSelect)
+          await handleCreateThought(templates.find((value) => value.default))
         }}
       >
         <PencilIcon className="w-4 h-4 mr-2" />
         Create thought
       </Button>
-      <MenuTemplate />
+      <MenuTemplate templates={templates} />
     </div>
   )
 }
