@@ -1,13 +1,10 @@
 'use client'
 
-import { useApp } from '@/lib/hooks/useApp'
 import { Button } from '@/ui/button'
 
 import { createTemplate } from '@/app/actions/templates'
-import { createThought } from '@/app/actions/thoughts'
 import { PencilIcon } from '@heroicons/react/24/solid'
 import { toast } from 'sonner'
-import MenuTemplate from '../templates/menu-template'
 
 export async function handleCreateTemplate() {
   try {
@@ -26,8 +23,6 @@ export async function handleCreateTemplate() {
 }
 
 export function ButtonCreateTemplate() {
-  const { templateSelect } = useApp()
-
   return (
     <div className="flex">
       <Button
@@ -39,7 +34,6 @@ export function ButtonCreateTemplate() {
         <PencilIcon className="w-4 h-4 mr-2" />
         Create thought
       </Button>
-      <MenuTemplate />
     </div>
   )
 }

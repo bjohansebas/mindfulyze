@@ -5,24 +5,21 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/ui/avatar'
 import { Button } from '@/ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/ui/popover'
 import { ArrowLeftOnRectangleIcon as Logout } from '@heroicons/react/24/solid'
-import { Edit3Icon } from 'lucide-react'
 
 import { signOut, useSession } from 'next-auth/react'
-import Link from 'next/link'
-import { ButtonFeedBack } from './button-feedback'
 
 export default function UserDropdown() {
   const { data: session } = useSession()
 
   return (
     <Popover>
-      <PopoverTrigger asChild className="h-9 w-9 sm:w-full py-0">
+      <PopoverTrigger asChild className="h-9 w-9 sm:w-full sm:w-max-[300px] py-0">
         <Button className="sm:justify-start" variant="ghost">
           <Avatar className="h-5 w-5 sm:mr-2">
             <AvatarImage src={`${session?.user.image}`} className="h-5 w-5" />
             <AvatarFallback>{stringAvatar(`${session?.user.name}`)}</AvatarFallback>
           </Avatar>
-          <p className="truncate sm:block hidden">{session?.user?.name}</p>
+          <p className="truncate">{session?.user?.name}</p>
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto drop-shadow-lg p-0" align="center">
@@ -47,14 +44,6 @@ export default function UserDropdown() {
               <IconMenu text="Settings" icon={<Settings className="h-4 w-4" />} />
             </Link> */}
           <div className="flex w-full flex-col gap-2">
-            <ButtonFeedBack />
-
-            <Button asChild className="justify-start" variant="ghost">
-              <Link href="/changelog" target="_blank" rel="noopener noreferrer" className="w-full text-sm">
-                <Edit3Icon className="h-4 w-4 mr-2" />
-                Changelog
-              </Link>
-            </Button>
             <Button
               className="w-full rounded-md text-sm justify-start text-red-500"
               onClick={() => {

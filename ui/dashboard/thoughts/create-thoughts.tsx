@@ -33,7 +33,7 @@ export function CreateThought({ templates }: { templates: Template[] }) {
   return (
     <div className="flex">
       <Button
-        className="sm:w-full rounded-r-none"
+        className="w-full rounded-r-none"
         onClick={async () => {
           await handleCreateThought(templates.find((value) => value.default))
         }}
