@@ -19,8 +19,8 @@ export default function NavigationMobile({ templates }: { templates: Template[] 
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="ghost" className="sm:hidden" size="icon">
-          <Avatar className="h-5 w-5 sm:mr-2">
-            <AvatarImage src={`${session?.user.image}`} className="h-5 w-5" />
+          <Avatar className="h-7 w-7 sm:mr-2">
+            <AvatarImage src={`${session?.user.image}`} className="h-7 w-7" />
             <AvatarFallback>{stringAvatar(`${session?.user.name}`)}</AvatarFallback>
           </Avatar>
         </Button>
