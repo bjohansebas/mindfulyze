@@ -7,22 +7,20 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/ui/dropdown-menu'
-import { ChevronDownIcon, PlusIcon } from '@heroicons/react/24/solid'
+import { ChevronDownIcon } from '@heroicons/react/24/solid'
 
 import { Template } from '@/@types/template'
+import { createTemplate } from '@/app/actions/templates'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { experimental_useOptimistic as useOptimistic } from 'react'
+import { toast } from 'sonner'
 import { handleCreateThought } from '../thoughts/create-thoughts'
 
 export function MenuTemplate({ templates }: { templates: Template[] }) {
-  const [optimisticTemplates, addOptimisticTemplates] = useOptimistic<Template[]>(
-    templates || [],
-    // @ts-ignore
-    (template: Template[], newTemplate: Template) => [...template, newTemplate],
-  )
+  const router = useRouter()
+
   const [openMenu, setOpenMenu] = useState(false)
 
   const handleOpenThought = async (id: string) => {
@@ -44,8 +42,8 @@ export function MenuTemplate({ templates }: { templates: Template[] }) {
       <DropdownMenuContent className="w-[300px]">
         <DropdownMenuLabel>Templates for thoughts</DropdownMenuLabel>
         <DropdownMenuGroup>
-          {optimisticTemplates.length > 0 ? (
-            optimisticTemplates.map((data) => (
+          {templates.length > 0 ? (
+            templates.map((data) => (
               <DropdownMenuItem
                 className="flex items-center w-full justify-between"
                 key={data.id}
@@ -59,9 +57,19 @@ export function MenuTemplate({ templates }: { templates: Template[] }) {
             ))
           ) : (
             <div className="p-5 flex items-center flex-col gap-5">
-              <p className="text-center">Oops, it looks like you don$apos;t have any templates.</p>
-              <DropdownMenuItem onClick={() => {}} className="text-primary-700">
-                Create your first template.
+              <p className="text-center">Oops, it looks like you don&apos;t have any templates.</p>
+              <DropdownMenuItem
+                onClick={async () => {
+                  toast.message('The template is being created.')
+
+                  const template = await createTemplate({ textWithFormat: '', title: 'Untitle' })
+                  if (template.status === 201 && template.data != null) {
+                    router.push(`/templates/${template.data.id}`)
+                  }
+                }}
+                className="text-primary-700"
+              >
+                Create your first template
               </DropdownMenuItem>
             </div>
           )}

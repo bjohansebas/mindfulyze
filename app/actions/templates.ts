@@ -10,6 +10,7 @@ import { createId } from '@/lib/utils'
 import { TemplateSchema, validatePartialTemplate, validateTemplate } from '@/schemas/template'
 
 import { getServerSession } from 'next-auth'
+import { revalidatePath } from 'next/cache'
 
 import * as z from 'zod'
 
@@ -88,7 +89,7 @@ export async function getTemplateById(id: string) {
 }
 
 // Create new template for user
-export async function createTemplate(data: z.infer<typeof TemplateSchema>) {
+export async function createTemplate(data: z.infer<typeof TemplateSchema>, page?: string) {
   const session = await getServerSession(authOptions)
 
   if (!session?.user || !session.user.pw) {
@@ -130,6 +131,8 @@ export async function createTemplate(data: z.infer<typeof TemplateSchema>) {
       },
     })
 
+    if (page) revalidatePath(page)
+
     return { data: { text: data.textWithFormat, ...res }, status: 201 }
   } catch (e) {
     return { message: "The template couldn't be created, try again anew.", status: 400, data: null }
@@ -137,7 +140,7 @@ export async function createTemplate(data: z.infer<typeof TemplateSchema>) {
 }
 
 // Create new template for user
-export async function updateTemplate(id: string, data: z.infer<typeof TemplateSchema>) {
+export async function updateTemplate(id: string, data: z.infer<typeof TemplateSchema>, page?: string) {
   const session = await getServerSession(authOptions)
 
   if (!session?.user || !session.user.pw) {
@@ -180,6 +183,8 @@ export async function updateTemplate(id: string, data: z.infer<typeof TemplateSc
       })
     }
 
+    if (page) revalidatePath(page)
+
     return { data: true, status: 201 }
   } catch (e) {
     return { message: "The template couldn't be updated, try again anew.", status: 400, data: false }
@@ -205,10 +210,13 @@ export async function duplicateTemplate(id: string) {
       return { data: null, status: 400 }
     }
 
-    const response = await createTemplate({
-      textWithFormat: template.data.text,
-      title: `${template.data.title} Copied`,
-    })
+    const response = await createTemplate(
+      {
+        textWithFormat: template.data.text,
+        title: `${template.data.title} Copied`,
+      },
+      'templates',
+    )
 
     if (response.status === 201 && response.data) {
       return { data: response.data, status: 201 }
@@ -220,7 +228,7 @@ export async function duplicateTemplate(id: string) {
   }
 }
 
-export async function setDefaultTemplate(id: string) {
+export async function setDefaultTemplate(id: string, page: string) {
   const session = await getServerSession(authOptions)
 
   if (!session?.user || !session.user.pw) {
@@ -266,13 +274,15 @@ export async function setDefaultTemplate(id: string) {
       },
     })
 
+    if (page) revalidatePath(page)
+
     return { data: true, status: 201 }
   } catch (e) {
     return { message: "The template couldn't be set as default, please try again.", status: 400, data: false }
   }
 }
 
-export async function deleteTemplate(id: string) {
+export async function deleteTemplate(id: string, page: string) {
   const session = await getServerSession(authOptions)
 
   if (!session?.user || !session.user.pw) {
@@ -301,6 +311,8 @@ export async function deleteTemplate(id: string) {
         id: template.data.id,
       },
     })
+
+    if (page) revalidatePath(page)
 
     return { data: true, status: 201 }
   } catch (e) {

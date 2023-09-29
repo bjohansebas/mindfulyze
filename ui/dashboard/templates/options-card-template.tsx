@@ -1,21 +1,24 @@
 'use client'
 
-import { DocumentDuplicateIcon, FlagIcon, PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid'
+import {
+  DocumentDuplicateIcon,
+  EllipsisHorizontalIcon,
+  FlagIcon,
+  PencilSquareIcon,
+  TrashIcon,
+} from '@heroicons/react/24/solid'
 
 import { deleteTemplate, duplicateTemplate, setDefaultTemplate } from '@/app/actions/templates'
-import { useApp } from '@/lib/hooks/useApp'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuPortal,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/ui/dropdown-menu'
 
 import { Button } from '@/ui/button'
+import Link from 'next/link'
 import { toast } from 'sonner'
 
 interface OptionCardTemplate {
@@ -23,16 +26,12 @@ interface OptionCardTemplate {
 }
 
 export function OptionsCardTemplate({ id }: OptionCardTemplate) {
-  const { setTemplates, setNewTemplate } = useApp()
-
-  const handleOpenTemplate = () => {}
-
   const handleDeleteTemplate = async () => {
-    const response = await deleteTemplate(id)
+    toast.message('The template is being deleted.')
+
+    const response = await deleteTemplate(id, 'templates')
 
     if (response.status === 201 && response.data) {
-      setTemplates((prev) => prev.filter((value) => value.id !== id))
-
       toast.success('The template has been deleted.')
     } else {
       toast.error(response.message)
@@ -40,11 +39,11 @@ export function OptionsCardTemplate({ id }: OptionCardTemplate) {
   }
 
   const handleDuplicateTemplate = async () => {
+    toast.message('The template is being duplicated.')
+
     const response = await duplicateTemplate(id)
 
     if (response.status === 201 && response.data) {
-      setTemplates((prev) => prev.concat([{ ...response.data }]))
-
       toast.success('The template has been duplicated.')
     } else {
       toast.error(response.message)
@@ -52,27 +51,11 @@ export function OptionsCardTemplate({ id }: OptionCardTemplate) {
   }
 
   const handleSetDefaultTemplate = async () => {
-    const response = await setDefaultTemplate(id)
+    toast.message('The default template is being changed.')
+
+    const response = await setDefaultTemplate(id, 'templates')
 
     if (response.status === 201 && response.data) {
-      setTemplates((prev) => {
-        const templates = [...prev]
-
-        const deleteDefault = templates.find((value) => value.default === true)
-
-        if (deleteDefault != null) {
-          deleteDefault.default = false
-        }
-
-        const addDefault = templates.find((value) => value.id === id)
-
-        if (addDefault != null) {
-          addDefault.default = true
-        }
-
-        return templates
-      })
-
       toast.success('The default template has been changed.')
     } else {
       toast.error(response.message)
@@ -83,14 +66,16 @@ export function OptionsCardTemplate({ id }: OptionCardTemplate) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="z-auto">
         <Button size="icon" variant="ghost" className="z-auto">
-          c
+          <EllipsisHorizontalIcon className="w-5 h-5" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuPortal>
         <DropdownMenuContent className="w-[230px]">
-          <DropdownMenuItem onClick={handleOpenTemplate}>
-            <PencilSquareIcon className="mr-2 h-4 w-4" />
-            Edit
+          <DropdownMenuItem asChild>
+            <Link className="w-full" href={`/templates/${id}`}>
+              <PencilSquareIcon className="mr-2 h-4 w-4" />
+              Edit
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={handleSetDefaultTemplate}>
             <FlagIcon className="mr-2 h-4 w-4" />

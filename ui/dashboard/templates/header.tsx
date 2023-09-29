@@ -5,12 +5,12 @@ import { Button } from '@/ui/button'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
-export function EmptyTemplate() {
+export function HeaderTemplate() {
   const router = useRouter()
 
   return (
-    <div className="p-5 flex items-center flex-col gap-5 w-full h-full justify-center text-lg">
-      <p className="text-center">Oops, it looks like you don&apos;t have any templates.</p>
+    <nav className="w-full flex justify-between items-center">
+      <h1 className="font-bold">Templates</h1>
       <Button
         onClick={async () => {
           toast.message('The template is being created.')
@@ -21,8 +21,8 @@ export function EmptyTemplate() {
           }
         }}
       >
-        Create your first template
+        New template
       </Button>
-    </div>
+    </nav>
   )
 }
