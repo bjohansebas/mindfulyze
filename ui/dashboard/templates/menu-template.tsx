@@ -13,13 +13,14 @@ import { ChevronDownIcon } from '@heroicons/react/24/solid'
 
 import { Template } from '@/@types/template'
 import { createTemplate } from '@/app/actions/templates'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { handleCreateThought } from '../thoughts/create-thoughts'
 
 export function MenuTemplate({ templates }: { templates: Template[] }) {
   const router = useRouter()
+  const pathname = usePathname()
 
   const [openMenu, setOpenMenu] = useState(false)
 
@@ -62,7 +63,7 @@ export function MenuTemplate({ templates }: { templates: Template[] }) {
                 onClick={async () => {
                   toast.message('The template is being created.')
 
-                  const template = await createTemplate({ textWithFormat: '', title: 'Untitle' })
+                  const template = await createTemplate({ textWithFormat: '', title: 'Untitle' }, pathname)
                   if (template.status === 201 && template.data != null) {
                     router.push(`/templates/${template.data.id}`)
                   }
