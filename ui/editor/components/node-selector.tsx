@@ -15,6 +15,7 @@ import {
 } from 'lucide-react'
 import { Dispatch, FC, SetStateAction } from 'react'
 
+import { Button } from '@/ui/button'
 import { BubbleMenuItem } from './bubble-menu'
 
 interface NodeSelectorProps {
@@ -89,28 +90,26 @@ export const NodeSelector: FC<NodeSelectorProps> = ({ editor, isOpen, setIsOpen 
   return (
     <Popover open={isOpen}>
       <div className="relative h-full">
-        <PopoverTrigger
-          className="flex h-full items-center gap-1 whitespace-nowrap p-2 text-sm font-medium text-stone-600 hover:bg-stone-100 active:bg-stone-200"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <span>{activeItem?.name}</span>
-          <ChevronDown className="h-4 w-4" />
+        <PopoverTrigger onClick={() => setIsOpen(!isOpen)} asChild>
+          <Button variant="ghost" className="rounded-none px-2 gap-1">
+            <span>{activeItem?.name}</span>
+            <ChevronDown className="h-4 w-4" />
+          </Button>
         </PopoverTrigger>
-
         <PopoverContent
           align="start"
-          className="z-[99999] my-1 flex max-h-80 w-48 flex-col overflow-hidden overflow-y-auto rounded border border-stone-200 bg-white p-1 shadow-xl animate-in fade-in slide-in-from-top-1"
+          className="z-[99999] my-1 flex max-h-80 w-48 flex-col overflow-hidden overflow-y-auto rounded bg-card border p-1 shadow-xl animate-in fade-in slide-in-from-top-1"
         >
           {items.map((item, index) => (
-            <button
+            <Button
               // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
               key={index}
               onClick={() => {
                 item.command()
                 setIsOpen(false)
               }}
-              className="flex items-center justify-between rounded-sm px-2 py-1 text-sm text-stone-600 hover:bg-stone-100"
-              type="button"
+              className="justify-between px-2"
+              variant="ghost"
             >
               <div className="flex items-center space-x-2">
                 <div className="rounded-sm border border-stone-200 p-1">
@@ -119,7 +118,7 @@ export const NodeSelector: FC<NodeSelectorProps> = ({ editor, isOpen, setIsOpen 
                 <span>{item.name}</span>
               </div>
               {activeItem.name === item.name && <Check className="h-4 w-4" />}
-            </button>
+            </Button>
           ))}
         </PopoverContent>
       </div>

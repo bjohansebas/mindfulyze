@@ -1,6 +1,5 @@
 import { LogoType } from '@/components/shared/icons'
 import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
-import { cn } from '@/lib/utils'
 import { Skeleton } from '@/ui/skeleton'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
@@ -41,26 +40,13 @@ export default function Nav() {
   // const helpCenter = selectedLayout === 'help'
 
   return (
-    <nav className="sticky inset-x-0 top-0 z-30 w-full transition-all border-b border-gray-200 bg-white/75 backdrop-blur-lg">
-      <MaxWidthWrapper
-      // {...(helpCenter && {
-      //   className: 'max-w-screen-lg',
-      // })}
-      >
+    <nav className="sticky inset-x-0 top-0 z-30 w-full transition-all border-b bg-card backdrop-blur-lg">
+      <MaxWidthWrapper>
         <div className="flex h-14 items-center justify-between">
           <div className="flex items-center space-x-4">
             <Link href="/">
               <LogoType className="w-auto h-10 text-primary-600" />
             </Link>
-            {/* {helpCenter && (
-              <div className="flex items-center">
-                <div className="mr-3 h-5 border-l-2 border-gray-400" />
-                <Link href="/help" className="font-display text-lg font-bold text-gray-700">
-                  Help Center
-                </Link>
-              </div>
-            )} */}
-            {/* {!helpCenter && ( */}
             <div className="hidden items-center space-x-3 lg:flex">
               {navItems.map(({ name, slug }) => {
                 return (
@@ -68,19 +54,16 @@ export default function Nav() {
                     id={`nav-${slug}`}
                     key={slug}
                     href={`/${slug}`}
-                    className="z-10 rounded-full px-4 py-1.5 text-sm font-medium capitalize text-gray-500 transition-colors ease-out hover:text-black"
+                    className="z-10 rounded-full px-4 py-1.5 text-sm font-medium capitalize"
                   >
                     {name}
                   </Link>
                 )
               })}
             </div>
-            {/* )} */}
           </div>
-          <div className="hidden lg:block">
-            <div>
-              <ButtonNav />
-            </div>
+          <div className="hidden lg:flex gap-2">
+            <ButtonNav />
           </div>
         </div>
       </MaxWidthWrapper>

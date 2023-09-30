@@ -1,3 +1,4 @@
+import { Button } from '@/ui/button'
 import { Popover, PopoverTrigger } from '@/ui/popover'
 import { PopoverContent } from '@radix-ui/react-popover'
 import { Editor } from '@tiptap/core'
@@ -101,29 +102,27 @@ export const ColorSelector: FC<ColorSelectorProps> = ({ editor, isOpen, setIsOpe
   return (
     <Popover open={isOpen}>
       <div className="relative h-full">
-        <PopoverTrigger
-          className="flex h-full items-center gap-1 p-2 text-sm font-medium text-stone-600 hover:bg-stone-100 active:bg-stone-200"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <span
-            className="rounded-sm px-1"
-            style={{
-              color: activeColorItem?.color,
-              backgroundColor: activeHighlightItem?.color,
-            }}
-          >
-            A
-          </span>
-
-          <ChevronDown className="h-4 w-4" />
+        <PopoverTrigger onClick={() => setIsOpen(!isOpen)} asChild>
+          <Button variant="ghost" className="rounded-none px-2 gap-1">
+            <span
+              className="px-1 rounded-sm"
+              style={{
+                color: activeColorItem?.color,
+                backgroundColor: activeHighlightItem?.color,
+              }}
+            >
+              A
+            </span>
+            <ChevronDown className="h-4 w-4" />
+          </Button>
         </PopoverTrigger>
         <PopoverContent
           align="start"
-          className="z-[99999] my-1 flex max-h-80 w-48 flex-col overflow-hidden overflow-y-auto rounded border border-stone-200 bg-white p-1 shadow-xl animate-in fade-in slide-in-from-top-1"
+          className="z-[99999] my-1 flex max-h-80 w-48 flex-col overflow-hidden bg-card overflow-y-auto rounded border p-1 shadow-xl animate-in fade-in slide-in-from-top-1"
         >
-          <div className="my-1 px-2 text-sm text-stone-500">Color</div>
+          <div className="my-1 px-2 text-sm">Color</div>
           {TEXT_COLORS.map(({ name, color }, index) => (
-            <button
+            <Button
               // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
               key={index}
               onClick={() => {
@@ -131,8 +130,8 @@ export const ColorSelector: FC<ColorSelectorProps> = ({ editor, isOpen, setIsOpe
                 name !== 'Default' && editor.chain().focus().setColor(color).run()
                 setIsOpen(false)
               }}
-              className="flex items-center justify-between rounded-sm px-2 py-1 text-sm text-stone-600 hover:bg-stone-100"
-              type="button"
+              className="justify-between rounded-sm px-2"
+              variant="ghost"
             >
               <div className="flex items-center space-x-2">
                 <div className="rounded-sm border border-stone-200 px-1 py-px font-medium" style={{ color }}>
@@ -141,13 +140,13 @@ export const ColorSelector: FC<ColorSelectorProps> = ({ editor, isOpen, setIsOpe
                 <span>{name}</span>
               </div>
               {editor.isActive('textStyle', { color }) && <Check className="h-4 w-4" />}
-            </button>
+            </Button>
           ))}
 
-          <div className="mb-1 mt-2 px-2 text-sm text-stone-500">Background</div>
+          <div className="mb-1 mt-2 px-2 text-sm">Background</div>
 
           {HIGHLIGHT_COLORS.map(({ name, color }, index) => (
-            <button
+            <Button
               // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
               key={index}
               onClick={() => {
@@ -155,8 +154,8 @@ export const ColorSelector: FC<ColorSelectorProps> = ({ editor, isOpen, setIsOpe
                 name !== 'Default' && editor.commands.setHighlight({ color })
                 setIsOpen(false)
               }}
-              className="flex items-center justify-between rounded-sm px-2 py-1 text-sm text-stone-600 hover:bg-stone-100"
-              type="button"
+              className="justify-between rounded-sm px-2"
+              variant="ghost"
             >
               <div className="flex items-center space-x-2">
                 <div
@@ -168,7 +167,7 @@ export const ColorSelector: FC<ColorSelectorProps> = ({ editor, isOpen, setIsOpe
                 <span>{name}</span>
               </div>
               {editor.isActive('highlight', { color }) && <Check className="h-4 w-4" />}
-            </button>
+            </Button>
           ))}
         </PopoverContent>
       </div>

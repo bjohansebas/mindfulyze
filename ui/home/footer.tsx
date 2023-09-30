@@ -15,35 +15,35 @@ const navigation = {
 
 export default function Footer() {
   return (
-    <footer className="z-10 border-t border-gray-200 bg-white/50 py-8 backdrop-blur-lg">
+    <footer className="z-10 border-t bg-card py-8 backdrop-blur-lg">
       <MaxWidthWrapper className="pt-10">
         <div className="xl:grid xl:grid-cols-5 xl:gap-8">
           <div className="space-y-8 xl:col-span-2">
             <Link href="/">
               <span className="sr-only">Mindfulyze Logo</span>
-              <LogoType className="h-12 w-auto text-gray-600" />
+              <LogoType className="h-12 w-auto" />
             </Link>
-            <p className="max-w-xs text-sm text-gray-500">A modern diary, for your day-to-day</p>
+            <p className="max-w-xs text-sm">A modern diary, for your day-to-day</p>
             <div className="flex items-center space-x-2">
               <a
                 href="https://twitter.com/mindfulyze"
                 target="_blank"
                 rel="noreferrer"
-                className="group rounded-md p-2 transition-colors hover:bg-gray-100 active:bg-gray-200"
+                className="group rounded-md p-2 transition-colors"
               >
                 <span className="sr-only">Twitter</span>
-                <Twitter className="h-5 w-5 text-gray-600" />
+                <Twitter className="h-5 w-5" />
               </a>
             </div>
           </div>
           <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-3 xl:mt-0">
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div>
-                <h3 className="text-sm font-semibold text-gray-600">Product</h3>
+                <h3 className="text-sm font-semibold">Product</h3>
                 <ul className="mt-4 space-y-4">
                   {navigation.product.map((item) => (
                     <li key={item.name}>
-                      <Link href={item.href} className="text-sm text-gray-500 hover:text-gray-900">
+                      <Link href={item.href} className="text-sm">
                         {item.name}
                       </Link>
                     </li>
@@ -77,11 +77,11 @@ export default function Footer() {
                 </ul>
               </div> */}
               <div className="mt-10 md:mt-0">
-                <h3 className="text-sm font-semibold text-gray-600">Legal</h3>
+                <h3 className="text-sm font-semibold">Legal</h3>
                 <ul className="mt-4 space-y-4">
                   {navigation.legal.map((item) => (
                     <li key={item.name}>
-                      <Link href={item.href} className="text-sm text-gray-500 hover:text-gray-900">
+                      <Link href={item.href} className="text-sm">
                         {item.name}
                       </Link>
                     </li>

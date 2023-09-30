@@ -1,11 +1,11 @@
 import { Twitter } from '@/components/shared/icons'
+import Facebook from '@/components/shared/icons/facebook'
 import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
 import { HOME_DOMAIN } from '@/lib/constants'
 import { constructMetadata } from '@/lib/metadata'
 import { formatDate } from '@/lib/utils'
 import { MDX } from '@/ui/content/mdx'
 import { allChangelogPosts } from 'contentlayer/generated'
-import { Facebook } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -47,21 +47,21 @@ export default async function ChangelogPost({
   return (
     <MaxWidthWrapper className="my-20 grid px-0 md:grid-cols-4">
       <div className="sticky top-16 hidden self-start md:col-span-1 md:block">
-        <Link href="/changelog" className="text-sm text-gray-500 transition-colors hover:text-gray-800">
+        <Link href="/changelog" className="text-sm text-gray-200 transition-colors hover:text-gray-50">
           ← Back to Changelog
         </Link>
       </div>
       <div className="flex flex-col space-y-8 md:col-span-3">
         <div className="mx-5 grid gap-5 md:mx-0">
           <div className="flex flex-col">
-            <Link href="/changelog" className="my-5 text-sm text-gray-500 md:hidden">
+            <Link href="/changelog" className="my-5 text-sm text-gray-50 md:hidden">
               ← Back to Changelog
             </Link>
-            <time dateTime={post.publishedAt} className="flex items-center text-sm text-gray-500 md:text-base">
+            <time dateTime={post.publishedAt} className="flex items-center text-sm text-gray-200 md:text-base">
               {formatDate(post.publishedAt)}
             </time>
           </div>
-          <h1 className="font-display text-3xl font-bold tracking-tight text-gray-800 sm:text-4xl">{post.title}</h1>
+          <h1 className="font-display text-3xl font-bold tracking-tight text-primary-600 sm:text-4xl">{post.title}</h1>
         </div>
         <div className="mx-5 mb-10 flex items-center justify-between md:mx-0">
           <div className="flex items-center space-x-6">
@@ -79,11 +79,11 @@ export default async function ChangelogPost({
               rel="noopener noreferrer"
               className="transition-all hover:scale-110"
             >
-              <Facebook className="h-6 w-6" fill="black" />
+              <Facebook className="h-6 w-6" />
             </Link>
           </div>
         </div>
-        <MDX code={post.body.code} className="mx-5 sm:prose-lg md:mx-0" />
+        <MDX code={post.body.code} className="mx-5 sm:prose-lg md:mx-0 text-foreground" />
       </div>
     </MaxWidthWrapper>
   )

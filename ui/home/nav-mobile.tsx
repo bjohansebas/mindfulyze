@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { ReactNode, useEffect, useRef } from 'react'
 
 import dynamic from 'next/dynamic'
+import { Button } from '../button'
 import { Skeleton } from '../skeleton'
 import { navItems } from './nav'
 
@@ -44,7 +45,7 @@ export default function MobileNav() {
       className={`fixed inset-0 z-50 w-full lg:hidden ${isOpen ? '' : 'pointer-events-none'}`}
       ref={containerRef}
     >
-      <motion.div className="absolute inset-0 right-0 w-full bg-white" variants={sidebar} />
+      <motion.div className="absolute inset-0 right-0 w-full bg-card" variants={sidebar} />
       <motion.ul variants={variants} className="absolute grid w-full gap-3 px-10 py-16">
         {navItems.map(({ name, slug }) => {
           return (
@@ -95,7 +96,7 @@ const MenuToggle = ({ toggle }: { toggle: any }) => (
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const Path = (props: any) => (
-  <motion.path fill="transparent" strokeWidth="2" stroke="hsl(0, 0%, 18%)" strokeLinecap="round" {...props} />
+  <motion.path fill="transparent" strokeWidth="2" stroke="hsl(164 10% 97.05%)" strokeLinecap="round" {...props} />
 )
 
 export const MenuItem = ({

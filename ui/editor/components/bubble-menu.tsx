@@ -3,6 +3,7 @@ import { BoldIcon, CodeIcon, ItalicIcon, StrikethroughIcon, UnderlineIcon } from
 import { FC, useState } from 'react'
 
 import { cn } from '@/lib/utils'
+import { Button } from '@/ui/button'
 import { Editor } from '@tiptap/core'
 import { ColorSelector } from './color-selector'
 import { NodeSelector } from './node-selector'
@@ -68,10 +69,7 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps & { editor: Editor }> = 
   const [isColorSelectorOpen, setIsColorSelectorOpen] = useState(false)
 
   return (
-    <BubbleMenu
-      {...bubbleMenuProps}
-      className="flex w-fit divide-x divide-stone-200 rounded border border-stone-200 bg-white shadow-xl"
-    >
+    <BubbleMenu {...bubbleMenuProps} className="flex w-fit divide-x rounded border shadow-xl">
       <NodeSelector
         editor={props.editor}
         isOpen={isNodeSelectorOpen}
@@ -82,19 +80,20 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps & { editor: Editor }> = 
       />
       <div className="flex">
         {items.map((item, index) => (
-          <button
-            type="button"
+          <Button
             // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
             key={index}
             onClick={item.command}
-            className="p-2 text-stone-600 hover:bg-stone-100 active:bg-stone-200"
+            variant="ghost"
+            className="rounded-none"
+            size="icon"
           >
             <item.icon
               className={cn('h-4 w-4', {
                 'text-blue-500': item.isActive(),
               })}
             />
-          </button>
+          </Button>
         ))}
       </div>
       <ColorSelector

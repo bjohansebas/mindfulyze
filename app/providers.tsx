@@ -11,7 +11,7 @@ type Props = {
 export const Provider = ({ children }: Props) => {
   return (
     <SessionProvider>
-      <Toaster closeButton />
+      <Toaster closeButton theme="dark" richColors={true} />
       {children}
       <Analytics />
     </SessionProvider>

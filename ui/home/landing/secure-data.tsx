@@ -7,7 +7,7 @@ const SecureData = () => {
         <ShieldCheckIcon className="sm:w-48 sm:h-48 w-32 h-32" />
       </div>
       <div className="max-w-md gap-3 flex flex-col">
-        <h2 className="font-display text-xl font-bold leading-[1.15] text-gray-800 sm:text-6xl sm:leading-[1.15]">
+        <h2 className="font-display text-xl font-bold leading-[1.15] text-primary-600 sm:text-6xl sm:leading-[1.15]">
           Write safely
         </h2>
         <p>

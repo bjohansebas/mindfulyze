@@ -35,7 +35,7 @@ const SentimentAnalysis = () => {
         />
       </div>
 
-      <h2 className="font-display text-xl font-bold leading-[1.15] text-gray-800 sm:text-6xl sm:leading-[1.15]">
+      <h2 className="font-display text-xl font-bold leading-[1.15] text-primary-600 sm:text-6xl sm:leading-[1.15]">
         Sentiment Analysis <Badge>Soon</Badge>
       </h2>
       <p className="max-w-lg">
