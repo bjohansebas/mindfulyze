@@ -34,7 +34,7 @@ export function MenuTemplate({ templates }: { templates: Template[] }) {
 
   return (
     <DropdownMenu open={openMenu} onOpenChange={setOpenMenu}>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger asChild>
         <Button className="p-1 rounded-l-none">
           <ChevronDownIcon className="h-4 w-4" />
         </Button>
