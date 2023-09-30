@@ -21,7 +21,7 @@ const UserDropdown = dynamic(() => import('./user-dropdown'), {
 
 export default function NavigationApp({ templates }: { templates: Template[] }) {
   return (
-    <aside className="sticky top-0 h-screen w-full sm:w-[300px] sm:max-w-[300px] bg-background p-4 z-auto border-b sm:border-b-0">
+    <aside className="h-screen w-full sm:w-[300px] sm:max-w-[300px] bg-background p-4 z-auto border-b sm:border-b-0">
       <NavigationMobile templates={templates} />
       <nav className="sm:flex justify-between h-full w-full sm:flex-col hidden">
         <div className="space-y-2">
