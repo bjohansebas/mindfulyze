@@ -19,6 +19,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/ui/dro
 import Editor from '@/ui/editor'
 import { TiptapExtensions } from '@/ui/editor/extensions'
 import { TiptapEditorProps } from '@/ui/editor/props'
+
 import { TrashIcon } from '@heroicons/react/24/solid'
 import { generateJSON } from '@tiptap/html'
 import { useEditor } from '@tiptap/react'
@@ -37,6 +38,7 @@ export function ContentThoughts({ text, createdAt, id }: ContentThoughtsProps) {
   const [saveStatus, setSaveStatus] = useState('')
 
   const [newDate, setNewDate] = useState(createdAt)
+
   const debouncedUpdates = useDebouncedCallback(async ({ data }: { data: z.infer<typeof ThoughtSchema> }) => {
     try {
       setSaveStatus('Saving...')
