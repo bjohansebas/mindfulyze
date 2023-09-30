@@ -1,4 +1,4 @@
-export const PRIVATE_APP_ROUTES = new Set(['home', 'stats', 'settings', 'welcome'])
+export const PRIVATE_APP_ROUTES = new Set(['home', 'stats', 'settings', 'welcome', 'templates'])
 
 export const HOME_DOMAIN =
   process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
