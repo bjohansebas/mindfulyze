@@ -1,6 +1,7 @@
 import { ButtonFeedBack } from './button-feedback'
 
 import { Template } from '@/@types/template'
+import { Logo, LogoType } from '@/components/shared/icons'
 import { Skeleton } from '@/ui/skeleton'
 import { ChatBubbleOvalLeftIcon } from '@heroicons/react/24/solid'
 import { LayoutTemplateIcon, PenLineIcon } from 'lucide-react'
@@ -21,9 +22,15 @@ const UserDropdown = dynamic(() => import('./user-dropdown'), {
 
 export default function NavigationApp({ templates }: { templates: Template[] }) {
   return (
-    <aside className="h-screen w-full sm:w-[300px] sm:max-w-[300px] bg-background p-4 z-auto border-b sm:border-b-0">
-      <NavigationMobile templates={templates} />
-      <nav className="sm:flex justify-between h-full w-full sm:flex-col hidden">
+    <aside className="h-screen max-h-screen w-full sm:w-[300px] sm:max-w-[300px] bg-background p-4 border-b sm:border-b-0">
+      <div className="flex justify-between items-center">
+        <Link href="/home">
+          <Logo className="text-primary-600 w-7 h-7 sm:hidden" />
+          <LogoType className="mx-4 mb-5 text-primary-600 w-auto h-12 hidden sm:inline" />
+        </Link>
+        <NavigationMobile templates={templates} />
+      </div>
+      <nav className="sm:flex justify-between h-[calc(100%-68px)] w-full sm:flex-col hidden">
         <div className="space-y-2">
           <CreateThought templates={templates} />
           <Button variant="ghost" asChild className="justify-start w-[auto] sm:flex hidden">
