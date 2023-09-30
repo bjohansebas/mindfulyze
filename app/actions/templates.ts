@@ -228,7 +228,7 @@ export async function duplicateTemplate(id: string) {
   }
 }
 
-export async function setDefaultTemplate(id: string, page: string) {
+export async function setDefaultTemplate(id: string, page?: string) {
   const session = await getServerSession(authOptions)
 
   if (!session?.user || !session.user.pw) {
@@ -282,7 +282,7 @@ export async function setDefaultTemplate(id: string, page: string) {
   }
 }
 
-export async function deleteTemplate(id: string, page: string) {
+export async function deleteTemplate(id: string, page?: string) {
   const session = await getServerSession(authOptions)
 
   if (!session?.user || !session.user.pw) {
