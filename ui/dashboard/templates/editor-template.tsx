@@ -102,7 +102,7 @@ export function EditorTemplate({ data: { text, title, id } }: EditorTemplateProp
                 <Button
                   onClick={async () => {
                     toast.message('The thought is being erased, please wait a moment.')
-                    const res = await deleteTemplate(id)
+                    const res = await deleteTemplate(id, `/templates/${id}`)
 
                     if (!res.data) {
                       toast.error(res.message)
