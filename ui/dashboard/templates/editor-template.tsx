@@ -123,44 +123,6 @@ export function EditorTemplate({ data: { text, title, id } }: EditorTemplateProp
       <Editor editor={editor} />
     </div>
   )
-  // return (
-  //   <Form {...form}>
-  //     <form
-  //       onSubmit={form.handleSubmit(onSubmit)}
-  //       className="flex flex-col bg-white rounded-lg h-full max-h-[90vh] gap-3 w-full overflow-x-hidden"
-  //     >
-  //       <FormField
-  //         control={form.control}
-  //         name="title"
-  //         render={({ field }) => (
-  //           <FormItem>
-  //             <FormLabel>Title</FormLabel>
-  //             <FormControl>
-  //               <Input placeholder="Untitled" {...field} />
-  //             </FormControl>
-  //             <FormMessage />
-  //           </FormItem>
-  //         )}
-  //       />
-  //       <FormField
-  //         control={form.control}
-  //         name="textWithFormat"
-  //         render={() => (
-  //           <FormItem>
-  //             <Editor editor={editor} className="border rounded-xl h-[60vh]" />
-  //             <FormMessage />
-  //           </FormItem>
-  //         )}
-  //       />
-  //       <div className="flex justify-between items-center">
-  //         <Button type="submit" disabled={isSubmitting}>
-  //           {isSubmitting && <Spinner className="mr-2 h-4 w-4 animate-spin" />}
-  //           {newTemplate ? 'Create' : 'Update'}
-  //         </Button>
-  //       </div>
-  //     </form>
-  //   </Form>
-  // )
 }
 
 export default EditorTemplate
