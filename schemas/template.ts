@@ -2,7 +2,7 @@ import z from 'zod'
 
 export const TemplateSchema = z.object({
   textWithFormat: z.string(),
-  title: z.string().min(3).max(50),
+  title: z.string().max(50),
 })
 
 export function validateTemplate(input: z.infer<typeof TemplateSchema>) {

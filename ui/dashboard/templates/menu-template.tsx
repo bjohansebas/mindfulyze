@@ -52,7 +52,7 @@ export function MenuTemplate({ templates }: { templates: Template[] }) {
                   return handleOpenThought(data.id)
                 }}
               >
-                <span>{data.title}</span>
+                <span>{data.title.trim().length === 0 ? 'Untitle' : data.title}</span>
                 <div>{data.default ? <span className="text-sm">DEFAULT</span> : null}</div>
               </DropdownMenuItem>
             ))
