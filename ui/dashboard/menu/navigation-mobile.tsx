@@ -8,15 +8,17 @@ import { ChatBubbleOvalLeftIcon } from '@heroicons/react/24/solid'
 import { LayoutTemplateIcon, LogOut, PenLineIcon } from 'lucide-react'
 import { signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
+import { useState } from 'react'
 import { Button } from '../../button'
 import { CreateThought } from '../thoughts/create-thoughts'
 import { ButtonFeedBack } from './button-feedback'
 
 export default function NavigationMobile({ templates }: { templates: Template[] }) {
   const { data: session } = useSession()
+  const [open, setOpen] = useState(false)
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button variant="ghost" className="sm:hidden" size="icon">
           <Avatar className="h-7 w-7 sm:mr-2">
@@ -32,14 +34,14 @@ export default function NavigationMobile({ templates }: { templates: Template[] 
         </SheetHeader>
         <nav className="flex justify-between h-[calc(100%-60px)] w-full flex-col mt-4">
           <div className="space-y-2">
-            <CreateThought templates={templates} />
-            <Button variant="ghost" asChild className="justify-start w-[auto] flex">
+            <CreateThought templates={templates} setOpen={setOpen} />
+            <Button variant="ghost" asChild className="justify-start w-[auto] flex" onClick={() => setOpen(false)}>
               <Link className="w-full" href="/home">
                 <ChatBubbleOvalLeftIcon className="w-4 h-4 mr-2" />
                 All thoughts
               </Link>
             </Button>
-            <Button variant="ghost" asChild className="justify-start flex">
+            <Button variant="ghost" asChild className="justify-start flex" onClick={() => setOpen(false)}>
               <Link className="w-full" href="/templates">
                 <LayoutTemplateIcon className="w-4 h-4 mr-2" />
                 Templates
@@ -47,8 +49,8 @@ export default function NavigationMobile({ templates }: { templates: Template[] 
             </Button>
           </div>
           <div className="space-y-2 flex flex-col">
-            <ButtonFeedBack />
-            <Button variant="ghost" asChild className="justify-start">
+            <ButtonFeedBack setOpen={setOpen} />
+            <Button variant="ghost" asChild className="justify-start" onClick={() => setOpen(false)}>
               <Link href="/changelog" className="w-full flex" target="_blank">
                 <PenLineIcon className="w-4 h-4 mr-2" />
                 Changelog
@@ -57,6 +59,7 @@ export default function NavigationMobile({ templates }: { templates: Template[] 
             <Button
               className="w-full justify-start"
               onClick={() => {
+                setOpen(false)
                 signOut({
                   callbackUrl: '/login',
                 })

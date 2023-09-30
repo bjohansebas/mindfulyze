@@ -6,6 +6,7 @@ import { Template } from '@/@types/template'
 import { createThought } from '@/app/actions/thoughts'
 import { ThoughtSchema } from '@/schemas/thought'
 import { PencilIcon } from '@heroicons/react/24/solid'
+import { Dispatch, SetStateAction } from 'react'
 import { toast } from 'sonner'
 import { z } from 'zod'
 import MenuTemplate from '../templates/menu-template'
@@ -31,13 +32,19 @@ export async function handleCreateThought(templateSelect) {
   }
 }
 
-export function CreateThought({ templates }: { templates: Template[] }) {
+export function CreateThought({
+  templates,
+  setOpen,
+}: { templates: Template[]; setOpen?: Dispatch<SetStateAction<boolean>> }) {
   return (
     <div className="flex">
       <Button
         className="w-full rounded-r-none"
         onClick={async () => {
           await handleCreateThought(templates.find((value) => value.default))
+          if (setOpen != null) {
+            setOpen(false)
+          }
         }}
       >
         <PencilIcon className="w-4 h-4 mr-2" />

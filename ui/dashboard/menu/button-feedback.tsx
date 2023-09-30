@@ -10,12 +10,12 @@ import { Textarea } from '@/ui/textarea'
 import { ChatBubbleBottomCenterTextIcon } from '@heroicons/react/24/solid'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import z from 'zod'
 
-export function ButtonFeedBack() {
+export function ButtonFeedBack({ setOpen }: { setOpen?: Dispatch<SetStateAction<boolean>> }) {
   const form = useForm<z.infer<typeof FeedbackSchema>>({
     resolver: zodResolver(FeedbackSchema),
   })
@@ -25,6 +25,11 @@ export function ButtonFeedBack() {
   async function onSubmit(data: z.infer<typeof FeedbackSchema>) {
     try {
       const res = await sendFeedback(data)
+
+      if (setOpen != null) {
+        setOpen(false)
+      }
+
       if (res.status === 201) {
         toast.success('Your feedback has been received! Thank you for your help.')
       } else {
@@ -60,7 +65,6 @@ export function ButtonFeedBack() {
                 </FormItem>
               )}
             />
-
             <Button type="submit" disabled={isSubmitting}>
               {isSubmitting && <Spinner className="mr-2 h-4 w-4 animate-spin" />}
               Send
