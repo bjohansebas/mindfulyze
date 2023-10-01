@@ -1,18 +1,19 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
-
 import { Template } from '@/@types/template'
 import { createThought } from '@/app/actions/thoughts'
+import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 import { ThoughtSchema } from '@/schemas/thought'
+import MenuTemplate from '../templates/menu-template'
+
 import { PencilIcon } from '@heroicons/react/24/solid'
 import { usePathname, useRouter } from 'next/navigation'
 import { Dispatch, SetStateAction } from 'react'
 import { toast } from 'sonner'
 import { z } from 'zod'
-import MenuTemplate from '../templates/menu-template'
 
-export async function handleCreateThought(templateSelect) {
+export async function handleCreateThought(templateSelect?: Template) {
   const data: z.infer<typeof ThoughtSchema> = {
     created: new Date(),
     textWithFormat: templateSelect?.text || '',
@@ -36,16 +37,16 @@ export async function handleCreateThought(templateSelect) {
 export function CreateThought({
   templates,
   setOpen,
-}: { templates: Template[]; setOpen?: Dispatch<SetStateAction<boolean>> }) {
+}: { templates?: Template[]; setOpen?: Dispatch<SetStateAction<boolean>> }) {
   const router = useRouter()
   const pathname = usePathname()
 
   return (
     <div className="flex">
       <Button
-        className="w-full rounded-r-none"
+        className={cn('w-full rounded-r-none', { 'rounded-md': templates == null })}
         onClick={async () => {
-          await handleCreateThought(templates.find((value) => value.default))
+          await handleCreateThought(templates?.find((value) => value.default) || undefined)
           if (setOpen != null) {
             setOpen(false)
           }
@@ -57,7 +58,7 @@ export function CreateThought({
         <PencilIcon className="w-4 h-4 mr-2" />
         Create thought
       </Button>
-      <MenuTemplate templates={templates} />
+      {templates != null ? <MenuTemplate templates={templates} /> : null}
     </div>
   )
 }
