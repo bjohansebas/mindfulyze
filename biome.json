@@ -17,7 +17,6 @@
   "organizeImports": {
     "enabled": true
   },
-  "files": {},
   "json": {
     "parser": {
       "allowComments": true
