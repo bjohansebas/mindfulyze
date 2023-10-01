@@ -69,7 +69,7 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps & { editor: Editor }> = 
   const [isColorSelectorOpen, setIsColorSelectorOpen] = useState(false)
 
   return (
-    <BubbleMenu {...bubbleMenuProps} className="flex w-fit divide-x rounded border shadow-xl">
+    <BubbleMenu {...bubbleMenuProps} className="flex w-fit divide-x rounded border shadow-xl bg-card">
       <NodeSelector
         editor={props.editor}
         isOpen={isNodeSelectorOpen}
