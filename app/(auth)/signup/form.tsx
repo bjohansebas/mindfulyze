@@ -3,7 +3,7 @@
 import { useSearchParams } from 'next/navigation'
 
 import Google from '@/components/shared/icons/google'
-import { Button } from '@/ui/button'
+import { Button } from '@/components/ui/button'
 import { signIn } from 'next-auth/react'
 
 export function SignUpForm() {

@@ -1,6 +1,6 @@
 import '@/styles/prosemirror.css'
 
-import NavigationApp from '@/ui/dashboard/menu/navigation'
+import NavigationApp from '@/components/ui/dashboard/menu/navigation'
 import { getTemplates } from '../actions/templates'
 
 export default async function AppLayout({

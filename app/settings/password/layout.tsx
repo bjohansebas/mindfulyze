@@ -1,4 +1,4 @@
-import Background from '@/ui/background'
+import Background from '@/components/ui/background'
 
 export default function PasswordLayout({
   children,

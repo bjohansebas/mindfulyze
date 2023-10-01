@@ -13,6 +13,9 @@
       "@/*": [
         "./*",
       ],
+      "@/ui": [
+        "./components/ui",
+      ],
       "contentlayer/generated": [
         "./.contentlayer/generated"
       ]

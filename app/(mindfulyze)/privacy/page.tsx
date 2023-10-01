@@ -1,8 +1,8 @@
 import { allLegalPosts } from 'contentlayer/generated'
 import { Metadata } from 'next'
 
+import LegalPage from '@/components/ui/content/legal'
 import { constructMetadata } from '@/lib/metadata'
-import LegalPage from '@/ui/content/legal'
 
 export const metadata: Metadata = constructMetadata({
   title: 'Privacy Policy – Mindfulyze',

@@ -1,6 +1,6 @@
+import BlogCard from '@/components/ui/content/blog-card'
 import { BLOG_CATEGORIES } from '@/lib/constants'
 import { constructMetadata } from '@/lib/metadata'
-import BlogCard from '@/ui/content/blog-card'
 import { allBlogPosts } from 'contentlayer/generated'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'

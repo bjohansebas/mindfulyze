@@ -1,8 +1,8 @@
 import { Twitter } from '@/components/shared/icons'
 import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
+import { MDX } from '@/components/ui/content/mdx'
 import { constructMetadata } from '@/lib/metadata'
 import { formatDate } from '@/lib/utils'
-import { MDX } from '@/ui/content/mdx'
 import { allChangelogPosts } from 'contentlayer/generated'
 import Link from 'next/link'
 

@@ -1,5 +1,5 @@
 import { getTemplateById } from '@/app/actions/templates'
-import EditorTemplate from '@/ui/dashboard/templates/editor-template'
+import EditorTemplate from '@/components/ui/dashboard/templates/editor-template'
 import { notFound } from 'next/navigation'
 
 export default async function Page({ params }: { params: { slug: string } }) {
