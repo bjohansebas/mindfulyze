@@ -52,6 +52,7 @@
     "@tiptap/starter-kit": "2.1.11",
     "@tiptap/suggestion": "2.1.11",
     "@vercel/analytics": "1.0.2",
+    "ai": "2.2.14",
     "bcrypt": "5.1.1",
     "class-variance-authority": "0.7.0",
     "clsx": "2.0.0",
@@ -79,14 +80,12 @@
     "tippy.js": "6.3.7",
     "tiptap-markdown": "0.8.2",
     "use-debounce": "9.0.4",
-    "vaul": "0.6.7",
     "zod": "3.22.2"
   },
   "devDependencies": {
     "@biomejs/biome": "1.2.2",
     "@commitlint/cli": "17.7.1",
     "@commitlint/config-conventional": "17.7.0",
-    "@s-ui/mono": "2.39.0",
     "@tailwindcss/typography": "0.5.10",
     "@types/bcrypt": "5.0.0",
     "@types/node": "20.7.0",
@@ -106,7 +105,7 @@
   },
   "engines": {
     "node": "18.x",
-    "pnpm": ">=8.6.5"
+    "pnpm": ">=8.8.0"
   },
-  "packageManager": "pnpm@8.6.10"
+  "packageManager": "pnpm@8.8.0"
 }
