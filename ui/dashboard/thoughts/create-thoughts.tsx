@@ -6,6 +6,7 @@ import { Template } from '@/@types/template'
 import { createThought } from '@/app/actions/thoughts'
 import { ThoughtSchema } from '@/schemas/thought'
 import { PencilIcon } from '@heroicons/react/24/solid'
+import { usePathname, useRouter } from 'next/navigation'
 import { Dispatch, SetStateAction } from 'react'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -36,6 +37,9 @@ export function CreateThought({
   templates,
   setOpen,
 }: { templates: Template[]; setOpen?: Dispatch<SetStateAction<boolean>> }) {
+  const router = useRouter()
+  const pathname = usePathname()
+
   return (
     <div className="flex">
       <Button
@@ -44,6 +48,9 @@ export function CreateThought({
           await handleCreateThought(templates.find((value) => value.default))
           if (setOpen != null) {
             setOpen(false)
+          }
+          if (pathname !== '/home') {
+            router.push('/home')
           }
         }}
       >

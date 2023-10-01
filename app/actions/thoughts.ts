@@ -15,6 +15,7 @@ import { getServerSession } from 'next-auth'
 import { revalidatePath } from 'next/cache'
 
 import * as z from 'zod'
+import { getTemplateById } from './templates'
 
 export async function getThoughtById(id: string) {
   const session = await getServerSession(authOptions)
@@ -96,6 +97,38 @@ export async function createThought(data: z.infer<typeof ThoughtSchema>) {
     revalidatePath('/home')
 
     return { data: response, status: 201 }
+  } catch (e) {
+    return { message: "The thought couldn't be created, try again anew.", status: 400, data: null }
+  }
+}
+
+// Create new thought for user
+export async function createThoughtByTemplateId(id: string) {
+  const session = await getServerSession(authOptions)
+
+  if (!session?.user || !session.user.pw) {
+    return { message: 'You must be logged in.', status: 401, data: null }
+  }
+
+  if (id.trim() === '') {
+    return { message: 'Id is empty', status: 404 }
+  }
+
+  try {
+    const template = await getTemplateById(id)
+    if (template.status !== 200 || template.data == null) {
+      return { message: template.message, status: template.status }
+    }
+
+    const thought = await createThought({ textWithFormat: template.data.text, created: new Date() })
+
+    if (thought.status !== 201 || thought.data == null) {
+      return { message: thought.message, status: thought.status }
+    }
+
+    revalidatePath('/home')
+
+    return { data: thought.data, status: 201 }
   } catch (e) {
     return { message: "The thought couldn't be created, try again anew.", status: 400, data: null }
   }
