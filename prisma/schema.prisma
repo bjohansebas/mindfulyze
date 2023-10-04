@@ -83,6 +83,7 @@ model Thought {
   user      User     @relation(fields: [userId], references: [id])
   userId    String
   createdAt DateTime @default(now()) @map("created_at")
+  create    DateTime @default(now()) @map("create")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("thoughts")
@@ -101,6 +102,15 @@ model Template {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("templates")
+}
+
+model SentimentAnalysis {
+  id        String   @id @default(uuid())
+  message   String   @db.Text()
+  type      String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("sentiment_analysis")
 }
 
 enum SubscriptionFrequency {
