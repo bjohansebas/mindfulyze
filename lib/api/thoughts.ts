@@ -1,12 +1,12 @@
 import { ThoughtResponse } from '@/app/actions/thoughts'
 import prisma from '@/lib/prisma'
 import { Thought as ThoughtProps } from '@prisma/client'
+import dayjs from 'dayjs'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../auth'
 import { NEXT_SECRET } from '../constants'
 import { decryptData } from '../encrypt'
 import { downloadFile } from '../supabase'
-import { toTimestamp } from '../utils'
 
 export async function getThoughtsByUser({
   // sort = "createdAt",
@@ -52,7 +52,7 @@ export async function getThoughts(): Promise<ThoughtResponse> {
 
     const thoughts = await Promise.all(
       response.map(async ({ url, bucket, updatedAt, ...res }) => {
-        const data = await downloadFile({ name: `${url}?bust=${toTimestamp(updatedAt.toDateString())})`, bucket })
+        const data = await downloadFile({ name: `${url}?bust=${dayjs(new Date()).valueOf()}`, bucket })
         const textEncrypt = await data.data?.text()
 
         if (!textEncrypt) return { text: '', ...res, updatedAt }

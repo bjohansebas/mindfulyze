@@ -8,6 +8,7 @@ import prisma from '@/lib/prisma'
 import { createFile, deleteFile, downloadFile, updateFile } from '@/lib/supabase'
 import { createId } from '@/lib/utils'
 import { TemplateSchema, validatePartialTemplate, validateTemplate } from '@/schemas/template'
+import dayjs from 'dayjs'
 
 import { getServerSession } from 'next-auth'
 import { revalidatePath } from 'next/cache'
@@ -35,7 +36,7 @@ export async function getTemplates(): Promise<TemplateResponse> {
 
     const template = await Promise.all(
       response.map(async ({ url, bucket, ...res }) => {
-        const data = await downloadFile({ name: url, bucket })
+        const data = await downloadFile({ name: `${url}?bust=${dayjs(new Date()).valueOf()}`, bucket })
         const text = await data.data?.text()
 
         if (!text) return { text: '', ...res }

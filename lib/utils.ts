@@ -1,5 +1,8 @@
 import { init } from '@paralleldrive/cuid2'
 import { type ClassValue, clsx } from 'clsx'
+import dayjs from 'dayjs'
+import timezone from 'dayjs/plugin/timezone' // dependent on utc plugin
+import utc from 'dayjs/plugin/utc'
 import { twMerge } from 'tailwind-merge'
 
 export function cn(...inputs: ClassValue[]) {
@@ -86,4 +89,12 @@ export const formatDate = (dateString: string) => {
 //   return `${queryString ? "?" : ""}${queryString}`;
 // };
 
-export const toTimestamp = (strDate: string) => Date.parse(strDate)
+dayjs.extend(utc)
+dayjs.extend(timezone)
+
+const tz = 'America/New_York'
+
+export const parseDate = (date: Date) => {
+  const dayjsLocal = dayjs(date)
+  return dayjsLocal.tz(tz).toString()
+}

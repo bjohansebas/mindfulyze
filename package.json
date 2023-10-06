@@ -58,6 +58,7 @@
     "cmdk": "0.2.0",
     "contentlayer": "0.3.4",
     "date-fns": "2.30.0",
+    "dayjs": "1.11.10",
     "framer-motion": "10.16.4",
     "github-slugger": "2.0.0",
     "lucide-react": "0.284.0",

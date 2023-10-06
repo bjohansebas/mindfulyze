@@ -7,13 +7,14 @@ import { SUPABASE_BUCKET_THOUGHTS } from '@/lib/constants/supabase'
 import { decryptData, encryptData } from '@/lib/encrypt'
 import prisma from '@/lib/prisma'
 import { createFile, deleteFile, downloadFile, updateFile } from '@/lib/supabase'
-import { createId, toTimestamp } from '@/lib/utils'
+import { createId, parseDate } from '@/lib/utils'
 import { ThoughtSchema, validateThought } from '@/schemas/thought'
 import { validatePartialThought } from '@/schemas/thought'
 
 import { getServerSession } from 'next-auth'
 import { revalidatePath } from 'next/cache'
 
+import dayjs from 'dayjs'
 import * as z from 'zod'
 import { getTemplateById } from './templates'
 
@@ -36,7 +37,7 @@ export async function getThoughtById(id: string) {
       },
     })
 
-    const dataThought = await downloadFile({ name: `${url}?bust=${toTimestamp(updatedAt.toDateString())})`, bucket })
+    const dataThought = await downloadFile({ name: `${url}?bust=${dayjs(new Date()).valueOf()}`, bucket })
 
     if (dataThought.data == null) {
       return {
@@ -178,7 +179,7 @@ export async function updateThought(id: string, data: z.infer<typeof ThoughtSche
       }
     }
 
-    if (data.created !== thought.data?.createdAt) {
+    if (parseDate(data.created) !== parseDate(thought.data.createdAt)) {
       await prisma.thought.update({
         data: {
           createdAt: data.created,
