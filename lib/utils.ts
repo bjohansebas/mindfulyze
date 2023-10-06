@@ -1,8 +1,8 @@
 import { init } from '@paralleldrive/cuid2'
 import { type ClassValue, clsx } from 'clsx'
 import dayjs from 'dayjs'
-import timezone from 'dayjs/plugin/timezone' // dependent on utc plugin
-import utc from 'dayjs/plugin/utc'
+import timezone from 'dayjs/plugin/timezone.js' // dependent on utc plugin
+import utc from 'dayjs/plugin/utc.js'
 import { twMerge } from 'tailwind-merge'
 
 export function cn(...inputs: ClassValue[]) {
