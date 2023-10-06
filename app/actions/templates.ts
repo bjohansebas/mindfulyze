@@ -71,7 +71,7 @@ export async function getTemplateById(id: string) {
       },
     })
 
-    const dataTemplate = await downloadFile({ name: url, bucket })
+    const dataTemplate = await downloadFile({ name: `${url}?bust=${dayjs(new Date()).valueOf()}`, bucket })
 
     if (dataTemplate.data == null) {
       return {
