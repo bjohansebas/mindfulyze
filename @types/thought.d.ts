@@ -5,3 +5,9 @@ export interface Thought {
   updatedAt: Date
   userId: string
 }
+
+export enum Feedback {
+  Positive = 'positive',
+  Negative = 'negative',
+  Neutral = 'neutral',
+}

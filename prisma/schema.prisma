@@ -76,9 +76,10 @@ model VerificationToken {
 }
 
 model Thought {
-  id     String @id @default(cuid())
+  id     String      @id @default(cuid())
   url    String
-  bucket String @default("thoughts")
+  bucket String      @default("thoughts")
+  type   TypeEmotion @default(neutral)
 
   user      User     @relation(fields: [userId], references: [id])
   userId    String
@@ -121,6 +122,12 @@ enum SubscriptionFrequency {
 enum SubscriptionPlanSlug {
   free
   plus
+}
+
+enum TypeEmotion {
+  positive
+  negative
+  neutral
 }
 
 model SubscriptionPlan {
