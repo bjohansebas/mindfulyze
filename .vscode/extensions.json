@@ -1,3 +1,13 @@
 {
-  "recommendations": ["prisma.prisma", "dbaeumer.vscode-eslint", "bradlc.vscode-tailwindcss", "biomejs.biome"]
+  "recommendations": [
+    // Linting / Formatting
+    "biomejs.biome",
+    "dbaeumer.vscode-eslint",
+    "usernamehw.errorlens",
+    "prisma.prisma",
+    "bradlc.vscode-tailwindcss",
+
+    // MDX Authoring
+    "unifiedjs.vscode-mdx"
+  ]
 }
