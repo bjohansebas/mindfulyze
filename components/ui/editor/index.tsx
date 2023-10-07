@@ -19,7 +19,7 @@ export default function Editor({ editor, className }: EditorContentProps) {
       }}
       className={cn('overflow-y-scroll relative min-h-48 h-full w-full p-6 border-b', className)}
     >
-      {editor && <EditorBubbleMenu editor={editor} />}
+      {editor ? <EditorBubbleMenu editor={editor} /> : null}
       <EditorContent editor={editor} />
     </div>
   )

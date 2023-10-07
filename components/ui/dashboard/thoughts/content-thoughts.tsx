@@ -36,6 +36,7 @@ export interface ContentThoughtsProps {
 }
 export function ContentThoughts({ text, createdAt, id }: ContentThoughtsProps) {
   const [saveStatus, setSaveStatus] = useState('')
+  const [disabled, setDisabled] = useState(false)
 
   const [newDate, setNewDate] = useState(createdAt)
 
@@ -78,13 +79,14 @@ export function ContentThoughts({ text, createdAt, id }: ContentThoughtsProps) {
     editorProps: TiptapEditorProps,
     onUpdate: ({ editor }) => {
       const textHTML = editor.getHTML()
-      const textPlane = editor.getText()
-
-      setSaveStatus('Unsaved')
-      debouncedUpdates({ data: { textWithFormat: textHTML, created: newDate } })
-      // debouncedSentiment({ data: textPlane })
+      // const textPlane = editor.getText()
+      if (text !== textHTML) {
+        setSaveStatus('Unsaved')
+        debouncedUpdates({ data: { textWithFormat: textHTML, created: newDate } })
+        // debouncedSentiment({ data: textPlane })
+      }
     },
-    autofocus: 'end',
+    autofocus: false,
   })
 
   return (
@@ -93,7 +95,7 @@ export function ContentThoughts({ text, createdAt, id }: ContentThoughtsProps) {
         <div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm">
+              <Button variant="ghost" size="sm" disabled={disabled}>
                 {format(newDate, 'PPP')}
               </Button>
             </DropdownMenuTrigger>
@@ -114,7 +116,7 @@ export function ContentThoughts({ text, createdAt, id }: ContentThoughtsProps) {
         </div>
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button className="hover:text-red-500" variant="ghost" size="sm">
+            <Button className="hover:text-red-500" variant="ghost" size="sm" disabled={disabled}>
               <TrashIcon className="h-4 w-4" />
             </Button>
           </AlertDialogTrigger>
@@ -130,6 +132,8 @@ export function ContentThoughts({ text, createdAt, id }: ContentThoughtsProps) {
               <AlertDialogAction asChild>
                 <Button
                   onClick={async () => {
+                    editor?.setEditable(false)
+                    setDisabled(true)
                     toast.message('The thought is being erased, please wait a moment.')
                     const res = await deleteThought(id)
                     if (!res.data) {
