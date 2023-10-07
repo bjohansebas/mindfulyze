@@ -23,8 +23,7 @@ export async function getThoughtsByUser({
     },
     orderBy: {
       // [sort]: "desc",
-      // createdAt: 'desc',
-      createdAt: 'asc',
+      createdAt: 'desc',
     },
     take: 30,
     ...(page && {
