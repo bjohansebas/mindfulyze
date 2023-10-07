@@ -12,9 +12,9 @@ interface CohereAPIResponse {
       confidence: number
     }[]
     labels: {
-      [Feedback.Positive]: { confidence: number }
-      [Feedback.Negative]: { confidence: number }
-      [Feedback.Neutral]: { confidence: number }
+      [Feedback.positive]: { confidence: number }
+      [Feedback.negative]: { confidence: number }
+      [Feedback.neutral]: { confidence: number }
     }
   }[]
 }

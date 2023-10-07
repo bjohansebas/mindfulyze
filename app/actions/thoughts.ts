@@ -10,13 +10,14 @@ import { createFile, deleteFile, downloadFile, updateFile } from '@/lib/supabase
 import { createId, parseDate } from '@/lib/utils'
 import { ThoughtSchema, validateThought } from '@/schemas/thought'
 import { validatePartialThought } from '@/schemas/thought'
+import { getTemplateById, getTemplateDefault } from './templates'
 
 import { getServerSession } from 'next-auth'
 import { revalidatePath } from 'next/cache'
 
+import { getTemplatesByDefault } from '@/lib/api/utils'
 import dayjs from 'dayjs'
 import * as z from 'zod'
-import { getTemplateById } from './templates'
 
 export async function getThoughtById(id: string) {
   const session = await getServerSession(authOptions)
@@ -57,7 +58,33 @@ export async function getThoughtById(id: string) {
   }
 }
 
+export async function getThoughtByIdWithOutText(id: string) {
+  const session = await getServerSession(authOptions)
+
+  if (!session?.user.id || !session.user.pw) {
+    return { message: 'You must be logged in.', status: 401, data: null }
+  }
+
+  if (id === '') {
+    return { message: 'The ID is empty.', status: 400, data: null }
+  }
+
+  try {
+    const thought = await prisma.thought.findUniqueOrThrow({
+      where: {
+        id: id,
+        userId: session.user.id,
+      },
+    })
+
+    return { data: thought, status: 200 }
+  } catch (e) {
+    return { message: 'Not found template', status: 404, data: null }
+  }
+}
+
 // Create new thought for user
+// TODO: Utilizar template id
 export async function createThought(data: z.infer<typeof ThoughtSchema>) {
   const session = await getServerSession(authOptions)
 
@@ -91,7 +118,6 @@ export async function createThought(data: z.infer<typeof ThoughtSchema>) {
         url: file.data?.path,
         bucket: SUPABASE_BUCKET_THOUGHTS,
         userId: session.user.id,
-        createdAt: result.data.created,
       },
     })
 
@@ -121,7 +147,7 @@ export async function createThoughtByTemplateId(id: string) {
       return { message: template.message, status: template.status }
     }
 
-    const thought = await createThought({ textWithFormat: template.data.text, created: new Date() })
+    const thought = await createThought(template.data.text)
 
     if (thought.status !== 201 || thought.data == null) {
       return { message: thought.message, status: thought.status }

@@ -7,7 +7,7 @@ export interface Thought {
 }
 
 export enum Feedback {
-  Positive = 'positive',
-  Negative = 'negative',
-  Neutral = 'neutral',
+  positive = 'positive',
+  negative = 'negative',
+  neutral = 'neutral',
 }

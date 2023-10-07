@@ -2,6 +2,7 @@
 
 import { CohereAPIResponse } from '@/@types/cohere'
 import prisma from '@/lib/prisma'
+import { getThoughtByIdWithOutText } from './thoughts'
 
 export async function getDataOfSentimentAnalysis() {
   return await prisma.sentimentAnalysis.findMany({
@@ -12,8 +13,10 @@ export async function getDataOfSentimentAnalysis() {
   })
 }
 
-export async function addSentimentToThoughts(message: string) {
+export async function addSentimentToThoughts(id: string, message: string) {
   try {
+    const thought = await getThoughtByIdWithOutText(id)
+
     const examples = (await getDataOfSentimentAnalysis()).map((data) => {
       return { text: data.message, label: data.type }
     })
@@ -38,7 +41,19 @@ export async function addSentimentToThoughts(message: string) {
       return { message: 'The thought could not be analyzed correctly, please try again.', status: 400, data: null }
     }
 
-    const feedback = response.classifications[0].prediction
+    const feedback = response.classifications[0].prediction.toLowerCase()
+
+    if (feedback !== thought.data?.type) {
+      await prisma.thought.update({
+        where: {
+          id: id,
+        },
+        data: {
+          // @ts-ignore
+          type: feedback,
+        },
+      })
+    }
 
     return { data: feedback, status: 201 }
   } catch (e) {
