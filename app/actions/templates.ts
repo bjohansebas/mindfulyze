@@ -1,7 +1,7 @@
 'use server'
 
 import { Template } from '@/@types/template'
-import { getTemplatesByUser } from '@/lib/api/utils'
+import { getTemplatesByDefault, getTemplatesByUser } from '@/lib/api/utils'
 import { authOptions } from '@/lib/auth'
 import { SUPABASE_BUCKET_TEMPLATES } from '@/lib/constants/supabase'
 import prisma from '@/lib/prisma'
@@ -48,6 +48,35 @@ export async function getTemplates(): Promise<TemplateResponse> {
     return { data: template, status: 200 }
   } catch (e) {
     return { message: 'Not found templates', status: 404, data: [] }
+  }
+}
+
+export async function getTemplateDefault() {
+  const session = await getServerSession(authOptions)
+
+  if (!session?.user.id || !session.user.pw) {
+    return { message: 'You must be logged in.', status: 401, data: null }
+  }
+
+  try {
+    const response = await getTemplatesByDefault({
+      userId: session.user.id,
+    })
+
+    if (response == null) {
+      return { message: 'Not found templates', status: 404, data: null }
+    }
+
+    const data = await downloadFile({
+      name: `${response.url}?bust=${dayjs(new Date()).valueOf()}`,
+      bucket: response.bucket,
+    })
+
+    const text = await data.data?.text()
+
+    return { data: { text: text || '', ...response }, status: 200 }
+  } catch (e) {
+    return { message: 'Not found templates', status: 404, data: null }
   }
 }
 

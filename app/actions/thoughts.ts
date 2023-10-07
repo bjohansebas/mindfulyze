@@ -84,26 +84,32 @@ export async function getThoughtByIdWithOutText(id: string) {
 }
 
 // Create new thought for user
-// TODO: Utilizar template id
-export async function createThought(data: z.infer<typeof ThoughtSchema>) {
+export async function createThought(idTemplate?: string) {
   const session = await getServerSession(authOptions)
 
   if (!session?.user || !session.user.pw) {
     return { message: 'You must be logged in.', status: 401, data: null }
   }
 
-  const result = validateThought({
-    created: new Date(data.created),
-    textWithFormat: data.textWithFormat,
-  })
+  let textForThought = ''
 
-  if (!result.success) {
-    return { message: result.error.message, status: 422 }
+  if (idTemplate == null) {
+    const template = await getTemplateDefault()
+
+    if (template != null) {
+      textForThought = template.data?.text || ''
+    }
+  } else {
+    const template = await getTemplateById(idTemplate)
+
+    if (template != null) {
+      textForThought = template.data?.text || ''
+    }
   }
 
   try {
     const password = decryptData({ key: NEXT_SECRET, data: session.user.pw })
-    const textEncrypt = encryptData({ key: password, data: data.textWithFormat })
+    const textEncrypt = encryptData({ key: password, data: textForThought })
 
     const uid = createId()
     const file = await createFile({ name: `${uid}.html`, text: textEncrypt, bucket: SUPABASE_BUCKET_THOUGHTS })
@@ -124,38 +130,6 @@ export async function createThought(data: z.infer<typeof ThoughtSchema>) {
     revalidatePath('/home')
 
     return { data: response, status: 201 }
-  } catch (e) {
-    return { message: "The thought couldn't be created, try again anew.", status: 400, data: null }
-  }
-}
-
-// Create new thought for user
-export async function createThoughtByTemplateId(id: string) {
-  const session = await getServerSession(authOptions)
-
-  if (!session?.user || !session.user.pw) {
-    return { message: 'You must be logged in.', status: 401, data: null }
-  }
-
-  if (id.trim() === '') {
-    return { message: 'Id is empty', status: 404 }
-  }
-
-  try {
-    const template = await getTemplateById(id)
-    if (template.status !== 200 || template.data == null) {
-      return { message: template.message, status: template.status }
-    }
-
-    const thought = await createThought(template.data.text)
-
-    if (thought.status !== 201 || thought.data == null) {
-      return { message: thought.message, status: thought.status }
-    }
-
-    revalidatePath('/home')
-
-    return { data: thought.data, status: 201 }
   } catch (e) {
     return { message: "The thought couldn't be created, try again anew.", status: 400, data: null }
   }

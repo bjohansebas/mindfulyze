@@ -6,4 +6,6 @@ export interface Template {
   createdAt: Date
   updatedAt: Date
   userId: string
+  url?: string
+  bucket?: string
 }

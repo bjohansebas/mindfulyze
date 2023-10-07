@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 
-import { createThoughtByTemplateId } from '@/app/actions/thoughts'
+import { createThought } from '@/app/actions/thoughts'
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 import { OptionsCardTemplate } from './options-card-template'
@@ -23,7 +23,7 @@ export function CardTemplate({ title, id }: CardTemplateProps) {
         onClick={async () => {
           toast.message('The thought is being created.')
 
-          const response = await createThoughtByTemplateId(id)
+          const response = await createThought(id)
           if (response.status === 201 && response.data != null) {
             router.push('/home')
             toast.success('Thought was created.')

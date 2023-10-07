@@ -4,25 +4,18 @@ import { Template } from '@/@types/template'
 import { createThought } from '@/app/actions/thoughts'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { ThoughtSchema } from '@/schemas/thought'
 import MenuTemplate from '../templates/menu-template'
 
 import { PencilIcon } from '@heroicons/react/24/solid'
 import { usePathname, useRouter } from 'next/navigation'
 import { Dispatch, SetStateAction } from 'react'
 import { toast } from 'sonner'
-import { z } from 'zod'
 
 export async function handleCreateThought(templateSelect?: Template) {
-  const data: z.infer<typeof ThoughtSchema> = {
-    created: new Date(),
-    textWithFormat: templateSelect?.text || '',
-  }
-
   try {
     toast.message('The thought is being created.')
 
-    const response = await createThought(data)
+    const response = await createThought(templateSelect?.id)
 
     if (response.status === 201) {
       toast.success('Thought was created.')

@@ -13,7 +13,8 @@ import { ChevronDownIcon } from '@heroicons/react/24/solid'
 
 import { Template } from '@/@types/template'
 import { createTemplate } from '@/app/actions/templates'
-import { createThoughtByTemplateId } from '@/app/actions/thoughts'
+import { createThought } from '@/app/actions/thoughts'
+
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'sonner'
@@ -29,7 +30,7 @@ export function MenuTemplate({ templates }: { templates: Template[] }) {
 
     toast.message('The thought is being created.')
 
-    const response = await createThoughtByTemplateId(id)
+    const response = await createThought(id)
     if (response.status === 201 && response.data != null) {
       router.push('/home')
       toast.success('Thought was created.')

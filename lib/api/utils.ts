@@ -33,3 +33,16 @@ export async function getTemplatesByUser({
     },
   })
 }
+
+export async function getTemplatesByDefault({
+  userId,
+}: {
+  userId: string
+}): Promise<TemplateProps | null> {
+  return await prisma.template.findFirst({
+    where: {
+      userId,
+      default: true,
+    },
+  })
+}
