@@ -29,7 +29,7 @@ export async function addSentimentToThoughts(id: string, message: string) {
         Authorization: `Bearer ${process.env.COHERE_API_KEY}`,
       },
       body: JSON.stringify({
-        model: 'large',
+        model: 'embed-multilingual-v2.0',
         inputs: [message],
         examples,
       }),
