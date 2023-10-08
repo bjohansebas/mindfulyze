@@ -5,6 +5,7 @@ const nextConfig = {
   experimental: {
     useDeploymentId: true,
     serverActions: true,
+    serverActionsBodySizeLimit: '3mb',
     useDeploymentIdServerActions: true,
   },
   images: {
