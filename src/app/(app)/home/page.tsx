@@ -1,5 +1,5 @@
-import { ListOfThoughts } from '@/components/ui/dashboard/thoughts/list-of-thoughts'
-import ThoughtsPlaceholder from '@/components/ui/dashboard/thoughts/placeholder-thoughts'
+import { ListOfThoughts } from '@/components/dashboard/thoughts/list-of-thoughts'
+import ThoughtsPlaceholder from '@/components/dashboard/thoughts/placeholder-thoughts'
 import { getThoughts } from '@/lib/api/thoughts'
 
 import { Suspense } from 'react'

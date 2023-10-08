@@ -5,8 +5,8 @@ import Link from 'next/link'
 import { ReactNode, useEffect, useRef } from 'react'
 
 import dynamic from 'next/dynamic'
-import { Button } from '../button'
-import { Skeleton } from '../skeleton'
+import { Button } from '../ui/button'
+import { Skeleton } from '../ui/skeleton'
 import { navItems } from './nav'
 
 const ButtonNavMobile = dynamic(() => import('./button-nav-mobile'), {

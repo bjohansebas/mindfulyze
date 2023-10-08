@@ -1,4 +1,4 @@
-import Background from '@/components/ui/background'
+import Background from '@/components/background'
 
 export default function AuthLayout({
   children,

@@ -1,6 +1,6 @@
+import Author from '@/components/content/author'
+import { MDX } from '@/components/content/mdx'
 import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
-import Author from '@/components/ui/content/author'
-import { MDX } from '@/components/ui/content/mdx'
 import { BLOG_CATEGORIES } from '@/lib/constants'
 import { constructMetadata } from '@/lib/metadata'
 import { formatDate } from '@/lib/utils'

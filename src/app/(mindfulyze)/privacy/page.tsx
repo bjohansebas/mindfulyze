@@ -1,7 +1,7 @@
 import { allLegalPosts } from 'contentlayer/generated'
 import { Metadata } from 'next'
 
-import LegalPage from '@/components/ui/content/legal'
+import LegalPage from '@/components/content/legal'
 import { constructMetadata } from '@/lib/metadata'
 
 export const metadata: Metadata = constructMetadata({

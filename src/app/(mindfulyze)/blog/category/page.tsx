@@ -1,4 +1,4 @@
-import BlogCard from '@/components/ui/content/blog-card'
+import BlogCard from '@/components/content/blog-card'
 import { BLOG_CATEGORIES } from '@/lib/constants'
 import { constructMetadata } from '@/lib/metadata'
 import { allBlogPosts } from 'contentlayer/generated'

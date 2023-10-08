@@ -1,7 +1,7 @@
+import { MDX } from '@/components/content/mdx'
 import { Twitter } from '@/components/shared/icons'
 import Facebook from '@/components/shared/icons/facebook'
 import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
-import { MDX } from '@/components/ui/content/mdx'
 import { HOME_DOMAIN } from '@/lib/constants'
 import { constructMetadata } from '@/lib/metadata'
 import { formatDate } from '@/lib/utils'

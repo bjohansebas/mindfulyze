@@ -1,6 +1,6 @@
-import Footer from '@/components/ui/home/footer'
-import Nav from '@/components/ui/home/nav'
-import MobileNav from '@/components/ui/home/nav-mobile'
+import Footer from '@/components/home/footer'
+import Nav from '@/components/home/nav'
+import MobileNav from '@/components/home/nav-mobile'
 
 export default function MindfulyzeLayout({
   children,

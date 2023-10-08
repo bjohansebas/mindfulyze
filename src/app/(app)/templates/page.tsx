@@ -1,7 +1,7 @@
 import { getTemplates } from '@/app/actions/templates'
-import { HeaderTemplate } from '@/components/ui/dashboard/templates/header'
-import { ListOfTemplates } from '@/components/ui/dashboard/templates/list-of-templates'
-import TemplatesPlaceholder from '@/components/ui/dashboard/templates/placeholder-templates'
+import { HeaderTemplate } from '@/components/dashboard/templates/header'
+import { ListOfTemplates } from '@/components/dashboard/templates/list-of-templates'
+import TemplatesPlaceholder from '@/components/dashboard/templates/placeholder-templates'
 
 import { Suspense } from 'react'
 

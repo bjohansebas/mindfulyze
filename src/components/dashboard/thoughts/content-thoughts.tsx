@@ -1,6 +1,9 @@
 'use client'
 
 import { deleteThought, updateThought } from '@/app/actions/thoughts'
+import Editor from '@/components/editor'
+import { TiptapExtensions } from '@/components/editor/extensions'
+import { TiptapEditorProps } from '@/components/editor/props'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,9 +18,6 @@ import {
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import Editor from '@/components/ui/editor'
-import { TiptapExtensions } from '@/components/ui/editor/extensions'
-import { TiptapEditorProps } from '@/components/ui/editor/props'
 import { ThoughtSchema } from '@/schemas/thought'
 
 import { TrashIcon } from '@heroicons/react/24/solid'

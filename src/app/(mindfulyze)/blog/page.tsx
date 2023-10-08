@@ -1,6 +1,6 @@
+import BlogCard from '@/components/content/blog-card'
+import BlogLayoutHero from '@/components/content/blog-layout-hero'
 import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
-import BlogCard from '@/components/ui/content/blog-card'
-import BlogLayoutHero from '@/components/ui/content/blog-layout-hero'
 import { constructMetadata } from '@/lib/metadata'
 import { allBlogPosts } from 'contentlayer/generated'
 

@@ -3,13 +3,14 @@
 import { toast } from 'sonner'
 import * as z from 'zod'
 
-import { TiptapExtensions } from '@/components/ui/editor/extensions'
-import { TiptapEditorProps } from '@/components/ui/editor/props'
+import { TiptapExtensions } from '@/components/editor/extensions'
+import { TiptapEditorProps } from '@/components/editor/props'
 import { useEditor } from '@tiptap/react'
 import { useState } from 'react'
 
 import { Template } from '@/@types/template'
 import { deleteTemplate, updateTemplate } from '@/app/actions/templates'
+import Editor from '@/components/editor'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,7 +23,6 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
-import Editor from '@/components/ui/editor'
 import { Input } from '@/components/ui/input'
 import { TemplateSchema } from '@/schemas/template'
 import { TrashIcon } from '@heroicons/react/24/solid'

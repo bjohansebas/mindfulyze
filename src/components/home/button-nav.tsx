@@ -2,7 +2,7 @@
 
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
-import { Button } from '../button'
+import { Button } from '../ui/button'
 
 export function ButtonNav() {
   const { status } = useSession()
