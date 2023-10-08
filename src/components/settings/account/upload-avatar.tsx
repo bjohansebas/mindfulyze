@@ -65,7 +65,7 @@ export default function UploadAvatar() {
           toast.error('Something went wrong')
         }
       }}
-      className="space-y-8"
+      className="space-y-8 md:w-72"
     >
       <div className="space-y-2">
         <p className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
