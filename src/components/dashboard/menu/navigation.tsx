@@ -22,7 +22,7 @@ const UserDropdown = dynamic(() => import('./user-dropdown'), {
 
 export default function NavigationApp({ templates }: { templates: Template[] }) {
   return (
-    <aside className="h-screen max-h-screen w-full sm:max-w-[300px] bg-background p-4 border-b sm:border-b-0">
+    <aside className="h-screen max-h-screen w-full sm:max-w-[300px] bg-card p-4 border-b sm:border-b-0">
       <div className="flex justify-between items-center">
         <Link href="/home">
           <Logo className="text-primary-600 w-7 h-7 sm:hidden" />
