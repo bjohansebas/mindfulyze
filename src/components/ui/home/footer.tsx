@@ -1,4 +1,4 @@
-import { Twitter } from '@/components/shared/icons/'
+import { Twitter } from '@/components/shared/icons'
 import LogoType from '@/components/shared/icons/logotype'
 import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
 import Link from 'next/link'

@@ -11,10 +11,10 @@
     "baseUrl": ".",
     "paths": {
       "@/*": [
-        "./*",
+        "src/*",
       ],
       "@/ui": [
-        "./components/ui",
+        "src/components/ui",
       ],
       "contentlayer/generated": [
         "./.contentlayer/generated"
@@ -39,7 +39,7 @@
     ]
   },
   "include": [
-    "next-env.d.ts",
+    "src/@types/next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
