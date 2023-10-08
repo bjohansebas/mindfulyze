@@ -36,33 +36,6 @@ export const authOptions: AuthOptions = {
     },
   },
   callbacks: {
-    signIn: async ({ user, account, profile }) => {
-      if (!user.email) {
-        return false
-      }
-
-      if (account?.provider === 'google') {
-        const userExists = await prisma.user.findUnique({
-          where: { email: user.email },
-          select: { name: true },
-        })
-
-        // if the user already exists via email,
-        // update the user with their name and image from Google
-        if (userExists && !userExists.name) {
-          await prisma.user.update({
-            where: { email: user.email },
-            data: {
-              name: profile?.name,
-              // @ts-ignore - this is a bug in the types, `picture` is a valid on the `Profile` type
-              image: profile?.picture,
-            },
-          })
-        }
-      }
-
-      return true
-    },
     jwt: async ({ token, user, trigger, session }) => {
       if (!token.email) {
         return {}
@@ -85,10 +58,12 @@ export const authOptions: AuthOptions = {
           where: { id: token.sub },
         })
 
-        token.user = refreshedUser
-        token.name = refreshedUser?.name
-        token.email = refreshedUser?.email
-        token.image = refreshedUser?.image
+        if (refreshedUser) {
+          token.user = refreshedUser
+          token.name = refreshedUser.name
+          token.email = refreshedUser.email
+          token.image = refreshedUser.image
+        }
       }
 
       return token
@@ -100,6 +75,8 @@ export const authOptions: AuthOptions = {
         // @ts-ignore
         pw: token.pw || null,
         ...session.user,
+        // @ts-ignore
+        image: token?.image || token.picture,
       }
       return session
     },
