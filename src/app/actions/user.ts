@@ -7,8 +7,17 @@ import bcrypt from 'bcrypt'
 import cloudinary from 'cloudinary'
 import z from 'zod'
 
-import { EmailFormSchema, NameFormSchema, validateEmail, validateName } from '@/schemas/user'
+import {
+  DeleteAccountSchemaForm,
+  EmailFormSchema,
+  NameFormSchema,
+  validateDeleteAccount,
+  validateEmail,
+  validateName,
+} from '@/schemas/user'
 import { getServerSession } from 'next-auth'
+import { deleteAllTemplates } from './templates'
+import { deleteAllThoughts } from './thoughts'
 
 export async function getUser() {
   const session = await getServerSession(authOptions)
@@ -143,5 +152,43 @@ export async function updateImage(data: string | undefined | null) {
     return { data: secure_url }
   } catch (e) {
     return { data: null }
+  }
+}
+
+export async function deleteAccount(data: z.infer<typeof DeleteAccountSchemaForm>) {
+  const session = await getServerSession(authOptions)
+
+  if (!session?.user) {
+    return { data: false }
+  }
+
+  const result = validateDeleteAccount(data)
+
+  if (!result.success) {
+    return false
+  }
+
+  try {
+    const isMatch = await verifyPassword({ password: data.password })
+
+    if (!isMatch) return false
+
+    await Promise.allSettled([
+      deleteAllThoughts(),
+      deleteAllTemplates(),
+      cloudinary.v2.uploader.destroy(`avatars/${session?.user?.id}`, {
+        invalidate: true,
+      }),
+    ])
+
+    await prisma.user.delete({
+      where: {
+        id: session.user.id,
+      },
+    })
+
+    return { data: true }
+  } catch (e) {
+    return { data: false }
   }
 }

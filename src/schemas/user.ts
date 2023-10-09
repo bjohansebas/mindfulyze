@@ -1,3 +1,4 @@
+import { CONFIRM_MESSAGE } from '@/lib/constants'
 import z from 'zod'
 
 export const NameFormSchema = z.object({
@@ -29,4 +30,18 @@ export const AvatarFormSchema = z.object({
 
 export function validateAvatar(input: z.infer<typeof AvatarFormSchema>) {
   return AvatarFormSchema.safeParse(input)
+}
+
+export const DeleteAccountSchemaForm = z
+  .object({
+    password: z.string(),
+    confirm_text: z.string(),
+  })
+  .refine((data) => data.confirm_text === CONFIRM_MESSAGE, {
+    message: `The text you entered did not match "${CONFIRM_MESSAGE}".`,
+    path: ['confirm_text'],
+  })
+
+export function validateDeleteAccount(input: z.infer<typeof DeleteAccountSchemaForm>) {
+  return DeleteAccountSchemaForm.safeParse(input)
 }

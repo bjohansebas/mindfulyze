@@ -349,3 +349,36 @@ export async function deleteTemplate(id: string, page?: string) {
     return { message: "The template couldn't be set as default, please try again.", status: 400, data: false }
   }
 }
+
+// Create new thought for user
+export async function deleteAllTemplates() {
+  const session = await getServerSession(authOptions)
+
+  if (!session?.user || !session.user.pw) {
+    return { message: 'You must be logged in.', status: 401, data: false }
+  }
+
+  try {
+    const templates = await prisma.template.findMany({ where: { userId: session.user.id } })
+
+    if (templates.length === 0) {
+      return { message: "The templates couldn't be deleted, try again anew.", status: 400, data: false }
+    }
+
+    await Promise.allSettled(
+      templates.map(async ({ url, bucket }) => {
+        await deleteFile({ name: url, bucket })
+      }),
+    )
+
+    await prisma.template.deleteMany({
+      where: {
+        userId: session.user.id,
+      },
+    })
+
+    return { data: true, status: 201 }
+  } catch (e) {
+    return { message: "The templates couldn't be deleted, try again anew.", status: 400, data: false }
+  }
+}

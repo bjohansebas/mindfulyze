@@ -8,14 +8,13 @@ import { decryptData, encryptData } from '@/lib/encrypt'
 import prisma from '@/lib/prisma'
 import { createFile, deleteFile, downloadFile, updateFile } from '@/lib/supabase'
 import { createId, parseDate } from '@/lib/utils'
-import { ThoughtSchema, validateThought } from '@/schemas/thought'
+import { ThoughtSchema } from '@/schemas/thought'
 import { validatePartialThought } from '@/schemas/thought'
 import { getTemplateById, getTemplateDefault } from './templates'
 
 import { getServerSession } from 'next-auth'
 import { revalidatePath } from 'next/cache'
 
-import { getTemplatesByDefault } from '@/lib/api/utils'
 import dayjs from 'dayjs'
 import * as z from 'zod'
 
@@ -224,5 +223,38 @@ export async function deleteThought(id: string) {
     return { data: true, status: 201 }
   } catch (e) {
     return { message: "The thought couldn't be deleted, try again anew.", status: 400, data: false }
+  }
+}
+
+// Create new thought for user
+export async function deleteAllThoughts() {
+  const session = await getServerSession(authOptions)
+
+  if (!session?.user || !session.user.pw) {
+    return { message: 'You must be logged in.', status: 401, data: false }
+  }
+
+  try {
+    const thoughts = await prisma.thought.findMany({ where: { userId: session.user.id } })
+
+    if (thoughts.length === 0) {
+      return { message: "The thoughts couldn't be deleted, try again anew.", status: 400, data: false }
+    }
+
+    await Promise.allSettled(
+      thoughts.map(async ({ url, bucket }) => {
+        await deleteFile({ name: url, bucket })
+      }),
+    )
+
+    await prisma.thought.deleteMany({
+      where: {
+        userId: session.user.id,
+      },
+    })
+
+    return { data: true, status: 201 }
+  } catch (e) {
+    return { message: "The thoughts couldn't be deleted, try again anew.", status: 400, data: false }
   }
 }
