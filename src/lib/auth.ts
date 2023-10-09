@@ -3,6 +3,7 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter'
 
 import { AuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
+import { createUserSubscriptionFree, getUserSubscriptionHandler } from './api/subscriptions'
 
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL
 
@@ -78,7 +79,24 @@ export const authOptions: AuthOptions = {
         // @ts-ignore
         image: token?.image || token.picture,
       }
+
+      const subscriptionPlan = await getUserSubscriptionHandler(session.user.id)
+      session.user.subscriptionPlan = subscriptionPlan || null
+
       return session
+    },
+  },
+  /**
+   * Events allow Next-Auth to do some custom action after certain user actions like creating a new account or signing in,
+   * without blocking the auth flow. Read more about the event system.
+   * Next-Auth will call this function after a new user account is registered.
+   * @see https://dev.to/ajones_codes/how-to-add-user-accounts-and-paid-subscriptions-to-your-nextjs-website-585e
+   * @see https://next-auth.js.org/configuration/events
+   */
+  events: {
+    createUser: async ({ user }) => {
+      // Connect user with the subscription free plan
+      await createUserSubscriptionFree(user)
     },
   },
 }
