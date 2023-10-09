@@ -4,9 +4,11 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { stringAvatar } from '@/lib/utils'
-import { ArrowLeftOnRectangleIcon as Logout } from '@heroicons/react/24/solid'
+import { ArrowLeftOnRectangleIcon as Logout, Cog6ToothIcon } from '@heroicons/react/24/solid'
+import { PenLineIcon } from 'lucide-react'
 
 import { signOut, useSession } from 'next-auth/react'
+import Link from 'next/link'
 
 export default function UserDropdown() {
   const { data: session } = useSession()
@@ -23,40 +25,35 @@ export default function UserDropdown() {
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto drop-shadow-lg p-0" align="center">
-        <div className="flex w-full flex-col gap-3 rounded-md p-3">
+        <div className="flex w-full flex-col space-y-px rounded-md p-3 sm:w-56">
           <div className="p-2">
             {session?.user?.name && <p className="truncate font-bold">{session?.user?.name}</p>}
             <p className="truncate text-sm">{session?.user?.email}</p>
           </div>
-          {/* <button
-              className="w-full rounded-md p-2 text-sm transition-all duration-75 hover:bg-gray-100 active:bg-gray-200"
-              onClick={() => {
-                setShowCMDK(true)
-                setOpenPopover(false)
-              }}
-            > 
-              <IconMenu text="Help Center" icon={<HelpCircle className="h-4 w-4" />} />
-            </button> */}
-          {/* <Link
-              href="/settings"
-              className="block w-full rounded-md p-2 text-sm transition-all duration-75 hover:bg-gray-100 active:bg-gray-200"
-            >
-              <IconMenu text="Settings" icon={<Settings className="h-4 w-4" />} />
-            </Link> */}
-          <div className="flex w-full flex-col gap-2">
-            <Button
-              className="w-full rounded-md text-sm justify-start text-red-500"
-              onClick={() => {
-                signOut({
-                  callbackUrl: '/login',
-                })
-              }}
-              variant="outline"
-            >
-              <Logout className="h-4 w-4 mr-2" />
-              Logout
-            </Button>
-          </div>
+          <Button variant="ghost" asChild className="justify-start w-[auto] flex">
+            <Link href="/settings">
+              <Cog6ToothIcon className="w-4 h-4 mr-2" />
+              Settings
+            </Link>
+          </Button>
+          <Button variant="ghost" asChild className="justify-start w-[auto] flex">
+            <Link href="/changelog" target="_blank">
+              <PenLineIcon className="w-4 h-4 mr-2" />
+              Changelog
+            </Link>
+          </Button>
+          <Button
+            onClick={() => {
+              signOut({
+                callbackUrl: '/login',
+              })
+            }}
+            variant="ghost"
+            className='justify-start w-[auto] flex"'
+          >
+            <Logout className="h-4 w-4 mr-2" />
+            Logout
+          </Button>
         </div>
       </PopoverContent>
     </Popover>
