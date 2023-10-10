@@ -1,12 +1,14 @@
 'use server'
 
-import { authOptions } from '@/lib/auth'
-import prisma from '@/lib/prisma'
-import { SetPasswordSchema } from '@/schemas/password'
 import bcrypt from 'bcrypt'
 import cloudinary from 'cloudinary'
+import { getServerSession } from 'next-auth'
 import z from 'zod'
 
+import { authOptions } from '@/lib/auth'
+import { USER_NOT_FOUND_ERROR } from '@/lib/constants/errors'
+import prisma from '@/lib/prisma'
+import { SetPasswordSchema } from '@/schemas/password'
 import {
   DeleteAccountSchemaForm,
   EmailFormSchema,
@@ -15,7 +17,6 @@ import {
   validateEmail,
   validateName,
 } from '@/schemas/user'
-import { getServerSession } from 'next-auth'
 import { deleteAllTemplates } from './templates'
 import { deleteAllThoughts } from './thoughts'
 
@@ -35,7 +36,7 @@ export async function getUser() {
 
     return { data: response, status: 200 }
   } catch (e) {
-    return { message: "The user couldn't be found, try again.", status: 400, data: null }
+    return { message: USER_NOT_FOUND_ERROR, status: 400, data: null }
   }
 }
 

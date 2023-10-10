@@ -1,9 +1,10 @@
 import prisma from '@/lib/prisma'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 
+import { getUserSubscription } from '@/app/actions/subscriptions'
 import { AuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
-import { createUserSubscriptionFree, getUserSubscriptionHandler } from './api/subscriptions'
+import { createUserSubscriptionFree } from './api/subscriptions'
 
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL
 
@@ -80,7 +81,7 @@ export const authOptions: AuthOptions = {
         image: token?.image || token.picture,
       }
 
-      const subscriptionPlan = await getUserSubscriptionHandler(session.user.id)
+      const subscriptionPlan = await getUserSubscription(session.user.id)
       session.user.subscriptionPlan = subscriptionPlan || null
 
       return session

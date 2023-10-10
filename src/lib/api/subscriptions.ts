@@ -16,61 +16,6 @@ export const getSubscriptionByUserId = async ({ userId }: { userId: string }) =>
     },
   })
 
-export const createUserSubscription = async ({
-  userId,
-  subscriptionPlanId,
-  frequency,
-  startsAt,
-  endsAt,
-  renewsAt,
-}: AddUserSubscriptionType) => {
-  try {
-    // Check if user exist
-    const user = await getUserById({ id: userId })
-
-    if (!user) {
-      const message = 'user not found'
-      return {
-        status: 400,
-        message,
-      }
-    }
-
-    // Check if user already has a subscription
-    if (user.Subscription !== null) {
-      const message = 'user already has a subscription'
-      return {
-        status: 400,
-        message,
-      }
-    }
-
-    // Add subscription
-    const subscription = await prisma.subscription.create({
-      data: {
-        userId,
-        subscriptionPlanId,
-        frequency,
-        startsAt,
-        endsAt,
-        renewsAt,
-      },
-    })
-
-    return {
-      status: 201,
-      data: {
-        subscription,
-      },
-    }
-  } catch (e) {
-    return {
-      status: 400,
-      message: '',
-    }
-  }
-}
-
 export const createUserSubscriptionFree = async (user: User) => {
   try {
     // Connect user with the subscription free plan
