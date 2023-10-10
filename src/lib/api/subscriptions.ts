@@ -5,44 +5,16 @@ import { SubscriptionPlanSlug } from '@prisma/client'
 import { User } from 'next-auth'
 import { getUserById } from './utils'
 
-export const getUserSubscription = async ({ userId }: { userId: string }) =>
+export const getSubscriptionByUserId = async ({ userId }: { userId: string }) =>
   await prisma.subscription.findFirst({
     where: {
       userId: userId,
     },
     select: {
+      isActive: true,
       subscriptionPlan: true,
     },
   })
-
-// get user subscription plan
-export const getUserSubscriptionHandler = async (userId: string) => {
-  try {
-    const subscription = await prisma.subscription.findFirst({
-      where: {
-        userId,
-      },
-    })
-
-    // check if user has a subscription
-    if (!subscription) return null
-
-    // get subscription plan
-    const subscriptionPlan = await prisma.subscriptionPlan.findFirst({
-      where: {
-        id: subscription.subscriptionPlanId,
-      },
-    })
-
-    // check if subscription plan exists
-    if (!subscriptionPlan) return null
-
-    return subscriptionPlan.slug
-  } catch (error) {
-    console.log(error)
-    return null
-  }
-}
 
 export const createUserSubscription = async ({
   userId,
