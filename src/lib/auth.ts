@@ -1,10 +1,9 @@
 import prisma from '@/lib/prisma'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 
-import { getUserSubscription } from '@/app/actions/subscriptions'
+import { createUserSubscriptionFree, getUserSubscription } from '@/app/actions/subscriptions'
 import { AuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
-import { createUserSubscriptionFree } from './api/subscriptions'
 
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL
 

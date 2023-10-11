@@ -1,8 +1,8 @@
 import { LemonSqueezyVariant } from '@/@types/lemon-squeezy'
+import { createUserSubscription, deleteUserSubscription } from '@/app/actions/subscriptions'
 import prisma from '@/lib/prisma'
 import { SubscriptionCreatedInputType } from '@/schemas/lemonsqueezy'
-import { z } from 'zod'
-import { createUserSubscription, deleteUserSubscriptionHandler } from './subscriptions'
+import { OK_CODE } from '../constants/status-code'
 import { getSubscriptionPlanByProductId } from './subscriptionsPlan'
 
 export const subscriptionCreatedHandler = async ({
@@ -64,15 +64,14 @@ export const subscriptionCreatedHandler = async ({
 
     // Delete subscription if exists
     if (subscription) {
-      const response = await deleteUserSubscriptionHandler({
+      const response = await deleteUserSubscription({
         userId: user.id,
       })
 
-      if (response?.status !== 201) {
-        const message = 'api:payment.subscriptionCreated.error.deleteSubscription'
+      if (response?.status !== OK_CODE) {
         return {
           status: 500,
-          message,
+          message: response.message,
           data: null,
         }
       }
