@@ -2,7 +2,15 @@ import { LemonSqueezyVariant } from '@/@types/lemon-squeezy'
 import { createUserSubscription, deleteUserSubscription } from '@/app/actions/subscriptions'
 import prisma from '@/lib/prisma'
 import { SubscriptionCreatedInputType } from '@/schemas/lemonsqueezy'
-import { OK_CODE } from '../constants/status-code'
+import {
+  SUBSCRIPTION_CREATED_ERROR,
+  SUBSCRIPTION_DELETED_ERROR,
+  SUBSCRIPTION_NOT_FOUND_ERROR,
+  UNKNOWN_ERROR,
+  USER_NOT_FOUND_ERROR,
+  VARIANT_NOT_FOUND_ERROR,
+} from '../constants/errors'
+import { CREATED_CODE, INTERNAL_SERVER_ERROR_CODE, NOT_FOUND_CODE, OK_CODE } from '../constants/status-code'
 import { getSubscriptionPlanByProductId } from './subscriptionsPlan'
 
 export const subscriptionCreatedHandler = async ({
@@ -19,10 +27,9 @@ export const subscriptionCreatedHandler = async ({
       },
     })
     if (!user) {
-      const message = 'user not found'
       return {
-        status: 404,
-        message,
+        status: NOT_FOUND_CODE,
+        message: USER_NOT_FOUND_ERROR,
         data: null,
       }
     }
@@ -34,10 +41,9 @@ export const subscriptionCreatedHandler = async ({
       productId,
     })
     if (!subscriptionPlan) {
-      const message = 'subscription plan not found'
       return {
-        status: 404,
-        message,
+        status: NOT_FOUND_CODE,
+        message: SUBSCRIPTION_NOT_FOUND_ERROR,
         data: null,
       }
     }
@@ -46,11 +52,11 @@ export const subscriptionCreatedHandler = async ({
     const variant = await getVariantByIdHandler({
       variantId,
     })
+
     if (!variant) {
-      const message = 'variant Not Found'
       return {
-        status: 404,
-        message,
+        status: NOT_FOUND_CODE,
+        message: VARIANT_NOT_FOUND_ERROR,
         data: null,
       }
     }
@@ -70,8 +76,8 @@ export const subscriptionCreatedHandler = async ({
 
       if (response?.status !== OK_CODE) {
         return {
-          status: 500,
-          message: response.message,
+          status: INTERNAL_SERVER_ERROR_CODE,
+          message: response.message || SUBSCRIPTION_DELETED_ERROR,
           data: null,
         }
       }
@@ -89,35 +95,36 @@ export const subscriptionCreatedHandler = async ({
 
     // Check if subscription was added
     if (!newSubscription.data) {
-      const message = 'api:payment.subscriptionCreated.error.addSubscription'
       return {
-        status: 400,
-        message,
+        status: INTERNAL_SERVER_ERROR_CODE,
+        message: SUBSCRIPTION_CREATED_ERROR,
         data: null,
       }
     }
 
     return {
-      status: 201,
-      data: {
-        subscription: newSubscription,
-      },
-      message: '',
+      status: CREATED_CODE,
+      data: newSubscription,
     }
   } catch (error: unknown) {
     console.error('subscriptionCreatedHandler.error: ', error)
 
-    const message = 'api:payment.subscriptionCreated.error.invalidInput'
-
     return {
-      status: 400,
-      message,
+      status: INTERNAL_SERVER_ERROR_CODE,
+      message: UNKNOWN_ERROR,
       data: null,
     }
   }
 }
 
-export const getVariantByIdHandler = async ({ variantId }: { variantId: string }) => {
+/**
+ * Retrieves a variant of subscription by its ID from Lemon Squeezy API.
+ * @param variantId - The ID of the variant to retrieve.
+ * @returns The variant object retrieved from the API.
+ */
+export const getVariantByIdHandler = async ({
+  variantId,
+}: { variantId: string }): Promise<LemonSqueezyVariant | null> => {
   try {
     const headers = new Headers()
     headers.append('Content-Type', 'application/json')
