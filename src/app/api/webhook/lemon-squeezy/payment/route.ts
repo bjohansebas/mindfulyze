@@ -1,6 +1,7 @@
 import { LemonSqueezyResponse } from '@/@types/lemon-squeezy'
-
 import { subscriptionCreatedHandler } from '@/lib/api/lemon-squeezy'
+import { BAD_REQUEST_CODE, UNAUTHORIZED_CODE } from '@/lib/constants/status-code'
+import { verifySignature } from '@/lib/lemon-squeezy'
 
 /* To invoke:
 
@@ -13,7 +14,13 @@ PRD Endpoint: https://mindfulyze.com/api/webhooks/lemon-squeezy/payment
 
 export async function POST(req: Request) {
   try {
-    const { data } = (await req.json()) as LemonSqueezyResponse
+    const { body, data: isValidSignature } = await verifySignature({ request: req })
+
+    if (!isValidSignature) return Response.json({}, { status: UNAUTHORIZED_CODE })
+
+    const { meta, data }: LemonSqueezyResponse = JSON.parse(body.toString())
+
+    if (meta.event_name !== 'subscription_created') return Response.json({}, { status: BAD_REQUEST_CODE })
 
     const response = await subscriptionCreatedHandler({
       productId: data.attributes.product_id.toString(),
@@ -23,10 +30,11 @@ export async function POST(req: Request) {
     })
 
     return Response.json({ data: response.data, message: response.message }, { status: response.status })
-  } catch (error: unknown) {
+  } catch (error) {
+    console.log(error)
     return Response.json(
       {
-        message: 'Error',
+        message: error.message || 'Error',
         data: null,
       },
       { status: 500 },
