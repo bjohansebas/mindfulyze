@@ -11,9 +11,9 @@ export function ButtonNav() {
     <>
       {status === 'authenticated' ? (
         <MenuItem key="Dashboard">
-          <Link href="/home" className="flex w-full font-semibold capitalize">
+          <a href="/home" className="flex w-full font-semibold capitalize">
             Dashboard
-          </Link>
+          </a>
         </MenuItem>
       ) : (
         <>

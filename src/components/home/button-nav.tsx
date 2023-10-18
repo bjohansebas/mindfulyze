@@ -11,7 +11,7 @@ export function ButtonNav() {
     <>
       {status === 'authenticated' ? (
         <Button asChild>
-          <Link href="/home">Dashboard</Link>
+          <a href="/home">Dashboard</a>
         </Button>
       ) : (
         <>
