@@ -1,3 +1,4 @@
+import Background from '@/components/background'
 import Footer from '@/components/home/footer'
 import Nav from '@/components/home/nav'
 import MobileNav from '@/components/home/nav-mobile'
@@ -13,6 +14,7 @@ export default function MindfulyzeLayout({
       <Nav />
       <main>{children}</main>
       <Footer />
+      <Background />
     </div>
   )
 }
