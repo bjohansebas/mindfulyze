@@ -1,15 +1,12 @@
 'use client'
 
 import { Feature } from '@/@types/pricing'
-import { nFormatter } from '@/lib/utils'
 import { SubscriptionPlan, SubscriptionPlanSlug } from '@prisma/client'
 import { CheckCircle, XCircle } from 'lucide-react'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import Confetti from 'react-dom-confetti'
-import MaxWidthWrapper from '../shared/max-width-wrapper'
 import { Badge } from '../ui/badge'
-import { Button } from '../ui/button'
 import { Switch } from '../ui/switch'
 
 export function CardsPricing({ pricingItems }: { pricingItems: SubscriptionPlan[] }) {
