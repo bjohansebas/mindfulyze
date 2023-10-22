@@ -53,18 +53,28 @@ export function CardsPricing({ pricingItems }: { pricingItems: SubscriptionPlan[
                 >
                   <header className="flex items-center justify-between">
                     <h3 className="text-center text-2xl font-bold">{name}</h3>
-                    {mostPopular ? (
-                      <Badge variant="outline" className="bg-primary-400/30">
-                        Popular
-                      </Badge>
-                    ) : null}
+                    <div className="space-x-2">
+                      {slug === session?.user.subscriptionPlan ||
+                      (session != null &&
+                        session.user.subscriptionPlan == null &&
+                        slug === SubscriptionPlanSlug.free) ? (
+                        <Badge variant="outline" className="bg-grenadier-400 border-grenadier-400">
+                          Your plan
+                        </Badge>
+                      ) : null}
+                      {mostPopular ? (
+                        <Badge variant="outline" className="bg-primary-400/30">
+                          Popular
+                        </Badge>
+                      ) : null}
+                    </div>
                   </header>
                   <div className="flex flex-col gap-3">
                     <p className="font-display text-4xl font-semibold">
                       ${period === 'yearly' ? priceYearly : priceMonthly}
                       <span className="text-lg text-gray-400">/{period === 'yearly' ? 'year' : 'month'}</span>
                     </p>
-                    <p className="text-gray-400 text-sm">{description}</p>
+                    <p className="text-gray-400 text-sm min-h-[60px]">{description}</p>
                   </div>
                   <ul className="space-y-5 px-4">
                     {features.map((value) => {

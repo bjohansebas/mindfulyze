@@ -1,7 +1,9 @@
 import { CardsPricing } from '@/components/pricing/cards-pricing'
+import { CardsPricingPlaceholder } from '@/components/pricing/cards-pricing-placeholder'
 import { HOME_DOMAIN } from '@/lib/constants'
 import { constructMetadata } from '@/lib/metadata'
 import { SubscriptionPlan } from '@prisma/client'
+import { Suspense } from 'react'
 
 export const metadata = constructMetadata({
   title: 'Pricing · Plans for every person – Mindfulyze',
@@ -38,7 +40,9 @@ export default async function Page() {
           Start for free, no credit card required.
         </h2>
       </header>
-      <CardsPricing pricingItems={plans} />
+      <Suspense fallback={<CardsPricingPlaceholder />}>
+        <CardsPricing pricingItems={plans} />
+      </Suspense>
     </>
   )
 }
