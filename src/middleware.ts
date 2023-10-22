@@ -16,10 +16,6 @@ export default async function middleware(req: NextRequest) {
     user?: User
   }
 
-  if (path === '/pricing') {
-    return NextResponse.redirect(new URL('/', req.url))
-  }
-
   // if there's no session and the path isn't /login or /register, redirect to /login
   if (!session?.email && PRIVATE_APP_ROUTES.has(key)) {
     return NextResponse.redirect(new URL(`/login${path !== '/' ? `?next=${encodeURIComponent(path)}` : ''}`, req.url))
