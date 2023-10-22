@@ -1,8 +1,10 @@
 import { init } from '@paralleldrive/cuid2'
+import { SubscriptionPlanSlug } from '@prisma/client'
 import { type ClassValue, clsx } from 'clsx'
 import dayjs from 'dayjs'
-import timezone from 'dayjs/plugin/timezone.js' // dependent on utc plugin
+import timezone from 'dayjs/plugin/timezone.js'
 import utc from 'dayjs/plugin/utc.js'
+import { Session } from 'next-auth'
 import { twMerge } from 'tailwind-merge'
 
 export function cn(...inputs: ClassValue[]) {
@@ -76,19 +78,6 @@ export const formatDate = (dateString: string) => {
   })
 }
 
-// export const getQueryString = (
-//   req: Request,
-//   opts?: Record<string, string>,
-// ) => {
-//   const { searchParams} = new URL(req.url)
-
-//   const queryString = new URLSearchParams({
-//     ...(searchParams as Record<string, string>),
-//     ...opts,
-//   }).toString();
-//   return `${queryString ? "?" : ""}${queryString}`;
-// };
-
 dayjs.extend(utc)
 dayjs.extend(timezone)
 
@@ -97,4 +86,28 @@ const tz = 'America/New_York'
 export const parseDate = (date: Date) => {
   const dayjsLocal = dayjs(date)
   return dayjsLocal.tz(tz).toString()
+}
+
+/**
+ * Parses the subscription plans and returns the URL for redirecting the user based on the conditions.
+ *
+ * @param session - The user session object or null.
+ * @param slug - The subscription plan slug.
+ * @param lemonSqueezyUrl - The URL for redirecting to the payment page.
+ * @returns A string representing the URL to redirect the user based on the conditions.
+ */
+export const parsePlans = (session: Session | null, slug: SubscriptionPlanSlug, lemonSqueezyUrl: string) => {
+  if (session == null && slug === SubscriptionPlanSlug.free) {
+    return '/home'
+  } else if (
+    (session == null && slug === SubscriptionPlanSlug.plus) ||
+    ((session?.user.subscriptionPlan === SubscriptionPlanSlug.free || session?.user.subscriptionPlan == null) &&
+      slug === SubscriptionPlanSlug.plus)
+  ) {
+    return `/redirect/payment?url=${lemonSqueezyUrl}`
+  } else if (session?.user.subscriptionPlan === SubscriptionPlanSlug.free && slug === SubscriptionPlanSlug.free) {
+    return '/home'
+  } else {
+    return '/home'
+  }
 }
