@@ -13,7 +13,11 @@ export const metadata = constructMetadata({
 
 async function getPlans() {
   try {
-    const res = await fetch(`${HOME_DOMAIN}/api/plans`)
+    const res = await fetch(`${HOME_DOMAIN}/api/plans`, {
+      next: {
+        revalidate: 60,
+      },
+    })
 
     if (!res.ok) {
       // This will activate the closest `error.js` Error Boundary
