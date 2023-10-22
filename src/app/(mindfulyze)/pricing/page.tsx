@@ -13,7 +13,7 @@ export const metadata = constructMetadata({
 
 async function getPlans() {
   try {
-    const res = await fetch(`${HOME_DOMAIN}/api/plans`, {
+    const res = await fetch('https://mindfulyze.com/api/plans', {
       next: {
         revalidate: 60,
       },
