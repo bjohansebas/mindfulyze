@@ -1,4 +1,3 @@
-import Chat from '@/components/home/landing/chat'
 import CTA from '@/components/home/landing/cta'
 import Hero from '@/components/home/landing/hero'
 import SecureData from '@/components/home/landing/secure-data'
@@ -12,7 +11,6 @@ export default function Page() {
       <SecureData />
       <Templates />
       <SentimentAnalysis />
-      <Chat />
       <CTA />
     </>
   )
