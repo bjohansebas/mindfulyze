@@ -1,5 +1,6 @@
 import '@/styles/globals.css'
 
+import { Viewport } from 'next'
 import { Poppins } from 'next/font/google'
 
 import { constructMetadata } from '@/lib/metadata'
@@ -14,6 +15,11 @@ const poppins = Poppins({
 })
 
 export const metadata = constructMetadata()
+
+export const viewport: Viewport = {
+  themeColor: '#00cf76',
+  colorScheme: 'dark',
+}
 
 export default function RootLayout({
   children,

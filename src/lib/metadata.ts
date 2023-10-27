@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+
 import { HOME_DOMAIN, MINDFULYZE_THUMBNAIL } from './constants'
 
 export function constructMetadata({
@@ -33,7 +34,6 @@ export function constructMetadata({
     },
     icons,
     metadataBase: new URL(HOME_DOMAIN),
-    themeColor: '#00cf76',
     manifest: '/manifest.json',
     keywords: [
       'Mindfulyze',
@@ -51,6 +51,5 @@ export function constructMetadata({
       'Sentiment analysis',
       'Thoughts',
     ],
-    colorScheme: 'only light',
   }
 }

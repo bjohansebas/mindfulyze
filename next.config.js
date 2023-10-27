@@ -4,9 +4,9 @@ const { withContentlayer } = require('next-contentlayer')
 const nextConfig = {
   experimental: {
     useDeploymentId: true,
-    serverActions: true,
     serverActionsBodySizeLimit: '3mb',
     useDeploymentIdServerActions: true,
+    webpackBuildWorker: true,
   },
   images: {
     domains: ['lh3.googleusercontent.com', 'res.cloudinary.com'],
