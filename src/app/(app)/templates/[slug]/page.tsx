@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const template = await getTemplateById(params.slug)
+
   if (template.status !== 200 || template.data == null) {
     notFound()
   }

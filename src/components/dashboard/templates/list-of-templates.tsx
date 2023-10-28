@@ -1,13 +1,9 @@
-import { TemplateResponse } from '@/app/actions/templates'
+import { getTemplates } from '@/app/actions/templates'
 import { CardTemplate } from './card-template'
 import { EmptyTemplate } from './empty-templates'
 
-interface ListOfTemplatesProps {
-  templates: Promise<TemplateResponse>
-}
-
-export async function ListOfTemplates({ templates }: ListOfTemplatesProps) {
-  const templatesData = await templates
+export async function ListOfTemplates() {
+  const templatesData = await getTemplates()
 
   return (
     <div className="w-full flex flex-col max-h-full overflow-y-auto gap-3 h-full">
