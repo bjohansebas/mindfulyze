@@ -1,24 +1,18 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@ui/*": [
+        "src/components/ui/*",
+      ],
       "@/*": [
         "src/*",
       ],
-      "@/ui": [
-        "src/components/ui",
-      ],
-      "contentlayer/generated": [
-        "./.contentlayer/generated"
-      ]
+      "contentlayer/generated": ["./.contentlayer/generated"]
     },
     "downlevelIteration": true,
     "forceConsistentCasingInFileNames": true,
@@ -38,14 +32,6 @@
       }
     ]
   },
-  "include": [
-    "src/@types/next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    ".contentlayer/generated"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src/@types/next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".contentlayer/generated"],
+  "exclude": ["node_modules"]
 }

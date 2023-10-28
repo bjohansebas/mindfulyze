@@ -1,8 +1,9 @@
 'use client'
 
-import { useSession } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 import Link from 'next/link'
-import { Button } from '../ui/button'
+
+import { Button } from '@ui/button'
 
 export function ButtonNav() {
   const { status } = useSession()
@@ -15,11 +16,22 @@ export function ButtonNav() {
         </Button>
       ) : (
         <>
-          <Button asChild variant="ghost">
-            <Link href="/login">Log in</Link>
+          <Button
+            variant="ghost"
+            className="rounded-full"
+            onClick={() => {
+              signIn('google', { callbackUrl: '/home' })
+            }}
+          >
+            Log in
           </Button>
-          <Button className="rounded-full" asChild>
-            <Link href="/signup">Sign Up</Link>
+          <Button
+            className="rounded-full"
+            onClick={() => {
+              signIn('google', { callbackUrl: '/home' })
+            }}
+          >
+            Sign Up
           </Button>
         </>
       )}

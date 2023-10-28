@@ -1,12 +1,12 @@
 'use client'
 
-import { motion, useCycle } from 'framer-motion'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { ReactNode, useEffect, useRef } from 'react'
 
-import dynamic from 'next/dynamic'
-import { Button } from '../ui/button'
-import { Skeleton } from '../ui/skeleton'
+import { motion, useCycle } from 'framer-motion'
+
+import { Skeleton } from '@ui/skeleton'
 import { navItems } from './nav'
 
 const ButtonNavMobile = dynamic(() => import('./button-nav-mobile'), {
@@ -51,7 +51,11 @@ export default function MobileNav() {
           return (
             <div key={slug} className="grid gap-3">
               <MenuItem>
-                <Link href={`/${slug}`} onClick={() => toggleOpen()} className="flex w-full font-semibold capitalize">
+                <Link
+                  href={`/${slug}`}
+                  onClick={() => toggleOpen()}
+                  className="flex w-full font-semibold capitalize hover:text-primary-600"
+                >
                   {name}
                 </Link>
               </MenuItem>
@@ -147,7 +151,7 @@ const useDimensions = (ref: any) => {
   useEffect(() => {
     dimensions.current.width = ref.current.offsetWidth
     dimensions.current.height = ref.current.offsetHeight
-  }, [])
+  }, [ref])
 
   return dimensions.current
 }

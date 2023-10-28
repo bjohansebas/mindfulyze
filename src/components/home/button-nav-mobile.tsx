@@ -1,7 +1,9 @@
 'use client'
 
-import { useSession } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 import Link from 'next/link'
+
+import { Button } from '@ui/button'
 import { MenuItem } from './nav-mobile'
 
 export function ButtonNav() {
@@ -18,16 +20,27 @@ export function ButtonNav() {
       ) : (
         <>
           <MenuItem key="Login">
-            <Link href="/login" className="flex w-full font-semibold capitalize">
+            <Button
+              className="capitalize p-0 h-6 w-full font-semibold text-base justify-normal text-white hover:text-primary-600 hover:no-underline"
+              variant="link"
+              onClick={() => {
+                signIn('google', { callbackUrl: '/home' })
+              }}
+            >
               Log in
-            </Link>
+            </Button>
           </MenuItem>
           <MenuItem className="my-3 h-px w-full bg-gray-300" />
-
           <MenuItem key="Signup">
-            <Link href="/signup" className="flex w-full font-semibold capitalize">
+            <Button
+              className="capitalize p-0 h-6 w-full font-semibold text-base justify-normal text-white hover:text-primary-600 hover:no-underline"
+              variant="link"
+              onClick={() => {
+                signIn('google', { callbackUrl: '/home' })
+              }}
+            >
               Sign Up
-            </Link>
+            </Button>
           </MenuItem>
         </>
       )}
