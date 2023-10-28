@@ -1,13 +1,9 @@
-import { ThoughtResponse } from '@/app/actions/thoughts'
+import { getThoughts } from '@/lib/api/thoughts'
 import { ContentThoughts } from './content-thoughts'
 import { ThoughtsEmpty } from './empty-thoughts'
 
-interface ListOfThoughtsProps {
-  thoughts: Promise<ThoughtResponse>
-}
-
-export async function ListOfThoughts({ thoughts }: ListOfThoughtsProps) {
-  const thoughtsData = await thoughts
+export async function ListOfThoughts() {
+  const thoughtsData = await getThoughts()
 
   return (
     <div className="border w-full flex flex-col rounded-2xl bg-card max-h-full overflow-y-auto">
