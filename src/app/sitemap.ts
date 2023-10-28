@@ -24,10 +24,12 @@ export default async function Sitemap() {
       priority: 0.8,
       changeFrequency: 'yearly',
     },
-    // {
-    //   url: `https://${domain}/pricing`,
-    //   lastModified: new Date(),
-    // },
+    {
+      url: `https://${domain}/pricing`,
+      lastModified: new Date(),
+      priority: 0.8,
+      changeFrequency: 'yearly',
+    },
     // {
     //   url: `https://${domain}/blog`,
     //   lastModified: new Date(),
@@ -38,18 +40,6 @@ export default async function Sitemap() {
     // })),
     // ...BLOG_CATEGORIES.map((category) => ({
     //   url: `https://${domain}/blog/category/${category.slug}`,
-    //   lastModified: new Date(),
-    // })),
-    // {
-    //   url: `https://${domain}/help`,
-    //   lastModified: new Date(),
-    // },
-    // ...allHelpPosts.map((post) => ({
-    //   url: `https://${domain}/help/article/${post.slug}`,
-    //   lastModified: new Date(post.updatedAt),
-    // })),
-    // ...HELP_CATEGORIES.map((category) => ({
-    //   url: `https://${domain}/help/category/${category.slug}`,
     //   lastModified: new Date(),
     // })),
     {
