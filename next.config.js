@@ -4,12 +4,23 @@ const { withContentlayer } = require('next-contentlayer')
 const nextConfig = {
   experimental: {
     useDeploymentId: true,
-    serverActionsBodySizeLimit: '3mb',
     useDeploymentIdServerActions: true,
+    serverActions: {
+      bodySizeLimit: '3mb',
+    },
     webpackBuildWorker: true,
   },
   images: {
-    domains: ['lh3.googleusercontent.com', 'res.cloudinary.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      },
+    ],
   },
 }
 
