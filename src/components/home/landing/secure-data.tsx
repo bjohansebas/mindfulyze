@@ -51,9 +51,9 @@ export function SecureDataPreview() {
             </div>
           </div>
           <Editor editor={editor} className="h-[calc(60vh-32px)]" />
-          <pre className="relative overflow-x-auto px-2  py-4">
+          <pre className="relative overflow-x-auto px-2 py-4 h-14">
             <code className="rounded py-[0.2rem] text-sm">{textEncript}</code>
-            <CopyButton value={textEncript} className={cn('absolute right-4 top-4')} />
+            <CopyButton value={textEncript} className="absolute right-4 top-4" />
           </pre>
         </div>
       </div>
