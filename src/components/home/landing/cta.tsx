@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 export default function CTA() {
   return (
-    <MaxWidthWrapper className="flex flex-col items-center justify-center space-y-8 pt-20 text-center mb-36">
+    <MaxWidthWrapper className="flex flex-col items-center justify-center space-y-8 text-center mb-36">
       <div>
         <LogoType className="w-auto h-16 text-primary-600" />
       </div>
