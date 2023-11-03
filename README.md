@@ -48,6 +48,8 @@ pnpm dev
 
 - [Next.js](https://nextjs.org/) – framework
 - [Typescript](https://www.typescriptlang.org/) – language
+- [Tiptap](https://tiptap.dev/) – text editor
+- [Cohere](https://cohere.com/) - AI sentiment analysis
 - [Tailwind](https://tailwindcss.com/) – CSS
 - [Supabase](https://supabase.com/) – database & storage
 - [NextAuth.js](https://next-auth.js.org/) – auth
