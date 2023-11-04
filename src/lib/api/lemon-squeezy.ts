@@ -11,6 +11,7 @@ import {
   VARIANT_NOT_FOUND_ERROR,
 } from '../constants/errors'
 import { CREATED_CODE, INTERNAL_SERVER_ERROR_CODE, NOT_FOUND_CODE, OK_CODE } from '../constants/status-code'
+import { env } from '../env'
 import { getSubscriptionPlanByProductId } from './subscriptionsPlan'
 
 export const subscriptionCreatedHandler = async ({
@@ -128,9 +129,9 @@ export const getVariantByIdHandler = async ({
   try {
     const headers = new Headers()
     headers.append('Content-Type', 'application/json')
-    headers.append('Authorization', `Bearer ${process.env.LEMON_SQUEEZY_API_KEY as string}`)
+    headers.append('Authorization', `Bearer ${env.LEMON_SQUEEZY_API_KEY as string}`)
 
-    const response = await fetch(`${process.env.LEMON_SQUEEZY_URL}/v1/variants/${variantId}`, {
+    const response = await fetch(`${env.LEMON_SQUEEZY_URL}/v1/variants/${variantId}`, {
       method: 'GET',
       headers,
     })

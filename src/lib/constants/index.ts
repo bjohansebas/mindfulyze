@@ -1,3 +1,5 @@
+import { env } from '../env'
+
 export const PRIVATE_APP_ROUTES = new Set(['home', 'stats', 'settings', 'welcome', 'templates'])
 
 export const HOME_DOMAIN =
@@ -9,14 +11,11 @@ export const HOME_DOMAIN =
 
 export const ENCRYPTION_METHOD = 'aes-256-cbc'
 
-// biome-ignore lint/style/noNonNullAssertion: <explanation>
-export const SECRET_IV = process.env.SECRET_IV!
+export const SECRET_IV = env.SECRET_IV
 
-// biome-ignore lint/style/noNonNullAssertion: <explanation>
-export const NEXT_SECRET = process.env.NEXTAUTH_SECRET!
+export const NEXT_SECRET = env.NEXTAUTH_SECRET
 
-// biome-ignore lint/style/noNonNullAssertion: <explanation>
-export const NEXT_URL = process.env.NEXTAUTH_URL!
+export const NEXT_URL = env.NEXTAUTH_URL
 
 export const DEFAULT_COST_SALT = 12
 

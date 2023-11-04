@@ -1,7 +1,9 @@
 import { getToken } from 'next-auth/jwt'
 import { NextRequest, NextResponse } from 'next/server'
-import { User } from './@types/user'
+
+import { User } from '@/@types/user'
 import { PRIVATE_APP_ROUTES } from './lib/constants'
+import { env } from './lib/env'
 import { parse } from './lib/middleware/utils'
 
 export default async function middleware(req: NextRequest) {
@@ -9,7 +11,7 @@ export default async function middleware(req: NextRequest) {
 
   const session = (await getToken({
     req,
-    secret: process.env.NEXTAUTH_SECRET,
+    secret: env.NEXTAUTH_SECRET,
   })) as {
     email?: string
     pw?: string
