@@ -15,8 +15,6 @@ export const SECRET_IV = env.SECRET_IV
 
 export const NEXT_SECRET = env.NEXTAUTH_SECRET
 
-export const NEXT_URL = env.NEXTAUTH_URL
-
 export const DEFAULT_COST_SALT = 12
 
 export const MIN_LENGTH_PW = 8
