@@ -20,7 +20,9 @@ export async function POST(req: Request) {
 
     const { meta, data }: LemonSqueezyResponse = JSON.parse(body.toString())
 
-    if (meta.event_name !== 'subscription_created') return Response.json({}, { status: BAD_REQUEST_CODE })
+    if (meta.event_name !== 'subscription_created' && meta.event_name !== 'subscription_updated') {
+      return Response.json({}, { status: BAD_REQUEST_CODE })
+    }
 
     const response = await subscriptionCreatedHandler({
       productId: data.attributes.product_id.toString(),
