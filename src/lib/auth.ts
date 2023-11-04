@@ -1,8 +1,7 @@
-import { createUserSubscriptionFree, getUserSubscription } from '@/app/actions/subscriptions'
-import { env } from '@/lib/env'
 import prisma from '@/lib/prisma'
-
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
+
+import { createUserSubscriptionFree, getUserSubscription } from '@/app/actions/subscriptions'
 import { AuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 
@@ -18,8 +17,8 @@ export const authOptions: AuthOptions = {
   },
   providers: [
     GoogleProvider({
-      clientId: env.GOOGLE_CLIENT_ID,
-      clientSecret: env.GOOGLE_CLIENT_SECRET,
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
       allowDangerousEmailAccountLinking: true,
     }),
   ],

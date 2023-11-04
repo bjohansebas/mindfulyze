@@ -1,7 +1,6 @@
 'use server'
 
 import { CohereAPIResponse } from '@/@types/cohere'
-import { env } from '@/lib/env'
 import prisma from '@/lib/prisma'
 import { getThoughtByIdWithOutText } from './thoughts'
 
@@ -27,7 +26,7 @@ export async function addSentimentToThoughts(id: string, message: string) {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${env.COHERE_API_KEY}`,
+        Authorization: `Bearer ${process.env.COHERE_API_KEY}`,
       },
       body: JSON.stringify({
         model: 'embed-multilingual-v2.0',
