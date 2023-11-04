@@ -1,10 +1,11 @@
 'use client'
 
 import { Feature } from '@/@types/pricing'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Switch } from '@/components/ui/switch'
 import { parsePlans } from '@/lib/utils'
+import { Badge } from '@ui/badge'
+import { Button } from '@ui/button'
+import { Switch } from '@ui/switch'
+
 import { SubscriptionPlan, SubscriptionPlanSlug } from '@prisma/client'
 import { CheckCircle, XCircle } from 'lucide-react'
 import { signIn, useSession } from 'next-auth/react'
@@ -70,7 +71,7 @@ export function CardsPricing({ pricingItems }: { pricingItems: SubscriptionPlan[
                     </div>
                   </header>
                   <div className="flex flex-col gap-3">
-                    <p className="font-display text-4xl font-semibold">
+                    <p className="text-4xl font-semibold">
                       ${period === 'yearly' ? priceYearly : priceMonthly}
                       <span className="text-lg text-gray-400">/{period === 'yearly' ? 'year' : 'month'}</span>
                     </p>

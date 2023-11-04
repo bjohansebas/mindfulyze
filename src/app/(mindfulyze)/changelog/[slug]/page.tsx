@@ -5,7 +5,9 @@ import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
 import { HOME_DOMAIN } from '@/lib/constants'
 import { constructMetadata } from '@/lib/metadata'
 import { formatDate } from '@/lib/utils'
+
 import { allChangelogPosts } from 'contentlayer/generated'
+
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -61,7 +63,7 @@ export default async function ChangelogPost({
               {formatDate(post.publishedAt)}
             </time>
           </div>
-          <h1 className="font-display text-3xl font-bold tracking-tight text-primary-600 sm:text-4xl">{post.title}</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-primary-600 sm:text-4xl">{post.title}</h1>
         </div>
         <div className="mx-5 mb-10 flex items-center justify-between md:mx-0">
           <div className="flex items-center space-x-6">

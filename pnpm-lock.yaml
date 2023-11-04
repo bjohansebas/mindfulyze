@@ -128,6 +128,9 @@ importers:
       framer-motion:
         specifier: 10.16.4
         version: 10.16.4(react-dom@18.2.0)(react@18.2.0)
+      geist:
+        specifier: 1.0.0
+        version: 1.0.0
       github-slugger:
         specifier: 2.0.0
         version: 2.0.0
@@ -1571,6 +1574,10 @@ packages:
     dependencies:
       glob: 7.1.7
     dev: true
+
+  /@next/font@13.5.6:
+    resolution: {integrity: sha512-urmUq05uCVJsBqAAJEV+xK5OTTodrSxdiG+351SOSjlWctywdBM6qX+K9pIe3K48RxjfnxlBbXjGyOJAji+pfw==}
+    dev: false
 
   /@next/swc-darwin-arm64@13.4.16:
     resolution: {integrity: sha512-Rl6i1uUq0ciRa3VfEpw6GnWAJTSKo9oM2OrkGXPsm7rMxdd2FR5NkKc0C9xzFCI4+QtmBviWBdF2m3ur3Nqstw==}
@@ -6338,6 +6345,12 @@ packages:
       string-width: 4.2.3
       strip-ansi: 6.0.1
       wide-align: 1.1.5
+    dev: false
+
+  /geist@1.0.0:
+    resolution: {integrity: sha512-7hqXZqIdSiFbXjlMZ8Ag0fBAW8RzUjIXPkh160rT4m4ECMtsKdFX+06e0mK28oRCpU+lOB1C5Es8qxzvv7H2Hg==}
+    dependencies:
+      '@next/font': 13.5.6
     dev: false
 
   /get-caller-file@2.0.5:

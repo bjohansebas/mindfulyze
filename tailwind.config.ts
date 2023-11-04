@@ -90,7 +90,8 @@ module.exports = {
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
       fontFamily: {
-        display: ['var(--font-poppins)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-geist-mono)'],
       },
     },
   },

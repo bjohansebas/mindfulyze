@@ -1,18 +1,11 @@
 import '@/styles/globals.css'
 
+import { GeistMono, GeistSans } from 'geist/font'
 import { Viewport } from 'next'
-import { Poppins } from 'next/font/google'
 
 import { constructMetadata } from '@/lib/metadata'
 import { cn } from '@/lib/utils'
 import { Provider } from './providers'
-
-const poppins = Poppins({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
-  display: 'swap',
-  variable: '--font-poppins',
-})
 
 export const metadata = constructMetadata()
 
@@ -28,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn(poppins.variable)}>
+      <body className={cn('font-sans', GeistSans.variable, GeistMono.variable)}>
         <Provider>{children}</Provider>
       </body>
     </html>

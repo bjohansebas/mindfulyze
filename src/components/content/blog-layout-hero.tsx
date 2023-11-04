@@ -3,6 +3,7 @@
 import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
 import { BLOG_CATEGORIES } from '@/lib/constants'
 import { cn } from '@/lib/utils'
+
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 
@@ -14,7 +15,7 @@ export default function BlogLayoutHero() {
   return (
     <MaxWidthWrapper>
       <div className="max-w-screen-sm py-16">
-        <h1 className="font-display text-3xl font-extrabold text-gray-700 sm:text-4xl">{data?.title || 'Blog'}</h1>
+        <h1 className="text-3xl font-extrabold text-gray-700 sm:text-4xl">{data?.title || 'Blog'}</h1>
         <p className="mt-4 text-xl text-gray-500">{data?.description || 'Latest news and updates from Mindfulyze.'}</p>
         <div className="mt-6 flex items-center space-x-4">
           <CategoryLink title="All" href="/blog" active={!slug} />

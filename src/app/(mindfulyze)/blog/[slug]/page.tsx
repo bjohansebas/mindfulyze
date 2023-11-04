@@ -4,7 +4,9 @@ import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
 import { BLOG_CATEGORIES } from '@/lib/constants'
 import { constructMetadata } from '@/lib/metadata'
 import { formatDate } from '@/lib/utils'
+
 import { allBlogPosts } from 'contentlayer/generated'
+
 import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -70,7 +72,7 @@ export default async function BlogArticle({
               {formatDate(data.publishedAt)}
             </time>
           </div>
-          <h1 className="font-display text-3xl font-extrabold text-gray-700 sm:text-4xl">{data.title}</h1>
+          <h1 className="text-3xl font-extrabold text-gray-700 sm:text-4xl">{data.title}</h1>
           <p className="text-xl text-gray-500">{data.summary}</p>
         </div>
       </MaxWidthWrapper>

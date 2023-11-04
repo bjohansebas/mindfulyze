@@ -64,7 +64,7 @@ export function MDX({ code, className }: MDXProps) {
     <article
       data-mdx-container
       className={cn(
-        'prose prose-gray max-w-none transition-all prose-headings:relative prose-headings:scroll-mt-20 prose-headings:font-display prose-headings:font-bold',
+        'prose prose-gray max-w-none transition-all prose-headings:relative prose-headings:scroll-mt-20 prose-headings:font-extrabold',
         className,
       )}
     >

@@ -1,8 +1,10 @@
 import { formatDate } from '@/lib/utils'
+import Author from './author'
+
 import { BlogPost } from 'contentlayer/generated'
+
 import Image from 'next/image'
 import Link from 'next/link'
-import Author from './author'
 
 export default function BlogCard({
   data,
@@ -23,7 +25,7 @@ export default function BlogCard({
       />
       <div className="flex flex-1 flex-col justify-between rounded-b-lg bg-white p-6">
         <div>
-          <h2 className="line-clamp-1 font-display text-2xl font-bold text-gray-700">{data.title}</h2>
+          <h2 className="line-clamp-1 text-2xl font-bold text-gray-700">{data.title}</h2>
           <p className="mt-2 line-clamp-2 text-gray-500">{data.summary}</p>
         </div>
         <div className="mt-4 flex items-center space-x-2">

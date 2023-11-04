@@ -3,7 +3,9 @@ import { Twitter } from '@/components/shared/icons'
 import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
 import { constructMetadata } from '@/lib/metadata'
 import { formatDate } from '@/lib/utils'
+
 import { allChangelogPosts } from 'contentlayer/generated'
+
 import Link from 'next/link'
 
 export const metadata = constructMetadata({
@@ -17,7 +19,7 @@ export default function Changelog() {
       <div className="relative grid border-b border-gray-200 py-20 md:grid-cols-4">
         <div className="md:col-span-1" />
         <div className="mx-5 flex flex-col space-y-6 md:col-span-3 md:mx-0">
-          <h1 className="font-display text-4xl font-bold tracking-tight text-primary-600 md:text-5xl">Changelog</h1>
+          <h1 className="text-4xl font-bold tracking-tight text-primary-600 md:text-5xl">Changelog</h1>
           <p className="text-lg text-gray-100">All the latest updates, improvements, and fixes to Mindfulyze.</p>
         </div>
         <div className="absolute bottom-2 right-0 flex items-center space-x-2">
@@ -56,7 +58,7 @@ export default function Changelog() {
                   </time>
                 </Link>
                 <Link href={`/changelog/${post.slug}`} className="mx-5 md:mx-0">
-                  <h2 className="font-display text-3xl font-bold tracking-tight text-primary-400 hover:underline hover:decoration-1 hover:underline-offset-4 md:text-4xl">
+                  <h2 className="text-3xl font-bold tracking-tight text-primary-400 hover:underline hover:decoration-1 hover:underline-offset-4 md:text-4xl">
                     {post.title}
                   </h2>
                 </Link>
