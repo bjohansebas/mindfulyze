@@ -12,6 +12,7 @@ export interface LemonSqueezyResponse {
       variant_id: string
       user_email: string
       renews_at: string
+      ends_at: string | null
     }
   }
 }

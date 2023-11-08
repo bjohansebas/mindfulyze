@@ -1,5 +1,5 @@
 import { LemonSqueezyResponse } from '@/@types/lemon-squeezy'
-import { subscriptionCreatedHandler } from '@/lib/api/lemon-squeezy'
+import { subscriptionCreated, subscriptionUpdated } from '@/lib/api/lemon-squeezy'
 import { BAD_REQUEST_CODE, UNAUTHORIZED_CODE } from '@/lib/constants/status-code'
 import { verifySignature } from '@/lib/lemon-squeezy'
 
@@ -24,14 +24,26 @@ export async function POST(req: Request) {
       return Response.json({}, { status: BAD_REQUEST_CODE })
     }
 
-    const response = await subscriptionCreatedHandler({
-      productId: data.attributes.product_id.toString(),
-      variantId: data.attributes.variant_id.toString(),
-      userEmail: data.attributes.user_email,
-      renewsAt: data.attributes.renews_at,
-    })
+    if (meta.event_name === 'subscription_created') {
+      const response = await subscriptionCreated({
+        productId: data.attributes.product_id.toString(),
+        variantId: data.attributes.variant_id.toString(),
+        userEmail: data.attributes.user_email,
+        renewsAt: data.attributes.renews_at,
+      })
 
-    return Response.json({ data: response.data, message: response.message }, { status: response.status })
+      return Response.json({ data: response.data, message: response.message }, { status: response.status })
+    } else if (meta.event_name === 'subscription_updated') {
+      const response = await subscriptionUpdated({
+        productId: data.attributes.product_id.toString(),
+        variantId: data.attributes.variant_id.toString(),
+        userEmail: data.attributes.user_email,
+        renewsAt: data.attributes.renews_at,
+        endsAt: data.attributes.ends_at,
+      })
+
+      return Response.json({ data: response.data, message: response.message }, { status: response.status })
+    }
   } catch (error) {
     console.log(error)
     return Response.json(

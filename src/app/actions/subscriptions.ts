@@ -132,7 +132,7 @@ export const createUserSubscriptionFree = async (user: User) => {
  */
 export const updateUserSubscription = async (params: UpdateUserSubscriptionType) => {
   try {
-    const { userId, subscriptionPlanId, frequency, startsAt, endsAt, renewsAt, isActive } = params
+    const { userId, subscriptionPlanId, frequency, startsAt, endsAt, renewsAt } = params
 
     // Check if user exists
     const user = await getUserById({ id: userId })
@@ -169,7 +169,6 @@ export const updateUserSubscription = async (params: UpdateUserSubscriptionType)
         startsAt,
         endsAt,
         renewsAt,
-        isActive,
       },
     })
 

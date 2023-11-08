@@ -16,9 +16,8 @@ export const UpdateUserSubscription = z.object({
   subscriptionPlanId: z.string(),
   frequency: z.nativeEnum(SubscriptionFrequency),
   startsAt: z.date(),
-  endsAt: z.date(),
+  endsAt: z.date().nullable(),
   renewsAt: z.date(),
-  isActive: z.boolean(),
 })
 
 export type UpdateUserSubscriptionType = TypeOf<typeof UpdateUserSubscription>

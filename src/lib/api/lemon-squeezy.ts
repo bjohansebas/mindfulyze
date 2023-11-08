@@ -1,7 +1,7 @@
 import { LemonSqueezyVariant } from '@/@types/lemon-squeezy'
-import { createUserSubscription, deleteUserSubscription } from '@/app/actions/subscriptions'
+import { createUserSubscription, deleteUserSubscription, updateUserSubscription } from '@/app/actions/subscriptions'
 import prisma from '@/lib/prisma'
-import { SubscriptionCreatedInputType } from '@/schemas/lemonsqueezy'
+import { SubscriptionCreatedInputType, SubscriptionUpdatedInputType } from '@/schemas/lemonsqueezy'
 import {
   SUBSCRIPTION_CREATED_ERROR,
   SUBSCRIPTION_DELETED_ERROR,
@@ -13,7 +13,7 @@ import {
 import { CREATED_CODE, INTERNAL_SERVER_ERROR_CODE, NOT_FOUND_CODE, OK_CODE } from '../constants/status-code'
 import { getSubscriptionPlanByProductId } from './subscriptionsPlan'
 
-export const subscriptionCreatedHandler = async ({
+export const subscriptionCreated = async ({
   productId,
   variantId,
   userEmail,
@@ -108,6 +108,107 @@ export const subscriptionCreatedHandler = async ({
     }
   } catch (error: unknown) {
     console.error('subscriptionCreatedHandler.error: ', error)
+
+    return {
+      status: INTERNAL_SERVER_ERROR_CODE,
+      message: UNKNOWN_ERROR,
+      data: null,
+    }
+  }
+}
+
+export const subscriptionUpdated = async ({
+  productId,
+  variantId,
+  userEmail,
+  renewsAt,
+  endsAt,
+}: SubscriptionUpdatedInputType) => {
+  try {
+    // Check if user exists
+    const user = await prisma.user.findUnique({
+      where: {
+        email: userEmail,
+      },
+    })
+
+    if (!user) {
+      return {
+        status: NOT_FOUND_CODE,
+        message: USER_NOT_FOUND_ERROR,
+        data: null,
+      }
+    }
+
+    // CREATE USER's SUBSCRIPTION
+
+    // Check if subscription plan exists
+    const subscriptionPlan = await getSubscriptionPlanByProductId({
+      productId,
+    })
+    if (!subscriptionPlan) {
+      return {
+        status: NOT_FOUND_CODE,
+        message: SUBSCRIPTION_NOT_FOUND_ERROR,
+        data: null,
+      }
+    }
+
+    // Check if variant exists
+    const variant = await getVariantByIdHandler({
+      variantId,
+    })
+
+    if (!variant) {
+      return {
+        status: NOT_FOUND_CODE,
+        message: VARIANT_NOT_FOUND_ERROR,
+        data: null,
+      }
+    }
+
+    // Check if user has an active subscription
+    const subscription = await prisma.subscription.findFirst({
+      where: {
+        userId: user.id,
+      },
+    })
+
+    // check subscription if exists
+    if (!subscription) {
+      // TODO
+      return {
+        status: INTERNAL_SERVER_ERROR_CODE,
+        message: SUBSCRIPTION_DELETED_ERROR,
+        data: null,
+      }
+    }
+
+    // Add subscription
+    const newSubscription = await updateUserSubscription({
+      userId: user.id,
+      subscriptionPlanId: subscriptionPlan.id,
+      frequency: variant.data.attributes.interval,
+      startsAt: new Date(),
+      endsAt: endsAt ? new Date(endsAt) : null,
+      renewsAt: new Date(renewsAt),
+    })
+
+    // Check if subscription was updated
+    if (!newSubscription.data) {
+      return {
+        status: INTERNAL_SERVER_ERROR_CODE,
+        message: SUBSCRIPTION_CREATED_ERROR,
+        data: null,
+      }
+    }
+
+    return {
+      status: CREATED_CODE,
+      data: newSubscription,
+    }
+  } catch (error: unknown) {
+    console.error('subscriptionUpdateHandler.error: ', error)
 
     return {
       status: INTERNAL_SERVER_ERROR_CODE,
