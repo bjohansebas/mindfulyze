@@ -52,6 +52,7 @@ export const createUserSubscription = async ({
   frequency,
   startsAt,
   endsAt,
+  status,
   renewsAt,
 }: AddUserSubscriptionType): Promise<{ status: number; data: Subscription | null; message?: string }> => {
   try {
@@ -84,6 +85,7 @@ export const createUserSubscription = async ({
         startsAt,
         endsAt,
         renewsAt,
+        status,
       },
     })
 
@@ -132,7 +134,7 @@ export const createUserSubscriptionFree = async (user: User) => {
  */
 export const updateUserSubscription = async (params: UpdateUserSubscriptionType) => {
   try {
-    const { userId, subscriptionPlanId, frequency, startsAt, endsAt, renewsAt } = params
+    const { userId, subscriptionPlanId, frequency, startsAt, endsAt, renewsAt, status } = params
 
     // Check if user exists
     const user = await getUserById({ id: userId })
@@ -168,6 +170,7 @@ export const updateUserSubscription = async (params: UpdateUserSubscriptionType)
         frequency,
         startsAt,
         endsAt,
+        status,
         renewsAt,
       },
     })

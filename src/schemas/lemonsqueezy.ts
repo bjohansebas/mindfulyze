@@ -1,3 +1,4 @@
+import { SubscriptionPlanStatus } from '@prisma/client'
 import { type TypeOf, z } from 'zod'
 
 export const subscriptionCreatedInput = z.object({
@@ -5,6 +6,7 @@ export const subscriptionCreatedInput = z.object({
   variantId: z.string(),
   userEmail: z.string(),
   renewsAt: z.string(),
+  status: z.nativeEnum(SubscriptionPlanStatus),
 })
 export type SubscriptionCreatedInputType = TypeOf<typeof subscriptionCreatedInput>
 
@@ -14,5 +16,6 @@ export const subscriptionUpdatedInput = z.object({
   userEmail: z.string(),
   renewsAt: z.string(),
   endsAt: z.string().nullable(),
+  status: z.nativeEnum(SubscriptionPlanStatus),
 })
 export type SubscriptionUpdatedInputType = TypeOf<typeof subscriptionUpdatedInput>

@@ -1,3 +1,5 @@
+import { SubscriptionPlanStatus } from '@prisma/client'
+
 /**
  * Webhook response (Lemon Squeezy)
  * @reference https://docs.lemonsqueezy.com/help/webhooks
@@ -13,6 +15,7 @@ export interface LemonSqueezyResponse {
       user_email: string
       renews_at: string
       ends_at: string | null
+      status: SubscriptionPlanStatus
     }
   }
 }

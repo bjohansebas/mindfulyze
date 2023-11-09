@@ -17,6 +17,7 @@ export const subscriptionCreated = async ({
   productId,
   variantId,
   userEmail,
+  status,
   renewsAt,
 }: SubscriptionCreatedInputType) => {
   try {
@@ -91,6 +92,7 @@ export const subscriptionCreated = async ({
       startsAt: new Date(),
       endsAt: null,
       renewsAt: new Date(renewsAt),
+      status,
     })
 
     // Check if subscription was added
@@ -121,6 +123,7 @@ export const subscriptionUpdated = async ({
   productId,
   variantId,
   userEmail,
+  status,
   renewsAt,
   endsAt,
 }: SubscriptionUpdatedInputType) => {
@@ -192,6 +195,7 @@ export const subscriptionUpdated = async ({
       startsAt: new Date(),
       endsAt: endsAt ? new Date(endsAt) : null,
       renewsAt: new Date(renewsAt),
+      status,
     })
 
     // Check if subscription was updated

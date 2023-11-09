@@ -6,7 +6,6 @@ export const getSubscriptionByUserId = async ({ userId }: { userId: string }) =>
       userId: userId,
     },
     select: {
-      isActive: true,
       subscriptionPlan: true,
     },
   })

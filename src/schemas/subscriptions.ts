@@ -1,4 +1,4 @@
-import { SubscriptionFrequency } from '@prisma/client'
+import { SubscriptionFrequency, SubscriptionPlanStatus } from '@prisma/client'
 import z, { TypeOf } from 'zod'
 
 export const AddUserSubscription = z.object({
@@ -8,6 +8,7 @@ export const AddUserSubscription = z.object({
   startsAt: z.date(),
   endsAt: z.date().nullable(),
   renewsAt: z.date(),
+  status: z.nativeEnum(SubscriptionPlanStatus),
 })
 export type AddUserSubscriptionType = TypeOf<typeof AddUserSubscription>
 
@@ -18,6 +19,7 @@ export const UpdateUserSubscription = z.object({
   startsAt: z.date(),
   endsAt: z.date().nullable(),
   renewsAt: z.date(),
+  status: z.nativeEnum(SubscriptionPlanStatus),
 })
 
 export type UpdateUserSubscriptionType = TypeOf<typeof UpdateUserSubscription>
