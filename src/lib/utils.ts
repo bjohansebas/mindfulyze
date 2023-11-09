@@ -69,13 +69,18 @@ export const createId = init({
   length: 26,
 })
 
-export const formatDate = (dateString: string) => {
-  return new Date(`${dateString}T00:00:00Z`).toLocaleDateString('en-US', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-    timeZone: 'UTC',
-  })
+export const formatDate = (date: string | null | undefined) => {
+  if (!date) return ''
+  try {
+    return new Date(`${date}`).toLocaleDateString('en-US', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      timeZone: 'UTC',
+    })
+  } catch (e) {
+    console.error(e)
+  }
 }
 
 dayjs.extend(utc)
