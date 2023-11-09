@@ -124,6 +124,16 @@ enum SubscriptionPlanSlug {
   plus
 }
 
+enum SubscriptionPlanStatus {
+  active
+  on_trial
+  past_due
+  cancelled
+  paused
+  unpaid
+  expired
+}
+
 enum TypeEmotion {
   positive
   negative
@@ -152,18 +162,18 @@ model SubscriptionPlan {
 }
 
 model Subscription {
-  id                 String                @id @default(cuid())
-  user               User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId             String                @unique @map("user_id")
-  subscriptionPlan   SubscriptionPlan      @relation(fields: [subscriptionPlanId], references: [id], onDelete: Cascade)
-  subscriptionPlanId String                @map("subscription_plan_id")
-  frequency          SubscriptionFrequency @default(month)
-  isActive           Boolean               @default(true) @map("is_active")
-  renewsAt           DateTime?             @map("renews_at")
-  startsAt           DateTime              @default(now()) @map("starts_at")
-  endsAt             DateTime?             @map("ends_at")
-  createdAt          DateTime              @default(now()) @map("created_at")
-  updatedAt          DateTime              @updatedAt @map("updated_at")
+  id                 String                  @id @default(cuid())
+  user               User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId             String                  @unique @map("user_id")
+  subscriptionPlan   SubscriptionPlan        @relation(fields: [subscriptionPlanId], references: [id], onDelete: Cascade)
+  subscriptionPlanId String                  @map("subscription_plan_id")
+  frequency          SubscriptionFrequency   @default(month)
+  status             SubscriptionPlanStatus?
+  renewsAt           DateTime?               @map("renews_at")
+  startsAt           DateTime                @default(now()) @map("starts_at")
+  endsAt             DateTime?               @map("ends_at")
+  createdAt          DateTime                @default(now()) @map("created_at")
+  updatedAt          DateTime                @updatedAt @map("updated_at")
 
   @@map("subscriptions")
 }
