@@ -1,34 +1,14 @@
 import { CardsPricing } from '@/components/pricing/cards-pricing'
 import { CardsPricingPlaceholder } from '@/components/pricing/cards-pricing-placeholder'
-import { HOME_DOMAIN } from '@/lib/constants'
 import { constructMetadata } from '@/lib/metadata'
-import { SubscriptionPlan } from '@prisma/client'
 import { Suspense } from 'react'
+import { getPlans } from './getPlans'
 
 export const metadata = constructMetadata({
   title: 'Pricing · Plans for every person – Mindfulyze',
   description:
     'The best journal to begin living a better life by writing your thoughts. Plans start from $0 per month.',
 })
-
-async function getPlans() {
-  try {
-    const res = await fetch('https://mindfulyze.com/api/plans', {
-      next: {
-        revalidate: 60,
-      },
-    })
-
-    if (!res.ok) {
-      // This will activate the closest `error.js` Error Boundary
-      throw new Error('Failed to fetch data')
-    }
-
-    return res.json() as Promise<SubscriptionPlan[]>
-  } catch {
-    throw new Error('Failed to fetch data')
-  }
-}
 
 export default async function Page() {
   const plans = await getPlans()

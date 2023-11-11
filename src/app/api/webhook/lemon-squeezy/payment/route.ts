@@ -31,6 +31,7 @@ export async function POST(req: Request) {
         userEmail: data.attributes.user_email,
         renewsAt: data.attributes.renews_at,
         status: data.attributes.status,
+        lemonsqueezyId: parseInt(data.id),
       })
 
       return Response.json({ data: response.data, message: response.message }, { status: response.status })
@@ -42,6 +43,7 @@ export async function POST(req: Request) {
         renewsAt: data.attributes.renews_at,
         endsAt: data.attributes.ends_at,
         status: data.attributes.status,
+        lemonsqueezyId: parseInt(data.id),
       })
 
       return Response.json({ data: response.data, message: response.message }, { status: response.status })

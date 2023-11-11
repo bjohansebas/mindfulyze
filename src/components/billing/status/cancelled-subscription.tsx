@@ -1,15 +1,14 @@
 import { formatDate } from '@/lib/utils'
 import { SubscriptionFrequency, SubscriptionPlan } from '@prisma/client'
-import { Button } from '@ui/button'
 import { Separator } from '@ui/separator'
-import { CancelButton } from '../buttons/cancel-button'
+import { ResumeButton } from '../buttons/resume-button'
 
-export async function ActiveSubscriptionCard({
+export async function CancelledSubscriptionCard({
   subscriptionPlan,
-  renewsAt,
+  endsAt,
   frequency,
   lemonSqueezyId,
-}: { lemonSqueezyId: number; subscriptionPlan: SubscriptionPlan; renewsAt: string; frequency: SubscriptionFrequency }) {
+}: { lemonSqueezyId: number; subscriptionPlan: SubscriptionPlan; endsAt: string; frequency: SubscriptionFrequency }) {
   return (
     <>
       <p className="text-sm text-muted-foreground mb-2">
@@ -19,15 +18,14 @@ export async function ActiveSubscriptionCard({
           {frequency === 'year' ? 'year' : 'month'}
         </span>
       </p>
-      <p className="text-sm text-muted-foreground mb-2">
-        You next renewal will be on <span className="font-bold">{formatDate(renewsAt)}</span>
+      <p className="text-sm text-muted-foreground xmb-8">
+        Your subscription has been cancelled and <b>will end on {formatDate(endsAt)}</b>. After this date you will no
+        longer have access to the app.
       </p>
+
       <Separator className="my-8" />
       <div className="mt-5 flex flex-wrap gap-4">
-        <Button>Change plan</Button>
-        <Button variant="ghost">Update your payment method</Button>
-        <Button variant="ghost">Pause payments</Button>
-        <CancelButton subscriptionId={lemonSqueezyId} />
+        <ResumeButton subscriptionId={lemonSqueezyId} />
       </div>
     </>
   )

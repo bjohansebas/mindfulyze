@@ -19,6 +19,7 @@ export const subscriptionCreated = async ({
   userEmail,
   status,
   renewsAt,
+  lemonsqueezyId,
 }: SubscriptionCreatedInputType) => {
   try {
     // Check if user exists
@@ -93,6 +94,7 @@ export const subscriptionCreated = async ({
       endsAt: null,
       renewsAt: new Date(renewsAt),
       status,
+      idLemonSqueezy: lemonsqueezyId,
     })
 
     // Check if subscription was added
@@ -125,6 +127,7 @@ export const subscriptionUpdated = async ({
   userEmail,
   status,
   renewsAt,
+  lemonsqueezyId,
   endsAt,
 }: SubscriptionUpdatedInputType) => {
   try {
@@ -196,6 +199,7 @@ export const subscriptionUpdated = async ({
       endsAt: endsAt ? new Date(endsAt) : null,
       renewsAt: new Date(renewsAt),
       status,
+      idLemonSqueezy: lemonsqueezyId,
     })
 
     // Check if subscription was updated

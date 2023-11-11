@@ -54,6 +54,7 @@ export const createUserSubscription = async ({
   endsAt,
   status,
   renewsAt,
+  idLemonSqueezy,
 }: AddUserSubscriptionType): Promise<{ status: number; data: Subscription | null; message?: string }> => {
   try {
     // Check if user exists
@@ -84,6 +85,7 @@ export const createUserSubscription = async ({
         frequency,
         startsAt,
         endsAt,
+        lemonSqueezyId: idLemonSqueezy,
         renewsAt,
         status,
       },
@@ -94,6 +96,7 @@ export const createUserSubscription = async ({
       data: subscription,
     }
   } catch (e) {
+    console.log(e)
     return {
       status: BAD_REQUEST_CODE,
       message: UNKNOWN_ERROR,
@@ -134,7 +137,7 @@ export const createUserSubscriptionFree = async (user: User) => {
  */
 export const updateUserSubscription = async (params: UpdateUserSubscriptionType) => {
   try {
-    const { userId, subscriptionPlanId, frequency, startsAt, endsAt, renewsAt, status } = params
+    const { userId, subscriptionPlanId, frequency, startsAt, endsAt, renewsAt, status, idLemonSqueezy } = params
 
     // Check if user exists
     const user = await getUserById({ id: userId })
@@ -172,6 +175,7 @@ export const updateUserSubscription = async (params: UpdateUserSubscriptionType)
         endsAt,
         status,
         renewsAt,
+        lemonSqueezyId: idLemonSqueezy,
       },
     })
 

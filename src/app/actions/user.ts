@@ -38,6 +38,7 @@ export async function getUserSubscription() {
         endsAt: true,
         frequency: true,
         status: true,
+        lemonSqueezyId: true,
       },
     })
 

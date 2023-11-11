@@ -7,6 +7,7 @@ export const subscriptionCreatedInput = z.object({
   userEmail: z.string(),
   renewsAt: z.string(),
   status: z.nativeEnum(SubscriptionPlanStatus),
+  lemonsqueezyId: z.number(),
 })
 export type SubscriptionCreatedInputType = TypeOf<typeof subscriptionCreatedInput>
 
@@ -17,5 +18,6 @@ export const subscriptionUpdatedInput = z.object({
   renewsAt: z.string(),
   endsAt: z.string().nullable(),
   status: z.nativeEnum(SubscriptionPlanStatus),
+  lemonsqueezyId: z.number(),
 })
 export type SubscriptionUpdatedInputType = TypeOf<typeof subscriptionUpdatedInput>

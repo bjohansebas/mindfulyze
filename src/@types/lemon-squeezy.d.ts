@@ -9,6 +9,7 @@ export interface LemonSqueezyResponse {
     event_name: string
   }
   data: {
+    id: string
     attributes: {
       product_id: string
       variant_id: string
