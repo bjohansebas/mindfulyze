@@ -14,6 +14,9 @@ importers:
       '@hookform/resolvers':
         specifier: 3.3.2
         version: 3.3.2(react-hook-form@7.48.2)
+      '@lemonsqueezy/lemonsqueezy.js':
+        specifier: 1.2.1
+        version: 1.2.1
       '@next-auth/prisma-adapter':
         specifier: 1.0.7
         version: 1.0.7(@prisma/client@5.5.2)(next-auth@4.24.4)
@@ -1472,6 +1475,10 @@ packages:
     dependencies:
       jsbi: 4.3.0
       tslib: 2.6.1
+    dev: false
+
+  /@lemonsqueezy/lemonsqueezy.js@1.2.1:
+    resolution: {integrity: sha512-W/lsaYZTjlRFAbdH1W8539+Ysfv2SKLl/8eK+zC9+GHdk/mgeMsqFZDRG8057Lsd1Mi9n96QuOC4kgeFUsdd6w==}
     dev: false
 
   /@manypkg/find-root@2.2.1:
