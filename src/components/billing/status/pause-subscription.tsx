@@ -2,8 +2,9 @@ import { formatDate } from '@/lib/utils'
 import { SubscriptionFrequency, SubscriptionPlan } from '@prisma/client'
 import { Separator } from '@ui/separator'
 import { ResumeButton } from '../buttons/resume-button'
+import { UnpauseButton } from '../buttons/unpause-button'
 
-export async function CancelledSubscriptionCard({
+export async function PauseSubscriptionCard({
   subscriptionPlan,
   endsAt,
   frequency,
@@ -18,14 +19,19 @@ export async function CancelledSubscriptionCard({
           {frequency === 'year' ? 'year' : 'month'}
         </span>
       </p>
-      <p className="text-sm text-muted-foreground mb-8">
-        Your subscription has been cancelled and <b>will end on {formatDate(endsAt)}</b>. After this date you will no
-        longer have access to the app.
-      </p>
+
+      {/* {subscriptionPlan. ? (
+        <p className="mb-8">
+          Your subscription payments are currently paused. Your subscription will automatically resume on{' '}
+          {formatDate(subscription.unpauseDate)}.
+        </p> */}
+      {/* ) : ( */}
+      <p className="text-sm text-muted-foreground mb-8">Your subscription payments are currently paused.</p>
+      {/* )} */}
 
       <Separator className="my-8" />
       <div className="mt-5 flex flex-wrap gap-4">
-        <ResumeButton subscriptionId={lemonSqueezyId} />
+        <UnpauseButton subscriptionId={lemonSqueezyId} />
       </div>
     </>
   )

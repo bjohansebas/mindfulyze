@@ -173,6 +173,7 @@ model Subscription {
   status             SubscriptionPlanStatus?
   renewsAt           DateTime?               @map("renews_at")
   startsAt           DateTime                @default(now()) @map("starts_at")
+  resumesAt          DateTime?               @map("resumes_at")
   endsAt             DateTime?               @map("ends_at")
   createdAt          DateTime                @default(now()) @map("created_at")
   updatedAt          DateTime                @updatedAt @map("updated_at")

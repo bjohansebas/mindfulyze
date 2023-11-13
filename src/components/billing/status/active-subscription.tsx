@@ -3,6 +3,7 @@ import { SubscriptionFrequency, SubscriptionPlan } from '@prisma/client'
 import { Button } from '@ui/button'
 import { Separator } from '@ui/separator'
 import { CancelButton } from '../buttons/cancel-button'
+import { PauseButton } from '../buttons/pause-button'
 
 export async function ActiveSubscriptionCard({
   subscriptionPlan,
@@ -26,7 +27,7 @@ export async function ActiveSubscriptionCard({
       <div className="mt-5 flex flex-wrap gap-4">
         <Button>Change plan</Button>
         <Button variant="ghost">Update your payment method</Button>
-        <Button variant="ghost">Pause payments</Button>
+        <PauseButton subscriptionId={lemonSqueezyId} />
         <CancelButton subscriptionId={lemonSqueezyId} />
       </div>
     </>

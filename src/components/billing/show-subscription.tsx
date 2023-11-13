@@ -3,6 +3,7 @@ import { getUserSubscription } from '@/app/actions/user'
 import { CardsPricing } from '../pricing/cards-pricing'
 import { ActiveSubscriptionCard } from './status/active-subscription'
 import { CancelledSubscriptionCard } from './status/cancelled-subscription'
+import { PauseSubscriptionCard } from './status/pause-subscription'
 
 export async function ShowSubscriptionCard() {
   const getSubscription = await getUserSubscription()
@@ -20,6 +21,15 @@ export async function ShowSubscriptionCard() {
   } else if (getSubscription.data?.status === 'cancelled') {
     return (
       <CancelledSubscriptionCard
+        endsAt={getSubscription.data.endsAt?.toDateString() || ''}
+        lemonSqueezyId={getSubscription.data.lemonSqueezyId as number}
+        frequency={getSubscription.data.frequency}
+        subscriptionPlan={getSubscription.data.subscriptionPlan}
+      />
+    )
+  } else if (getSubscription.data?.status === 'paused') {
+    return (
+      <PauseSubscriptionCard
         endsAt={getSubscription.data.endsAt?.toDateString() || ''}
         lemonSqueezyId={getSubscription.data.lemonSqueezyId as number}
         frequency={getSubscription.data.frequency}
