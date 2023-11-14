@@ -2,8 +2,11 @@ import { formatDate } from '@/lib/utils'
 import { SubscriptionFrequency, SubscriptionPlan } from '@prisma/client'
 import { Button } from '@ui/button'
 import { Separator } from '@ui/separator'
+import { Skeleton } from '@ui/skeleton'
+import { Suspense } from 'react'
 import { CancelButton } from '../buttons/cancel-button'
 import { PauseButton } from '../buttons/pause-button'
+import { UpdateBillingButton } from '../buttons/update-billing-button'
 
 export async function ActiveSubscriptionCard({
   subscriptionPlan,
@@ -26,7 +29,9 @@ export async function ActiveSubscriptionCard({
       <Separator className="my-8" />
       <div className="mt-5 flex flex-wrap gap-4">
         <Button>Change plan</Button>
-        <Button variant="ghost">Update your payment method</Button>
+        <Suspense fallback={<Skeleton className="w-[228px] h-9" />}>
+          <UpdateBillingButton subscriptionId={lemonSqueezyId} />
+        </Suspense>
         <PauseButton subscriptionId={lemonSqueezyId} />
         <CancelButton subscriptionId={lemonSqueezyId} />
       </div>

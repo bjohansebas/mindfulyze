@@ -1,9 +1,29 @@
 'use server'
 
-import { BAD_REQUEST_CODE, CREATED_CODE } from '@/lib/constants/status-code'
+import { BAD_REQUEST_CODE, CREATED_CODE, OK_CODE } from '@/lib/constants/status-code'
 import LemonSqueezy from '@lemonsqueezy/lemonsqueezy.js'
 
 const ls = new LemonSqueezy(process.env.LEMON_SQUEEZY_API_KEY as string)
+
+export async function getSubscription(id: number) {
+  try {
+    const subscription = await ls.getSubscription({ id: id })
+
+    return {
+      data: {
+        subscription: {
+          update_billing_url: subscription.data.attributes.urls.update_payment_method,
+          // biome-ignore lint/complexity/useLiteralKeys: <explanation>
+          customer_portal_url: subscription.data.attributes.urls['customer_portal'],
+        },
+      },
+      message: null,
+      status: OK_CODE,
+    }
+  } catch (e) {
+    return { data: null, message: e.message, status: BAD_REQUEST_CODE }
+  }
+}
 
 export async function cancelSubscription(id: number) {
   try {

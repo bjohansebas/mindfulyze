@@ -38,7 +38,7 @@ export function UnpauseButton({ subscriptionId }: { subscriptionId: number }) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="ghost" disabled={isLoading}>
+        <Button variant="outline" disabled={isLoading}>
           Unpause payments
           <Loader2
             size={16}

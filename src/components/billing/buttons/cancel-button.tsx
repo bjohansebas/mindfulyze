@@ -38,7 +38,7 @@ export function CancelButton({ subscriptionId }: { subscriptionId: number }) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="ghost" disabled={isLoading}>
+        <Button variant="outline" disabled={isLoading}>
           Cancel
           <Loader2
             size={16}

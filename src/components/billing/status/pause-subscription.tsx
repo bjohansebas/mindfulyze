@@ -6,10 +6,9 @@ import { UnpauseButton } from '../buttons/unpause-button'
 
 export async function PauseSubscriptionCard({
   subscriptionPlan,
-  endsAt,
   frequency,
   lemonSqueezyId,
-}: { lemonSqueezyId: number; subscriptionPlan: SubscriptionPlan; endsAt: string; frequency: SubscriptionFrequency }) {
+}: { lemonSqueezyId: number; subscriptionPlan: SubscriptionPlan; frequency: SubscriptionFrequency }) {
   return (
     <>
       <p className="text-sm text-muted-foreground mb-2">
@@ -19,16 +18,7 @@ export async function PauseSubscriptionCard({
           {frequency === 'year' ? 'year' : 'month'}
         </span>
       </p>
-
-      {/* {subscriptionPlan. ? (
-        <p className="mb-8">
-          Your subscription payments are currently paused. Your subscription will automatically resume on{' '}
-          {formatDate(subscription.unpauseDate)}.
-        </p> */}
-      {/* ) : ( */}
       <p className="text-sm text-muted-foreground mb-8">Your subscription payments are currently paused.</p>
-      {/* )} */}
-
       <Separator className="my-8" />
       <div className="mt-5 flex flex-wrap gap-4">
         <UnpauseButton subscriptionId={lemonSqueezyId} />
