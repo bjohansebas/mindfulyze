@@ -1,6 +1,7 @@
 'use client'
 
 import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import { SessionProvider } from 'next-auth/react'
 import { Toaster } from 'sonner'
 
@@ -14,6 +15,7 @@ export const Provider = ({ children }: Props) => {
       <Toaster closeButton theme="dark" richColors={true} />
       {children}
       <Analytics />
+      <SpeedInsights />
     </SessionProvider>
   )
 }
