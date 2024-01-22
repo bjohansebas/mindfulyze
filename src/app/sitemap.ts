@@ -24,12 +24,6 @@ export default async function Sitemap() {
       priority: 0.8,
       changeFrequency: 'yearly',
     },
-    {
-      url: `https://${domain}/pricing`,
-      lastModified: new Date(),
-      priority: 0.8,
-      changeFrequency: 'yearly',
-    },
     // {
     //   url: `https://${domain}/blog`,
     //   lastModified: new Date(),

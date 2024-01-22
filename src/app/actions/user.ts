@@ -20,34 +20,6 @@ import {
 import { deleteAllTemplates } from './templates'
 import { deleteAllThoughts } from './thoughts'
 
-export async function getUserSubscription() {
-  const session = await getServerSession(authOptions)
-
-  if (!session?.user) {
-    return { message: 'You must be logged in.', status: 401, data: null }
-  }
-
-  try {
-    const response = await prisma.subscription.findUniqueOrThrow({
-      where: {
-        userId: session.user.id,
-      },
-      select: {
-        subscriptionPlan: true,
-        renewsAt: true,
-        endsAt: true,
-        frequency: true,
-        status: true,
-        lemonSqueezyId: true,
-        resumesAt: true,
-      },
-    })
-
-    return { data: response, status: 200 }
-  } catch (e) {
-    return { message: USER_NOT_FOUND_ERROR, status: 400, data: null }
-  }
-}
 export async function getUser() {
   const session = await getServerSession(authOptions)
 

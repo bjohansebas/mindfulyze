@@ -1,31 +1,13 @@
 import NavigationSettings from '@/components/settings/menu/navigation'
 import { SidebarNav } from '@/components/settings/menu/sidebar-nav'
 import { Separator } from '@/components/ui/separator'
-// import { BellIcon, CreditCardIcon, UserIcon } from '@heroicons/react/24/solid'
-import { CreditCardIcon, UserIcon } from '@heroicons/react/24/solid'
-
-// import { PencilRulerIcon } from 'lucide-react'
+import { UserIcon } from '@heroicons/react/24/solid'
 
 const sidebarNavItems = [
   {
     title: 'Account',
     href: '/settings',
     icon: <UserIcon className="h-4 w-4 mr-2" />,
-  },
-  // {
-  //   title: 'Appearance',
-  //   href: '/settings/appearance',
-  //   icon: <PencilRulerIcon className="h-4 w-4 mr-2" />,
-  // },
-  // {
-  //   title: 'Notifications',
-  //   href: '/settings/notifications',
-  //   icon: <BellIcon className="h-4 w-4 mr-2" />,
-  // },
-  {
-    title: 'Billing',
-    href: '/settings/billing',
-    icon: <CreditCardIcon className="h-4 w-4 mr-2" />,
   },
 ]
 

@@ -6,10 +6,7 @@ import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
 import Link from 'next/link'
 
 const navigation = {
-  product: [
-    { name: 'Changelog', href: '/changelog' },
-    { name: 'Pricing', href: '/pricing' },
-  ],
+  product: [{ name: 'Changelog', href: '/changelog' }],
   legal: [{ name: 'Privacy', href: '/privacy' }],
 }
 

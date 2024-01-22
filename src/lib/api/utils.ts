@@ -10,9 +10,6 @@ export async function getUserById({
     where: {
       id,
     },
-    include: {
-      Subscription: true,
-    },
   })
 }
 

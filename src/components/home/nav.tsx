@@ -14,10 +14,6 @@ export const navItems = [
     name: 'Changelog',
     slug: 'changelog',
   },
-  {
-    name: 'Pricing',
-    slug: 'pricing',
-  },
 ]
 
 export default function Nav() {

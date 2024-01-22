@@ -56,9 +56,8 @@ model User {
   Thought       Thought[]
   template      Template[]
 
-  updatedAt    DateTime      @updatedAt @map("updated_at")
-  createdAt    DateTime      @default(now()) @map("created_at")
-  Subscription Subscription?
+  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
 
   @@map("users")
 }
@@ -114,70 +113,8 @@ model SentimentAnalysis {
   @@map("sentiment_analysis")
 }
 
-enum SubscriptionFrequency {
-  month
-  year
-}
-
-enum SubscriptionPlanSlug {
-  free
-  plus
-}
-
-enum SubscriptionPlanStatus {
-  active
-  on_trial
-  past_due
-  cancelled
-  paused
-  unpaid
-  expired
-}
-
 enum TypeEmotion {
   positive
   negative
   neutral
-}
-
-model SubscriptionPlan {
-  id           String               @id @default(cuid())
-  productId    String?              @map("product_id")
-  variants     String[]
-  slug         SubscriptionPlanSlug @unique @default(free)
-  name         String
-  description  String
-  priceMonthly Float                @default(0) @map("price_monthly")
-  priceYearly  Float                @default(0) @map("price_yearly")
-  hrefMonthly  String               @map("href_monthly")
-  hrefYearly   String               @map("href_yearly")
-  features     String[]
-  mostPopular  Boolean              @default(false) @map("most_popular")
-  isActive     Boolean              @default(true) @map("is_active")
-  createdAt    DateTime             @default(now()) @map("created_at")
-  updatedAt    DateTime             @updatedAt @map("updated_at")
-  Subscription Subscription[]
-
-  @@map("subscription_plans")
-}
-
-model Subscription {
-  id                 String                  @id @default(cuid())
-  lemonSqueezyId     Int?                    @unique
-  email              String?
-  user               User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId             String                  @unique @map("user_id")
-  subscriptionPlan   SubscriptionPlan        @relation(fields: [subscriptionPlanId], references: [id], onDelete: Cascade)
-  subscriptionPlanId String                  @map("subscription_plan_id")
-  frequency          SubscriptionFrequency   @default(month)
-  status             SubscriptionPlanStatus?
-  renewsAt           DateTime?               @map("renews_at")
-  startsAt           DateTime                @default(now()) @map("starts_at")
-  resumesAt          DateTime?               @map("resumes_at")
-  endsAt             DateTime?               @map("ends_at")
-  createdAt          DateTime                @default(now()) @map("created_at")
-  updatedAt          DateTime                @updatedAt @map("updated_at")
-
-  @@index([lemonSqueezyId])
-  @@map("subscriptions")
 }
