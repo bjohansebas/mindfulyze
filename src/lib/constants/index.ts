@@ -4,8 +4,8 @@ export const HOME_DOMAIN =
   process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
     ? 'https://mindfulyze.com'
     : process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
-    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-    : 'http://localhost:3000'
+      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+      : 'http://localhost:3000'
 
 export const ENCRYPTION_METHOD = 'aes-256-cbc'
 

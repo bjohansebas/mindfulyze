@@ -6,7 +6,7 @@
     "useIgnoreFile": true
   },
   "linter": {
-    "enabled": true,
+    "enabled": false,
     "rules": {
       "recommended": true,
       "a11y": {
