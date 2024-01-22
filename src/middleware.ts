@@ -19,9 +19,10 @@ export default async function middleware(req: NextRequest) {
   // if there's no session and the path isn't /login or /register, redirect to /login
   if (!session?.email && PRIVATE_APP_ROUTES.has(key)) {
     return NextResponse.redirect(new URL(`/login${path !== '/' ? `?next=${encodeURIComponent(path)}` : ''}`, req.url))
+  }
 
-    // if there's a session
-  } else if (session?.email) {
+  // if there's a session
+  if (session?.email) {
     // if the user was created in the last 10s and the path isn't /welcome, redirect to /welcome
     // (this is a workaround because the `isNewUser` flag is triggered when a user does `dangerousEmailAccountLinking`)
     // if (

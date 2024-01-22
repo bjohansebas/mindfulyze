@@ -250,9 +250,9 @@ export async function duplicateTemplate(id: string) {
 
     if (response.status === 201 && response.data) {
       return { data: response.data, status: 201 }
-    } else {
-      return { message: "The template couldn't be created, try again anew.", status: 400, data: null }
     }
+
+    return { message: "The template couldn't be created, try again anew.", status: 400, data: null }
   } catch (e) {
     return { message: "The template couldn't be created, try again anew.", status: 400, data: null }
   }
