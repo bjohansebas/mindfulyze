@@ -55,35 +55,16 @@ export function ContentThoughts({ text, createdAt, id }: ContentThoughtsProps) {
     }
   }, 1000)
 
-  // const debouncedSentiment = useDebouncedCallback(async ({ data }: { data: string }) => {
-  //   try {
-  //     console.log(data)
-
-  //     // setSaveStatus('Saving...')
-  //     const response = await addSentimentToThoughts(id, data)
-  //     console.log(response)
-
-  //     if (response.data) {
-  //       // setSaveStatus('')
-  //     } else {
-  //       // setSaveStatus('Unsaved')
-  //     }
-  //   } catch (e) {
-  //     console.log(e)
-  //   }
-  // }, 2000)
-
   const editor = useEditor({
     content: generateJSON(text || '', TiptapExtensions),
     extensions: TiptapExtensions,
     editorProps: TiptapEditorProps,
     onUpdate: ({ editor }) => {
       const textHTML = editor.getHTML()
-      // const textPlane = editor.getText()
+
       if (text !== textHTML) {
         setSaveStatus('Unsaved')
         debouncedUpdates({ data: { textWithFormat: textHTML, created: newDate } })
-        // debouncedSentiment({ data: textPlane })
       }
     },
     autofocus: false,

@@ -1,8 +1,6 @@
 import CTA from '@/components/home/landing/cta'
 import Hero from '@/components/home/landing/hero'
 import { SecureDataPreview } from '@/components/home/landing/secure-data'
-import { SentimentAnalysis } from '@/components/home/landing/sentiment-analysis'
-import Templates from '@/components/home/landing/templates'
 import { ShieldCheckIcon, StarIcon } from '@heroicons/react/24/solid'
 import { Badge } from '@ui/badge'
 import { LayoutTemplateIcon } from 'lucide-react'
