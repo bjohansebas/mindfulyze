@@ -1,4 +1,4 @@
-import prisma from '@/lib/prisma'
+import { prisma } from '@mindfulyze/database'
 import { Template as TemplateProps } from '@prisma/client'
 
 export async function getUserById({

@@ -7,7 +7,6 @@ import z from 'zod'
 
 import { authOptions } from '@/lib/auth'
 import { USER_NOT_FOUND_ERROR } from '@/lib/constants/errors'
-import prisma from '@/lib/prisma'
 import { SetPasswordSchema } from '@/schemas/password'
 import {
   DeleteAccountSchemaForm,
@@ -17,6 +16,7 @@ import {
   validateEmail,
   validateName,
 } from '@/schemas/user'
+import { prisma } from '@mindfulyze/database'
 import { deleteAllTemplates } from './templates'
 import { deleteAllThoughts } from './thoughts'
 

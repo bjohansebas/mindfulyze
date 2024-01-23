@@ -1,4 +1,4 @@
-import prisma from '@/lib/prisma'
+import { prisma } from '@mindfulyze/database'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 
 import { AuthOptions } from 'next-auth'

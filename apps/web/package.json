@@ -3,12 +3,8 @@
   "private": true,
   "license": "MPL-2.0",
   "scripts": {
-    "build": "prisma generate & next build",
-    "db:generate": "prisma generate",
-    "db:push": "prisma db push --skip-generate --accept-data-loss",
-    "db:migrate": "prisma migrate dev",
-    "dev": "prisma generate & next dev",
-    "dev:db": "pnpm prisma studio --browser none",
+    "build": "next build",
+    "dev": "next dev",
     "lint": "biome check . --apply",
     "start": "next start"
   },
@@ -17,9 +13,9 @@
     "@hookform/resolvers": "3.3.4",
     "config": "workspace:*",
     "@mindfulyze/utils": "workspace:*",
+    "@mindfulyze/database": "workspace:*",
     "@next-auth/prisma-adapter": "1.0.7",
     "@paralleldrive/cuid2": "2.2.2",
-    "@prisma/client": "5.8.1",
     "@radix-ui/react-alert-dialog": "1.0.5",
     "@radix-ui/react-avatar": "1.0.4",
     "@radix-ui/react-dialog": "1.0.5",
@@ -90,7 +86,6 @@
     "eslint": "8.56.0",
     "eslint-config-next": "14.1.0",
     "postcss": "8.4.33",
-    "prisma": "5.8.1",
     "tailwindcss": "3.4.1",
     "typescript": "5.3.3"
   },

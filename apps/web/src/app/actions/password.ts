@@ -5,7 +5,7 @@ import { DEFAULT_COST_SALT, NEXT_SECRET } from '@/lib/constants'
 import { encryptData } from '@/lib/encrypt'
 import { NewPasswordSchema, validateNewPassword } from '@/schemas/password'
 
-import prisma from '@/lib/prisma'
+import { prisma } from '@mindfulyze/database'
 import bcrypt from 'bcrypt'
 import { getServerSession } from 'next-auth'
 import z from 'zod'

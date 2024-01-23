@@ -7,6 +7,8 @@
     "clean": "turbo clean",
     "commit": "git-cz",
     "dev": "turbo dev",
+    "db:generate": "turbo db:generate",
+    "db:push": "turbo db:push",
     "lint": "turbo lint",
     "prepare": "husky install"
   },
