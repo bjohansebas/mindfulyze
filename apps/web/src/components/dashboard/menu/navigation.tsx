@@ -1,8 +1,8 @@
 import { ButtonFeedBack } from './button-feedback'
 
-import { Template } from '@/@types/template'
 import { Logo, LogoType } from '@/components/shared/icons'
 import { Skeleton } from '@/components/ui/skeleton'
+import { Template } from '@/types/template'
 import { ChatBubbleOvalLeftIcon } from '@heroicons/react/24/solid'
 import { LayoutTemplateIcon, PenLineIcon } from 'lucide-react'
 import dynamic from 'next/dynamic'

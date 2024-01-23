@@ -1,9 +1,9 @@
 'use client'
 
-import { Template } from '@/@types/template'
 import { createThought } from '@/app/actions/thoughts'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { Template } from '@/types/template'
 import MenuTemplate from '../templates/menu-template'
 
 import { PencilIcon } from '@heroicons/react/24/solid'

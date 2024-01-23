@@ -1,7 +1,7 @@
 import crypto from 'crypto'
 
-import { EncryptDataProps } from '@/@types/encrypt'
 import { ENCRYPTION_METHOD, SECRET_IV } from '@/lib/constants'
+import { EncryptDataProps } from '@/types/encrypt'
 
 /**
  * Generate a secret hash to use for encryption.

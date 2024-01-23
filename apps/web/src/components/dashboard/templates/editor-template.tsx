@@ -8,7 +8,6 @@ import { TiptapEditorProps } from '@/components/editor/props'
 import { useEditor } from '@tiptap/react'
 import { useState } from 'react'
 
-import { Template } from '@/@types/template'
 import { deleteTemplate, updateTemplate } from '@/app/actions/templates'
 import Editor from '@/components/editor'
 import {
@@ -25,6 +24,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { TemplateSchema } from '@/schemas/template'
+import { Template } from '@/types/template'
 import { TrashIcon } from '@heroicons/react/24/solid'
 import { generateJSON } from '@tiptap/html'
 import { useRouter } from 'next/navigation'

@@ -1,6 +1,5 @@
 'use server'
 
-import { Thought } from '@/@types/thought'
 import { authOptions } from '@/lib/auth'
 import { NEXT_SECRET } from '@/lib/constants'
 import { SUPABASE_BUCKET_THOUGHTS } from '@/lib/constants/supabase'
@@ -10,6 +9,7 @@ import { createFile, deleteFile, downloadFile, updateFile } from '@/lib/supabase
 import { createId, parseDate } from '@/lib/utils'
 import { ThoughtSchema } from '@/schemas/thought'
 import { validatePartialThought } from '@/schemas/thought'
+import { Thought } from '@/types/thought'
 import { getTemplateById, getTemplateDefault } from './templates'
 
 import { getServerSession } from 'next-auth'

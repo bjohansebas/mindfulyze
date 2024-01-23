@@ -1,9 +1,9 @@
 'use client'
 
-import { Template } from '@/@types/template'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { stringAvatar } from '@/lib/utils'
+import { Template } from '@/types/template'
 import { Button } from '../../ui/button'
 import { CreateThought } from '../thoughts/create-thoughts'
 import { ButtonFeedBack } from './button-feedback'
