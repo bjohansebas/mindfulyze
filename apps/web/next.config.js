@@ -8,7 +8,6 @@ const nextConfig = {
     serverActions: {
       bodySizeLimit: '3mb',
     },
-    webpackBuildWorker: true,
   },
   images: {
     remotePatterns: [
