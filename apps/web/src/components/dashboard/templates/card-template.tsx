@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation'
 
 import { createThought } from '@/app/actions/thoughts'
-import { Button } from '@/components/ui/button'
+import { Button } from '@mindfulyze/ui'
 import { toast } from 'sonner'
 import { OptionsCardTemplate } from './options-card-template'
 

@@ -1,6 +1,6 @@
 import { LogoType } from '@/components/shared/icons'
 import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
-import { Button } from '@ui/button'
+import { Button } from '@mindfulyze/ui'
 
 import Link from 'next/link'
 

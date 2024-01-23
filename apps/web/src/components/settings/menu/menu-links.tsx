@@ -2,9 +2,9 @@
 
 import { ButtonFeedBack } from '@/components/dashboard/menu/button-feedback'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { stringAvatar } from '@/lib/utils'
+import { Button } from '@mindfulyze/ui'
 
 import { ChatBubbleOvalLeftIcon, Cog6ToothIcon } from '@heroicons/react/24/solid'
 import { LayoutTemplateIcon, LogOut, PenLineIcon } from 'lucide-react'

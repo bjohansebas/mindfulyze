@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button'
+import { Button } from '@mindfulyze/ui'
 import { constructMetadata } from '@mindfulyze/utils'
 import { PasswordForm } from './form'
 

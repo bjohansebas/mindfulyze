@@ -4,10 +4,10 @@ import { Logo, LogoType } from '@/components/shared/icons'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Template } from '@/types/template'
 import { ChatBubbleOvalLeftIcon } from '@heroicons/react/24/solid'
+import { Button } from '@mindfulyze/ui'
 import { LayoutTemplateIcon, PenLineIcon } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import { Button } from '../../ui/button'
 import { CreateThought } from '../thoughts/create-thoughts'
 
 const NavigationMobile = dynamic(() => import('./navigation-mobile'), {

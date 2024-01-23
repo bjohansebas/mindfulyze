@@ -15,10 +15,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
-import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { ThoughtSchema } from '@/schemas/thought'
+import { Button } from '@mindfulyze/ui'
 
 import { TrashIcon } from '@heroicons/react/24/solid'
 import { generateJSON } from '@tiptap/html'

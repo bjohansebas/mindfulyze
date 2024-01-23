@@ -3,7 +3,7 @@
 import { signIn, useSession } from 'next-auth/react'
 import Link from 'next/link'
 
-import { Button } from '@ui/button'
+import { Button } from '@mindfulyze/ui'
 import { MenuItem } from './nav-mobile'
 
 export function ButtonNav() {

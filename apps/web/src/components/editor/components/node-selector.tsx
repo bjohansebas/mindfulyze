@@ -15,7 +15,7 @@ import {
 } from 'lucide-react'
 import { Dispatch, FC, SetStateAction } from 'react'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@mindfulyze/ui'
 import { BubbleMenuItem } from './bubble-menu'
 
 interface NodeSelectorProps {

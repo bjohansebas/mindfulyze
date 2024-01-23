@@ -1,6 +1,5 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { ChevronDownIcon } from '@heroicons/react/24/solid'
+import { Button } from '@mindfulyze/ui'
 
 import { createTemplate } from '@/app/actions/templates'
 import { createThought } from '@/app/actions/thoughts'

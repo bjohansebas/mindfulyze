@@ -3,7 +3,7 @@
 import { useSearchParams } from 'next/navigation'
 
 import Google from '@/components/shared/icons/google'
-import { Button } from '@/components/ui/button'
+import { Button } from '@mindfulyze/ui'
 import { signIn } from 'next-auth/react'
 import { useEffect } from 'react'
 import { toast } from 'sonner'
