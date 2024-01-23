@@ -93,11 +93,8 @@ const config: Config = {
         mono: ['var(--font-geist-mono)', 'system-ui', 'sans-serif'],
       },
     },
-    plugins: [
-      // Tailwind plugins
-      typography,
-    ],
   },
+  plugins: [typography],
 }
 
 export default config
