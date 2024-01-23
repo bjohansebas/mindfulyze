@@ -1,4 +1,4 @@
-import { constructMetadata } from '@/lib/metadata'
+import { constructMetadata } from '@mindfulyze/utils'
 
 import { AccountForm } from '@/app/(settings)/settings/form'
 import { Separator } from '@/components/ui/separator'

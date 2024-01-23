@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { constructMetadata } from '@/lib/metadata'
+import { constructMetadata } from '@mindfulyze/utils'
 import { PasswordForm } from './form'
 
 import { Suspense } from 'react'

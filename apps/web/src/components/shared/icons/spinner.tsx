@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn } from '@mindfulyze/utils'
 import styles from './spinner.module.css'
 
 export default function Spinner({ className }: { className?: string }) {

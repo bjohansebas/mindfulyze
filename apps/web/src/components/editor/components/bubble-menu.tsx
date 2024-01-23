@@ -3,7 +3,7 @@ import { BoldIcon, CodeIcon, ItalicIcon, StrikethroughIcon, UnderlineIcon } from
 import { FC, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { cn } from '@mindfulyze/utils'
 import { Editor } from '@tiptap/core'
 import { ColorSelector } from './color-selector'
 import { NodeSelector } from './node-selector'

@@ -1,6 +1,6 @@
 import Logo from '@/components/shared/icons/logo'
 import { Button } from '@/components/ui/button'
-import { constructMetadata } from '@/lib/metadata'
+import { constructMetadata } from '@mindfulyze/utils'
 import Link from 'next/link'
 import { Suspense } from 'react'
 import { SignUpForm } from './form'

@@ -2,8 +2,8 @@
 
 import { createThought } from '@/app/actions/thoughts'
 import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
 import { Template } from '@/types/template'
+import { cn } from '@mindfulyze/utils'
 import MenuTemplate from '../templates/menu-template'
 
 import { PencilIcon } from '@heroicons/react/24/solid'

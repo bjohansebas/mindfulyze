@@ -1,6 +1,6 @@
 'use client'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@mindfulyze/utils'
 import { EditorContent, EditorContentProps } from '@tiptap/react'
 import { Dispatch, SetStateAction } from 'react'
 import { EditorBubbleMenu } from './components/bubble-menu'

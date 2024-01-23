@@ -1,8 +1,8 @@
 import { MDX } from '@/components/content/mdx'
 import { Twitter } from '@/components/shared/icons'
 import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
-import { constructMetadata } from '@/lib/metadata'
 import { formatDate } from '@/lib/utils'
+import { constructMetadata } from '@mindfulyze/utils'
 
 import { allChangelogPosts } from 'contentlayer/generated'
 

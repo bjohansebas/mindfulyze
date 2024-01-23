@@ -3,8 +3,7 @@ import '@/styles/globals.css'
 import { GeistMono, GeistSans } from 'geist/font'
 import { Viewport } from 'next'
 
-import { constructMetadata } from '@/lib/metadata'
-import { cn } from '@/lib/utils'
+import { cn, constructMetadata } from '@mindfulyze/utils'
 import { Provider } from './providers'
 
 export const metadata = constructMetadata()

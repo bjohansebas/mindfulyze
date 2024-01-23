@@ -2,7 +2,7 @@ import { allLegalPosts } from 'contentlayer/generated'
 import { Metadata } from 'next'
 
 import LegalPage from '@/components/content/legal'
-import { constructMetadata } from '@/lib/metadata'
+import { constructMetadata } from '@mindfulyze/utils'
 
 export const metadata: Metadata = constructMetadata({
   title: 'Privacy Policy – Mindfulyze',

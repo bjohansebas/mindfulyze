@@ -3,8 +3,8 @@ import { Twitter } from '@/components/shared/icons'
 import Facebook from '@/components/shared/icons/facebook'
 import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
 import { HOME_DOMAIN } from '@/lib/constants'
-import { constructMetadata } from '@/lib/metadata'
 import { formatDate } from '@/lib/utils'
+import { constructMetadata } from '@mindfulyze/utils'
 
 import { allChangelogPosts } from 'contentlayer/generated'
 

@@ -1,14 +1,7 @@
 import { init } from '@paralleldrive/cuid2'
-import { type ClassValue, clsx } from 'clsx'
 import dayjs from 'dayjs'
 import timezone from 'dayjs/plugin/timezone.js'
 import utc from 'dayjs/plugin/utc.js'
-import { Session } from 'next-auth'
-import { twMerge } from 'tailwind-merge'
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}
 
 export function capitalize(str: string) {
   if (!str || typeof str !== 'string') return str

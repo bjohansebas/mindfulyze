@@ -4,7 +4,7 @@ import * as React from 'react'
 import { Controller, ControllerProps, FieldPath, FieldValues, FormProvider, useFormContext } from 'react-hook-form'
 
 import { Label } from '@/components/ui/label'
-import { cn } from '@/lib/utils'
+import { cn } from '@mindfulyze/utils'
 
 const Form = FormProvider
 

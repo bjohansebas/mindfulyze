@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn } from '@mindfulyze/utils'
 import { ReactNode } from 'react'
 
 export default function MaxWidthWrapper({
