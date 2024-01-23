@@ -15,7 +15,7 @@
   "dependencies": {
     "@heroicons/react": "2.1.1",
     "@hookform/resolvers": "3.3.4",
-    "@mindfulyze/tailwind-config": "workspace:*",
+    "config": "workspace:*",
     "@mindfulyze/utils": "workspace:*",
     "@next-auth/prisma-adapter": "1.0.7",
     "@paralleldrive/cuid2": "2.2.2",
@@ -92,8 +92,7 @@
     "postcss": "8.4.33",
     "prisma": "5.8.1",
     "tailwindcss": "3.4.1",
-    "typescript": "5.3.3",
-    "tsconfig": "workspace:*"
+    "typescript": "5.3.3"
   },
   "engines": {
     "node": "18.x || 20.x",

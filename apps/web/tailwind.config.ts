@@ -1,4 +1,4 @@
-import sharedConfig from '@mindfulyze/tailwind-config/tailwind.config.ts'
+import sharedConfig from 'config/tailwind/tailwind.config.ts'
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
