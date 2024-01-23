@@ -1,4 +1,4 @@
-import { MAX_LENGTH_PW, MIN_LENGTH_PW } from '@/lib/constants'
+import { MAX_LENGTH_PW, MIN_LENGTH_PW } from '@mindfulyze/utils'
 
 import z from 'zod'
 

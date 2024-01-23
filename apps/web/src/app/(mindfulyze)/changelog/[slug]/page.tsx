@@ -1,16 +1,16 @@
+import { allChangelogPosts } from 'contentlayer/generated'
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
+
 import { MDX } from '@/components/content/mdx'
 import { Twitter } from '@/components/shared/icons'
 import Facebook from '@/components/shared/icons/facebook'
 import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
-import { HOME_DOMAIN } from '@/lib/constants'
 import { formatDate } from '@/lib/utils'
+
+import { HOME_DOMAIN } from '@mindfulyze/utils'
 import { constructMetadata } from '@mindfulyze/utils'
-
-import { allChangelogPosts } from 'contentlayer/generated'
-
-import type { Metadata } from 'next'
-import Link from 'next/link'
-import { notFound } from 'next/navigation'
 
 export async function generateStaticParams() {
   return allChangelogPosts.map((post) => ({

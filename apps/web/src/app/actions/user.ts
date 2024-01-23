@@ -6,7 +6,7 @@ import { getServerSession } from 'next-auth'
 import z from 'zod'
 
 import { authOptions } from '@/lib/auth'
-import { USER_NOT_FOUND_ERROR } from '@/lib/constants/errors'
+import { USER_NOT_FOUND_ERROR } from '@/messages'
 import { SetPasswordSchema } from '@/schemas/password'
 import {
   DeleteAccountSchemaForm,

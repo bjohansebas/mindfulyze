@@ -1,7 +1,6 @@
 import crypto from 'crypto'
 
-import { ENCRYPTION_METHOD, SECRET_IV } from '@/lib/constants'
-import { EncryptDataProps } from '@/types/encrypt'
+import { ENCRYPTION_METHOD, SECRET_IV } from '../constants'
 
 /**
  * Generate a secret hash to use for encryption.
@@ -20,8 +19,21 @@ export const generateKey = (password: string) => {
 
 const encryptionIV = crypto.createHash('sha512').update(SECRET_IV).digest('hex').substring(0, 16)
 
-// Encrypt data
-export function encryptData({ key, data }: EncryptDataProps) {
+/**
+ * Encrypts the given data using the provided key.
+ *
+ * @param {EncryptDataProps} params - The parameters for encrypting the data.
+ * @param {string} params.key - The key used for encryption.
+ * @param {string} params.data - The data to be encrypted.
+ * @returns {string} - The encrypted data in base64 format.
+ */
+export function encryptData({
+  key,
+  data,
+}: {
+  key: string
+  data: string
+}): string {
   const encryptKey = generateKey(key)
   const cipher = crypto.createCipheriv(ENCRYPTION_METHOD, encryptKey, encryptionIV)
 
@@ -29,8 +41,21 @@ export function encryptData({ key, data }: EncryptDataProps) {
   return Buffer.from(cipher.update(data, 'utf8', 'hex') + cipher.final('hex')).toString('base64')
 }
 
-// Decrypt data
-export function decryptData({ key, data }: EncryptDataProps) {
+/**
+ * Decrypts the given data using the provided key.
+ *
+ * @param {Object} params - The parameters for decrypting the data.
+ * @param {string} params.key - The key used for decryption.
+ * @param {string} params.data - The data to be decrypted.
+ * @returns {string} - The decrypted data.
+ */
+export function decryptData({
+  key,
+  data,
+}: {
+  key: string
+  data: string
+}): string {
   const encryptKey = generateKey(key)
 
   const buff = Buffer.from(data, 'base64')

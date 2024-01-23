@@ -1,19 +1,19 @@
 'use server'
 
+import dayjs from 'dayjs'
+import { getServerSession } from 'next-auth'
+import { revalidatePath } from 'next/cache'
+import * as z from 'zod'
+
+import { prisma } from '@mindfulyze/database'
+import { SUPABASE_BUCKET_TEMPLATES } from '@mindfulyze/utils'
+
 import { getTemplatesByDefault, getTemplatesByUser } from '@/lib/api/utils'
 import { authOptions } from '@/lib/auth'
-import { SUPABASE_BUCKET_TEMPLATES } from '@/lib/constants/supabase'
 import { createFile, deleteFile, downloadFile, updateFile } from '@/lib/supabase'
 import { createId } from '@/lib/utils'
 import { TemplateSchema, validatePartialTemplate, validateTemplate } from '@/schemas/template'
 import { Template } from '@/types/template'
-import { prisma } from '@mindfulyze/database'
-import dayjs from 'dayjs'
-
-import { getServerSession } from 'next-auth'
-import { revalidatePath } from 'next/cache'
-
-import * as z from 'zod'
 
 export interface TemplateResponse {
   data: Template[]

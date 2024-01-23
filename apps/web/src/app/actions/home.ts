@@ -1,6 +1,6 @@
 'use server'
 
-import { encryptData } from '@/lib/encrypt'
+import { encryptData } from '@mindfulyze/utils'
 
 // Create new thought for user
 export async function encriptText(text: string) {

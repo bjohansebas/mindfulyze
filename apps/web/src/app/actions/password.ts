@@ -1,14 +1,14 @@
 'use server'
 
-import { authOptions } from '@/lib/auth'
-import { DEFAULT_COST_SALT, NEXT_SECRET } from '@/lib/constants'
-import { encryptData } from '@/lib/encrypt'
-import { NewPasswordSchema, validateNewPassword } from '@/schemas/password'
-
-import { prisma } from '@mindfulyze/database'
 import bcrypt from 'bcrypt'
 import { getServerSession } from 'next-auth'
 import z from 'zod'
+
+import { prisma } from '@mindfulyze/database'
+import { DEFAULT_COST_SALT, NEXT_SECRET, encryptData } from '@mindfulyze/utils'
+
+import { authOptions } from '@/lib/auth'
+import { NewPasswordSchema, validateNewPassword } from '@/schemas/password'
 import { getUser } from './user'
 
 // Create new password for user

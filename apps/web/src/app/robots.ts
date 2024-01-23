@@ -1,5 +1,6 @@
-import { HOME_DOMAIN } from '@/lib/constants'
 import { MetadataRoute } from 'next'
+
+import { HOME_DOMAIN } from '@mindfulyze/utils'
 
 export default function robots(): MetadataRoute.Robots {
   return {
