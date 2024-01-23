@@ -3,12 +3,12 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
-import { updateEmail } from '@/app/actions/user'
 import Spinner from '@/components/shared/icons/spinner'
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { EmailFormSchema } from '@/schemas/user'
+import { updateEmail } from 'app/actions/user'
 
 import { useSession } from 'next-auth/react'
 import { toast } from 'sonner'

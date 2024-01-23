@@ -2,8 +2,8 @@
 
 import { Button } from '@/components/ui/button'
 
-import { createTemplate } from '@/app/actions/templates'
 import { PencilIcon } from '@heroicons/react/24/solid'
+import { createTemplate } from 'app/actions/templates'
 import { toast } from 'sonner'
 
 export async function handleCreateTemplate() {

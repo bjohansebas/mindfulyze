@@ -2,7 +2,6 @@
 
 import '@/styles/prosemirror.css'
 
-import { encriptText } from '@/app/actions/home'
 import Editor from '@/components/editor'
 import { TiptapExtensions } from '@/components/editor/extensions'
 import { TiptapEditorProps } from '@/components/editor/props'
@@ -11,6 +10,7 @@ import { cn } from '@mindfulyze/utils'
 import { generateJSON } from '@tiptap/html'
 import { useEditor } from '@tiptap/react'
 import { Button } from '@ui/button'
+import { encriptText } from 'app/actions/home'
 import { CopyIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useDebouncedCallback } from 'use-debounce'
