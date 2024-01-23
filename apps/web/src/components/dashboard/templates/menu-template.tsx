@@ -11,9 +11,9 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { ChevronDownIcon } from '@heroicons/react/24/solid'
 
+import { createTemplate } from '@/app/actions/templates'
+import { createThought } from '@/app/actions/thoughts'
 import { Template } from '@/types/template'
-import { createTemplate } from 'app/actions/templates'
-import { createThought } from 'app/actions/thoughts'
 
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'

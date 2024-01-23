@@ -8,6 +8,7 @@ import { TiptapEditorProps } from '@/components/editor/props'
 import { useEditor } from '@tiptap/react'
 import { useState } from 'react'
 
+import { deleteTemplate, updateTemplate } from '@/app/actions/templates'
 import Editor from '@/components/editor'
 import {
   AlertDialog,
@@ -26,7 +27,6 @@ import { TemplateSchema } from '@/schemas/template'
 import { Template } from '@/types/template'
 import { TrashIcon } from '@heroicons/react/24/solid'
 import { generateJSON } from '@tiptap/html'
-import { deleteTemplate, updateTemplate } from 'app/actions/templates'
 import { useRouter } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce'
 

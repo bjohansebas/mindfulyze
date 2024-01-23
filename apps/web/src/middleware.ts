@@ -1,8 +1,8 @@
 import { getToken } from 'next-auth/jwt'
 import { NextRequest, NextResponse } from 'next/server'
-import { PRIVATE_APP_ROUTES } from './src/lib/constants'
-import { parse } from './src/lib/middleware/utils'
-import { User } from './src/types/user'
+import { PRIVATE_APP_ROUTES } from './lib/constants'
+import { parse } from './lib/middleware/utils'
+import { User } from './types/user'
 
 export default async function middleware(req: NextRequest) {
   const { key, path } = parse(req)

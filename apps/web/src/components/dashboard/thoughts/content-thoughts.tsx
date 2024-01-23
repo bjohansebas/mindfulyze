@@ -1,5 +1,6 @@
 'use client'
 
+import { deleteThought, updateThought } from '@/app/actions/thoughts'
 import Editor from '@/components/editor'
 import { TiptapExtensions } from '@/components/editor/extensions'
 import { TiptapEditorProps } from '@/components/editor/props'
@@ -18,7 +19,6 @@ import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { ThoughtSchema } from '@/schemas/thought'
-import { deleteThought, updateThought } from 'app/actions/thoughts'
 
 import { TrashIcon } from '@heroicons/react/24/solid'
 import { generateJSON } from '@tiptap/html'

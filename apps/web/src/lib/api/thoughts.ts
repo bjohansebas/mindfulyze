@@ -1,6 +1,6 @@
+import { ThoughtResponse } from '@/app/actions/thoughts'
 import { prisma } from '@mindfulyze/database'
 import { Thought as ThoughtProps } from '@prisma/client'
-import { ThoughtResponse } from 'app/actions/thoughts'
 import dayjs from 'dayjs'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../auth'

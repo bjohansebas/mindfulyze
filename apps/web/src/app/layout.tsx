@@ -1,8 +1,6 @@
 import '@/styles/globals.css'
 
-import { GeistMono } from 'geist/font/mono'
-import { GeistSans } from 'geist/font/sans'
-
+import { GeistMono, GeistSans } from 'geist/font'
 import { Viewport } from 'next'
 
 import { cn, constructMetadata } from '@mindfulyze/utils'
@@ -22,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn(GeistSans.className, GeistMono.className)}>
+      <body className={cn('font-sans', GeistSans.variable, GeistMono.variable)}>
         <Provider>{children}</Provider>
       </body>
     </html>

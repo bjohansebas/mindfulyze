@@ -7,12 +7,12 @@ import { useSession } from 'next-auth/react'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
+import { updateName } from '@/app/actions/user'
 import Spinner from '@/components/shared/icons/spinner'
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { NameFormSchema } from '@/schemas/user'
-import { updateName } from 'app/actions/user'
 
 export function NameForm() {
   const { data: session, update } = useSession()

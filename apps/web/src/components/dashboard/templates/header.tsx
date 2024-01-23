@@ -1,7 +1,7 @@
 'use client'
 
+import { createTemplate } from '@/app/actions/templates'
 import { Button } from '@/components/ui/button'
-import { createTemplate } from 'app/actions/templates'
 import { usePathname, useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 

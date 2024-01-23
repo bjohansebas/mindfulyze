@@ -1,7 +1,7 @@
+import { getUser } from '@/app/actions/user'
 import { NewPasswordForm } from '@/components/settings/password/newPasswordForm'
 import { SetPasswordForm } from '@/components/settings/password/setPasswordForm'
 import { LockClosedIcon } from '@heroicons/react/24/solid'
-import { getUser } from 'app/actions/user'
 
 export async function PasswordForm() {
   const user = await getUser()

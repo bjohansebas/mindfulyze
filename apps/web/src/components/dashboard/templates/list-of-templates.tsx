@@ -1,4 +1,4 @@
-import { getTemplates } from 'app/actions/templates'
+import { getTemplates } from '@/app/actions/templates'
 import { CardTemplate } from './card-template'
 import { EmptyTemplate } from './empty-templates'
 

@@ -8,6 +8,7 @@ import {
   TrashIcon,
 } from '@heroicons/react/24/solid'
 
+import { deleteTemplate, duplicateTemplate, setDefaultTemplate } from '@/app/actions/templates'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,7 +16,6 @@ import {
   DropdownMenuPortal,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { deleteTemplate, duplicateTemplate, setDefaultTemplate } from 'app/actions/templates'
 
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
