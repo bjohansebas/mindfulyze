@@ -7,57 +7,6 @@ import remarkGfm from 'remark-gfm'
 import { HOME_DOMAIN } from './src/lib/constants'
 import { capitalize } from './src/lib/utils'
 
-export const BlogPost = defineDocumentType(() => ({
-  name: 'BlogPost',
-  filePathPattern: '**/blog/*.mdx',
-  contentType: 'mdx',
-  fields: {
-    title: {
-      type: 'string',
-      required: true,
-    },
-    seoTitle: {
-      type: 'string',
-    },
-    publishedAt: {
-      type: 'string',
-      required: true,
-    },
-    summary: {
-      type: 'string',
-      required: true,
-    },
-    seoDescription: {
-      type: 'string',
-    },
-    image: {
-      type: 'string',
-      required: true,
-    },
-    author: {
-      type: 'string',
-      required: true,
-    },
-    categories: {
-      type: 'list',
-      of: {
-        type: 'enum',
-        options: ['company', 'education', 'customer-stories'],
-        default: 'company',
-      },
-      required: true,
-    },
-    related: {
-      type: 'list',
-      of: {
-        type: 'string',
-      },
-    },
-  },
-  // @ts-ignore
-  computedFields: computedFields('blog'),
-}))
-
 export const ChangelogPost = defineDocumentType(() => ({
   name: 'ChangelogPost',
   filePathPattern: '**/changelog/*.mdx',
@@ -206,8 +155,7 @@ const computedFields = (type: 'blog' | 'changelog' | 'help' | 'legal') => ({
 
 export default makeSource({
   contentDirPath: 'content',
-  documentTypes: [BlogPost, ChangelogPost, LegalPost],
-  // documentTypes: [BlogPost, ChangelogPost, LegalPost, HelpPost],
+  documentTypes: [ChangelogPost, LegalPost],
   mdx: {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [
