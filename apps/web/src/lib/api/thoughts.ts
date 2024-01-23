@@ -1,11 +1,10 @@
 import { ThoughtResponse } from '@/app/actions/thoughts'
 import { prisma } from '@mindfulyze/database'
+import { NEXT_SECRET, decryptData } from '@mindfulyze/utils'
 import { Thought as ThoughtProps } from '@prisma/client'
 import dayjs from 'dayjs'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../auth'
-import { NEXT_SECRET } from '../constants'
-import { decryptData } from '../encrypt'
 import { downloadFile } from '../supabase'
 
 export async function getThoughtsByUser({

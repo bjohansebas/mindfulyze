@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 
-import { SUPABASE_ANON_KEY, SUPABASE_URL } from './constants/supabase'
+import { SUPABASE_ANON_KEY, SUPABASE_URL } from '@mindfulyze/utils'
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
   auth: {

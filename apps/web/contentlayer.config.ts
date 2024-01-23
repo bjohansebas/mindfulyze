@@ -4,8 +4,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 
-import { HOME_DOMAIN } from './src/lib/constants'
-import { capitalize } from './src/lib/utils'
+import { HOME_DOMAIN, capitalize } from '@mindfulyze/utils'
 
 export const ChangelogPost = defineDocumentType(() => ({
   name: 'ChangelogPost',

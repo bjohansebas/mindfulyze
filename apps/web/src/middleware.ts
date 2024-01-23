@@ -1,6 +1,6 @@
+import { PRIVATE_APP_ROUTES } from '@mindfulyze/utils'
 import { getToken } from 'next-auth/jwt'
 import { NextRequest, NextResponse } from 'next/server'
-import { PRIVATE_APP_ROUTES } from './lib/constants'
 import { parse } from './lib/middleware/utils'
 import { User } from './types/user'
 

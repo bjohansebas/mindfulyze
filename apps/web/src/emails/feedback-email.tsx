@@ -1,5 +1,5 @@
+import { MINDFULYZE_LOGO } from '@mindfulyze/utils'
 import { Body, Container, Head, Heading, Html, Img, Preview, Section, Tailwind, Text } from '@react-email/components'
-import { MINDFULYZE_LOGO } from '../lib/constants'
 
 export default function FeedbackEmail({
   email = 'panic@thedis.co',

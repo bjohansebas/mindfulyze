@@ -13,6 +13,9 @@
       "@/*": [
         "src/*",
       ],
+      "@lib/*": [
+"src/*"
+      ],
       "contentlayer/generated": ["./.contentlayer/generated"]
     },
     "downlevelIteration": true,
