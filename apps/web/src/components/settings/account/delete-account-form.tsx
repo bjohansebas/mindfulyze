@@ -20,7 +20,7 @@ import {
 } from '@/components/ui/dialog'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Label } from '@/components/ui/label'
-import { CONFIRM_MESSAGE } from '@/lib/constants'
+import { CONFIRM_MESSAGE } from '@/messages'
 import { signOut, useSession } from 'next-auth/react'
 import { toast } from 'sonner'
 import { z } from 'zod'

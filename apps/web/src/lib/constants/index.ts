@@ -47,5 +47,3 @@ export const BLOG_CATEGORIES: {
   //   description: "Learn how Mindfulyze customers use Mindfulyze.",
   // },
 ]
-
-export const CONFIRM_MESSAGE = 'confirm delete account'
