@@ -1,8 +1,8 @@
 'use client'
 
 import { createThought } from '@/app/actions/thoughts'
+import { Button } from '@/components/ui/button'
 import { Template } from '@/types/template'
-import { Button } from '@mindfulyze/ui'
 import { cn } from '@mindfulyze/utils'
 import MenuTemplate from '../templates/menu-template'
 

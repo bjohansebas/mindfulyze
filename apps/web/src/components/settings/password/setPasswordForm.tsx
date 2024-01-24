@@ -6,11 +6,11 @@ import * as z from 'zod'
 
 import { encryptPassword } from '@/app/actions/password'
 import { verifyPassword } from '@/app/actions/user'
+import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import usePassword from '@/lib/hooks/usePassword'
 import { SetPasswordSchema } from '@/schemas/password'
-import { Button } from '@mindfulyze/ui'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 

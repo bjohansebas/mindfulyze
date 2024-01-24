@@ -1,10 +1,10 @@
 'use client'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { stringAvatar } from '@/lib/utils'
 import { ArrowLeftOnRectangleIcon as Logout, Cog6ToothIcon } from '@heroicons/react/24/solid'
-import { Button } from '@mindfulyze/ui'
 import { PenLineIcon } from 'lucide-react'
 
 import { signOut, useSession } from 'next-auth/react'

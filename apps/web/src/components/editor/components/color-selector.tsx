@@ -1,5 +1,5 @@
+import { Button } from '@/components/ui/button'
 import { Popover, PopoverTrigger } from '@/components/ui/popover'
-import { Button } from '@mindfulyze/ui'
 import { PopoverContent } from '@radix-ui/react-popover'
 import { Editor } from '@tiptap/core'
 import { Check, ChevronDown } from 'lucide-react'

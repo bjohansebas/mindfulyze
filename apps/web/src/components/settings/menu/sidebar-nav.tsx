@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-import { Button } from '@mindfulyze/ui'
+import { Button } from '@/components/ui/button'
 import { cn } from '@mindfulyze/utils'
 
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {

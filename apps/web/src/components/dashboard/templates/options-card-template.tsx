@@ -17,7 +17,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-import { Button } from '@mindfulyze/ui'
+import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { toast } from 'sonner'
 

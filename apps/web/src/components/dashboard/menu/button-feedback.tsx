@@ -2,12 +2,12 @@
 
 import { sendFeedback } from '@/app/actions/feedback'
 import Spinner from '@/components/shared/icons/spinner'
+import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Textarea } from '@/components/ui/textarea'
 import { FeedbackSchema } from '@/schemas/feedback'
 import { ChatBubbleBottomCenterTextIcon } from '@heroicons/react/24/solid'
-import { Button } from '@mindfulyze/ui'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Dispatch, SetStateAction, useState } from 'react'

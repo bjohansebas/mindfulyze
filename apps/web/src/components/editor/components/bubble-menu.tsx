@@ -2,7 +2,7 @@ import { BubbleMenu, BubbleMenuProps } from '@tiptap/react'
 import { BoldIcon, CodeIcon, ItalicIcon, StrikethroughIcon, UnderlineIcon } from 'lucide-react'
 import { FC, useState } from 'react'
 
-import { Button } from '@mindfulyze/ui'
+import { Button } from '@/components/ui/button'
 import { cn } from '@mindfulyze/utils'
 import { Editor } from '@tiptap/core'
 import { ColorSelector } from './color-selector'

@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@mindfulyze/ui'
+import { Button } from '@/components/ui/button'
 
 import { createTemplate } from '@/app/actions/templates'
 import { PencilIcon } from '@heroicons/react/24/solid'

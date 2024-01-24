@@ -4,9 +4,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
 import { deleteAccount, updateEmail } from '@/app/actions/user'
+import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { DeleteAccountSchemaForm, EmailFormSchema } from '@/schemas/user'
-import { Button } from '@mindfulyze/ui'
 
 import Spinner from '@/components/shared/icons/spinner'
 import {

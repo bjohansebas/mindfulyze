@@ -1,7 +1,7 @@
 'use client'
 
 import { createTemplate } from '@/app/actions/templates'
-import { Button } from '@mindfulyze/ui'
+import { Button } from '@/components/ui/button'
 import { usePathname, useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 

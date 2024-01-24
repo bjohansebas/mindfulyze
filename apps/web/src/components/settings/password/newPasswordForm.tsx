@@ -7,11 +7,11 @@ import { toast } from 'sonner'
 import * as z from 'zod'
 
 import { createPassword } from '@/app/actions/password'
+import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import usePassword from '@/lib/hooks/usePassword'
 import { NewPasswordSchema } from '@/schemas/password'
-import { Button } from '@mindfulyze/ui'
 
 export function NewPasswordForm() {
   const router = useRouter()

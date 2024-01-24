@@ -21,11 +21,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
+import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { TemplateSchema } from '@/schemas/template'
 import { Template } from '@/types/template'
 import { TrashIcon } from '@heroicons/react/24/solid'
-import { Button } from '@mindfulyze/ui'
 import { generateJSON } from '@tiptap/html'
 import { useRouter } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce'
