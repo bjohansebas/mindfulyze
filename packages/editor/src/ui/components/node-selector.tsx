@@ -1,5 +1,6 @@
-// import { PopoverContent } from '@radix-ui/react-popover'
+import * as Popover from '@radix-ui/react-popover'
 import { Editor } from '@tiptap/core'
+
 import {
   Check,
   CheckSquare,
@@ -14,7 +15,7 @@ import {
 } from 'lucide-react'
 import { Dispatch, FC, SetStateAction } from 'react'
 
-import { Button, Popover, PopoverContent, PopoverTrigger } from '@mindfulyze/ui'
+import { Button } from '@mindfulyze/ui'
 import { BubbleMenuItem } from './bubble-menu'
 
 interface NodeSelectorProps {
@@ -87,15 +88,15 @@ export const NodeSelector: FC<NodeSelectorProps> = ({ editor, isOpen, setIsOpen 
   }
 
   return (
-    <Popover open={isOpen}>
+    <Popover.Root open={isOpen}>
       <div className="relative h-full">
-        <PopoverTrigger onClick={() => setIsOpen(!isOpen)} asChild>
+        <Popover.Trigger onClick={() => setIsOpen(!isOpen)} asChild>
           <Button variant="ghost" className="rounded-none px-2 gap-1">
             <span>{activeItem?.name}</span>
             <ChevronDown className="h-4 w-4" />
           </Button>
-        </PopoverTrigger>
-        <PopoverContent
+        </Popover.Trigger>
+        <Popover.Content
           align="start"
           className="z-[99999] my-1 flex max-h-80 w-48 flex-col overflow-hidden overflow-y-auto rounded bg-card border p-1 shadow-xl animate-in fade-in slide-in-from-top-1"
         >
@@ -119,8 +120,8 @@ export const NodeSelector: FC<NodeSelectorProps> = ({ editor, isOpen, setIsOpen 
               {activeItem.name === item.name && <Check className="h-4 w-4" />}
             </Button>
           ))}
-        </PopoverContent>
+        </Popover.Content>
       </div>
-    </Popover>
+    </Popover.Root>
   )
 }

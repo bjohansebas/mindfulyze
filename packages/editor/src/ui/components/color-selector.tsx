@@ -1,4 +1,5 @@
-import { Button, Popover, PopoverContent, PopoverTrigger } from '@mindfulyze/ui'
+import { Button } from '@mindfulyze/ui'
+import * as Popover from '@radix-ui/react-popover'
 import { Editor } from '@tiptap/core'
 import { Check, ChevronDown } from 'lucide-react'
 import { Dispatch, FC, SetStateAction } from 'react'
@@ -98,9 +99,9 @@ export const ColorSelector: FC<ColorSelectorProps> = ({ editor, isOpen, setIsOpe
   const activeHighlightItem = HIGHLIGHT_COLORS.find(({ color }) => editor.isActive('highlight', { color }))
 
   return (
-    <Popover open={isOpen}>
+    <Popover.Root open={isOpen}>
       <div className="relative h-full">
-        <PopoverTrigger onClick={() => setIsOpen(!isOpen)} asChild>
+        <Popover.Trigger onClick={() => setIsOpen(!isOpen)} asChild>
           <Button variant="ghost" className="rounded-none px-2 gap-1">
             <span
               className="px-1 rounded-sm"
@@ -113,8 +114,8 @@ export const ColorSelector: FC<ColorSelectorProps> = ({ editor, isOpen, setIsOpe
             </span>
             <ChevronDown className="h-4 w-4" />
           </Button>
-        </PopoverTrigger>
-        <PopoverContent
+        </Popover.Trigger>
+        <Popover.Content
           align="start"
           className="z-[99999] my-1 flex max-h-80 w-48 flex-col overflow-hidden bg-card overflow-y-auto rounded border p-1 shadow-xl animate-in fade-in slide-in-from-top-1"
         >
@@ -167,8 +168,8 @@ export const ColorSelector: FC<ColorSelectorProps> = ({ editor, isOpen, setIsOpe
               {editor.isActive('highlight', { color }) && <Check className="h-4 w-4" />}
             </Button>
           ))}
-        </PopoverContent>
+        </Popover.Content>
       </div>
-    </Popover>
+    </Popover.Root>
   )
 }

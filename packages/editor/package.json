@@ -33,6 +33,7 @@
     "typescript": "5.3.3"
   },
   "dependencies": {
+    "@radix-ui/react-popover": "1.0.7",
     "class-variance-authority": "0.7.0",
     "@mindfulyze/ui": "workspace:*",
     "tailwindcss": "3.4.1",
