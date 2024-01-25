@@ -50,6 +50,9 @@ importers:
       '@mindfulyze/database':
         specifier: workspace:*
         version: link:../../packages/database
+      '@mindfulyze/editor':
+        specifier: workspace:*
+        version: link:../../packages/editor
       '@mindfulyze/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -98,48 +101,12 @@ importers:
       '@supabase/supabase-js':
         specifier: 2.39.3
         version: 2.39.3
-      '@tiptap/core':
-        specifier: 2.1.16
-        version: 2.1.16(@tiptap/pm@2.1.16)
-      '@tiptap/extension-color':
-        specifier: 2.1.16
-        version: 2.1.16(@tiptap/core@2.1.16)(@tiptap/extension-text-style@2.1.16)
-      '@tiptap/extension-highlight':
-        specifier: 2.1.16
-        version: 2.1.16(@tiptap/core@2.1.16)
-      '@tiptap/extension-horizontal-rule':
-        specifier: 2.1.16
-        version: 2.1.16(@tiptap/core@2.1.16)(@tiptap/pm@2.1.16)
-      '@tiptap/extension-placeholder':
-        specifier: 2.1.16
-        version: 2.1.16(@tiptap/core@2.1.16)(@tiptap/pm@2.1.16)
-      '@tiptap/extension-task-item':
-        specifier: 2.1.16
-        version: 2.1.16(@tiptap/core@2.1.16)(@tiptap/pm@2.1.16)
-      '@tiptap/extension-task-list':
-        specifier: 2.1.16
-        version: 2.1.16(@tiptap/core@2.1.16)
-      '@tiptap/extension-text-style':
-        specifier: 2.1.16
-        version: 2.1.16(@tiptap/core@2.1.16)
-      '@tiptap/extension-underline':
-        specifier: 2.1.16
-        version: 2.1.16(@tiptap/core@2.1.16)
       '@tiptap/html':
         specifier: 2.1.16
         version: 2.1.16(@tiptap/core@2.1.16)(@tiptap/pm@2.1.16)
-      '@tiptap/pm':
-        specifier: 2.1.16
-        version: 2.1.16
       '@tiptap/react':
         specifier: 2.1.16
         version: 2.1.16(@tiptap/core@2.1.16)(@tiptap/pm@2.1.16)(react-dom@18.2.0)(react@18.2.0)
-      '@tiptap/starter-kit':
-        specifier: 2.1.16
-        version: 2.1.16(@tiptap/pm@2.1.16)
-      '@tiptap/suggestion':
-        specifier: 2.1.16
-        version: 2.1.16(@tiptap/core@2.1.16)(@tiptap/pm@2.1.16)
       '@vercel/analytics':
         specifier: 1.1.2
         version: 1.1.2
@@ -305,6 +272,103 @@ importers:
       prisma:
         specifier: 5.8.1
         version: 5.8.1
+      typescript:
+        specifier: 5.3.3
+        version: 5.3.3
+
+  packages/editor:
+    dependencies:
+      '@mindfulyze/ui':
+        specifier: workspace:*
+        version: link:../ui
+      '@radix-ui/react-popover':
+        specifier: 1.0.7
+        version: 1.0.7(@types/react-dom@18.2.18)(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0)
+      '@tiptap/core':
+        specifier: 2.1.16
+        version: 2.1.16(@tiptap/pm@2.1.16)
+      '@tiptap/extension-color':
+        specifier: 2.1.16
+        version: 2.1.16(@tiptap/core@2.1.16)(@tiptap/extension-text-style@2.1.16)
+      '@tiptap/extension-highlight':
+        specifier: 2.1.16
+        version: 2.1.16(@tiptap/core@2.1.16)
+      '@tiptap/extension-horizontal-rule':
+        specifier: 2.1.16
+        version: 2.1.16(@tiptap/core@2.1.16)(@tiptap/pm@2.1.16)
+      '@tiptap/extension-placeholder':
+        specifier: 2.1.16
+        version: 2.1.16(@tiptap/core@2.1.16)(@tiptap/pm@2.1.16)
+      '@tiptap/extension-task-item':
+        specifier: 2.1.16
+        version: 2.1.16(@tiptap/core@2.1.16)(@tiptap/pm@2.1.16)
+      '@tiptap/extension-task-list':
+        specifier: 2.1.16
+        version: 2.1.16(@tiptap/core@2.1.16)
+      '@tiptap/extension-text-style':
+        specifier: 2.1.16
+        version: 2.1.16(@tiptap/core@2.1.16)
+      '@tiptap/extension-underline':
+        specifier: 2.1.16
+        version: 2.1.16(@tiptap/core@2.1.16)
+      '@tiptap/html':
+        specifier: 2.1.16
+        version: 2.1.16(@tiptap/core@2.1.16)(@tiptap/pm@2.1.16)
+      '@tiptap/pm':
+        specifier: 2.1.16
+        version: 2.1.16
+      '@tiptap/react':
+        specifier: 2.1.16
+        version: 2.1.16(@tiptap/core@2.1.16)(@tiptap/pm@2.1.16)(react-dom@18.2.0)(react@18.2.0)
+      '@tiptap/starter-kit':
+        specifier: 2.1.16
+        version: 2.1.16(@tiptap/pm@2.1.16)
+      '@tiptap/suggestion':
+        specifier: 2.1.16
+        version: 2.1.16(@tiptap/core@2.1.16)(@tiptap/pm@2.1.16)
+      '@types/react':
+        specifier: 18.2.48
+        version: 18.2.48
+      class-variance-authority:
+        specifier: 0.7.0
+        version: 0.7.0
+      lucide-react:
+        specifier: 0.314.0
+        version: 0.314.0(react@18.2.0)
+      next:
+        specifier: 14.1.0
+        version: 14.1.0(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+      react:
+        specifier: 18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: 18.2.0
+        version: 18.2.0(react@18.2.0)
+      tailwindcss:
+        specifier: 3.4.1
+        version: 3.4.1
+      tippy.js:
+        specifier: 6.3.7
+        version: 6.3.7
+      tiptap-markdown:
+        specifier: 0.8.9
+        version: 0.8.9(@tiptap/core@2.1.16)
+    devDependencies:
+      '@mindfulyze/utils':
+        specifier: workspace:*
+        version: link:../utils
+      autoprefixer:
+        specifier: 10.4.16
+        version: 10.4.16(postcss@8.4.33)
+      config:
+        specifier: workspace:*
+        version: link:../config
+      postcss:
+        specifier: 8.4.33
+        version: 8.4.33
+      tsup:
+        specifier: 8.0.1
+        version: 8.0.1(postcss@8.4.33)(typescript@5.3.3)
       typescript:
         specifier: 5.3.3
         version: 5.3.3
@@ -4563,7 +4627,7 @@ packages:
   /call-bind@1.0.2:
     resolution: {integrity: sha512-7O+FbCihrB5WGbFYesctwmTKae6rOiIzmz1icreWJ+0aA7LJfuqhEso2T9ncpcFtzMQtzXf2QGGueWJGTYsqrA==}
     dependencies:
-      function-bind: 1.1.1
+      function-bind: 1.1.2
       get-intrinsic: 1.2.1
     dev: true
 
@@ -5428,7 +5492,7 @@ packages:
       define-properties: 1.2.1
       es-abstract: 1.22.1
       es-set-tostringtag: 2.0.1
-      function-bind: 1.1.1
+      function-bind: 1.1.2
       get-intrinsic: 1.2.1
       globalthis: 1.0.3
       has-property-descriptors: 1.0.0
@@ -6140,12 +6204,8 @@ packages:
     requiresBuild: true
     optional: true
 
-  /function-bind@1.1.1:
-    resolution: {integrity: sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==}
-
   /function-bind@1.1.2:
     resolution: {integrity: sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==}
-    dev: true
 
   /function.prototype.name@1.1.5:
     resolution: {integrity: sha512-uN7m/BzVKQnCUF/iW8jYea67v++2u7m5UgENbHRtdDVclOUP+FMPlCNdmk0h/ysGyo2tavMJEDqJAkJdRa1vMA==}
@@ -6196,7 +6256,7 @@ packages:
   /get-intrinsic@1.2.1:
     resolution: {integrity: sha512-2DcsyfABl+gVHEfCOaTrWgyt+tb6MSEGmKq+kI5HwLbIYgjgmMcV8KQ41uaKz1xxUcn9tJtgFbQUEVcEbd0FYw==}
     dependencies:
-      function-bind: 1.1.1
+      function-bind: 1.1.2
       has: 1.0.3
       has-proto: 1.0.1
       has-symbols: 1.0.3
@@ -6454,7 +6514,7 @@ packages:
     resolution: {integrity: sha512-f2dvO0VU6Oej7RkWJGrehjbzMAjFp5/VKPp5tTpWIV4JHHZK1/BxbFRtf/siA2SWTe09caDmVtYYzWEIbBS4zw==}
     engines: {node: '>= 0.4.0'}
     dependencies:
-      function-bind: 1.1.1
+      function-bind: 1.1.2
 
   /hash-wasm@4.9.0:
     resolution: {integrity: sha512-7SW7ejyfnRxuOc7ptQHSf4LDoZaWOivfzqw+5rpcQku0nHfmicPKE51ra9BiRLAmT8+gGLestr1XroUkqdjL6w==}

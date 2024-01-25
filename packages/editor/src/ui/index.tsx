@@ -1,5 +1,3 @@
-'use client'
-
 import { cn } from '@mindfulyze/utils'
 import { EditorContent, EditorContentProps } from '@tiptap/react'
 import { Dispatch, SetStateAction } from 'react'

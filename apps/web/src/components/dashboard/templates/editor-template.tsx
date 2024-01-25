@@ -3,13 +3,11 @@
 import { toast } from 'sonner'
 import * as z from 'zod'
 
-import { TiptapExtensions } from '@/components/editor/extensions'
-import { TiptapEditorProps } from '@/components/editor/props'
+import { Editor, TiptapEditorProps, TiptapExtensions } from '@mindfulyze/editor'
 import { useEditor } from '@tiptap/react'
 import { useState } from 'react'
 
 import { deleteTemplate, updateTemplate } from '@/app/actions/templates'
-import Editor from '@/components/editor'
 import {
   AlertDialog,
   AlertDialogAction,

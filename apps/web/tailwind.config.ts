@@ -10,6 +10,7 @@ const config: Pick<Config, 'presets'> = {
         './src/components/**/*.{js,ts,jsx,tsx}',
         // h/t to https://www.willliu.com/blog/Why-your-Tailwind-styles-aren-t-working-in-your-Turborepo
         '../../packages/ui/src/**/*{.js,.ts,.jsx,.tsx}',
+        '../../packages/editor/src/**/*{.js,.ts,.jsx,.tsx}',
       ],
       theme: {
         extend: {

@@ -13,7 +13,7 @@ import {
   Text,
   TextQuote,
 } from 'lucide-react'
-import React, { ReactNode, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { ReactNode, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import tippy from 'tippy.js'
 
 interface CommandItemProps {

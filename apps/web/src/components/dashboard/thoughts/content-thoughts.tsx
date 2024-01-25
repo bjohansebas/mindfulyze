@@ -1,9 +1,8 @@
 'use client'
 
 import { deleteThought, updateThought } from '@/app/actions/thoughts'
-import Editor from '@/components/editor'
-import { TiptapExtensions } from '@/components/editor/extensions'
-import { TiptapEditorProps } from '@/components/editor/props'
+import { Editor, TiptapEditorProps, TiptapExtensions } from '@mindfulyze/editor'
+
 import {
   AlertDialog,
   AlertDialogAction,

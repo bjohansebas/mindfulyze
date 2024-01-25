@@ -3,9 +3,8 @@
 import '@/styles/prosemirror.css'
 
 import { encriptText } from '@/app/actions/home'
-import Editor from '@/components/editor'
-import { TiptapExtensions } from '@/components/editor/extensions'
-import { TiptapEditorProps } from '@/components/editor/props'
+import { Editor, TiptapEditorProps, TiptapExtensions } from '@mindfulyze/editor'
+
 import { CheckIcon } from '@heroicons/react/24/solid'
 import { cn } from '@mindfulyze/utils'
 import { generateJSON } from '@tiptap/html'
