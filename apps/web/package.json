@@ -12,7 +12,6 @@
     "@heroicons/react": "2.1.1",
     "@hookform/resolvers": "3.3.4",
     "config": "workspace:*",
-    "@mindfulyze/ui": "workspace:*",
     "@mindfulyze/utils": "workspace:*",
     "@mindfulyze/editor": "workspace:*",
     "@mindfulyze/database": "workspace:*",
@@ -74,6 +73,9 @@
     "postcss": "8.4.33",
     "tailwindcss": "3.4.1",
     "typescript": "5.3.3"
+  },
+  "peerDependencies": {
+    "@mindfulyze/ui": "workspace:*"
   },
   "engines": {
     "node": "18.x || 20.x",

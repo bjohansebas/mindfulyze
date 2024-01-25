@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "@mindfulyze/utils": "workspace:*",
+    "@mindfulyze/ui": "workspace:*",
     "@types/react": "18.2.48",
     "autoprefixer": "10.4.16",
     "config": "workspace:*",
@@ -35,7 +36,6 @@
   "dependencies": {
     "@radix-ui/react-popover": "1.0.7",
     "class-variance-authority": "0.7.0",
-    "@mindfulyze/ui": "workspace:*",
     "tailwindcss": "3.4.1",
     "@types/react": "18.2.48",
     "@tiptap/core": "2.1.16",

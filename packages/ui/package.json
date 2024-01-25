@@ -2,27 +2,22 @@
   "name": "@mindfulyze/ui",
   "version": "0.0.0",
   "sideEffects": false,
-  "main": "./dist/index.mjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.mts",
-  "files": ["dist/**"],
+  "main": "./src/index.tsx",
+  "types": "./src/index.tsx",
   "scripts": {
-    "build": "tsup",
-    "lint": "biome check .",
-    "dev": "tsup --watch"
+    "lint": "biome check ."
   },
   "peerDependencies": {
     "react": "^18.2.0"
   },
   "devDependencies": {
     "@mindfulyze/utils": "workspace:*",
-    "@types/react": "18.2.47",
+    "@types/react": "18.2.48",
     "autoprefixer": "10.4.16",
     "config": "workspace:*",
     "postcss": "8.4.33",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "tsup": "8.0.1",
     "typescript": "5.3.3"
   },
   "dependencies": {
