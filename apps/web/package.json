@@ -12,6 +12,7 @@
     "@heroicons/react": "2.1.1",
     "@hookform/resolvers": "3.3.4",
     "config": "workspace:*",
+    "@mindfulyze/ui": "workspace:*",
     "@mindfulyze/utils": "workspace:*",
     "@mindfulyze/database": "workspace:*",
     "@next-auth/prisma-adapter": "1.0.7",

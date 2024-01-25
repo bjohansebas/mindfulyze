@@ -3,7 +3,7 @@
 import { signIn, useSession } from 'next-auth/react'
 import Link from 'next/link'
 
-import { Button } from '@ui/button'
+import { Button } from '@mindfulyze/ui'
 
 export function ButtonNav() {
   const { status } = useSession()
@@ -17,8 +17,8 @@ export function ButtonNav() {
       ) : (
         <>
           <Button
-            variant="ghost"
-            className="rounded-full"
+            variant="outline"
+            shape="rounded"
             onClick={() => {
               signIn('google', { callbackUrl: '/home' })
             }}
@@ -26,7 +26,8 @@ export function ButtonNav() {
             Log in
           </Button>
           <Button
-            className="rounded-full"
+            variant="surface"
+            shape="rounded"
             onClick={() => {
               signIn('google', { callbackUrl: '/home' })
             }}
