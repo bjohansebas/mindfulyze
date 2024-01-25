@@ -5,9 +5,7 @@
   "license": "MIT",
   "files": ["./**"],
   "devDependencies": {
-    "tailwindcss": "3.4.1"
-  },
-  "dependencies": {
+    "tailwindcss": "3.4.1",
     "@tailwindcss/typography": "0.5.10",
     "tailwindcss-animate": "1.0.7"
   }

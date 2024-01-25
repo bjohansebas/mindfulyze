@@ -12,19 +12,6 @@ const config: Pick<Config, 'presets'> = {
         '../../packages/ui/src/**/*{.js,.ts,.jsx,.tsx}',
         '../../packages/editor/src/**/*{.js,.ts,.jsx,.tsx}',
       ],
-      theme: {
-        extend: {
-          ...sharedConfig?.theme?.extend,
-          container: {
-            center: true,
-            padding: '2rem',
-            screens: {
-              '2xl': '1400px',
-            },
-          },
-        },
-      },
-      plugins: sharedConfig.plugins,
     },
   ],
 }
