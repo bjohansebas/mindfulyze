@@ -21,7 +21,7 @@ const buttonVariants = cva(
         tiny: 'h-6 text-xs px-2.5 py-1',
         sm: 'h-8 text-sm px-3 py-2 leading-4',
         default: 'h-9 text-sm px-4 py-2',
-        lg: 'h-10 px-4 py-2 text-base',
+        lg: 'h-10 px-8 py-2 text-base',
       },
       shape: {
         square: 'rounded-[8px]',
