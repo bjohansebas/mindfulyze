@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@ui/button'
+import { Button } from '@mindfulyze/ui'
 
 import { signIn } from 'next-auth/react'
 
