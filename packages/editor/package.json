@@ -37,7 +37,6 @@
     "@mindfulyze/ui": "workspace:*",
     "tailwindcss": "3.4.1",
     "@types/react": "18.2.48",
-    "@radix-ui/react-popover": "1.0.7",
     "@tiptap/core": "2.1.16",
     "@tiptap/extension-color": "2.1.16",
     "@tiptap/extension-highlight": "2.1.16",

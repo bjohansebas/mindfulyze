@@ -1,9 +1,7 @@
-import { Button } from '@mindfulyze/ui'
-import { PopoverContent } from '@radix-ui/react-popover'
+import { Button, Popover, PopoverContent, PopoverTrigger } from '@mindfulyze/ui'
 import { Editor } from '@tiptap/core'
 import { Check, ChevronDown } from 'lucide-react'
 import { Dispatch, FC, SetStateAction } from 'react'
-import { Popover, PopoverTrigger } from '../../components/popover'
 
 export interface BubbleColorMenuItem {
   name: string
