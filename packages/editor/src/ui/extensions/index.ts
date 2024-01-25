@@ -1,3 +1,6 @@
+import { blockquoteVariants } from '@mindfulyze/ui'
+import { cn } from '@mindfulyze/utils'
+
 import { InputRule } from '@tiptap/core'
 import { Color } from '@tiptap/extension-color'
 import Highlight from '@tiptap/extension-highlight'
@@ -30,7 +33,7 @@ export const TiptapExtensions = [
     },
     blockquote: {
       HTMLAttributes: {
-        class: 'border-l-4 border-stone-700',
+        class: cn(blockquoteVariants({ alignment: 'left', variant: 'outline', size: 'sm' })),
       },
     },
     codeBlock: {
