@@ -63,7 +63,7 @@ export default async function ChangelogPost({
               {formatDate(post.publishedAt)}
             </time>
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-primary-600 sm:text-4xl">{post.title}</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-emerald-600 sm:text-4xl">{post.title}</h1>
         </div>
         <div className="mx-5 mb-10 flex items-center justify-between md:mx-0">
           <div className="flex items-center space-x-6">

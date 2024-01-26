@@ -13,7 +13,7 @@ export default function NavigationSettings() {
   return (
     <nav className="w-full bg-card border-b flex justify-between p-4 items-center">
       <Link href="/home">
-        <Logo className="text-primary-600 w-7 h-7" />
+        <Logo className="text-emerald-600 w-7 h-7" />
       </Link>
       <MenuLinks />
     </nav>

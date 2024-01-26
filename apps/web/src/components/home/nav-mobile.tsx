@@ -54,7 +54,7 @@ export default function MobileNav() {
                 <Link
                   href={`/${slug}`}
                   onClick={() => toggleOpen()}
-                  className="flex w-full font-semibold capitalize hover:text-primary-600"
+                  className="flex w-full font-semibold capitalize hover:text-emerald-600"
                 >
                   {name}
                 </Link>

@@ -16,7 +16,7 @@ export default function Login() {
         <Link href="/">
           <Logo className="h-10 w-10" />
         </Link>
-        <h3 className="text-xl font-semibold text-primary-600">Sign in to Mindfulyze</h3>
+        <h3 className="text-xl font-semibold text-emerald-600">Sign in to Mindfulyze</h3>
         <p className="text-sm">Start writing about your daily life.</p>
       </div>
       <div className="flex flex-col space-y-3 bg-card px-4 py-8 sm:px-16">
@@ -31,7 +31,7 @@ export default function Login() {
         </Suspense>
         <p className="text-center text-sm">
           Don&#39;t have an account?{' '}
-          <Link href="/signup" className="font-semibold text-primary-400">
+          <Link href="/signup" className="font-semibold text-emerald-400">
             Sign up
           </Link>
           .

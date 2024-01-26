@@ -21,7 +21,7 @@ export function ButtonNav() {
         <>
           <MenuItem key="Login">
             <Button
-              className="capitalize p-0 h-6 w-full font-semibold text-base justify-normal text-white hover:text-primary-600 hover:no-underline"
+              className="capitalize p-0 h-6 w-full font-semibold text-base justify-normal text-white hover:text-emerald-600 hover:no-underline"
               variant="link"
               onClick={() => {
                 signIn('google', { callbackUrl: '/home' })
@@ -33,7 +33,7 @@ export function ButtonNav() {
           <MenuItem className="my-3 h-px w-full bg-gray-300" />
           <MenuItem key="Signup">
             <Button
-              className="capitalize p-0 h-6 w-full font-semibold text-base justify-normal text-white hover:text-primary-600 hover:no-underline"
+              className="capitalize p-0 h-6 w-full font-semibold text-base justify-normal text-white hover:text-emerald-600 hover:no-underline"
               variant="link"
               onClick={() => {
                 signIn('google', { callbackUrl: '/home' })
