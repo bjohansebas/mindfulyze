@@ -78,7 +78,7 @@ export function Editor({
       onClick={() => {
         editor?.chain().focus().run()
       }}
-      className={cn('bg-card relative min-h-[500px] w-full', className)}
+      className={cn('bg-card relative min-h-[250px] w-full', className)}
     >
       {editor ? <EditorBubbleMenu editor={editor} /> : null}
       <EditorContent editor={editor} />
