@@ -1,5 +1,3 @@
-import '@/styles/prosemirror.css'
-
 import NavigationApp from '@/components/dashboard/menu/navigation'
 import { getTemplates } from '../actions/templates'
 

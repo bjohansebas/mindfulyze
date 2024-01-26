@@ -1,0 +1,26 @@
+:root {
+    --md-black: rgb(0 0 0);
+    --md-highlight-default: #ffffff;
+    --md-highlight-purple: #f6f3f8;
+    --md-highlight-red: #fdebeb;
+    --md-highlight-yellow: #fbf4a2;
+    --md-highlight-blue: #c1ecf9;
+    --md-highlight-green: #acf79f;
+    --md-highlight-orange: #faebdd;
+    --md-highlight-pink: #faf1f5;
+    --md-highlight-gray: #f1f1ef;
+
+}
+
+.dark {
+    --md-black: rgb(255 255 255);
+    --md-highlight-default: #000000;
+    --md-highlight-purple: #3f2c4b;
+    --md-highlight-red: #5c1a1a;
+    --md-highlight-yellow: #5c4b1a;
+    --md-highlight-blue: #1a3d5c;
+    --md-highlight-green: #1a5c20;
+    --md-highlight-orange: #5c3a1a;
+    --md-highlight-pink: #5c1a3a;
+    --md-highlight-gray: #3a3a3a;
+}

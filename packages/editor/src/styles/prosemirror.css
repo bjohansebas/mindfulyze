@@ -1,3 +1,7 @@
+/* .ProseMirror {
+  @apply pt-2.5 pb-4 px-3.5;
+} */
+
 .ProseMirror .is-editor-empty:first-child::before {
   content: attr(data-placeholder);
   float: left;

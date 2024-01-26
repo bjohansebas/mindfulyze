@@ -1,7 +1,5 @@
 'use client'
 
-import '@/styles/prosemirror.css'
-
 import { encriptText } from '@/app/actions/home'
 import { Editor, TiptapEditorProps, TiptapExtensions } from '@mindfulyze/editor'
 
