@@ -1,6 +1,8 @@
 import '@/styles/globals.css'
 
-import { GeistMono, GeistSans } from 'geist/font'
+import { GeistMono } from 'geist/font/mono'
+import { GeistSans } from 'geist/font/sans'
+
 import { Viewport } from 'next'
 
 import { cn, constructMetadata } from '@mindfulyze/utils'
@@ -19,8 +21,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={cn('dark font-sans', GeistSans.variable, GeistMono.variable)}>
+    <html lang="en" className="dark">
+      <body className={cn('dark:selection:bg-emerald-800', GeistSans.className, GeistMono.className)}>
         <Provider>{children}</Provider>
       </body>
     </html>
