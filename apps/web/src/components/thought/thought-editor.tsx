@@ -1,8 +1,9 @@
 'use client'
 
-import { deleteThought, updateDateThought, updateThought } from '@/app/actions/thoughts'
 import { Editor } from '@mindfulyze/editor'
+import { Button } from '@mindfulyze/ui'
 
+import { deleteThought, updateDateThought, updateThought } from '@/app/actions/thoughts'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,7 +15,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
-import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 
@@ -27,22 +27,18 @@ export interface ContentThoughtsProps {
   createdAt: Date
   id: string
 }
-export function ContentThoughts({ text, createdAt, id }: ContentThoughtsProps) {
+export function ThoughtEditor({ text, createdAt, id }: ContentThoughtsProps) {
   const [saveStatus, setSaveStatus] = useState('')
   const [disabled, setDisabled] = useState(false)
 
   const [newDate, setNewDate] = useState(createdAt)
 
   return (
-    <div className="h-[70vh] w-full max-w-full">
-      <div className="flex w-full border-b px-4 py-2 justify-between">
-        <div>
+    <div className="flex flex-col">
+      <div className="flex w-full justify-between py-3">
+        <div className="flex gap-3 items-center">
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" disabled={disabled}>
-                {newDate.toDateString()}
-              </Button>
-            </DropdownMenuTrigger>
+            <DropdownMenuTrigger disabled={disabled}>{newDate.toDateString()}</DropdownMenuTrigger>
             <DropdownMenuContent>
               <Calendar
                 mode="single"
@@ -60,8 +56,8 @@ export function ContentThoughts({ text, createdAt, id }: ContentThoughtsProps) {
         </div>
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button className="hover:text-red-500" variant="ghost" size="sm" disabled={disabled}>
-              <TrashIcon className="h-4 w-4" />
+            <Button className="hover:text-red-500" variant="ghost" disabled={disabled}>
+              <TrashIcon className="h-5 w-5" />
             </Button>
           </AlertDialogTrigger>
           <AlertDialogContent>
@@ -107,7 +103,7 @@ export function ContentThoughts({ text, createdAt, id }: ContentThoughtsProps) {
         autofocus={false}
         text={text}
         editable={disabled}
-        className="overflow-y-scroll h-[calc(70vh-50px)]"
+        className="bg-background border-primary border rounded-xl"
         onDebouncedUpdate={async (editor) => {
           if (editor) {
             const textHTML = editor.getHTML()
