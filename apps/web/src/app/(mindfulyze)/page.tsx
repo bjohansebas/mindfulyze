@@ -13,9 +13,7 @@ export default function Page() {
         <h1 className="font-extrabold text-4xl sm:text-5xl lg:text-6xl text-center tracking-tighter">
           Store moments from your day
           <br />
-          <span className="bg-gradient-to-r from-emerald-400 to-emerald-600 bg-clip-text text-transparent">
-            Securely
-          </span>
+          <span className="text-emerald-600">Securely</span>
         </h1>
         <h2 className="mt-6 text-lg text-slate-300 text-center max-w-2xl mx-auto">
           Capture, express, and reflect on your day in a secure and private space. Start your journey of self-expression
