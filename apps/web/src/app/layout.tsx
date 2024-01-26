@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn('font-sans', GeistSans.variable, GeistMono.variable)}>
+      <body className={cn('dark font-sans', GeistSans.variable, GeistMono.variable)}>
         <Provider>{children}</Provider>
       </body>
     </html>
