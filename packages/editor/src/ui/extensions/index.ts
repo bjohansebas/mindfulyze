@@ -9,6 +9,7 @@ import Placeholder from '@tiptap/extension-placeholder'
 import TaskItem from '@tiptap/extension-task-item'
 import TaskList from '@tiptap/extension-task-list'
 import TextStyle from '@tiptap/extension-text-style'
+import Typography from '@tiptap/extension-typography'
 import TiptapUnderline from '@tiptap/extension-underline'
 import StarterKit from '@tiptap/starter-kit'
 import { Markdown } from 'tiptap-markdown'
@@ -89,6 +90,7 @@ export const TiptapExtensions = [
   SlashCommand,
   TiptapUnderline,
   TextStyle,
+  Typography,
   Color,
   Highlight.configure({
     multicolor: true,
