@@ -1,13 +1,11 @@
 'use client'
 
 import { toast } from 'sonner'
-import * as z from 'zod'
 
-import { Editor, TiptapEditorProps, TiptapExtensions } from '@mindfulyze/editor'
-import { useEditor } from '@tiptap/react'
+import { Editor } from '@mindfulyze/editor'
 import { useState } from 'react'
 
-import { deleteTemplate, updateTemplate } from '@/app/actions/templates'
+import { deleteTemplate, updateTemplate, updateTitleTemplate } from '@/app/actions/templates'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,10 +19,8 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { TemplateSchema } from '@/schemas/template'
 import { Template } from '@/types/template'
 import { TrashIcon } from '@heroicons/react/24/solid'
-import { generateJSON } from '@tiptap/html'
 import { useRouter } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce'
 
@@ -38,10 +34,10 @@ export function EditorTemplate({ data: { text, title, id } }: EditorTemplateProp
   const [saveStatus, setSaveStatus] = useState('')
   const [newTitle, setNewTitle] = useState(title)
 
-  const debouncedUpdates = useDebouncedCallback(async ({ data }: { data: z.infer<typeof TemplateSchema> }) => {
+  const debouncedUpdates = useDebouncedCallback(async ({ data }: { data: string }) => {
     try {
       setSaveStatus('Saving...')
-      const response = await updateTemplate(id, data, `templates/${id}`)
+      const response = await updateTitleTemplate(id, data, `templates/${id}`)
 
       if (response.data) {
         setSaveStatus('')
@@ -51,20 +47,7 @@ export function EditorTemplate({ data: { text, title, id } }: EditorTemplateProp
     } catch (e) {
       console.log(e)
     }
-  }, 2000)
-
-  const editor = useEditor({
-    content: generateJSON(text, TiptapExtensions),
-    extensions: TiptapExtensions,
-    editorProps: TiptapEditorProps,
-    onUpdate: ({ editor }) => {
-      const textHTML = editor.getHTML()
-
-      setSaveStatus('Unsaved')
-      debouncedUpdates({ data: { textWithFormat: textHTML, title: newTitle } })
-    },
-    autofocus: 'end',
-  })
+  }, 1000)
 
   return (
     <div className="h-full w-full">
@@ -73,10 +56,10 @@ export function EditorTemplate({ data: { text, title, id } }: EditorTemplateProp
           <Input
             placeholder="Untitled"
             value={newTitle}
-            onChange={(e) => {
+            onChange={async (e) => {
               setSaveStatus('Unsaved')
               setNewTitle(e.target.value)
-              debouncedUpdates({ data: { textWithFormat: editor?.getHTML() || '', title: e.target.value } })
+              debouncedUpdates({ data: e.target.value })
             }}
           />
           <span className="text-sm">{`${saveStatus}`}</span>
@@ -118,7 +101,42 @@ export function EditorTemplate({ data: { text, title, id } }: EditorTemplateProp
           </AlertDialogContent>
         </AlertDialog>
       </div>
-      <Editor editor={editor} />
+      <Editor
+        onDebouncedUpdate={async (editor) => {
+          if (editor) {
+            const textHTML = editor.getHTML()
+
+            try {
+              setSaveStatus('Saving...')
+              const response = await updateTemplate(
+                id,
+                { textWithFormat: textHTML, title: newTitle },
+                `templates/${id}`,
+              )
+
+              if (response.data) {
+                setSaveStatus('')
+              } else {
+                setSaveStatus('Unsaved')
+              }
+            } catch (e) {
+              console.log(e)
+            }
+          }
+        }}
+        text={text}
+        className=""
+        debounceDuration={2000}
+        onUpdate={(editor) => {
+          if (editor != null) {
+            const textHTML = editor.getHTML()
+
+            if (text !== textHTML) {
+              setSaveStatus('Unsaved')
+            }
+          }
+        }}
+      />
     </div>
   )
 }

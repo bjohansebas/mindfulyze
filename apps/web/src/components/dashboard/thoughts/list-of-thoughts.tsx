@@ -6,7 +6,7 @@ export async function ListOfThoughts() {
   const thoughtsData = await getThoughts()
 
   return (
-    <div className="border w-full flex flex-col rounded-2xl bg-card max-h-full overflow-y-auto">
+    <div className="border w-full max-w-full flex flex-col rounded-2xl bg-card max-h-full overflow-y-auto">
       {thoughtsData.data.length > 0 ? (
         thoughtsData.data.map(({ id, text, createdAt }) => (
           <ContentThoughts key={id} text={text} id={id} createdAt={createdAt} />

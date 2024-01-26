@@ -1,40 +1,17 @@
 'use client'
 
 import { encriptText } from '@/app/actions/home'
-import { Editor, TiptapEditorProps, TiptapExtensions } from '@mindfulyze/editor'
+import { Editor } from '@mindfulyze/editor'
 
 import { CheckIcon } from '@heroicons/react/24/solid'
 import { cn } from '@mindfulyze/utils'
-import { generateJSON } from '@tiptap/html'
-import { useEditor } from '@tiptap/react'
+
 import { Button } from '@ui/button'
 import { CopyIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { useDebouncedCallback } from 'use-debounce'
 
 export function SecureDataPreview() {
   const [textEncript, setTextEncript] = useState('')
-
-  const debouncedUpdates = useDebouncedCallback(async (text) => {
-    try {
-      const response = await encriptText(text)
-      setTextEncript(response)
-    } catch (e) {
-      console.log(e)
-    }
-  }, 1000)
-
-  const editor = useEditor({
-    content: generateJSON('', TiptapExtensions),
-    extensions: TiptapExtensions,
-    editorProps: TiptapEditorProps,
-    onUpdate: async ({ editor }) => {
-      const text = editor.getHTML()
-
-      debouncedUpdates(text)
-    },
-    autofocus: 'end',
-  })
 
   return (
     <div className="w-full max-w-3xl shadow-xl h-[31.625rem] max-h-[calc(60vh+58px)] sm:rounded-xl lg:h-[34.6875rem] xl:h-[31.625rem] bg-card/70 backdrop-blur ring-1 ring-inset ring-emerald-900">
@@ -46,8 +23,20 @@ export function SecureDataPreview() {
             <div className="w-2.5 h-2.5 bg-slate-600 rounded-full" />
           </div>
         </div>
-        <Editor editor={editor} className="h-[calc(60vh-32px)]" />
-        <pre className="relative overflow-x-auto px-2 py-4 h-14">
+        <Editor
+          className="overflow-y-scroll h-[calc(60vh-32px)]"
+          onDebouncedUpdate={async (editor) => {
+            try {
+              if (editor != null) {
+                const response = await encriptText(editor.getHTML())
+                setTextEncript(response)
+              }
+            } catch (e) {
+              console.log(e)
+            }
+          }}
+        />
+        <pre className="bg-card relative overflow-x-auto px-2 py-4 h-14">
           <code className="rounded py-[0.2rem] text-sm">{textEncript}</code>
           <CopyButton value={textEncript} className="absolute right-4 top-4" />
         </pre>

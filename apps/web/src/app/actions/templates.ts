@@ -222,6 +222,40 @@ export async function updateTemplate(id: string, data: z.infer<typeof TemplateSc
 }
 
 // Create new template for user
+export async function updateTitleTemplate(id: string, title: string, page?: string) {
+  const session = await getServerSession(authOptions)
+
+  if (!session?.user || !session.user.pw) {
+    return { message: 'You must be logged in.', status: 401, data: false }
+  }
+
+  const template = await getTemplateById(id)
+
+  if (template.status !== 200 || template.data == null) {
+    return { ...template, data: false }
+  }
+
+  try {
+    if (title !== template.data?.title) {
+      await prisma.template.update({
+        data: {
+          title: title,
+        },
+        where: {
+          id: template.data.id,
+        },
+      })
+    }
+
+    if (page) revalidatePath(page)
+
+    return { data: true, status: 201 }
+  } catch (e) {
+    return { message: "The template couldn't be updated, try again anew.", status: 400, data: false }
+  }
+}
+
+// Create new template for user
 export async function duplicateTemplate(id: string) {
   const session = await getServerSession(authOptions)
 
