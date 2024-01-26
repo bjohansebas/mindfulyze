@@ -1,7 +1,7 @@
 'use client'
 
-import { deleteThought, updateThought } from '@/app/actions/thoughts'
-import { Editor, TiptapEditorProps, TiptapExtensions } from '@mindfulyze/editor'
+import { deleteThought, updateDateThought, updateThought } from '@/app/actions/thoughts'
+import { Editor } from '@mindfulyze/editor'
 
 import {
   AlertDialog,
@@ -17,16 +17,10 @@ import {
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { ThoughtSchema } from '@/schemas/thought'
 
 import { TrashIcon } from '@heroicons/react/24/solid'
-import { generateJSON } from '@tiptap/html'
-import { useEditor } from '@tiptap/react'
-import { format } from 'date-fns'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { useDebouncedCallback } from 'use-debounce'
-import { z } from 'zod'
 
 export interface ContentThoughtsProps {
   text: string
@@ -39,44 +33,14 @@ export function ContentThoughts({ text, createdAt, id }: ContentThoughtsProps) {
 
   const [newDate, setNewDate] = useState(createdAt)
 
-  const debouncedUpdates = useDebouncedCallback(async ({ data }: { data: z.infer<typeof ThoughtSchema> }) => {
-    try {
-      setSaveStatus('Saving...')
-      const response = await updateThought(id, data)
-
-      if (response.data) {
-        setSaveStatus('')
-      } else {
-        setSaveStatus('Unsaved')
-      }
-    } catch (e) {
-      console.log(e)
-    }
-  }, 1000)
-
-  const editor = useEditor({
-    content: generateJSON(text || '', TiptapExtensions),
-    extensions: TiptapExtensions,
-    editorProps: TiptapEditorProps,
-    onUpdate: ({ editor }) => {
-      const textHTML = editor.getHTML()
-
-      if (text !== textHTML) {
-        setSaveStatus('Unsaved')
-        debouncedUpdates({ data: { textWithFormat: textHTML, created: newDate } })
-      }
-    },
-    autofocus: false,
-  })
-
   return (
-    <div className="h-[70vh] w-full">
+    <div className="h-[70vh] w-full max-w-full">
       <div className="flex w-full border-b px-4 py-2 justify-between">
         <div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="sm" disabled={disabled}>
-                {format(newDate, 'PPP')}
+                {newDate.toDateString()}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
@@ -85,7 +49,7 @@ export function ContentThoughts({ text, createdAt, id }: ContentThoughtsProps) {
                 selected={newDate}
                 onSelect={async (date) => {
                   setNewDate(date || createdAt)
-                  await updateThought(id, { textWithFormat: editor?.getHTML() || '', created: date || createdAt })
+                  await updateDateThought(id, date || createdAt)
                 }}
                 disabled={(date) => date > new Date() || date < new Date('1900-01-01')}
                 initialFocus
@@ -112,7 +76,6 @@ export function ContentThoughts({ text, createdAt, id }: ContentThoughtsProps) {
               <AlertDialogAction asChild>
                 <Button
                   onClick={async () => {
-                    editor?.setEditable(false)
                     setDisabled(true)
                     toast.message('The thought is being erased, please wait a moment.')
                     const res = await deleteThought(id)
@@ -131,7 +94,40 @@ export function ContentThoughts({ text, createdAt, id }: ContentThoughtsProps) {
           </AlertDialogContent>
         </AlertDialog>
       </div>
-      <Editor editor={editor} className="h-[calc(70vh-50px)]" />
+      <Editor
+        onUpdate={(editor) => {
+          if (editor != null) {
+            const textHTML = editor.getHTML()
+
+            if (text !== textHTML) {
+              setSaveStatus('Unsaved')
+            }
+          }
+        }}
+        autofocus={false}
+        text={text}
+        editable={disabled}
+        className="overflow-y-scroll h-[calc(70vh-50px)]"
+        onDebouncedUpdate={async (editor) => {
+          if (editor) {
+            const textHTML = editor.getHTML()
+            if (text !== textHTML) {
+              try {
+                setSaveStatus('Saving...')
+                const response = await updateThought(id, { created: newDate, textWithFormat: textHTML })
+
+                if (response.data) {
+                  setSaveStatus('')
+                } else {
+                  setSaveStatus('Unsaved')
+                }
+              } catch (e) {
+                console.log(e)
+              }
+            }
+          }
+        }}
+      />
     </div>
   )
 }

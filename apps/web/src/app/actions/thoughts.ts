@@ -195,6 +195,36 @@ export async function updateThought(id: string, data: z.infer<typeof ThoughtSche
   }
 }
 
+export async function updateDateThought(id: string, date: Date) {
+  const session = await getServerSession(authOptions)
+  if (!session?.user || !session.user.pw) {
+    return { message: 'You must be logged in.', status: 401, data: null }
+  }
+
+  const thought = await getThoughtById(id)
+
+  if (thought.status !== 200 || thought.data == null) {
+    return { ...thought, data: false }
+  }
+
+  try {
+    if (parseDate(date) !== parseDate(thought.data.createdAt)) {
+      await prisma.thought.update({
+        data: {
+          createdAt: date,
+        },
+        where: {
+          id: thought.data.id,
+        },
+      })
+    }
+
+    return { data: true, status: 201 }
+  } catch (e) {
+    return { message: "The template couldn't be updated, try again anew.", status: 400, data: false }
+  }
+}
+
 // Create new thought for user
 export async function deleteThought(id: string) {
   const session = await getServerSession(authOptions)

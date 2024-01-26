@@ -2,23 +2,83 @@ import './styles/index.css'
 import './styles/prosemirror.css'
 
 import { cn } from '@mindfulyze/utils'
-import { EditorContent, EditorContentProps } from '@tiptap/react'
-import { Dispatch, SetStateAction } from 'react'
+
+import { Editor as EditorClass, FocusPosition } from '@tiptap/core'
+import { generateJSON } from '@tiptap/html'
+import { EditorContent, useEditor } from '@tiptap/react'
+
+import { useDebouncedCallback } from 'use-debounce'
+
+import { useEffect } from 'react'
 import { EditorBubbleMenu } from './components/BubbleMenu'
+import { TiptapExtensions } from './extensions'
+import { TiptapEditorProps } from './props'
 
 export interface EditorProps {
-  onChange: Dispatch<SetStateAction<object>>
+  /**
+   * The default value to use for the editor.
+   * ""
+   */
+  text?: string
+  /**
+   * A callback function that is called whenever the editor is updated.
+   * Defaults to () => {}.
+   */
+  onUpdate?: (editor?: EditorClass) => void | Promise<void>
+  /**
+   * A callback function that is called whenever the editor is updated, but only after the defined debounce duration.
+   * Defaults to () => {}.
+   */
+  onDebouncedUpdate?: (editor?: EditorClass) => void | Promise<void>
+  /**
+   * The duration (in milliseconds) to debounce the onDebouncedUpdate callback.
+   * Defaults to 750.
+   */
+  debounceDuration?: number
+  /**
+   * Additional classes to add to the editor container.
+   */
   className?: string
+  autofocus?: FocusPosition
+  editable?: boolean
 }
 
-export function Editor({ editor, className }: EditorContentProps) {
+export function Editor({
+  text = '',
+  className,
+  debounceDuration = 750,
+  autofocus = 'end',
+  onUpdate = () => {},
+  onDebouncedUpdate = () => {},
+  editable,
+}: EditorProps) {
+  const debouncedUpdates = useDebouncedCallback(async ({ editor }: { editor: EditorClass }) => {
+    onDebouncedUpdate(editor)
+  }, debounceDuration)
+
+  const editor = useEditor({
+    content: generateJSON(text, TiptapExtensions),
+    extensions: TiptapExtensions,
+    editorProps: TiptapEditorProps,
+    onUpdate: async (e) => {
+      onUpdate(e.editor)
+
+      debouncedUpdates(e)
+    },
+    autofocus: autofocus,
+  })
+
+  useEffect(() => {
+    editor?.setEditable(editable || true)
+  }, [editable])
+
   return (
-    // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
+    // biome-ignore lint/a11y/useKeyWithClickEvents:
     <div
       onClick={() => {
         editor?.chain().focus().run()
       }}
-      className={cn('overflow-y-scroll relative min-h-48 h-full w-full p-6 border-b', className)}
+      className={cn('bg-card relative min-h-[500px] w-full', className)}
     >
       {editor ? <EditorBubbleMenu editor={editor} /> : null}
       <EditorContent editor={editor} />
