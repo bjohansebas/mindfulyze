@@ -1,14 +1,17 @@
+import './styles/index.css'
+import './styles/prosemirror.css'
+
 import { cn } from '@mindfulyze/utils'
 import { EditorContent, EditorContentProps } from '@tiptap/react'
 import { Dispatch, SetStateAction } from 'react'
-import { EditorBubbleMenu } from '../components/BubbleMenu'
+import { EditorBubbleMenu } from './components/BubbleMenu'
 
 export interface EditorProps {
   onChange: Dispatch<SetStateAction<object>>
   className?: string
 }
 
-export default function Editor({ editor, className }: EditorContentProps) {
+export function Editor({ editor, className }: EditorContentProps) {
   return (
     // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
     <div
@@ -22,3 +25,6 @@ export default function Editor({ editor, className }: EditorContentProps) {
     </div>
   )
 }
+
+export { TiptapExtensions } from './extensions'
+export { TiptapEditorProps } from './props'
