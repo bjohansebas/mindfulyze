@@ -4,7 +4,9 @@
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  "files": ["dist/**/*"],
+  "files": [
+    "dist/**/*"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -22,8 +24,8 @@
     "react": "^18.2.0"
   },
   "devDependencies": {
-    "@mindfulyze/utils": "workspace:*",
     "@mindfulyze/ui": "workspace:*",
+    "@mindfulyze/utils": "workspace:*",
     "@types/react": "18.2.48",
     "autoprefixer": "10.4.16",
     "config": "workspace:*",
@@ -35,9 +37,6 @@
   },
   "dependencies": {
     "@radix-ui/react-popover": "1.0.7",
-    "class-variance-authority": "0.7.0",
-    "tailwindcss": "3.4.1",
-    "@types/react": "18.2.48",
     "@tiptap/core": "2.1.16",
     "@tiptap/extension-color": "2.1.16",
     "@tiptap/extension-highlight": "2.1.16",
@@ -46,17 +45,21 @@
     "@tiptap/extension-task-item": "2.1.16",
     "@tiptap/extension-task-list": "2.1.16",
     "@tiptap/extension-text-style": "2.1.16",
+    "@tiptap/extension-typography": "^2.1.16",
     "@tiptap/extension-underline": "2.1.16",
-    "lucide-react": "0.314.0",
-    "tippy.js": "6.3.7",
-    "tiptap-markdown": "0.8.9",
     "@tiptap/html": "2.1.16",
     "@tiptap/pm": "2.1.16",
-    "react": "18.2.0",
-    "next": "14.1.0",
-    "react-dom": "18.2.0",
     "@tiptap/react": "2.1.16",
     "@tiptap/starter-kit": "2.1.16",
-    "@tiptap/suggestion": "2.1.16"
+    "@tiptap/suggestion": "2.1.16",
+    "@types/react": "18.2.48",
+    "class-variance-authority": "0.7.0",
+    "lucide-react": "0.314.0",
+    "next": "14.1.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tailwindcss": "3.4.1",
+    "tippy.js": "6.3.7",
+    "tiptap-markdown": "0.8.9"
   }
 }
