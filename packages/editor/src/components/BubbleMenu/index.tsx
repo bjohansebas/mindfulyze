@@ -86,7 +86,10 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps & { editor: Editor }> = 
   //   const [isLinkSelectorOpen, setIsLinkSelectorOpen] = useState(false)
 
   return (
-    <BubbleMenu {...bubbleMenuProps} className="flex w-fit p-1 rounded border gap-1 max-w-[97vw] overflow-x-auto">
+    <BubbleMenu
+      {...bubbleMenuProps}
+      className="bg-card flex w-fit p-1 rounded border gap-1 max-w-[97vw] overflow-x-auto"
+    >
       <NodeSelector
         editor={props.editor}
         isOpen={isNodeSelectorOpen}
