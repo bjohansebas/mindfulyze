@@ -13,7 +13,7 @@ export default function Page() {
         <h1 className="font-extrabold text-4xl sm:text-5xl lg:text-6xl text-center tracking-tighter">
           Store moments from your day
           <br />
-          <span className="bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-emerald-400 to-emerald-600 bg-clip-text text-transparent">
             Securely
           </span>
         </h1>
@@ -30,7 +30,7 @@ export default function Page() {
         <section className="col-span-2 md:col-span-1">
           <header className="flex flex-col gap-6 items-center p-5">
             <LayoutTemplateIcon className="w-32 h-32" />
-            <h2 className="text-center text-4xl font-bold text-primary-600">Create your notes super fast</h2>
+            <h2 className="text-center text-4xl font-bold text-emerald-600">Create your notes super fast</h2>
             <p className="text-center max-w-3xl mx-auto text-lg">
               With the help of templates, you will have the ease of starting to write a journal and reflect on the
               things that matter most.
@@ -40,7 +40,7 @@ export default function Page() {
         <section className="col-span-2 md:col-span-1">
           <header className="flex flex-col gap-6 items-center p-5">
             <ShieldCheckIcon className="w-32 h-32" />
-            <h2 className="text-center text-4xl font-bold text-primary-600">Write safely</h2>
+            <h2 className="text-center text-4xl font-bold text-emerald-600">Write safely</h2>
             <p className="text-center max-w-3xl mx-auto text-lg">
               Using AES-256 encryption, your personal diary is securely protected. Only you can decrypt and access them,
               ensuring that no one else
@@ -81,7 +81,7 @@ export default function Page() {
               <StarIcon className="w-32 h-32 fill-purple-800" />
               <StarIcon className="w-20 h-20 -top-7 -left-7 absolute fill-purple-500" />
             </div>
-            <h2 className=" text-center text-4xl font-bold text-primary-600">
+            <h2 className=" text-center text-4xl font-bold text-emerald-600">
               Sentiment Analysis <Badge>Soon</Badge>
             </h2>
             <p className="text-center max-w-3xl mx-auto text-lg">

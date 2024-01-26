@@ -24,9 +24,9 @@ const CustomLink = (props: any) => {
 
 const components = {
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  h2: (props: any) => <h2 className="text-2xl underline-offset-4 hover:underline text-primary-400" {...props} />,
+  h2: (props: any) => <h2 className="text-2xl underline-offset-4 hover:underline text-emerald-400" {...props} />,
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  a: (props: any) => <CustomLink className="font-medium text-primary-400 underline-offset-4" {...props} />,
+  a: (props: any) => <CustomLink className="font-medium text-emerald-400 underline-offset-4" {...props} />,
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   code: (props: any) => (
     <code

@@ -8,7 +8,7 @@ export default function LegalPage({ post }: { post: LegalPost }) {
   return (
     <div>
       <div className="py-10">
-        <h1 className="mt-5 text-center text-4xl font-extrabold leading-[1.15] text-primary-600 sm:text-6xl">
+        <h1 className="mt-5 text-center text-4xl font-extrabold leading-[1.15] text-emerald-600 sm:text-6xl">
           {post.title}
         </h1>
       </div>

@@ -11,7 +11,7 @@ export function SentimentAnalysis() {
         sat in a café, reminisced about old times, and caught up on our lives. The conversation and companionship were
         so comforting that I felt extremely positive by the end of the day.
       </div>
-      <div className="p-6 py-2 col-span-2 lg:ml-10 lg:w-[calc(100%+2.5rem)] shadow-lg shadow-primary-500/30 rounded-xl bg-card/70 backdrop-blur ring-1 ring-inset ring-primary-600">
+      <div className="p-6 py-2 col-span-2 lg:ml-10 lg:w-[calc(100%+2.5rem)] shadow-lg shadow-emerald-500/30 rounded-xl bg-card/70 backdrop-blur ring-1 ring-inset ring-emerald-600">
         I spent the afternoon taking a walk in the park. The weather was pleasant, and people were enjoying the
         outdoors. I watched children playing in the park and people walking their dogs. It was a peaceful and relaxing
         experience, without any significant excitement, just a moment of tranquility in the midst of nature.

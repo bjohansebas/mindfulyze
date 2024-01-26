@@ -37,7 +37,7 @@ export function SecureDataPreview() {
   })
 
   return (
-    <div className="w-full max-w-3xl shadow-xl h-[31.625rem] max-h-[calc(60vh+58px)] sm:rounded-xl lg:h-[34.6875rem] xl:h-[31.625rem] bg-card/70 backdrop-blur ring-1 ring-inset ring-primary-900">
+    <div className="w-full max-w-3xl shadow-xl h-[31.625rem] max-h-[calc(60vh+58px)] sm:rounded-xl lg:h-[34.6875rem] xl:h-[31.625rem] bg-card/70 backdrop-blur ring-1 ring-inset ring-emerald-900">
       <div className="relative w-full flex flex-col">
         <div className="flex-none border-b border-slate-500/30">
           <div className="flex items-center h-8 space-x-1.5 px-3">

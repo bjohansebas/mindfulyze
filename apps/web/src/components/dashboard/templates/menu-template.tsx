@@ -74,7 +74,7 @@ export function MenuTemplate({ templates }: { templates: Template[] }) {
                     router.push(`/templates/${template.data.id}`)
                   }
                 }}
-                className="text-primary-700"
+                className="text-emerald-700"
               >
                 Create your first template
               </DropdownMenuItem>

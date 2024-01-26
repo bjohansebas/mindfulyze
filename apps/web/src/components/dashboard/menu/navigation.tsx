@@ -25,8 +25,8 @@ export default function NavigationApp({ templates }: { templates: Template[] }) 
     <aside className="h-screen max-h-screen w-full sm:max-w-[300px] bg-card p-4 border-b sm:border-b-0">
       <div className="flex justify-between items-center">
         <Link href="/home">
-          <Logo className="text-primary-600 w-7 h-7 sm:hidden" />
-          <LogoType className="mx-4 mb-5 text-primary-600 w-auto h-12 hidden sm:inline" />
+          <Logo className="text-emerald-600 w-7 h-7 sm:hidden" />
+          <LogoType className="mx-4 mb-5 text-emerald-600 w-auto h-12 hidden sm:inline" />
         </Link>
         <NavigationMobile templates={templates} />
       </div>

@@ -23,7 +23,7 @@ export default function Nav() {
         <div className="flex h-14 items-center justify-between">
           <div className="flex items-center space-x-4">
             <Link href="/">
-              <LogoType className="w-auto h-10 text-primary-600" />
+              <LogoType className="w-auto h-10 text-emerald-600" />
             </Link>
             <div className="hidden items-center space-x-3 lg:flex">
               {navItems.map(({ name, slug }) => {
@@ -32,7 +32,7 @@ export default function Nav() {
                     id={`nav-${slug}`}
                     key={slug}
                     href={`/${slug}`}
-                    className="z-10 rounded-full px-4 py-1.5 text-sm font-medium capitalize hover:hover:text-primary-200"
+                    className="z-10 rounded-full px-4 py-1.5 text-sm font-medium capitalize hover:hover:text-emerald-200"
                   >
                     {name}
                   </Link>
