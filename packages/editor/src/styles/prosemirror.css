@@ -77,9 +77,3 @@ ul[data-type="taskList"] li[data-checked="true"]>div>p {
   text-decoration-thickness: 1px;
   opacity: 0.65;
 }
-
-/* Overwrite tippy-box original max-width */
-
-.tippy-box {
-  max-width: 400px !important;
-}
