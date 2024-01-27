@@ -5,7 +5,7 @@ import { Suspense } from 'react'
 
 export default async function Page() {
   return (
-    <div className="h-screen max-h-screen overflow-y-scroll md:px-12 px-6 pb-6 flex flex-col max-w-full">
+    <div className="h-screen md:max-h-screen md:overflow-y-scroll md:px-12 px-6 pb-6 flex flex-col max-w-full">
       <Suspense fallback={<ThoughtsPlaceholder />}>
         <ThoughtsList />
       </Suspense>
