@@ -8,10 +8,12 @@ export const sendEmail = async ({
   subject,
   react,
   email,
+  test,
 }: {
   subject: string
-  email?: string
+  email: string
   react: JSX.Element
+  test?: boolean
 }) => {
   if (!resend) {
     console.log('Resend is not configured. You need to add a RESEND_API_KEY in your .env file for emails to work.')
@@ -19,8 +21,8 @@ export const sendEmail = async ({
   }
 
   return resend.emails.send({
-    from: 'onboarding@resend.dev',
-    to: email ?? 'delivered@resend.dev',
+    from: 'Mindfulyze <noreply@mindfulyze.com>',
+    to: test ? 'delivered@resend.dev' : email,
     subject,
     react,
     headers: {
