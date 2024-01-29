@@ -2,6 +2,10 @@
   @apply pt-4 pb-6 px-4;
 }
 
+.ProseMirror h2 h3 h4 h5 h1 {
+  @apply mb-1
+}
+
 .ProseMirror .is-editor-empty:first-child::before {
   content: attr(data-placeholder);
   float: left;
