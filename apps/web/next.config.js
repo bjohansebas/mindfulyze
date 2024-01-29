@@ -9,6 +9,9 @@ const nextConfig = {
       bodySizeLimit: '3mb',
     },
   },
+  logging: {
+    fetches: { fullUrl: true },
+  },
   transpilePackages: ['@mindfulyze/ui'],
   images: {
     remotePatterns: [
