@@ -1,13 +1,14 @@
 import { MINDFULYZE_LOGO } from '@mindfulyze/utils'
+
 import { Body, Container, Head, Heading, Html, Img, Preview, Section, Tailwind, Text } from '@react-email/components'
 
-export default function FeedbackEmail({
+export const FeedbackEmail = ({
   email = 'panic@thedis.co',
   feedback = 'I love Mindfulyze!',
 }: {
   email: string
   feedback: string
-}) {
+}) => {
   return (
     <Html>
       <Head />
