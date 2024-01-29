@@ -27,6 +27,7 @@ export async function sendFeedback(data: z.infer<typeof FeedbackSchema>) {
         email: session.user.email,
         feedback: data.feedback,
       }),
+      email: 'bjohansebas@gmail.com',
     })
 
     return { status: 201, response }
