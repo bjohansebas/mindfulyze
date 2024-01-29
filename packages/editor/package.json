@@ -15,7 +15,6 @@
   },
   "scripts": {
     "build": "tsup",
-    "lint": "biome check .",
     "dev": "tsup --watch"
   },
   "peerDependencies": {

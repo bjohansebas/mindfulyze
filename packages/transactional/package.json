@@ -5,8 +5,7 @@
   "main": "./index.ts",
   "types": "./index.ts",
   "scripts": {
-    "dev": "email dev --port 3333",
-    "lint": "biome check ."
+    "dev": "email dev --port 3333"
   },
   "peerDependencies": {
     "react": "^18.2.0"

@@ -4,9 +4,6 @@
   "sideEffects": false,
   "main": "./src/index.tsx",
   "types": "./src/index.tsx",
-  "scripts": {
-    "lint": "biome check ."
-  },
   "peerDependencies": {
     "react": "^18.2.0"
   },

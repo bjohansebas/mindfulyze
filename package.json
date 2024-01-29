@@ -9,7 +9,7 @@
     "dev": "turbo dev",
     "db:generate": "turbo db:generate",
     "db:push": "turbo db:push",
-    "lint": "turbo lint",
+    "lint": "biome check . && turbo lint",
     "prepare": "husky install"
   },
   "config": {

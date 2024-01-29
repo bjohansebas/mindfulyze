@@ -7,7 +7,6 @@
   "files": ["dist/**"],
   "scripts": {
     "build": "tsup",
-    "lint": "eslint src/",
     "dev": "tsup --watch",
     "check-types": "tsc --noEmit"
   },
