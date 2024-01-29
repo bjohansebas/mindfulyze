@@ -4,9 +4,8 @@ import { authOptions } from '@/lib/auth'
 import { getServerSession } from 'next-auth'
 import z from 'zod'
 
-import { sendEmail } from '@/emails'
-import FeedbackEmail from '@/emails/feedback-email'
 import { FeedbackSchema, validateFeedback } from '@/schemas/feedback'
+import { FeedbackEmail, sendEmail } from '@mindfulyze/emails'
 
 export async function sendFeedback(data: z.infer<typeof FeedbackSchema>) {
   const session = await getServerSession(authOptions)

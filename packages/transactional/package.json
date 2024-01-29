@@ -1,0 +1,27 @@
+{
+  "name": "@mindfulyze/emails",
+  "version": "0.0.0",
+  "sideEffects": false,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "scripts": {
+    "dev": "email dev --port 3333",
+    "lint": "biome check ."
+  },
+  "peerDependencies": {
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@mindfulyze/utils": "workspace:*",
+    "@types/react": "18.2.48",
+    "config": "workspace:*",
+    "react": "18.2.0",
+    "typescript": "5.3.3"
+  },
+  "dependencies": {
+    "@react-email/components": "0.0.14",
+    "nanoid": "5.0.4",
+    "react-email": "2.0.0",
+    "resend": "3.0.0"
+  }
+}
