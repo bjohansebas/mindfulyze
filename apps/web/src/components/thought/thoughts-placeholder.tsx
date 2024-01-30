@@ -3,7 +3,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 export default function ThoughtsPlaceholder() {
   return (
     <div className="w-full flex flex-col">
-      {Array.from({ length: 2 }).map((_, i) => (
+      {Array.from({ length: 10 }).map((_, i) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
         <div className="w-full flex flex-col gap-4" key={i}>
           <div className="flex w-full py-4 pb-0 justify-between items-center">
