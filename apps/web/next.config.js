@@ -8,6 +8,7 @@ const nextConfig = {
     serverActions: {
       bodySizeLimit: '3mb',
     },
+    ppr: true,
   },
   logging: {
     fetches: { fullUrl: true },
