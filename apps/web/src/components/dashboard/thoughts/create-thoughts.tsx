@@ -7,7 +7,7 @@ import { cn } from '@mindfulyze/utils'
 import MenuTemplate from '../templates/menu-template'
 
 import { PencilIcon } from '@heroicons/react/24/solid'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { Dispatch, SetStateAction } from 'react'
 import { toast } from 'sonner'
 
@@ -31,7 +31,8 @@ export function CreateThought({
   templates,
   setOpen,
 }: { templates?: Template[]; setOpen?: Dispatch<SetStateAction<boolean>> }) {
-  const router = useRouter()
+  const { replace } = useRouter()
+  const searchParams = useSearchParams()
   const pathname = usePathname()
 
   return (
@@ -40,12 +41,15 @@ export function CreateThought({
         className={cn('w-full rounded-r-none', { 'rounded-md': templates == null })}
         onClick={async () => {
           await handleCreateThought(templates?.find((value) => value.default) || undefined)
+
           if (setOpen != null) {
             setOpen(false)
           }
-          if (pathname !== '/home') {
-            router.push('/home')
-          }
+          const params = new URLSearchParams(searchParams)
+
+          params.set('page', '1')
+
+          replace(`${pathname}?${params.toString()}`)
         }}
       >
         <PencilIcon className="w-4 h-4 mr-2" />
