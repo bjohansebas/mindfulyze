@@ -189,6 +189,8 @@ export async function updateThought(id: string, data: z.infer<typeof ThoughtSche
       })
     }
 
+    revalidatePath('/home')
+
     return { data: true, status: 201 }
   } catch (e) {
     return { message: "The template couldn't be updated, try again anew.", status: 400, data: false }
