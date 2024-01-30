@@ -1,3 +1,5 @@
+'use server'
+
 import { ThoughtResponse } from '@/app/actions/thoughts'
 import { prisma } from '@mindfulyze/database'
 import { NEXT_SECRET, decryptData } from '@mindfulyze/utils'
@@ -8,12 +10,12 @@ import { authOptions } from '../auth'
 import { downloadFile } from '../supabase'
 
 export async function getThoughtsByUser({
-  // sort = "createdAt",
+  sort = 'createdAt',
   page,
   userId,
 }: {
-  // sort: "createdAt"; // always descending
-  page: string | null
+  sort?: 'createdAt'
+  page: number | null
   userId: string
 }): Promise<ThoughtProps[]> {
   return await prisma.thought.findMany({
@@ -21,18 +23,16 @@ export async function getThoughtsByUser({
       userId,
     },
     orderBy: {
-      // [sort]: "desc",
-      createdAt: 'desc',
+      [sort]: 'desc',
     },
-    take: 30,
+    take: 10,
     ...(page && {
-      skip: (parseInt(page) - 1) * 30,
+      skip: (page - 1) * 10,
     }),
   })
 }
 
-// Get thoughts of user
-export async function getThoughts(): Promise<ThoughtResponse> {
+export async function getThoughts({ page }: { page: number }): Promise<ThoughtResponse> {
   const session = await getServerSession(authOptions)
 
   if (!session?.user.id || !session.user.pw) {
@@ -41,8 +41,7 @@ export async function getThoughts(): Promise<ThoughtResponse> {
 
   try {
     const response = await getThoughtsByUser({
-      // sort,
-      page: '1',
+      page,
       userId: session.user.id,
     })
 
@@ -64,5 +63,26 @@ export async function getThoughts(): Promise<ThoughtResponse> {
     return { data: thoughts, status: 200 }
   } catch (e) {
     return { message: 'Not found thoughts', status: 404, data: [] }
+  }
+}
+const ITEMS_PER_PAGE = 10
+
+export async function getThoughtsPages() {
+  const session = await getServerSession(authOptions)
+
+  if (!session?.user.id || !session.user.pw) {
+    return { message: 'You must be logged in.', status: 401, data: 0 }
+  }
+
+  try {
+    const response = await prisma.thought.count({
+      where: {
+        userId: session.user.id,
+      },
+    })
+
+    return { data: Math.ceil(response / ITEMS_PER_PAGE), status: 200 }
+  } catch (e) {
+    return { message: 'Not found thoughts', status: 404, data: 0 }
   }
 }
