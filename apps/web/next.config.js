@@ -13,9 +13,6 @@ const nextConfig = {
   logging: {
     fetches: { fullUrl: true },
   },
-  logging: {
-    fetches: { fullUrl: true },
-  },
   transpilePackages: ['@mindfulyze/ui'],
   images: {
     remotePatterns: [
