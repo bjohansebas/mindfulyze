@@ -1,9 +1,9 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { toast } from '@mindfulyze/ui'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
 import * as z from 'zod'
 
 import { createPassword } from '@/app/actions/password'

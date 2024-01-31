@@ -3,8 +3,8 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
+import { toast } from '@mindfulyze/ui'
 import { useSession } from 'next-auth/react'
-import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { updateName } from '@/app/actions/user'

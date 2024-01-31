@@ -2,8 +2,8 @@
 
 import { createTemplate } from '@/app/actions/templates'
 import { Button } from '@/components/ui/button'
+import { toast } from '@mindfulyze/ui'
 import { usePathname, useRouter } from 'next/navigation'
-import { toast } from 'sonner'
 
 export function HeaderTemplate() {
   const router = useRouter()

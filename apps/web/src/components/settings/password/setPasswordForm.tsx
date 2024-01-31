@@ -11,8 +11,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input'
 import usePassword from '@/lib/hooks/usePassword'
 import { SetPasswordSchema } from '@/schemas/password'
+import { toast } from '@mindfulyze/ui'
 import { useRouter } from 'next/navigation'
-import { toast } from 'sonner'
 
 export function SetPasswordForm() {
   const router = useRouter()

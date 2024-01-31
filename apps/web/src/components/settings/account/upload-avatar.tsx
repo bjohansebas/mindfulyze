@@ -5,10 +5,10 @@ import { Button } from '@/components/ui/button'
 
 import { UploadCloud } from 'lucide-react'
 
+import { toast } from '@mindfulyze/ui'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { useCallback, useEffect, useState } from 'react'
-import { toast } from 'sonner'
 
 export default function UploadAvatar() {
   const { data: session, update } = useSession()

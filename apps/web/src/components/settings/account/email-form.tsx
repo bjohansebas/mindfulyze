@@ -10,8 +10,8 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from '@/components/ui/input'
 import { EmailFormSchema } from '@/schemas/user'
 
+import { toast } from '@mindfulyze/ui'
 import { useSession } from 'next-auth/react'
-import { toast } from 'sonner'
 import { z } from 'zod'
 
 export function EmailForm() {

@@ -3,10 +3,10 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
-import { deleteAccount, updateEmail } from '@/app/actions/user'
+import { deleteAccount } from '@/app/actions/user'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { DeleteAccountSchemaForm, EmailFormSchema } from '@/schemas/user'
+import { DeleteAccountSchemaForm } from '@/schemas/user'
 
 import Spinner from '@/components/shared/icons/spinner'
 import {
@@ -18,11 +18,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Label } from '@/components/ui/label'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { CONFIRM_MESSAGE } from '@/messages'
-import { signOut, useSession } from 'next-auth/react'
-import { toast } from 'sonner'
+import { toast } from '@mindfulyze/ui'
+import { signOut } from 'next-auth/react'
 import { z } from 'zod'
 
 export function DeleteAccountForm() {

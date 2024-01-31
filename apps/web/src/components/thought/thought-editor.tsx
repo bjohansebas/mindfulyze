@@ -19,8 +19,8 @@ import { Calendar } from '@/components/ui/calendar'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 
 import { TrashIcon } from '@heroicons/react/24/solid'
+import { toast } from '@mindfulyze/ui'
 import { useState } from 'react'
-import { toast } from 'sonner'
 
 export interface ContentThoughtsProps {
   text: string

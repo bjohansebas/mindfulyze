@@ -9,10 +9,9 @@ import { FeedbackSchema } from '@/schemas/feedback'
 import { ChatBubbleBottomCenterTextIcon } from '@heroicons/react/24/solid'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button } from '@mindfulyze/ui'
+import { Button, toast } from '@mindfulyze/ui'
 import { Dispatch, SetStateAction, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
 import z from 'zod'
 
 export function ButtonFeedBack({ setOpen }: { setOpen?: Dispatch<SetStateAction<boolean>> }) {

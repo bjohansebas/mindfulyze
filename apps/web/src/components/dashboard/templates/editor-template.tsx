@@ -1,6 +1,6 @@
 'use client'
 
-import { toast } from 'sonner'
+import { toast } from '@mindfulyze/ui'
 
 import { Editor } from '@mindfulyze/editor'
 import { useState } from 'react'
