@@ -29,7 +29,7 @@ export function CreateButton({ templates }: { templates: Template[] }) {
   const pathname = usePathname()
   return (
     <Button
-      className="w-full rounded-r-none"
+      className="w-full rounded-r-none px-3"
       onClick={async () => {
         await handleCreateThought(templates?.find((value) => value.default) || undefined)
 

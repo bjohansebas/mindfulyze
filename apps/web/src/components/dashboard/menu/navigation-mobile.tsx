@@ -5,7 +5,7 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import { stringAvatar } from '@/lib/utils'
 import { Template } from '@/types/template'
 import { ButtonFeedBack } from '../../shared/button-feedback'
-import { CreateThought } from '../../shared/create-thoughts'
+import { CreateThought } from '../../shared/thoughts/create-thoughts'
 import { Button } from '../../ui/button'
 
 import { ChatBubbleOvalLeftIcon, Cog6ToothIcon } from '@heroicons/react/24/solid'

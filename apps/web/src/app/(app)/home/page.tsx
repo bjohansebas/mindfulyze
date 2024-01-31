@@ -17,7 +17,7 @@ export default async function Page({
   const totalPages = await getThoughtsPages()
 
   return (
-    <div className="h-screen md:max-h-screen md:overflow-y-scroll md:px-12 px-6 pb-6 flex flex-col max-w-full">
+    <div className="h-screen md:px-12 px-6 pb-6 flex flex-col max-w-full">
       <Suspense key={currentPage} fallback={<ThoughtsPlaceholder />}>
         <ThoughtsList currentPage={currentPage} />
       </Suspense>

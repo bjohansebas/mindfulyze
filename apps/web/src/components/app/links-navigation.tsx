@@ -20,9 +20,13 @@ export function LinkNavigation() {
         <Link
           key={link.name}
           href={link.href}
-          className={cn(buttonVariants({ variant: 'link' }), {
-            'text-card-muted': pathname !== link.href,
-          })}
+          className={cn(
+            buttonVariants({ variant: 'link' }),
+            {
+              'text-card-muted': pathname !== link.href,
+            },
+            'px-1 p-0',
+          )}
         >
           {link.name}
         </Link>
