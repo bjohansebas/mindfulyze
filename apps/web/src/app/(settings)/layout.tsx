@@ -1,7 +1,7 @@
-import NavigationSettings from '@/components/settings/menu/navigation'
 import { SidebarNav } from '@/components/settings/menu/sidebar-nav'
 import { Separator } from '@/components/ui/separator'
 import { UserIcon } from '@heroicons/react/24/solid'
+import NavigationApp from '@ui/app/navigation'
 
 const sidebarNavItems = [
   {
@@ -18,7 +18,8 @@ export default async function SettingsLayout({
 }) {
   return (
     <div className="flex h-screen flex-col bg-background w-full">
-      <NavigationSettings />
+      <NavigationApp />
+
       <div className="space-y-6 p-10 pb-16">
         <div className="space-y-0.5">
           <h2 className="text-2xl font-bold tracking-tight">Settings</h2>
