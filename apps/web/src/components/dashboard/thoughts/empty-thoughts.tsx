@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-import { CreateThought } from './create-thoughts'
+import { CreateThought } from '../../shared/create-thoughts'
 
 export function ThoughtsEmpty() {
   return (

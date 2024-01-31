@@ -4,9 +4,9 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { stringAvatar } from '@/lib/utils'
 import { Template } from '@/types/template'
+import { ButtonFeedBack } from '../../shared/button-feedback'
+import { CreateThought } from '../../shared/create-thoughts'
 import { Button } from '../../ui/button'
-import { CreateThought } from '../thoughts/create-thoughts'
-import { ButtonFeedBack } from './button-feedback'
 
 import { ChatBubbleOvalLeftIcon, Cog6ToothIcon } from '@heroicons/react/24/solid'
 import { LayoutTemplateIcon, LogOut, PenLineIcon } from 'lucide-react'
@@ -37,7 +37,7 @@ export default function NavigationMobile({ templates }: { templates: Template[] 
           </SheetHeader>
           <nav className="flex justify-between h-full w-full flex-col mt-4">
             <div className="space-y-2">
-              <CreateThought templates={templates} setOpen={setOpen} />
+              <CreateThought />
               <Button variant="ghost" asChild className="justify-start w-[auto] flex" onClick={() => setOpen(false)}>
                 <Link className="w-full" href="/home">
                   <ChatBubbleOvalLeftIcon className="w-4 h-4 mr-2" />

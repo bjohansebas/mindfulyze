@@ -2,7 +2,6 @@
 
 import { sendFeedback } from '@/app/actions/feedback'
 import Spinner from '@/components/shared/icons/spinner'
-import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Textarea } from '@/components/ui/textarea'
@@ -10,6 +9,7 @@ import { FeedbackSchema } from '@/schemas/feedback'
 import { ChatBubbleBottomCenterTextIcon } from '@heroicons/react/24/solid'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Button } from '@mindfulyze/ui'
 import { Dispatch, SetStateAction, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -46,8 +46,8 @@ export function ButtonFeedBack({ setOpen }: { setOpen?: Dispatch<SetStateAction<
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <Button onClick={() => setIsOpen((prev) => !prev)} variant="ghost" className="w-full justify-start">
-          <ChatBubbleBottomCenterTextIcon className="mr-2 h-4 w-4" /> Feedback
+        <Button onClick={() => setIsOpen((prev) => !prev)} variant="outline" className="w-full justify-start">
+          <ChatBubbleBottomCenterTextIcon className="h-4 w-4" /> Feedback
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[340px]" align="start">
