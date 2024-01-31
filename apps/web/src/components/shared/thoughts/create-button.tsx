@@ -3,9 +3,8 @@
 import { createThought } from '@/app/actions/thoughts'
 import { Template } from '@/types/template'
 import { PencilIcon } from '@heroicons/react/24/solid'
-import { Button } from '@mindfulyze/ui'
+import { Button, toast } from '@mindfulyze/ui'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { toast } from 'sonner'
 
 export async function handleCreateThought(templateSelect?: Template) {
   try {

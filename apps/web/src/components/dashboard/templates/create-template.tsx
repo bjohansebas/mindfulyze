@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 
 import { createTemplate } from '@/app/actions/templates'
 import { PencilIcon } from '@heroicons/react/24/solid'
-import { toast } from 'sonner'
+import { toast } from '@mindfulyze/ui'
 
 export async function handleCreateTemplate() {
   try {

@@ -15,9 +15,9 @@ import { createTemplate } from '@/app/actions/templates'
 import { createThought } from '@/app/actions/thoughts'
 import { Template } from '@/types/template'
 
+import { toast } from '@mindfulyze/ui'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { toast } from 'sonner'
 
 export function MenuTemplate({ templates }: { templates: Template[] }) {
   const router = useRouter()

@@ -18,8 +18,8 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 import { Button } from '@/components/ui/button'
+import { toast } from '@mindfulyze/ui'
 import Link from 'next/link'
-import { toast } from 'sonner'
 
 interface OptionCardTemplate {
   id: string
