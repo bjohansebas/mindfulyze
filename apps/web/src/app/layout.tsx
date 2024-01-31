@@ -22,7 +22,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className={cn('dark:selection:bg-emerald-800', GeistSans.className, GeistMono.className)}>
+      <body className={cn('bg-background dark:selection:bg-emerald-800', GeistSans.className, GeistMono.className)}>
         <Provider>{children}</Provider>
       </body>
     </html>
