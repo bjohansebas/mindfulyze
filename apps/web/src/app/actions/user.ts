@@ -6,7 +6,6 @@ import { getServerSession } from 'next-auth'
 import z from 'zod'
 
 import { authOptions } from '@/lib/auth'
-import { USER_NOT_FOUND_ERROR } from '@/messages'
 import { SetPasswordSchema } from '@/schemas/password'
 import {
   DeleteAccountSchemaForm,
@@ -17,6 +16,7 @@ import {
   validateName,
 } from '@/schemas/user'
 import { prisma } from '@mindfulyze/database'
+import { USER_NOT_FOUND_ERROR } from '@mindfulyze/utils'
 import { deleteAllTemplates } from './templates'
 import { deleteAllThoughts } from './thoughts'
 

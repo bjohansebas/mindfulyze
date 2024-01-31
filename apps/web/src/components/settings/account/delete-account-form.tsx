@@ -19,8 +19,8 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { CONFIRM_MESSAGE } from '@/messages'
 import { toast } from '@mindfulyze/ui'
+import { CONFIRM_MESSAGE } from 'messages'
 import { signOut } from 'next-auth/react'
 import { z } from 'zod'
 

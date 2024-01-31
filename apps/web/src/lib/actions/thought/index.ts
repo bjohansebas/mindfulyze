@@ -1,13 +1,19 @@
 'use server'
 
-import { ThoughtResponse } from '@/app/actions/thoughts'
-import { prisma } from '@mindfulyze/database'
-import { NEXT_SECRET, decryptData } from '@mindfulyze/utils'
 import { Thought as ThoughtProps } from '@prisma/client'
+
+import { prisma } from '@mindfulyze/database'
+import { NEXT_SECRET, NOT_FOUND_CODE, NOT_FOUND_THOUGHTS, OK_CODE, UNAUTHORIZED_CODE } from '@mindfulyze/utils'
+import { ERROR_LOGIN_REQUIRED } from '@mindfulyze/utils'
+import { decryptData } from '@mindfulyze/utils'
+
 import dayjs from 'dayjs'
 import { getServerSession } from 'next-auth'
-import { authOptions } from '../auth'
-import { downloadFile } from '../supabase'
+
+import { ActionResponse } from '@/types'
+import { Thought } from '@/types/thought'
+import { authOptions } from '@lib/auth'
+import { downloadFile } from '@lib/supabase'
 
 export async function getThoughtsByUser({
   sort = 'createdAt',
@@ -32,11 +38,11 @@ export async function getThoughtsByUser({
   })
 }
 
-export async function getThoughts({ page }: { page: number }): Promise<ThoughtResponse> {
+export async function getThoughts({ page }: { page: number }): Promise<ActionResponse<Thought[]>> {
   const session = await getServerSession(authOptions)
 
   if (!session?.user.id || !session.user.pw) {
-    return { message: 'You must be logged in.', status: 401, data: [] }
+    return { message: ERROR_LOGIN_REQUIRED, status: UNAUTHORIZED_CODE, data: [] }
   }
 
   try {
@@ -60,18 +66,19 @@ export async function getThoughts({ page }: { page: number }): Promise<ThoughtRe
       }),
     )
 
-    return { data: thoughts, status: 200 }
+    return { data: thoughts, status: OK_CODE }
   } catch (e) {
-    return { message: 'Not found thoughts', status: 404, data: [] }
+    return { message: NOT_FOUND_THOUGHTS, status: NOT_FOUND_CODE, data: [] }
   }
 }
+
 const ITEMS_PER_PAGE = 10
 
 export async function getThoughtsPages() {
   const session = await getServerSession(authOptions)
 
   if (!session?.user.id || !session.user.pw) {
-    return { message: 'You must be logged in.', status: 401, data: 0 }
+    return { message: ERROR_LOGIN_REQUIRED, status: UNAUTHORIZED_CODE, data: 0 }
   }
 
   try {
@@ -83,6 +90,6 @@ export async function getThoughtsPages() {
 
     return { data: Math.ceil(response / ITEMS_PER_PAGE), status: 200 }
   } catch (e) {
-    return { message: 'Not found thoughts', status: 404, data: 0 }
+    return { message: NOT_FOUND_THOUGHTS, status: NOT_FOUND_CODE, data: 0 }
   }
 }

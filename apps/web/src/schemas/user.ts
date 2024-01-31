@@ -1,4 +1,4 @@
-import { CONFIRM_MESSAGE } from '@/messages'
+import { CONFIRM_MESSAGE } from 'messages'
 import z from 'zod'
 
 export const NameFormSchema = z.object({

@@ -1,4 +1,4 @@
-import { getThoughtsPages } from '@/lib/api/thoughts'
+import { getThoughtsPages } from '@lib/actions/thought'
 import Pagination from '@ui/thought/pagination'
 import { ThoughtsList } from '@ui/thought/thoughts-list'
 import ThoughtsPlaceholder from '@ui/thought/thoughts-placeholder'

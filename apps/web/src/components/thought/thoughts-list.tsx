@@ -1,4 +1,4 @@
-import { getThoughts } from '@/lib/api/thoughts'
+import { getThoughts } from '@/lib/actions/thought'
 import { ThoughtsEmpty } from '../dashboard/thoughts/empty-thoughts'
 import { ThoughtEditor } from './thought-editor'
 
