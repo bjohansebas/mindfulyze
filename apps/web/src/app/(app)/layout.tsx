@@ -6,7 +6,7 @@ export default async function AppLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex h-screen flex-col w-full">
+    <div className="flex flex-col w-full">
       <NavigationApp />
       <main className="w-full">{children}</main>
     </div>

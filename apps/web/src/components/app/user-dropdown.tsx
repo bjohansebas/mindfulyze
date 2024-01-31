@@ -2,9 +2,9 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { authOptions } from '@/lib/auth'
 import { stringAvatar } from '@/lib/utils'
-import { Cog6ToothIcon } from '@heroicons/react/24/solid'
+import { ChatBubbleOvalLeftIcon, Cog6ToothIcon } from '@heroicons/react/24/solid'
 import { Button } from '@mindfulyze/ui'
-import { LogOutIcon, PenLineIcon } from 'lucide-react'
+import { LayoutTemplateIcon, LogOutIcon, PenLineIcon } from 'lucide-react'
 import { getServerSession } from 'next-auth'
 
 import { signOut } from 'next-auth/react'
@@ -23,10 +23,22 @@ export default async function UserDropdown() {
       </PopoverTrigger>
       <PopoverContent className="w-56 drop-shadow-lg p-0" align="end">
         <div className="flex w-full flex-col space-y-px rounded-md p-3 sm:w-56">
-          <div className="p-2">
+          <div className="p-2 mb-2">
             {session?.user?.name && <p className="truncate font-bold">{session?.user?.name}</p>}
             <p className="truncate text-sm">{session?.user?.email}</p>
           </div>
+          <Button variant="ghost" asChild className="justify-start w-[auto] md:hidden">
+            <Link href="/home">
+              <ChatBubbleOvalLeftIcon className="w-4 h-4" />
+              Thoughts
+            </Link>
+          </Button>
+          <Button variant="ghost" asChild className="justify-start w-[auto] md:hidden">
+            <Link href="/templates">
+              <LayoutTemplateIcon className="w-4 h-4" />
+              Templates
+            </Link>
+          </Button>
           <Button variant="ghost" asChild className="justify-start w-[auto] flex">
             <Link href="/settings">
               <Cog6ToothIcon className="w-4 h-4" />

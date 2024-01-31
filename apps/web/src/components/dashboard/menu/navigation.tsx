@@ -7,7 +7,7 @@ import { ChatBubbleOvalLeftIcon } from '@heroicons/react/24/solid'
 import { LayoutTemplateIcon, PenLineIcon } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import { CreateThought } from '../../shared/create-thoughts'
+import { CreateThought } from '../../shared/thoughts/create-thoughts'
 import { Button } from '../../ui/button'
 
 const NavigationMobile = dynamic(() => import('./navigation-mobile'), {
