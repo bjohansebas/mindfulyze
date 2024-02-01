@@ -20,7 +20,7 @@ import {
 } from '@/components/ui/dialog'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { toast } from '@mindfulyze/ui'
-import { CONFIRM_MESSAGE } from 'messages'
+import { CONFIRM_MESSAGE } from '@mindfulyze/utils'
 import { signOut } from 'next-auth/react'
 import { z } from 'zod'
 
