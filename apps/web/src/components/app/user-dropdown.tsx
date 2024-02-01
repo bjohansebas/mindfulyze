@@ -4,11 +4,11 @@ import { authOptions } from '@/lib/auth'
 import { stringAvatar } from '@/lib/utils'
 import { ChatBubbleOvalLeftIcon, Cog6ToothIcon } from '@heroicons/react/24/solid'
 import { Button } from '@mindfulyze/ui'
-import { LayoutTemplateIcon, LogOutIcon, PenLineIcon } from 'lucide-react'
+import { LayoutTemplateIcon, PenLineIcon } from 'lucide-react'
 import { getServerSession } from 'next-auth'
 
-import { signOut } from 'next-auth/react'
 import Link from 'next/link'
+import { ButtonLogout } from './men/button-logout'
 
 export default async function UserDropdown() {
   const session = await getServerSession(authOptions)
@@ -51,20 +51,7 @@ export default async function UserDropdown() {
               Changelog
             </Link>
           </Button>
-          <form
-            className="w-full"
-            action={async () => {
-              'use server'
-              await signOut({
-                callbackUrl: '/login',
-              })
-            }}
-          >
-            <Button variant="ghost" className="justify-start w-full">
-              <LogOutIcon className="h-4 w-4" />
-              Logout
-            </Button>
-          </form>
+          <ButtonLogout />
         </div>
       </PopoverContent>
     </Popover>
