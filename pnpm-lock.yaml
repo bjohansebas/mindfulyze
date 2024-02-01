@@ -446,6 +446,9 @@ importers:
       react:
         specifier: 18.2.0
         version: 18.2.0
+      tsup:
+        specifier: 8.0.1
+        version: 8.0.1(postcss@8.4.33)(typescript@5.3.3)
       typescript:
         specifier: 5.3.3
         version: 5.3.3
