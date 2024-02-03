@@ -1,10 +1,11 @@
 import { MDX } from '@/components/content/mdx'
-import { Twitter } from '@/components/shared/icons'
 import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
 import { formatDate } from '@/lib/utils'
 import { constructMetadata } from '@mindfulyze/utils'
 
 import { allChangelogPosts } from 'contentlayer/generated'
+import { Twitter } from 'lucide-react'
+import Image from 'next/image'
 
 import Link from 'next/link'
 
@@ -20,27 +21,26 @@ export default function Changelog() {
         <div className="md:col-span-1" />
         <div className="mx-5 flex flex-col space-y-6 md:col-span-3 md:mx-0">
           <h1 className="text-4xl font-bold tracking-tight text-emerald-600 md:text-5xl">Changelog</h1>
-          <p className="text-lg text-gray-100">All the latest updates, improvements, and fixes to Mindfulyze.</p>
+          <p className="text-lg text-gray-100">New updates and improvements to Mindfulyze.</p>
         </div>
         <div className="absolute bottom-2 right-0 flex items-center space-x-2">
           <p className="text-sm text-gray-100">Subscribe to updates →</p>
           <Link
             href="https://twitter.com/mindfulyze"
-            className="rounded-full bg-blue-100 p-2 transition-colors hover:bg-blue-200"
+            className="rounded-full p-2 transition-colors"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Twitter className="h-4 w-4 text-[#1d9bf0]" />
+            <Twitter className="h-6 w-6 text-[#1d9bf0]" />
           </Link>
         </div>
       </div>
 
-      <div className="divide-y divide-gray-200">
+      <div className="divide-y">
         {allChangelogPosts
           .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
           .map(async (post, idx) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-            <div key={idx} className="grid py-20 md:grid-cols-4 md:px-5 xl:px-0">
+            <div key={post.title} className="grid py-10 md:grid-cols-4 md:px-5 xl:px-0">
               <div className="sticky top-20 hidden self-start md:col-span-1 md:block">
                 <Link href={`/changelog/${post.slug}`}>
                   <time dateTime={post.publishedAt} className="text-gray-200 transition-colors hover:text-gray-100">
@@ -49,6 +49,16 @@ export default function Changelog() {
                 </Link>
               </div>
               <div className="flex flex-col gap-6 md:col-span-3">
+                <Link href={`/changelog/${post.slug}`}>
+                  <Image
+                    src={post.image}
+                    alt={post.title}
+                    width={1200}
+                    height={630}
+                    priority={idx === 0} // since it's above the fold
+                    className="rounded-2xl"
+                  />
+                </Link>
                 <Link href={`/changelog/${post.slug}`} className="group mx-5 flex items-center space-x-3 md:mx-0">
                   <time
                     dateTime={post.publishedAt}
@@ -58,7 +68,7 @@ export default function Changelog() {
                   </time>
                 </Link>
                 <Link href={`/changelog/${post.slug}`} className="mx-5 md:mx-0">
-                  <h2 className="text-3xl font-bold tracking-tight text-emerald-400 hover:underline hover:decoration-1 hover:underline-offset-4 md:text-4xl">
+                  <h2 className="text-3xl font-bold tracking-tight text-emerald-500 hover:underline hover:decoration-1 hover:underline-offset-4 md:text-4xl">
                     {post.title}
                   </h2>
                 </Link>
