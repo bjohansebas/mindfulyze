@@ -10,7 +10,7 @@
     "db:generate": "turbo db:generate",
     "db:push": "turbo db:push",
     "lint": "biome check . && turbo lint",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "config": {
     "commitizen": {
@@ -19,15 +19,15 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.5.3",
-    "@commitlint/cli": "18.5.0",
-    "@commitlint/config-conventional": "18.5.0",
-    "@commitlint/cz-commitlint": "18.5.0",
+    "@commitlint/cli": "18.6.0",
+    "@commitlint/config-conventional": "18.6.0",
+    "@commitlint/cz-commitlint": "18.6.0",
     "commitizen": "4.3.0",
     "eslint": "8.56.0",
     "eslint-config-next": "14.1.0",
-    "husky": "8.0.3",
-    "lint-staged": "15.2.0",
-    "turbo": "^1.10.15"
+    "husky": "9.0.10",
+    "lint-staged": "15.2.1",
+    "turbo": "1.12.2"
   },
   "packageManager": "pnpm@8.9.0"
 }
