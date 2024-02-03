@@ -88,7 +88,7 @@ export async function getThoughts({
 
 const ITEMS_PER_PAGE = 10
 
-export async function getThoughtsPages() {
+export async function getThoughtsPages({ toDate, fromDate }: { toDate?: string; fromDate?: string }) {
   const session = await getServerSession(authOptions)
 
   if (!session?.user.id || !session.user.pw) {
@@ -99,6 +99,10 @@ export async function getThoughtsPages() {
     const response = await prisma.thought.count({
       where: {
         userId: session.user.id,
+        createdAt: {
+          gte: dayjs(fromDate).isValid() && fromDate != null ? fromDate : undefined, // Start of date range
+          lte: dayjs(toDate).isValid() && toDate != null ? toDate : undefined, // End of date range
+        },
       },
     })
 
