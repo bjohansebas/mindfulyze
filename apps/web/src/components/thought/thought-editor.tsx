@@ -22,22 +22,24 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/compon
 
 import { TrashIcon } from '@heroicons/react/24/solid'
 import { toast } from '@mindfulyze/ui'
+import { cn } from '@mindfulyze/utils'
 import { useState } from 'react'
 
 export interface ContentThoughtsProps {
   text: string
   createdAt: Date
   id: string
+  classNameHeader?: string
 }
-export function ThoughtEditor({ text, createdAt, id }: ContentThoughtsProps) {
+export function ThoughtEditor({ text, createdAt, id, classNameHeader }: ContentThoughtsProps) {
   const [saveStatus, setSaveStatus] = useState('')
   const [disabled, setDisabled] = useState(false)
 
   const [newDate, setNewDate] = useState(createdAt)
 
   return (
-    <div className="flex flex-col">
-      <div className="flex w-full justify-between py-3">
+    <div className="flex flex-col max-w-full w-full">
+      <div className={cn('flex w-full justify-between py-3', classNameHeader)}>
         <div className="flex gap-3 items-center">
           <DropdownMenu>
             <DropdownMenuTrigger disabled={disabled}>{format(newDate, 'LLL dd, y')}</DropdownMenuTrigger>
