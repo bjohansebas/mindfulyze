@@ -23,7 +23,7 @@ export default async function Page({
   const fromDate = searchParams?.fromDate ?? undefined
   const toDate = searchParams?.toDate ?? undefined
 
-  const totalPages = await getThoughtsPages()
+  const totalPages = await getThoughtsPages({ fromDate, toDate })
 
   return (
     <div className="px-6 md:px-0 py-6 flex flex-col max-w-3xl mx-auto">
@@ -38,9 +38,11 @@ export default async function Page({
           <ThoughtsList currentPage={currentPage} fromDate={fromDate} toDate={toDate} />
         </Suspense>
       </section>
-      <footer className="mt-10 flex w-full justify-center">
-        <Pagination totalPages={totalPages.data} />
-      </footer>
+      {totalPages.data > 0 ? (
+        <footer className="mt-10 flex w-full justify-center">
+          <Pagination totalPages={totalPages.data} />
+        </footer>
+      ) : null}
     </div>
   )
 }
