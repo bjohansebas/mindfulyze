@@ -27,17 +27,15 @@ export function DateRangeThought({ className }: { className?: string }) {
     const params = new URLSearchParams(searchParams)
 
     if (date != null) {
-      if (date.from) {
-        params.set('fromDate', date.from.toISOString() || '')
-      }
+      date.from ? params.set('fromDate', date.from.toISOString() || '') : params.delete('fromDate')
 
-      if (date.to) {
-        params.set('toDate', dayjs(date.to).set('hour', 24).set('hour', 59).set('second', 59).toISOString() || '')
-      }
-      push(`${pathname}?${params.toString()}`)
-    } else {
-      replace(pathname)
+      date.to
+        ? params.set('toDate', dayjs(date.to).set('hour', 24).set('hour', 59).set('second', 59).toISOString() || '')
+        : params.delete('toDate')
+
+      params.delete('page')
     }
+    replace(`${pathname}?${params.toString()}`)
   }, 400)
 
   return (
