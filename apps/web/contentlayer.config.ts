@@ -36,6 +36,50 @@ export const ChangelogPost = defineDocumentType(() => ({
   computedFields: computedFields('changelog'),
 }))
 
+// export const HelpPost = defineDocumentType(() => ({
+//   name: 'HelpPost',
+//   filePathPattern: '**/help/*.mdx',
+//   contentType: 'mdx',
+//   fields: {
+//     title: {
+//       type: 'string',
+//       required: true,
+//     },
+//     updatedAt: {
+//       type: 'string',
+//       required: true,
+//     },
+//     summary: {
+//       type: 'string',
+//       required: true,
+//     },
+//     author: {
+//       type: 'string',
+//       required: true,
+//     },
+//     categories: {
+//       type: 'list',
+//       of: {
+//         type: 'enum',
+//         options: ['overview', 'getting-started', 'security'],
+//         default: 'overview',
+//       },
+//       required: true,
+//     },
+//     related: {
+//       type: 'list',
+//       of: {
+//         type: 'string',
+//       },
+//     },
+//     excludeHeadingsFromSearch: {
+//       type: 'boolean',
+//     },
+//   },
+//   // @ts-ignore
+//   computedFields: computedFields('help'),
+// }))
+
 export const LegalPost = defineDocumentType(() => ({
   name: 'LegalPost',
   filePathPattern: '**/legal/*.mdx',

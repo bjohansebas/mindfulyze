@@ -15,8 +15,8 @@
     "react": "^18.2.0"
   },
   "devDependencies": {
-    "@types/node": "20.11.16",
-    "@types/react": "18.2.52",
+    "@types/node": "20.11.5",
+    "@types/react": "18.2.48",
     "next": "14.1.0",
     "react": "18.2.0",
     "config": "workspace:*",
