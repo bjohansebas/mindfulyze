@@ -25,7 +25,6 @@ export const ChangelogPost = defineDocumentType(() => ({
     },
     image: {
       type: 'string',
-      required: true,
     },
     author: {
       type: 'string',
