@@ -26,7 +26,7 @@ export default async function Page({
   const totalPages = await getThoughtsPages({ fromDate, toDate })
 
   return (
-    <div className="px-6 md:px-0 py-6 flex flex-col max-w-3xl mx-auto">
+    <div className="px-6 md:px-0 py-6 flex flex-col max-w-3xl mx-auto gap-5">
       <header className="flex justify-end gap-2 flex-wrap">
         <Suspense fallback={<Skeleton className="rounded-[8px] w-[161px] h-9" />}>
           <CreateThought />
@@ -39,7 +39,7 @@ export default async function Page({
         </Suspense>
       </section>
       {totalPages.data > 0 ? (
-        <footer className="mt-10 flex w-full justify-center">
+        <footer className="flex w-full justify-center">
           <Pagination totalPages={totalPages.data} />
         </footer>
       ) : null}
