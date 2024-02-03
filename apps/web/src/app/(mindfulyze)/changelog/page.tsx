@@ -49,16 +49,19 @@ export default function Changelog() {
                 </Link>
               </div>
               <div className="flex flex-col gap-6 md:col-span-3">
-                <Link href={`/changelog/${post.slug}`}>
-                  <Image
-                    src={post.image}
-                    alt={post.title}
-                    width={1200}
-                    height={630}
-                    priority={idx === 0} // since it's above the fold
-                    className="rounded-2xl"
-                  />
-                </Link>
+                {post.image ? (
+                  <Link href={`/changelog/${post.slug}`}>
+                    <Image
+                      src={post.image}
+                      alt={post.title}
+                      width={1200}
+                      height={630}
+                      priority={idx === 0} // since it's above the fold
+                      className="rounded-2xl"
+                    />
+                  </Link>
+                ) : null}
+
                 <Link href={`/changelog/${post.slug}`} className="group mx-5 flex items-center space-x-3 md:mx-0">
                   <time
                     dateTime={post.publishedAt}

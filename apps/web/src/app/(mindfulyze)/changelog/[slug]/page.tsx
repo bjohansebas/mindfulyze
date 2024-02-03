@@ -70,14 +70,17 @@ export default async function ChangelogPost({
           </div>
           <h1 className="text-3xl font-bold tracking-tight text-emerald-500 sm:text-4xl">{post.title}</h1>
         </div>
-        <Image
-          src={post.image}
-          alt={post.title}
-          width={1200}
-          height={630}
-          priority // since it's above the fold
-          className="rounded-2xl"
-        />
+        {post.image ? (
+          <Image
+            src={post.image}
+            alt={post.title}
+            width={1200}
+            height={630}
+            priority // since it's above the fold
+            className="rounded-2xl"
+          />
+        ) : null}
+
         <div className="mx-5 mb-10 flex items-center justify-between md:mx-0">
           <div className="flex items-center gap-3">
             <Link
