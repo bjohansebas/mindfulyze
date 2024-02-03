@@ -40,7 +40,7 @@ export function CreateButton({ templates }: { templates: Template[] }) {
       }}
     >
       <PencilIcon className="w-4 h-4" />
-      <span className="sm:inline hidden">New thought</span>
+      <span>New thought</span>
     </Button>
   )
 }

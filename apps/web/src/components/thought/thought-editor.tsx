@@ -4,6 +4,8 @@ import { Editor } from '@mindfulyze/editor'
 import { Button } from '@mindfulyze/ui'
 
 import { deleteThought, updateDateThought, updateThought } from '@/app/actions/thoughts'
+import { format } from 'date-fns'
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -38,7 +40,7 @@ export function ThoughtEditor({ text, createdAt, id }: ContentThoughtsProps) {
       <div className="flex w-full justify-between py-3">
         <div className="flex gap-3 items-center">
           <DropdownMenu>
-            <DropdownMenuTrigger disabled={disabled}>{newDate.toDateString()}</DropdownMenuTrigger>
+            <DropdownMenuTrigger disabled={disabled}>{format(newDate, 'LLL dd, y')}</DropdownMenuTrigger>
             <DropdownMenuContent>
               <Calendar
                 mode="single"

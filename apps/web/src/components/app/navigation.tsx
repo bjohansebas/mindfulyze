@@ -25,12 +25,7 @@ export default function NavigationApp() {
       </div>
 
       <div className="flex gap-3">
-        <Suspense fallback={<Skeleton className="rounded-[8px] w-16 md:w-[161px] h-9" />}>
-          <CreateThought />
-        </Suspense>
-        <div className="md:flex hidden">
-          <ButtonFeedBack />
-        </div>
+        <ButtonFeedBack />
         <Suspense fallback={<Skeleton className="rounded-full w-9 h-9" />}>
           <UserDropdown />
         </Suspense>

@@ -19,14 +19,22 @@ export async function getThoughtsByUser({
   sort = 'createdAt',
   page,
   userId,
+  fromDate,
+  toDate,
 }: {
   sort?: 'createdAt'
+  toDate?: string
+  fromDate?: string
   page: number | null
   userId: string
 }): Promise<ThoughtProps[]> {
   return await prisma.thought.findMany({
     where: {
       userId,
+      createdAt: {
+        gte: dayjs(fromDate).isValid() && fromDate != null ? fromDate : undefined, // Start of date range
+        lte: dayjs(toDate).isValid() && toDate != null ? toDate : undefined, // End of date range
+      },
     },
     orderBy: {
       [sort]: 'desc',
@@ -38,7 +46,11 @@ export async function getThoughtsByUser({
   })
 }
 
-export async function getThoughts({ page }: { page: number }): Promise<ActionResponse<Thought[]>> {
+export async function getThoughts({
+  page,
+  fromDate,
+  toDate,
+}: { page: number; toDate?: string; fromDate?: string }): Promise<ActionResponse<Thought[]>> {
   const session = await getServerSession(authOptions)
 
   if (!session?.user.id || !session.user.pw) {
@@ -48,6 +60,8 @@ export async function getThoughts({ page }: { page: number }): Promise<ActionRes
   try {
     const response = await getThoughtsByUser({
       page,
+      fromDate,
+      toDate,
       userId: session.user.id,
     })
 

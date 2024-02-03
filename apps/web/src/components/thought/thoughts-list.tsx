@@ -4,10 +4,14 @@ import { ThoughtEditor } from './thought-editor'
 
 export async function ThoughtsList({
   currentPage,
+  toDate,
+  fromDate,
 }: {
   currentPage: number
+  toDate?: string
+  fromDate?: string
 }) {
-  const thoughtsData = await getThoughts({ page: currentPage })
+  const thoughtsData = await getThoughts({ page: currentPage, toDate, fromDate })
 
   return thoughtsData.data.length > 0 ? (
     thoughtsData.data.map(({ id, text, createdAt }) => (
