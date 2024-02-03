@@ -23,10 +23,10 @@ export const ChangelogPost = defineDocumentType(() => ({
       type: 'string',
       required: true,
     },
-    // image: {
-    //   type: 'string',
-    //   required: true,
-    // },
+    image: {
+      type: 'string',
+      required: true,
+    },
     author: {
       type: 'string',
       required: true,
@@ -35,50 +35,6 @@ export const ChangelogPost = defineDocumentType(() => ({
   // @ts-ignore
   computedFields: computedFields('changelog'),
 }))
-
-// export const HelpPost = defineDocumentType(() => ({
-//   name: 'HelpPost',
-//   filePathPattern: '**/help/*.mdx',
-//   contentType: 'mdx',
-//   fields: {
-//     title: {
-//       type: 'string',
-//       required: true,
-//     },
-//     updatedAt: {
-//       type: 'string',
-//       required: true,
-//     },
-//     summary: {
-//       type: 'string',
-//       required: true,
-//     },
-//     author: {
-//       type: 'string',
-//       required: true,
-//     },
-//     categories: {
-//       type: 'list',
-//       of: {
-//         type: 'enum',
-//         options: ['overview', 'getting-started', 'security'],
-//         default: 'overview',
-//       },
-//       required: true,
-//     },
-//     related: {
-//       type: 'list',
-//       of: {
-//         type: 'string',
-//       },
-//     },
-//     excludeHeadingsFromSearch: {
-//       type: 'boolean',
-//     },
-//   },
-//   // @ts-ignore
-//   computedFields: computedFields('help'),
-// }))
 
 export const LegalPost = defineDocumentType(() => ({
   name: 'LegalPost',
@@ -98,7 +54,7 @@ export const LegalPost = defineDocumentType(() => ({
   computedFields: computedFields('legal'),
 }))
 
-const computedFields = (type: 'blog' | 'changelog' | 'help' | 'legal') => ({
+const computedFields = (type: 'changelog' | 'legal') => ({
   slug: {
     type: 'string',
     resolve: (doc) => doc._raw.flattenedPath.replace(`${type}/`, ''),

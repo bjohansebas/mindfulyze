@@ -4,13 +4,14 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import { MDX } from '@/components/content/mdx'
-import { Twitter } from '@/components/shared/icons'
 import Facebook from '@/components/shared/icons/facebook'
 import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
-import { formatDate } from '@/lib/utils'
+import { format } from 'date-fns'
 
 import { HOME_DOMAIN } from '@mindfulyze/utils'
 import { constructMetadata } from '@mindfulyze/utils'
+import { LinkedinIcon, TwitterIcon } from 'lucide-react'
+import Image from 'next/image'
 
 export async function generateStaticParams() {
   return allChangelogPosts.map((post) => ({
@@ -28,11 +29,12 @@ export async function generateMetadata({
     return
   }
 
-  const { title, summary: description } = post
+  const { title, summary: description, image } = post
 
   return constructMetadata({
     title: `${title} - Mindfulyze`,
     description,
+    image,
   })
 }
 
@@ -47,33 +49,44 @@ export default async function ChangelogPost({
   }
 
   return (
-    <MaxWidthWrapper className="my-20 grid px-0 md:grid-cols-4">
+    <MaxWidthWrapper className="mt-10 mb-20 grid px-0 md:grid-cols-4">
       <div className="sticky top-16 hidden self-start md:col-span-1 md:block">
-        <Link href="/changelog" className="text-sm text-gray-200 transition-colors hover:text-gray-50">
+        <Link href="/changelog" className="text-sm text-foreground transition-colors hover:text-emerald-400">
           ← Back to Changelog
         </Link>
       </div>
       <div className="flex flex-col space-y-8 md:col-span-3">
         <div className="mx-5 grid gap-5 md:mx-0">
           <div className="flex flex-col">
-            <Link href="/changelog" className="my-5 text-sm text-gray-50 md:hidden">
+            <Link
+              href="/changelog"
+              className="my-5 text-sm text-foreground md:hidden hover:text-emerald-400 active:text-emerald-400"
+            >
               ← Back to Changelog
             </Link>
-            <time dateTime={post.publishedAt} className="flex items-center text-sm text-gray-200 md:text-base">
-              {formatDate(post.publishedAt)}
+            <time dateTime={post.publishedAt} className="flex items-center text-sm text-foreground md:text-base">
+              {format(post.publishedAt, 'LLLL dd, y')}
             </time>
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-emerald-600 sm:text-4xl">{post.title}</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-emerald-500 sm:text-4xl">{post.title}</h1>
         </div>
+        <Image
+          src={post.image}
+          alt={post.title}
+          width={1200}
+          height={630}
+          priority // since it's above the fold
+          className="rounded-2xl"
+        />
         <div className="mx-5 mb-10 flex items-center justify-between md:mx-0">
-          <div className="flex items-center space-x-6">
+          <div className="flex items-center gap-3">
             <Link
               href={`https://twitter.com/intent/tweet?text=${post.title}&url=${HOME_DOMAIN}/changelog/${post.slug}&via=${post.author}`}
               target="_blank"
               rel="noopener noreferrer"
               className="transition-all hover:scale-110"
             >
-              <Twitter className="h-6 w-6" />
+              <TwitterIcon className="h-6 w-6" />
             </Link>
             <Link
               href={`https://www.facebook.com/sharer/sharer.php?u=${HOME_DOMAIN}/changelog/${post.slug}`}
@@ -82,6 +95,14 @@ export default async function ChangelogPost({
               className="transition-all hover:scale-110"
             >
               <Facebook className="h-6 w-6" />
+            </Link>
+            <Link
+              href={` http://www.linkedin.com/shareArticle?mini=true&url=${HOME_DOMAIN}/changelog/${post.slug}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-all hover:scale-110"
+            >
+              <LinkedinIcon className="h-6 w-6" />
             </Link>
           </div>
         </div>
