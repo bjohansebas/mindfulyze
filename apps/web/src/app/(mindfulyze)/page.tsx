@@ -9,7 +9,7 @@ import Image from 'next/image'
 export default function Page() {
   return (
     <>
-      <header className="max-w-5xl mx-auto pt-20 sm:pt-24 lg:pt-32">
+      <header className="max-w-5xl mx-auto pt-10">
         <h1 className="font-extrabold text-4xl sm:text-5xl lg:text-6xl text-center tracking-tighter">
           Store moments from your day
           <br />

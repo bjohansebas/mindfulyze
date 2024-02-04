@@ -1,41 +1,25 @@
-'use client'
-
-import { signIn, useSession } from 'next-auth/react'
+import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 
 import { Button } from '@mindfulyze/ui'
 
-export function ButtonNav() {
-  const { status } = useSession()
+import { authOptions } from '@lib/auth'
 
-  return (
+export async function ButtonNav() {
+  const session = await getServerSession(authOptions)
+
+  return session ? (
+    <Button asChild variant="surface" shape="rounded">
+      <Link href="/home">Dashboard</Link>
+    </Button>
+  ) : (
     <>
-      {status === 'authenticated' ? (
-        <Button asChild>
-          <Link href="/home">Dashboard</Link>
-        </Button>
-      ) : (
-        <>
-          <Button
-            variant="outline"
-            shape="rounded"
-            onClick={() => {
-              signIn('google', { callbackUrl: '/home' })
-            }}
-          >
-            Log in
-          </Button>
-          <Button
-            variant="surface"
-            shape="rounded"
-            onClick={() => {
-              signIn('google', { callbackUrl: '/home' })
-            }}
-          >
-            Sign Up
-          </Button>
-        </>
-      )}
+      <Button variant="link" shape="rounded" asChild className="text-foreground hover:text-primary">
+        <Link href="/login">Log in</Link>
+      </Button>
+      <Button variant="surface" shape="rounded" asChild>
+        <Link href="/signup">Sign Up</Link>
+      </Button>
     </>
   )
 }

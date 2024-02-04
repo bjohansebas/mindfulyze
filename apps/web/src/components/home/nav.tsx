@@ -1,13 +1,8 @@
 import { LogoType } from '@/components/shared/icons'
-import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
-import { Skeleton } from '@ui/skeleton'
 
-import dynamic from 'next/dynamic'
 import Link from 'next/link'
-
-const ButtonNav = dynamic(() => import('./button-nav'), {
-  loading: () => <Skeleton className="w-[119.5px] h-9" />,
-})
+import ButtonNav from './button-nav'
+import MobileNav from './nav-mobile'
 
 export const navItems = [
   {
@@ -16,35 +11,32 @@ export const navItems = [
   },
 ]
 
-export default function Nav() {
+export default function Navigation() {
   return (
-    <nav className="sticky inset-x-0 top-0 z-30 w-full transition-all border-b bg-card backdrop-blur-lg">
-      <MaxWidthWrapper>
-        <div className="flex h-14 items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <Link href="/">
-              <LogoType className="w-auto h-10 text-emerald-600" />
-            </Link>
-            <div className="hidden items-center space-x-3 lg:flex">
-              {navItems.map(({ name, slug }) => {
-                return (
-                  <Link
-                    id={`nav-${slug}`}
-                    key={slug}
-                    href={`/${slug}`}
-                    className="z-10 rounded-full px-4 py-1.5 text-sm font-medium capitalize hover:hover:text-emerald-200"
-                  >
-                    {name}
-                  </Link>
-                )
-              })}
-            </div>
-          </div>
-          <div className="hidden lg:flex gap-2">
-            <ButtonNav />
-          </div>
+    <nav className="w-full max-w-5xl mx-auto px-8 lg:h-24 h-20 flex item-center justify-between">
+      <div className="flex items-center gap-4">
+        <Link href="/">
+          <LogoType className="w-auto h-12 text-emerald-600" />
+        </Link>
+        <div className="hidden items-center space-x-3 lg:flex">
+          {navItems.map(({ name, slug }) => {
+            return (
+              <Link
+                id={`nav-${slug}`}
+                key={slug}
+                href={`/${slug}`}
+                className="px-4 text-sm font-medium capitalize hover:hover:text-primary"
+              >
+                {name}
+              </Link>
+            )
+          })}
         </div>
-      </MaxWidthWrapper>
+      </div>
+      <div className="hidden lg:flex gap-2 items-center">
+        <ButtonNav />
+      </div>
+      <MobileNav />
     </nav>
   )
 }
