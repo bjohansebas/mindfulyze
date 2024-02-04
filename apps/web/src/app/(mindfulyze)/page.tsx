@@ -6,16 +6,15 @@ import { LayoutTemplateIcon } from 'lucide-react'
 export default function Page() {
   return (
     <>
-      <header className="max-w-5xl mx-auto pt-10">
-        <h1 className="font-extrabold text-4xl sm:text-5xl lg:text-6xl text-center tracking-tighter">
-          Store moments from your day
-          <br />
-          <span className="text-emerald-600">Securely</span>
+      <header className="max-w-lg md:max-w-3xl mx-auto md:pt-16 pt-10  px-2 md:px-0">
+        <h1 className="font-bold text-[2rem] md:text-6xl text-center text-balance">
+          Practice journaling in a <span className="text-primary">safe</span> and{' '}
+          <span className="text-primary">simple</span> manner
         </h1>
-        <h2 className="mt-6 text-lg text-slate-300 text-center max-w-2xl mx-auto">
-          Capture, express, and reflect on your day in a secure and private space. Start your journey of self-expression
-          and personal growth
-        </h2>
+        <p className="mt-4 max-w-[26rem] mx-auto md:max-w-xl text-muted-foreground lg:leading-loose text-pretty text-center">
+          Turn every moment into an opportunity to grow and get to know yourself, exploring your thoughts and ideas in
+          one single place.
+        </p>
         <Hero />
       </header>
       <div className="mt-20 sm:mt-24 p-10 grid grid-cols-2 grid-rows-2 gap-4 place-items-center">
