@@ -23,6 +23,8 @@
     "@commitlint/config-conventional": "18.5.0",
     "@commitlint/cz-commitlint": "18.5.0",
     "commitizen": "4.3.0",
+    "eslint": "8.56.0",
+    "eslint-config-next": "14.1.0",
     "husky": "8.0.3",
     "lint-staged": "15.2.0",
     "turbo": "^1.10.15"
