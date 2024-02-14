@@ -11,26 +11,28 @@ const config: Config = {
   ],
   presets: [sharedConfig],
   theme: {
-    colors: {
-      emerald: {
-        // PRIMARY COLOR
-        '50': '#eefff6',
-        '100': '#d7ffed',
-        '200': '#b2ffdc',
-        '300': '#76ffc3',
-        '400': '#33f5a1',
-        '500': '#09de82',
-        '600': '#00cf76',
-        '700': '#049155',
-        '800': '#0a7146',
-        '900': '#0a5d3c',
-        '950': '#00341f',
+    extend: {
+      colors: {
+        emerald: {
+          // PRIMARY COLOR
+          '50': '#eefff6',
+          '100': '#d7ffed',
+          '200': '#b2ffdc',
+          '300': '#76ffc3',
+          '400': '#33f5a1',
+          '500': '#09de82',
+          '600': '#00cf76',
+          '700': '#049155',
+          '800': '#0a7146',
+          '900': '#0a5d3c',
+          '950': '#00341f',
+        },
       },
-    },
-    fontFamily: {
-      default: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
-      sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
-      mono: ['var(--font-geist-mono)', 'system-ui', 'sans-serif'],
+      fontFamily: {
+        default: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-geist-mono)', 'system-ui', 'sans-serif'],
+      },
     },
   },
 }
