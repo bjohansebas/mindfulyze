@@ -1,17 +1,12 @@
 'use client'
 
-import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { ReactNode, useEffect, useRef } from 'react'
 
 import { motion, useCycle } from 'framer-motion'
 
-import { Skeleton } from '@ui/skeleton'
+import ButtonNav from './button-nav-mobile'
 import { navItems } from './nav'
-
-const ButtonNavMobile = dynamic(() => import('./button-nav-mobile'), {
-  loading: () => <Skeleton className="w-[119.5px] h-9" />,
-})
 
 const sidebar = {
   open: (height = 1000) => ({
@@ -63,7 +58,7 @@ export default function MobileNav() {
             </div>
           )
         })}
-        <ButtonNavMobile />
+        <ButtonNav />
       </motion.ul>
       <MenuToggle toggle={toggleOpen} />
     </motion.nav>

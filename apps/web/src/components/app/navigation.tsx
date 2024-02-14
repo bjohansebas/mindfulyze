@@ -4,7 +4,6 @@ import { Suspense } from 'react'
 import { Logo, LogoType } from '@/components/shared/icons'
 import UserDropdown from '@ui/app/user-dropdown'
 import { ButtonFeedBack } from '@ui/shared/button-feedback'
-import { CreateThought } from '@ui/shared/thoughts/create-thoughts'
 import { Skeleton } from '@ui/skeleton'
 
 import { LinkNavigation } from './links-navigation'

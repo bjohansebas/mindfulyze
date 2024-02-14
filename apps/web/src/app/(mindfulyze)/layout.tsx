@@ -1,5 +1,5 @@
-import Footer from '@ui/home/footer'
 import Navigation from '@ui/home/nav'
+import Footer from '@ui/shared/footer'
 
 export default function MindfulyzeLayout({
   children,

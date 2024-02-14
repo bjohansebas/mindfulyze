@@ -2,7 +2,6 @@
 
 import { buttonVariants } from '@mindfulyze/ui'
 import { cn } from '@mindfulyze/utils'
-import {} from '@ui/button'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 

@@ -1,4 +1,4 @@
-import { LogoType } from '@/components/shared/icons'
+import { LogoType } from '@ui/shared/icons'
 
 import Link from 'next/link'
 import ButtonNav from './button-nav'

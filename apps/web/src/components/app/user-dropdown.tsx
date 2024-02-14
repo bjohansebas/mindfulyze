@@ -8,7 +8,7 @@ import { LayoutTemplateIcon, PenLineIcon } from 'lucide-react'
 import { getServerSession } from 'next-auth'
 
 import Link from 'next/link'
-import { ButtonLogout } from './men/button-logout'
+import { ButtonLogout } from './menu/button-logout'
 
 export default async function UserDropdown() {
   const session = await getServerSession(authOptions)
