@@ -32,13 +32,13 @@
 .dark {
   :root {
     --gradient: #00cf76;
-    --background: 230, 43%, 3%;
+    --background: 0, 0%, 13%;
     --foreground: 164 10% 97.05%;
     --muted: 164 50% 12.299999999999999%;
-    --muted-foreground: 171, 10%, 64%;
+    --muted-foreground: 165, 8%, 62%;
     --popover: 164 45% 5.33%;
     --popover-foreground: 164 10% 97.05%;
-    --card: 218, 36%, 4%;
+    --card: 0, 0%, 9%;
     --card-foreground: 164 10% 97.05%;
     --border: 164 50% 12.299999999999999%;
     --input: 164 50% 12.299999999999999%;
