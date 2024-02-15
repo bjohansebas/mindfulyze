@@ -5,6 +5,7 @@ import { ReactNode, useEffect, useRef } from 'react'
 
 import { motion, useCycle } from 'framer-motion'
 
+import { Button } from '@mindfulyze/ui'
 import ButtonNav from './button-nav-mobile'
 import { navItems } from './nav'
 
@@ -67,7 +68,7 @@ export default function MobileNav() {
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const MenuToggle = ({ toggle }: { toggle: any }) => (
-  <button type="button" onClick={toggle} className="pointer-events-auto absolute right-7 top-8 z-20">
+  <Button onClick={toggle} className="pointer-events-auto absolute right-7 top-6 z-20 p-0" variant="link" size="sm">
     <svg width="23" height="23" viewBox="0 0 23 23">
       <Path
         variants={{
@@ -90,7 +91,7 @@ const MenuToggle = ({ toggle }: { toggle: any }) => (
         }}
       />
     </svg>
-  </button>
+  </Button>
 )
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
