@@ -1,13 +1,13 @@
-import { SidebarNav } from '@/components/settings/menu/sidebar-nav'
-import { Separator } from '@/components/ui/separator'
-import { UserIcon } from '@heroicons/react/24/solid'
 import NavigationApp from '@ui/app/navigation'
+import { Separator } from '@ui/separator'
+import { SidebarNav } from '@ui/settings/menu/sidebar-nav'
+import { UserRoundIcon } from 'lucide-react'
 
 const sidebarNavItems = [
   {
     title: 'Account',
     href: '/settings',
-    icon: <UserIcon className="h-4 w-4 mr-2" />,
+    icon: <UserRoundIcon className="h-4 w-4 mr-2" />,
   },
 ]
 

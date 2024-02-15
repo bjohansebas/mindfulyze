@@ -6,7 +6,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Textarea } from '@/components/ui/textarea'
 import { FeedbackSchema } from '@/schemas/feedback'
-import { ChatBubbleBottomCenterTextIcon } from '@heroicons/react/24/solid'
+import { MessageSquareTextIcon } from 'lucide-react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, toast } from '@mindfulyze/ui'
@@ -46,7 +46,7 @@ export function ButtonFeedBack({ setOpen }: { setOpen?: Dispatch<SetStateAction<
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
         <Button onClick={() => setIsOpen((prev) => !prev)} variant="outline" className="w-full justify-start">
-          <ChatBubbleBottomCenterTextIcon className="h-4 w-4" /> Feedback
+          <MessageSquareTextIcon className="h-4 w-4" /> Feedback
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[340px]" align="start">

@@ -1,8 +1,8 @@
 'use client'
 
-import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline'
 import { generatePagination } from '@mindfulyze/utils'
 import clsx from 'clsx'
+import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
 

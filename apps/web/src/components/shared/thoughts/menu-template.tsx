@@ -9,7 +9,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { ChevronDownIcon } from '@heroicons/react/24/solid'
+import { ChevronDownIcon } from 'lucide-react'
 
 import { createTemplate } from '@/app/actions/templates'
 import { createThought } from '@/app/actions/thoughts'

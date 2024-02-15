@@ -20,9 +20,9 @@ import {
 import { Calendar } from '@/components/ui/calendar'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 
-import { TrashIcon } from '@heroicons/react/24/solid'
 import { toast } from '@mindfulyze/ui'
 import { cn } from '@mindfulyze/utils'
+import { TrashIcon } from 'lucide-react'
 import { useState } from 'react'
 
 export interface ContentThoughtsProps {

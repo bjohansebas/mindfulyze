@@ -1,12 +1,6 @@
 'use client'
 
-import {
-  DocumentDuplicateIcon,
-  EllipsisHorizontalIcon,
-  FlagIcon,
-  PencilSquareIcon,
-  TrashIcon,
-} from '@heroicons/react/24/solid'
+import { FilesIcon, FlagIcon, MoreHorizontalIcon, SquarePenIcon, TrashIcon } from 'lucide-react'
 
 import { deleteTemplate, duplicateTemplate, setDefaultTemplate } from '@/app/actions/templates'
 import {
@@ -66,14 +60,14 @@ export function OptionsCardTemplate({ id }: OptionCardTemplate) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="z-auto">
         <Button size="icon" variant="ghost" className="z-auto">
-          <EllipsisHorizontalIcon className="w-5 h-5" />
+          <MoreHorizontalIcon className="w-5 h-5" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuPortal>
         <DropdownMenuContent className="w-[230px]">
           <DropdownMenuItem asChild>
             <Link className="w-full" href={`/templates/${id}`}>
-              <PencilSquareIcon className="mr-2 h-4 w-4" />
+              <SquarePenIcon className="mr-2 h-4 w-4" />
               Edit
             </Link>
           </DropdownMenuItem>
@@ -82,7 +76,7 @@ export function OptionsCardTemplate({ id }: OptionCardTemplate) {
             Set as default
           </DropdownMenuItem>
           <DropdownMenuItem onClick={handleDuplicateTemplate}>
-            <DocumentDuplicateIcon className="mr-2 h-4 w-4" />
+            <FilesIcon className="mr-2 h-4 w-4" />
             Duplicate
           </DropdownMenuItem>
           <DropdownMenuItem onClick={handleDeleteTemplate}>

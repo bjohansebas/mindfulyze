@@ -2,8 +2,8 @@
 
 import { createThought } from '@/app/actions/thoughts'
 import { Template } from '@/types/template'
-import { PencilIcon } from '@heroicons/react/24/solid'
 import { Button, toast } from '@mindfulyze/ui'
+import { PencilIcon } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 export async function handleCreateThought(templateSelect?: Template) {

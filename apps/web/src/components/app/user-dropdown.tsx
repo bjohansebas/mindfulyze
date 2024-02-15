@@ -1,10 +1,9 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { authOptions } from '@/lib/auth'
 import { stringAvatar } from '@/lib/utils'
-import { ChatBubbleOvalLeftIcon, Cog6ToothIcon } from '@heroicons/react/24/solid'
 import { Button } from '@mindfulyze/ui'
-import { LayoutTemplateIcon, PenLineIcon } from 'lucide-react'
+import { Avatar, AvatarFallback, AvatarImage } from '@ui/avatar'
+import { Popover, PopoverContent, PopoverTrigger } from '@ui/popover'
+import { LayoutTemplateIcon, MessageCircleIcon, PenLineIcon, SettingsIcon } from 'lucide-react'
 import { getServerSession } from 'next-auth'
 
 import Link from 'next/link'
@@ -29,7 +28,7 @@ export default async function UserDropdown() {
           </div>
           <Button variant="ghost" asChild className="justify-start w-[auto] md:hidden">
             <Link href="/home">
-              <ChatBubbleOvalLeftIcon className="w-4 h-4" />
+              <MessageCircleIcon className="w-4 h-4" />
               Thoughts
             </Link>
           </Button>
@@ -41,7 +40,7 @@ export default async function UserDropdown() {
           </Button>
           <Button variant="ghost" asChild className="justify-start w-[auto] flex">
             <Link href="/settings">
-              <Cog6ToothIcon className="w-4 h-4" />
+              <SettingsIcon className="w-4 h-4" />
               Settings
             </Link>
           </Button>

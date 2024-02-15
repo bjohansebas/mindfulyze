@@ -1,10 +1,10 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@mindfulyze/ui'
 
 import { createTemplate } from '@/app/actions/templates'
-import { PencilIcon } from '@heroicons/react/24/solid'
 import { toast } from '@mindfulyze/ui'
+import { PencilIcon } from 'lucide-react'
 
 export async function handleCreateTemplate() {
   try {

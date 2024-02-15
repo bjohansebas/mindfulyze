@@ -20,7 +20,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Template } from '@/types/template'
-import { TrashIcon } from '@heroicons/react/24/solid'
+import { TrashIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce'
 
