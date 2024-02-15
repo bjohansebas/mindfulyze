@@ -25,7 +25,7 @@ const buttonVariants = cva(
       },
       shape: {
         square: 'rounded-[8px]',
-        circle: 'rounded-[100%]',
+        circle: 'rounded-[100%] p-2',
         rounded: 'rounded-full',
       },
     },
