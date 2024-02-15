@@ -59,18 +59,13 @@ export default function Page() {
             </p>
           </header>
         </section>
-        <section className="flex justify-center flex-col items-center gap-4">
-          <div>
-            <LogoType className="w-auto h-16 text-emerald-600" />
-          </div>
-          <h2 className="text-4xl font-extrabold leading-tigh sm:text-5xl sm:leading-tight">
-            <span className="bg-gradient-to-r from-emerald-500 to-emerald-700 bg-clip-text text-transparent">
-              Free your thoughts
-            </span>
-            <br />
-            free your mind
+        <section className="flex justify-center flex-col items-center gap-3">
+          <LogoType className="w-auto h-16 text-primary" />
+          <h2 className="text-4xl md:text-5xl font-semibold md:max-w-md max-w-sm text-center text-balance">
+            Free your <span className="text-primary">thoughts</span> free your{' '}
+            <span className="text-primary">mind</span>
           </h2>
-          <Button asChild>
+          <Button asChild className="mt-5">
             <Link href="/signup">Try Mindfulyze For Free</Link>
           </Button>
         </section>
