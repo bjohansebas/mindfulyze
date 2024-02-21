@@ -9,6 +9,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@aptabase/react": "0.3.3",
     "@hookform/resolvers": "3.3.4",
     "@mindfulyze/database": "workspace:*",
     "@mindfulyze/editor": "workspace:*",

@@ -41,6 +41,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@aptabase/react':
+        specifier: 0.3.3
+        version: 0.3.3(react@18.2.0)
       '@hookform/resolvers':
         specifier: 3.3.4
         version: 3.3.4(react-hook-form@7.49.3)
@@ -471,6 +474,14 @@ packages:
   /@alloc/quick-lru@5.2.0:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
+
+  /@aptabase/react@0.3.3(react@18.2.0):
+    resolution: {integrity: sha512-/8pSVMv5kElaVD4ukDQmPzF7sw/VsOM/P/B/4tieUZt3zmACPcVpYTFQZ0oYESSn/yTvVIU1iTeXa6zKwxi4vw==}
+    peerDependencies:
+      react: ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /@babel/code-frame@7.23.5:
     resolution: {integrity: sha512-CgH3s1a96LipHCmSUmYFPwY7MNx8C3avkq7i4Wl3cfa662ldtUe4VM1TPXX70pfmrlWTb6jLqTYrZyT2ZTJBgA==}

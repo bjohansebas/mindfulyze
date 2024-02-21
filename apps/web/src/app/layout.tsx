@@ -5,7 +5,8 @@ import { GeistSans } from 'geist/font/sans'
 
 import { Viewport } from 'next'
 
-import { cn, constructMetadata } from '@mindfulyze/utils'
+import { AptabaseProvider } from '@aptabase/react'
+import { APTABASE_APP_KEY, cn, constructMetadata } from '@mindfulyze/utils'
 import { Provider } from './providers'
 
 export const metadata = constructMetadata()
@@ -23,7 +24,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={cn('bg-background dark:selection:bg-emerald-800', GeistSans.className, GeistMono.className)}>
-        <Provider>{children}</Provider>
+        <AptabaseProvider appKey={APTABASE_APP_KEY}>
+          <Provider>{children}</Provider>
+        </AptabaseProvider>
       </body>
     </html>
   )
