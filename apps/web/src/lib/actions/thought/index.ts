@@ -2,10 +2,10 @@
 
 import { Thought as ThoughtProps } from '@prisma/client'
 
+import { decryptData } from '@lib/encryption'
 import { prisma } from '@mindfulyze/database'
 import { NEXTAUTH_SECRET, NOT_FOUND_CODE, NOT_FOUND_THOUGHTS, OK_CODE, UNAUTHORIZED_CODE } from '@mindfulyze/utils'
 import { ERROR_LOGIN_REQUIRED } from '@mindfulyze/utils'
-import { decryptData } from '@mindfulyze/utils'
 
 import dayjs from 'dayjs'
 import { getServerSession } from 'next-auth'

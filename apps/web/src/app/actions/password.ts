@@ -5,10 +5,11 @@ import { getServerSession } from 'next-auth'
 import z from 'zod'
 
 import { prisma } from '@mindfulyze/database'
-import { DEFAULT_COST_SALT, NEXTAUTH_SECRET, encryptData } from '@mindfulyze/utils'
+import { DEFAULT_COST_SALT, NEXTAUTH_SECRET } from '@mindfulyze/utils'
 
-import { authOptions } from '@/lib/auth'
 import { NewPasswordSchema, validateNewPassword } from '@/schemas/password'
+import { authOptions } from '@lib/auth'
+import { encryptData } from '@lib/encryption'
 import { getUser } from './user'
 
 // Create new password for user
