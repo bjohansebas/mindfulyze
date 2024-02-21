@@ -1,9 +1,9 @@
-import { capitalize } from '@lib/utils'
 import { defineDocumentType, makeSource } from 'contentlayer/source-files'
 import GithubSlugger from 'github-slugger'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
+import { capitalize } from './src/lib/utils'
 
 export const HOME_DOMAIN =
   process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
