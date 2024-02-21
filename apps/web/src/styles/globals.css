@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
   :root {
     --gradient: #00cf76;
@@ -27,34 +26,30 @@
     --ring: 164 100% 41%;
     --radius: 0.5rem;
   }
-}
 
-.dark {
-  :root {
-    --gradient: #00cf76;
-    --background: 0, 0%, 13%;
-    --foreground: 164 10% 97.05%;
-    --muted: 164 50% 12.299999999999999%;
-    --muted-foreground: 165, 8%, 62%;
-    --popover: 164 45% 5.33%;
-    --popover-foreground: 164 10% 97.05%;
-    --card: 0, 0%, 9%;
-    --card-foreground: 164 10% 97.05%;
-    --border: 164 50% 12.299999999999999%;
-    --input: 164 50% 12.299999999999999%;
-    --primary: 164 91% 58%;
-    --primary-foreground: 164 9.1% 5.8%;
-    --secondary: 164 50% 12.299999999999999%;
-    --secondary-foreground: 164 10% 97.05%;
-    --accent: 164 50% 12.299999999999999%;
-    --accent-foreground: 164 10% 97.05%;
+  .dark {
+    --gradient: #049155;
+    --background: 164 61.75% 2.32%;
+    --foreground: 164 9.5% 96.45%;
+    --muted: 164 47.5% 8.7%;
+    --muted-foreground: 164 9.5% 52.9%;
+    --popover: 164 46% 3.7699999999999996%;
+    --popover-foreground: 164 9.5% 96.45%;
+    --card: 164 46% 3.7699999999999996%;
+    --card-foreground: 164 9.5% 96.45%;
+    --border: 164 47.5% 8.7%;
+    --input: 164 47.5% 8.7%;
+    --primary: 164 95% 29%;
+    --primary-foreground: 164 9.5% 96.45%;
+    --secondary: 164 47.5% 8.7%;
+    --secondary-foreground: 164 9.5% 96.45%;
+    --accent: 164 47.5% 8.7%;
+    --accent-foreground: 164 9.5% 96.45%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 164 10% 97.05%;
-    --ring: 164 100% 41%;
-    --radius: 0.5rem;
+    --destructive-foreground: 164 9.5% 96.45%;
+    --ring: 164 95% 29%;
   }
 }
-
 
 @layer base {
   * {
