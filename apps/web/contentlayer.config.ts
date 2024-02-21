@@ -1,10 +1,16 @@
+import { capitalize } from '@lib/utils'
 import { defineDocumentType, makeSource } from 'contentlayer/source-files'
 import GithubSlugger from 'github-slugger'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 
-import { HOME_DOMAIN, capitalize } from '@mindfulyze/utils'
+export const HOME_DOMAIN =
+  process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+    ? 'https://mindfulyze.com'
+    : process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
+      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+      : 'http://localhost:3000'
 
 export const ChangelogPost = defineDocumentType(() => ({
   name: 'ChangelogPost',
