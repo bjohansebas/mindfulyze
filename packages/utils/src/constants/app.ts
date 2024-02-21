@@ -9,7 +9,3 @@ export const HOME_DOMAIN =
     : process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
       ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
       : 'http://localhost:3000'
-
-export const NEXT_SECRET = process.env.NEXTAUTH_SECRET as string
-
-export const NEXT_URL = process.env.NEXTAUTH_URL as string

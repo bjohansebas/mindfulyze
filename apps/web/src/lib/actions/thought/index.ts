@@ -3,7 +3,7 @@
 import { Thought as ThoughtProps } from '@prisma/client'
 
 import { prisma } from '@mindfulyze/database'
-import { NEXT_SECRET, NOT_FOUND_CODE, NOT_FOUND_THOUGHTS, OK_CODE, UNAUTHORIZED_CODE } from '@mindfulyze/utils'
+import { NEXTAUTH_SECRET, NOT_FOUND_CODE, NOT_FOUND_THOUGHTS, OK_CODE, UNAUTHORIZED_CODE } from '@mindfulyze/utils'
 import { ERROR_LOGIN_REQUIRED } from '@mindfulyze/utils'
 import { decryptData } from '@mindfulyze/utils'
 
@@ -65,7 +65,7 @@ export async function getThoughts({
       userId: session.user.id,
     })
 
-    const password = decryptData({ key: NEXT_SECRET, data: session.user.pw })
+    const password = decryptData({ key: NEXTAUTH_SECRET, data: session.user.pw })
 
     const thoughts = await Promise.all(
       response.map(async ({ url, bucket, updatedAt, ...res }) => {

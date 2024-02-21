@@ -1,4 +1,6 @@
 import { prisma } from '@mindfulyze/database'
+import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from '@mindfulyze/utils'
+
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 
 import { AuthOptions } from 'next-auth'
@@ -16,8 +18,8 @@ export const authOptions: AuthOptions = {
   },
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      clientId: GOOGLE_CLIENT_ID as string,
+      clientSecret: GOOGLE_CLIENT_SECRET as string,
       allowDangerousEmailAccountLinking: true,
     }),
   ],

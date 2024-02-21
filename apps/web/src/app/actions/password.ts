@@ -5,7 +5,7 @@ import { getServerSession } from 'next-auth'
 import z from 'zod'
 
 import { prisma } from '@mindfulyze/database'
-import { DEFAULT_COST_SALT, NEXT_SECRET, encryptData } from '@mindfulyze/utils'
+import { DEFAULT_COST_SALT, NEXTAUTH_SECRET, encryptData } from '@mindfulyze/utils'
 
 import { authOptions } from '@/lib/auth'
 import { NewPasswordSchema, validateNewPassword } from '@/schemas/password'
@@ -52,7 +52,7 @@ export async function createPassword(data: z.infer<typeof NewPasswordSchema>) {
 }
 
 export async function encryptPassword(password: string) {
-  const dataEncrypt = encryptData({ key: NEXT_SECRET, data: password })
+  const dataEncrypt = encryptData({ key: NEXTAUTH_SECRET, data: password })
 
   return dataEncrypt
 }

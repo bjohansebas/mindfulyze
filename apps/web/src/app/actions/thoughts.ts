@@ -8,7 +8,7 @@ import { validatePartialThought } from '@/schemas/thought'
 import { Thought } from '@/types/thought'
 import { prisma } from '@mindfulyze/database'
 import { decryptData, encryptData } from '@mindfulyze/utils'
-import { NEXT_SECRET } from '@mindfulyze/utils'
+import { NEXTAUTH_SECRET } from '@mindfulyze/utils'
 import { SUPABASE_BUCKET_THOUGHTS } from '@mindfulyze/utils'
 import { getTemplateById, getTemplateDefault } from './templates'
 
@@ -48,7 +48,7 @@ export async function getThoughtById(id: string) {
     }
 
     const text = await dataThought.data.text()
-    const password = decryptData({ key: NEXT_SECRET, data: session.user.pw })
+    const password = decryptData({ key: NEXTAUTH_SECRET, data: session.user.pw })
     const textDecrypt = decryptData({ key: password, data: text })
 
     return { data: { text: textDecrypt, updatedAt, ...res, url, bucket }, status: 200 }
@@ -107,7 +107,7 @@ export async function createThought(idTemplate?: string) {
   }
 
   try {
-    const password = decryptData({ key: NEXT_SECRET, data: session.user.pw })
+    const password = decryptData({ key: NEXTAUTH_SECRET, data: session.user.pw })
     const textEncrypt = encryptData({ key: password, data: textForThought })
 
     const uid = createId()
@@ -164,7 +164,7 @@ export async function updateThought(id: string, data: z.infer<typeof ThoughtSche
 
   try {
     if (data.textWithFormat !== thought.data?.text) {
-      const password = decryptData({ key: NEXT_SECRET, data: session.user.pw })
+      const password = decryptData({ key: NEXTAUTH_SECRET, data: session.user.pw })
       const textEncrypt = encryptData({ key: password, data: data.textWithFormat })
 
       const file = await updateFile({
