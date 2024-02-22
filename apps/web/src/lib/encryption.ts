@@ -1,6 +1,6 @@
 import crypto from 'crypto'
 
-import { ENCRYPTION_METHOD, SECRET_IV } from '@mindfulyze/utils/src/constants'
+import { ENCRYPTION_METHOD, SECRET_IV } from '@mindfulyze/utils'
 
 /**
  * Generate a secret hash to use for encryption.
