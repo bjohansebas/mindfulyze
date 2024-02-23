@@ -1,4 +1,4 @@
-import { LogoType } from '@ui/shared/icons'
+import { MindfulyzeIconWithText } from '@mindfulyze/ui'
 
 import Link from 'next/link'
 import ButtonNav from './button-nav'
@@ -16,7 +16,7 @@ export default function Navigation() {
     <nav className="w-full max-w-5xl mx-auto px-8 lg:h-24 h-20 flex item-center justify-between">
       <div className="flex items-center gap-4">
         <Link href="/">
-          <LogoType className="w-auto h-12 text-emerald-600" />
+          <MindfulyzeIconWithText className="w-auto h-12 text-emerald-600" />
         </Link>
         <div className="hidden items-center space-x-3 lg:flex">
           {navItems.map(({ name, slug }) => {
