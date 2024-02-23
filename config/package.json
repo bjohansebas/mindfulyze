@@ -1,6 +1,5 @@
 {
-  "name": "config",
-  "version": "0.0.0",
+  "name": "@mindfulyze/config",
   "private": true,
   "license": "MIT",
   "files": ["./**"],

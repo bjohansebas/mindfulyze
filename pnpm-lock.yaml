@@ -174,6 +174,9 @@ importers:
         specifier: 3.22.4
         version: 3.22.4
     devDependencies:
+      '@mindfulyze/config':
+        specifier: workspace:*
+        version: link:../../config
       '@types/bcrypt':
         specifier: 5.0.2
         version: 5.0.2
@@ -189,9 +192,6 @@ importers:
       autoprefixer:
         specifier: 10.4.17
         version: 10.4.17(postcss@8.4.33)
-      config:
-        specifier: workspace:*
-        version: link:../../packages/config
       eslint:
         specifier: 8.56.0
         version: 8.56.0
@@ -208,7 +208,7 @@ importers:
         specifier: 5.3.3
         version: 5.3.3
 
-  packages/config:
+  config:
     devDependencies:
       '@tailwindcss/typography':
         specifier: 0.5.10
@@ -226,12 +226,12 @@ importers:
         specifier: 5.8.1
         version: 5.8.1(prisma@5.8.1)
     devDependencies:
+      '@mindfulyze/config':
+        specifier: workspace:*
+        version: link:../../config
       '@types/node':
         specifier: 20.11.5
         version: 20.11.5
-      config:
-        specifier: workspace:*
-        version: link:../config
       prisma:
         specifier: 5.8.1
         version: 5.8.1
@@ -320,6 +320,9 @@ importers:
         specifier: 10.0.0
         version: 10.0.0(react@18.2.0)
     devDependencies:
+      '@mindfulyze/config':
+        specifier: workspace:*
+        version: link:../../config
       '@mindfulyze/ui':
         specifier: workspace:*
         version: link:../ui
@@ -329,9 +332,6 @@ importers:
       autoprefixer:
         specifier: 10.4.16
         version: 10.4.16(postcss@8.4.33)
-      config:
-        specifier: workspace:*
-        version: link:../config
       postcss:
         specifier: 8.4.33
         version: 8.4.33
@@ -357,15 +357,15 @@ importers:
         specifier: 3.0.0
         version: 3.0.0
     devDependencies:
+      '@mindfulyze/config':
+        specifier: workspace:*
+        version: link:../../config
       '@mindfulyze/utils':
         specifier: workspace:*
         version: link:../utils
       '@types/react':
         specifier: 18.2.48
         version: 18.2.48
-      config:
-        specifier: workspace:*
-        version: link:../config
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -409,6 +409,9 @@ importers:
         specifier: 3.4.1
         version: 3.4.1
     devDependencies:
+      '@mindfulyze/config':
+        specifier: workspace:*
+        version: link:../../config
       '@mindfulyze/utils':
         specifier: workspace:*
         version: link:../utils
@@ -418,9 +421,6 @@ importers:
       autoprefixer:
         specifier: 10.4.16
         version: 10.4.16(postcss@8.4.33)
-      config:
-        specifier: workspace:*
-        version: link:../config
       postcss:
         specifier: 8.4.33
         version: 8.4.33
@@ -443,15 +443,15 @@ importers:
         specifier: 2.2.1
         version: 2.2.1
     devDependencies:
+      '@mindfulyze/config':
+        specifier: workspace:*
+        version: link:../../config
       '@types/node':
         specifier: 20.11.5
         version: 20.11.5
       '@types/react':
         specifier: 18.2.48
         version: 18.2.48
-      config:
-        specifier: workspace:*
-        version: link:../config
       next:
         specifier: 14.1.0
         version: 14.1.0(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)

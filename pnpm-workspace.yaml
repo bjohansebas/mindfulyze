@@ -2,3 +2,4 @@ packages:
   - "apps/*"
   - "packages/transactional/.react-email"
   - "packages/*"
+  - "config"
