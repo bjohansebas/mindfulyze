@@ -1,11 +1,11 @@
 import Link from 'next/link'
 import { Suspense } from 'react'
 
-import { Logo, LogoType } from '@/components/shared/icons'
 import UserDropdown from '@ui/app/user-dropdown'
 import { ButtonFeedBack } from '@ui/shared/button-feedback'
 import { Skeleton } from '@ui/skeleton'
 
+import { MindfulyzeIcon, MindfulyzeIconWithText } from '@mindfulyze/ui'
 import { LinkNavigation } from './links-navigation'
 
 export default function NavigationApp() {
@@ -14,9 +14,9 @@ export default function NavigationApp() {
       <div className="flex items-center gap-4">
         <Link href="/home">
           <div className="py-2.5 md:hidden">
-            <Logo className="text-emerald-600 w-7 h-7" />
+            <MindfulyzeIcon className="text-emerald-600 w-7 h-7" />
           </div>
-          <LogoType className="text-emerald-600 w-auto h-12 hidden md:inline" />
+          <MindfulyzeIconWithText className="text-emerald-600 w-auto h-12 hidden md:inline" />
         </Link>
         <div className="md:flex gap-3 hidden">
           <LinkNavigation />

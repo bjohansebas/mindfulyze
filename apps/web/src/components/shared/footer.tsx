@@ -1,6 +1,5 @@
-import { Button } from '@mindfulyze/ui'
+import { Button, MindfulyzeIconWithText } from '@mindfulyze/ui'
 import { Separator } from '@ui/separator'
-import LogoType from '@ui/shared/icons/logotype'
 import { GithubIcon, TwitterIcon } from 'lucide-react'
 
 import Link from 'next/link'
@@ -16,7 +15,7 @@ export default function Footer() {
       <div className="flex item-center justify-between md:flex-col gap-2">
         <Link href="/">
           <span className="sr-only">Mindfulyze Logo</span>
-          <LogoType className="h-12 w-auto" />
+          <MindfulyzeIconWithText className="h-12 w-auto" />
         </Link>
         <div className="flex items-center space-x-2">
           <Button asChild shape="circle" variant="ghost">
