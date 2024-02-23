@@ -1,9 +1,10 @@
-import Logo from '@/components/shared/icons/logo'
-import { Button } from '@/components/ui/button'
+import { MindfulyzeIcon } from '@mindfulyze/ui'
 import { constructMetadata } from '@mindfulyze/utils'
+
+import { OAuthForm, OAuthFormPlaceholder } from '@ui/auth/oauth-form'
+
 import Link from 'next/link'
 import { Suspense } from 'react'
-import { SignUpForm } from './form'
 
 export const metadata = constructMetadata({
   title: 'Sign up to Mindfulyze',
@@ -11,23 +12,17 @@ export const metadata = constructMetadata({
 
 export default function SignUp() {
   return (
-    <div className="z-10 h-fit w-full max-w-md overflow-hidden border sm:rounded-2xl sm:shadow-xl">
-      <div className="flex flex-col items-center justify-center space-y-3 border-b bg-background px-4 py-6 pt-8 text-center sm:px-16">
+    <div className="z-10 h-fit w-full max-w-md overflow-hidden border rounded-2xl shadow-xl">
+      <div className="flex flex-col items-center justify-center gap-2 border-b bg-background px-4 py-6 pt-8 text-center sm:px-16">
         <Link href="/">
-          <Logo className="h-10 w-10" />
+          <MindfulyzeIcon className="h-10 w-10" />
         </Link>
-        <h3 className="text-xl font-semibold text-emerald-600">Create your Mindfulyze account</h3>
-        <p className="text-sm">Start writing about your daily life.</p>
+        <h1 className="mt-4 text-xl font-semibold text-emerald-600 text-balance">Create your Mindfulyze account</h1>
+        <h2 className="text-sm text-balance">Start writing about your daily life.</h2>
       </div>
-      <div className="flex flex-col space-y-3 bg-card px-4 py-8 sm:px-16">
-        <Suspense
-          fallback={
-            <div className="flex flex-col space-y-3 bg-card px-4 py-8 sm:px-16">
-              <Button disabled={true} variant="secondary" className="w-full" size="lg" />
-            </div>
-          }
-        >
-          <SignUpForm />
+      <div className="flex flex-col gap-5 bg-card px-4 py-8 sm:px-16">
+        <Suspense fallback={<OAuthFormPlaceholder />}>
+          <OAuthForm />
         </Suspense>
         <p className="text-center text-sm">
           Already have an account?{' '}

@@ -1,7 +1,6 @@
 import Link from 'next/link'
 
-import { Button } from '@mindfulyze/ui'
-import { LogoType } from '@ui/shared/icons'
+import { Button, MindfulyzeIconWithText } from '@mindfulyze/ui'
 import { Bookmarks } from '@ui/shared/illustrations/bookmarks'
 import { Draw } from '@ui/shared/illustrations/draw'
 import { SecureData } from '@ui/shared/illustrations/secure-data'
@@ -60,7 +59,7 @@ export default function Page() {
           </header>
         </section>
         <section className="flex justify-center flex-col items-center gap-3">
-          <LogoType className="w-auto h-16 text-primary" />
+          <MindfulyzeIconWithText className="w-auto h-16 text-primary" />
           <h2 className="text-4xl md:text-5xl font-semibold md:max-w-md max-w-sm text-center text-balance">
             Free your <span className="text-primary">thoughts</span> free your{' '}
             <span className="text-primary">mind</span>
