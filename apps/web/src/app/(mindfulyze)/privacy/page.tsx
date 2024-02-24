@@ -1,5 +1,5 @@
 import { allLegalPosts } from 'contentlayer/generated'
-import { Metadata } from 'next'
+import type { Metadata } from 'next'
 
 import LegalPage from '@/components/content/legal'
 import { constructMetadata } from '@mindfulyze/utils'

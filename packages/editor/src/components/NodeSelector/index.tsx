@@ -1,5 +1,5 @@
 import * as Popover from '@radix-ui/react-popover'
-import { Editor } from '@tiptap/core'
+import type { Editor } from '@tiptap/core'
 
 import {
   Check,
@@ -13,10 +13,10 @@ import {
   TextIcon,
   TextQuote,
 } from 'lucide-react'
-import { Dispatch, FC, SetStateAction } from 'react'
+import type { Dispatch, FC, SetStateAction } from 'react'
 
 import { Button } from '@mindfulyze/ui'
-import { BubbleMenuItem } from '../BubbleMenu'
+import type { BubbleMenuItem } from '../BubbleMenu'
 
 interface NodeSelectorProps {
   editor: Editor

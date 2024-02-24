@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server'
+import type { NextRequest } from 'next/server'
 
 export const parse = (req: NextRequest) => {
   // path is the path of the URL (e.g. dub.sh/stats/github -> /stats/github)

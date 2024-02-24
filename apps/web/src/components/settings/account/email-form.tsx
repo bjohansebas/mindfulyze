@@ -12,7 +12,7 @@ import { EmailFormSchema } from '@/schemas/user'
 
 import { toast } from '@mindfulyze/ui'
 import { useSession } from 'next-auth/react'
-import { z } from 'zod'
+import type { z } from 'zod'
 
 export function EmailForm() {
   const { data: session, update } = useSession()

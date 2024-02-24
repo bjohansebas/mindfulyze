@@ -3,7 +3,7 @@ import '@/styles/globals.css'
 import { GeistMono } from 'geist/font/mono'
 import { GeistSans } from 'geist/font/sans'
 
-import { Viewport } from 'next'
+import type { Viewport } from 'next'
 
 import { AptabaseProvider } from '@aptabase/react'
 import { APTABASE_APP_KEY, cn, constructMetadata } from '@mindfulyze/utils'

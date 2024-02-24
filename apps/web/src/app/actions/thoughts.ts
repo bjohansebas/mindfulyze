@@ -3,9 +3,9 @@
 import { authOptions } from '@/lib/auth'
 import { createFile, deleteFile, downloadFile, updateFile } from '@/lib/supabase'
 import { createId, parseDate } from '@/lib/utils'
-import { ThoughtSchema } from '@/schemas/thought'
+import type { ThoughtSchema } from '@/schemas/thought'
 import { validatePartialThought } from '@/schemas/thought'
-import { Thought } from '@/types/thought'
+import type { Thought } from '@/types/thought'
 import { decryptData, encryptData } from '@lib/encryption'
 
 import { prisma } from '@mindfulyze/database'
@@ -17,7 +17,7 @@ import { getServerSession } from 'next-auth'
 import { revalidatePath } from 'next/cache'
 
 import dayjs from 'dayjs'
-import * as z from 'zod'
+import type { z } from 'zod'
 
 export async function getThoughtById(id: string) {
   const session = await getServerSession(authOptions)

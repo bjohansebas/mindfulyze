@@ -1,12 +1,11 @@
 import { TEXT_COLORS } from '@editor/constants'
 
 import { Button } from '@mindfulyze/ui'
-import { cn } from '@mindfulyze/utils'
 
 import * as Popover from '@radix-ui/react-popover'
-import { Editor } from '@tiptap/core'
-import { BaselineIcon, Check, ChevronDown } from 'lucide-react'
-import { Dispatch, FC, SetStateAction } from 'react'
+import type { Editor } from '@tiptap/core'
+import { BaselineIcon, Check } from 'lucide-react'
+import type { Dispatch, FC, SetStateAction } from 'react'
 
 export interface BubbleColorMenuItem {
   name: string

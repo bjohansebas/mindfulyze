@@ -1,19 +1,8 @@
-import { Editor, Extension, Range } from '@tiptap/core'
+import { type Editor, Extension, type Range } from '@tiptap/core'
 import { ReactRenderer } from '@tiptap/react'
 import Suggestion from '@tiptap/suggestion'
-import {
-  CheckSquare,
-  Code,
-  Heading1,
-  Heading2,
-  Heading3,
-  List,
-  ListOrdered,
-  // MessageSquarePlus,
-  Text,
-  TextQuote,
-} from 'lucide-react'
-import { ReactNode, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { CheckSquare, Code, Heading1, Heading2, Heading3, List, ListOrdered, Text, TextQuote } from 'lucide-react'
+import { type ReactNode, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import tippy from 'tippy.js'
 
 interface CommandItemProps {

@@ -1,4 +1,4 @@
-import { LegalPost } from 'contentlayer/generated'
+import type { LegalPost } from 'contentlayer/generated'
 
 import { MDX } from '@/components/content/mdx'
 import MaxWidthWrapper from '@/components/shared/max-width-wrapper'

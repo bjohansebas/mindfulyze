@@ -19,7 +19,7 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Template } from '@/types/template'
+import type { Template } from '@/types/template'
 import { TrashIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce'

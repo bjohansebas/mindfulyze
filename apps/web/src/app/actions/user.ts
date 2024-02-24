@@ -3,14 +3,14 @@
 import bcrypt from 'bcrypt'
 import cloudinary from 'cloudinary'
 import { getServerSession } from 'next-auth'
-import z from 'zod'
+import type { z } from 'zod'
 
 import { authOptions } from '@/lib/auth'
-import { SetPasswordSchema } from '@/schemas/password'
+import type { SetPasswordSchema } from '@/schemas/password'
 import {
-  DeleteAccountSchemaForm,
-  EmailFormSchema,
-  NameFormSchema,
+  type DeleteAccountSchemaForm,
+  type EmailFormSchema,
+  type NameFormSchema,
   validateDeleteAccount,
   validateEmail,
   validateName,

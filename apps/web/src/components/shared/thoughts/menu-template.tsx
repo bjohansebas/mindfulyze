@@ -13,7 +13,7 @@ import { ChevronDownIcon } from 'lucide-react'
 
 import { createTemplate } from '@/app/actions/templates'
 import { createThought } from '@/app/actions/thoughts'
-import { Template } from '@/types/template'
+import type { Template } from '@/types/template'
 
 import { toast } from '@mindfulyze/ui'
 import { usePathname, useRouter } from 'next/navigation'

@@ -10,9 +10,9 @@ import { MessageSquareTextIcon } from 'lucide-react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, toast } from '@mindfulyze/ui'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { type Dispatch, type SetStateAction, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import z from 'zod'
+import type { z } from 'zod'
 
 export function ButtonFeedBack({ setOpen }: { setOpen?: Dispatch<SetStateAction<boolean>> }) {
   const form = useForm<z.infer<typeof FeedbackSchema>>({

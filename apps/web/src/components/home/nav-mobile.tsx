@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { ReactNode, useEffect, useRef } from 'react'
+import { type ReactNode, useEffect, useRef } from 'react'
 
 import { motion, useCycle } from 'framer-motion'
 

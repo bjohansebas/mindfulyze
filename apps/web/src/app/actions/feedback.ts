@@ -2,9 +2,9 @@
 
 import { authOptions } from '@/lib/auth'
 import { getServerSession } from 'next-auth'
-import z from 'zod'
+import type { z } from 'zod'
 
-import { FeedbackSchema, validateFeedback } from '@/schemas/feedback'
+import { type FeedbackSchema, validateFeedback } from '@/schemas/feedback'
 import { FeedbackEmail, sendEmail } from '@mindfulyze/emails'
 
 export async function sendFeedback(data: z.infer<typeof FeedbackSchema>) {

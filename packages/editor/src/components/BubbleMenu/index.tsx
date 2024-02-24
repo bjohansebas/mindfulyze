@@ -1,9 +1,6 @@
-import { BubbleMenu, BubbleMenuProps, Editor, isNodeSelection } from '@tiptap/react'
+import { BubbleMenu, type BubbleMenuProps, type Editor, isNodeSelection } from '@tiptap/react'
 import { BoldIcon, CodeIcon, ItalicIcon, StrikethroughIcon, UnderlineIcon } from 'lucide-react'
-import { FC, useState } from 'react'
-
-// import { ColorSelector } from './color-selector'
-// import { NodeSelector } from './node-selector'
+import { type FC, useState } from 'react'
 
 import { ColorSelector } from '@editor/components/ColorSelector'
 import { Button } from '@mindfulyze/ui'

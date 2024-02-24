@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 
 import { toast } from '@mindfulyze/ui'
 import { useSession } from 'next-auth/react'
-import { z } from 'zod'
+import type { z } from 'zod'
 
 import { updateName } from '@/app/actions/user'
 import Spinner from '@/components/shared/icons/spinner'

@@ -7,7 +7,7 @@ import dayjs from 'dayjs'
 import { CalendarIcon } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
-import { DateRange } from 'react-day-picker'
+import type { DateRange } from 'react-day-picker'
 import { useDebouncedCallback } from 'use-debounce'
 
 export function DateRangeThought({ className }: { className?: string }) {

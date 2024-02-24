@@ -1,7 +1,7 @@
 'use client'
 
 import { createThought } from '@/app/actions/thoughts'
-import { Template } from '@/types/template'
+import type { Template } from '@/types/template'
 import { Button, toast } from '@mindfulyze/ui'
 import { PencilIcon } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'

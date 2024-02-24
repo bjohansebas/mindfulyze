@@ -1,5 +1,5 @@
 import { getTemplates } from '@/app/actions/templates'
-import { Template } from '@/types/template'
+import type { Template } from '@/types/template'
 
 import { useEffect, useMemo, useState } from 'react'
 

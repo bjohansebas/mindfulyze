@@ -3,7 +3,7 @@ import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from '@mindfulyze/utils'
 
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 
-import { AuthOptions } from 'next-auth'
+import type { AuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL

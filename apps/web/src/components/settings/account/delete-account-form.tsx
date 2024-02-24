@@ -22,7 +22,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { toast } from '@mindfulyze/ui'
 import { CONFIRM_MESSAGE } from '@mindfulyze/utils'
 import { signOut } from 'next-auth/react'
-import { z } from 'zod'
+import type { z } from 'zod'
 
 export function DeleteAccountForm() {
   const form = useForm<z.infer<typeof DeleteAccountSchemaForm>>({

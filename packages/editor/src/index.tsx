@@ -3,7 +3,7 @@ import './styles/prosemirror.css'
 
 import { cn } from '@mindfulyze/utils'
 
-import { Editor as EditorClass, FocusPosition } from '@tiptap/core'
+import type { Editor as EditorClass, FocusPosition } from '@tiptap/core'
 import { generateJSON } from '@tiptap/html'
 import { EditorContent, useEditor } from '@tiptap/react'
 

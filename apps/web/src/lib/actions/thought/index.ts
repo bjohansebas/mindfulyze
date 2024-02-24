@@ -1,6 +1,6 @@
 'use server'
 
-import { Thought as ThoughtProps } from '@prisma/client'
+import type { Thought as ThoughtProps } from '@prisma/client'
 
 import { decryptData } from '@lib/encryption'
 import { prisma } from '@mindfulyze/database'
@@ -10,8 +10,8 @@ import { ERROR_LOGIN_REQUIRED } from '@mindfulyze/utils'
 import dayjs from 'dayjs'
 import { getServerSession } from 'next-auth'
 
-import { ActionResponse } from '@/types'
-import { Thought } from '@/types/thought'
+import type { ActionResponse } from '@/types'
+import type { Thought } from '@/types/thought'
 import { authOptions } from '@lib/auth'
 import { downloadFile } from '@lib/supabase'
 

@@ -1,5 +1,5 @@
 import { prisma } from '@mindfulyze/database'
-import { Template as TemplateProps } from '@prisma/client'
+import type { Template as TemplateProps } from '@prisma/client'
 
 export async function getUserById({
   id,
