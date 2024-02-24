@@ -6,7 +6,7 @@ export function SecureData({ className }: { className?: string }) {
           <path d="M0 0h365.6v259.8H0z" />
         </clipPath>
       </defs>
-      <g clip-path="url(#a)">
+      <g clipPath="url(#a)">
         <path fill="none" d="M0 0h365.6v259.8H0z" />
         <path
           fill="#9F9E9E"
@@ -40,27 +40,27 @@ export function SecureData({ className }: { className?: string }) {
           fill="#9f9e9e"
           d="M44.81 108.63h76c4.691 0 8.5 3.809 8.5 8.5s-3.809 8.5-8.5 8.5h-76c-4.691 0-8.5-3.809-8.5-8.5s3.809-8.5 8.5-8.5Z"
         />
-        <circle cx="291.259" cy="140.379" r="44.25" fill="#32F5C1" vector-effect="non-scaling-stroke" />
-        <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="291.259" cy="140.379" r="44.25" fill="#32F5C1" vectorEffect="non-scaling-stroke" />
+        <g fill="none" strokeLinecap="round" strokeLinejoin="round">
           <circle
             cx="291.259"
             cy="149.268"
             r="2.222"
             stroke="#0D100F"
-            stroke-width="3"
-            vector-effect="non-scaling-stroke"
+            strokeWidth="3"
+            vectorEffect="non-scaling-stroke"
           />
           <path
             stroke="#0d100f"
-            stroke-miterlimit="2"
-            stroke-width="5"
+            strokeMiterlimit="2"
+            strokeWidth="5"
             d="M276.204 136.43h31.112a4.447 4.447 0 0 1 4.444 4.445v17.78a4.447 4.447 0 0 1-4.444 4.445h-31.112a4.447 4.447 0 0 1-4.444-4.445v-17.78a4.447 4.447 0 0 1 4.444-4.445Z"
           />
           <path
             stroke="#0D100F"
-            stroke-width="5"
+            strokeWidth="5"
             d="M280.148 135.935v-6.667c0-6.137 4.975-11.111 11.111-11.111 6.137 0 11.111 4.974 11.111 11.111v6.667"
-            vector-effect="non-scaling-stroke"
+            vectorEffect="non-scaling-stroke"
           />
         </g>
       </g>

@@ -6,7 +6,7 @@ export function Draw({ className }: { className: string }) {
           <path d="M0 0h174.3v204.7H0z" />
         </clipPath>
       </defs>
-      <g clip-path="url(#a)">
+      <g clipPath="url(#a)">
         <path fill="none" d="M0 0h174.3v204.7H0z" />
         <path
           fill="currentColor"

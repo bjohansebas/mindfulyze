@@ -6,7 +6,7 @@ export function Bookmarks({ className }: { className?: string }) {
           <path d="M0 0h178v224H0z" />
         </clipPath>
       </defs>
-      <g clip-path="url(#a)">
+      <g clipPath="url(#a)">
         <path fill="none" d="M0 0h178v224H0z" />
         <path
           fill="currentColor"
