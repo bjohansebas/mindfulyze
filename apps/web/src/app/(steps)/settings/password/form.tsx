@@ -1,27 +1,74 @@
-import { getUser } from '@/app/actions/user'
-import { NewPasswordForm } from '@ui/settings/password/newPasswordForm'
-import { SetPasswordForm } from '@ui/settings/password/setPasswordForm'
-import { LockIcon } from 'lucide-react'
+'use client'
 
-export async function PasswordForm() {
-  const user = await getUser()
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import type { z } from 'zod'
+
+import { encryptPassword } from '@/app/actions/password'
+import { verifyPassword } from '@/app/actions/user'
+import { Button } from '@/components/ui/button'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import usePassword from '@/lib/hooks/usePassword'
+import { SetPasswordSchema } from '@/schemas/password'
+import { toast } from '@mindfulyze/ui'
+import { useRouter } from 'next/navigation'
+
+export function SetPasswordForm() {
+  const router = useRouter()
+
+  const form = useForm<z.infer<typeof SetPasswordSchema>>({
+    resolver: zodResolver(SetPasswordSchema),
+    defaultValues: {
+      password: '',
+    },
+  })
+
+  const { isSubmitting } = form.formState
+
+  const { updatePassword } = usePassword()
+
+  async function onSubmit(data: z.infer<typeof SetPasswordSchema>) {
+    try {
+      const res = await verifyPassword(data)
+
+      if (res) {
+        const pwHash = await encryptPassword(data.password)
+
+        await updatePassword(pwHash)
+
+        toast.success('The password is correct, we will redirect you in a moment.')
+
+        router.push('/home')
+      } else {
+        toast.error('The password is incorrect, please try again.')
+      }
+    } catch (e) {
+      console.log(e)
+      toast.error('The password is incorrect, please try again.')
+    }
+  }
 
   return (
-    <div className="z-10 h-fit w-full max-w-md overflow-hidden border rounded-2xl sm:shadow-xl bg-card">
-      <div className="flex flex-col items-center justify-center space-y-3 px-4 py-3 pt-8 text-center sm:px-16">
-        <LockIcon className="h-10 w-10" />
-        <h3 className="text-xl font-semibold">
-          {user.data?.password != null ? 'Unlock your thoughts' : 'Safe password'}
-        </h3>
-        <p className="text-sm">
-          {user.data?.password != null
-            ? 'Please enter the password to unlock your thoughts.'
-            : 'Before we begin, first create a password to keep all your thoughts secure.'}
-        </p>
-      </div>
-      <div className="flex flex-col space-y-3 px-4 pb-8 pt-3 sm:px-16">
-        {user.data?.password == null ? <SetPasswordForm /> : <NewPasswordForm />}
-      </div>
-    </div>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input type="password" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" disabled={isSubmitting}>
+          Verify
+        </Button>
+      </form>
+    </Form>
   )
 }

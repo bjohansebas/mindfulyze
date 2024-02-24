@@ -12,10 +12,6 @@ export const NewPasswordSchema = z
     path: ['confirmPassword'],
   })
 
-export function validateNewPassword(input: z.infer<typeof NewPasswordSchema>) {
-  return NewPasswordSchema.safeParse(input)
-}
-
 export const SetPasswordSchema = z.object({
   password: z.string().min(MIN_LENGTH_PW).max(MAX_LENGTH_PW),
 })

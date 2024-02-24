@@ -1,5 +1,5 @@
 export interface ActionResponse<T> {
   status: number
-  data: T
+  data: T | null
   message?: string
 }

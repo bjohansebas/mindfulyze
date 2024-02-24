@@ -1,17 +1,17 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { toast } from '@mindfulyze/ui'
+import { Button, toast } from '@mindfulyze/ui'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
-import * as z from 'zod'
+import type { z } from 'zod'
 
 import { createPassword } from '@/app/actions/password'
-import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import usePassword from '@/lib/hooks/usePassword'
 import { NewPasswordSchema } from '@/schemas/password'
+import usePassword from '@lib/hooks/usePassword'
+import { CREATED_CODE } from '@mindfulyze/utils'
 
 export function NewPasswordForm() {
   const router = useRouter()
@@ -32,7 +32,7 @@ export function NewPasswordForm() {
     try {
       const res = await createPassword(data)
 
-      if (res.status === 201 && res.data != null) {
+      if (res.status === CREATED_CODE && res.data != null) {
         await updatePassword(res.data)
 
         toast.success('The password was created, we will redirect you in a moment.')
@@ -42,7 +42,6 @@ export function NewPasswordForm() {
         toast.error('The password could not be created, please try again.')
       }
     } catch (e) {
-      console.log(e)
       toast.error('The password could not be created, please try again.')
     }
   }

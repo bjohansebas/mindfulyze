@@ -23,18 +23,10 @@ export default async function middleware(req: NextRequest) {
 
   // if there's a session
   if (session?.email) {
-    // if the user was created in the last 10s and the path isn't /welcome, redirect to /welcome
-    // (this is a workaround because the `isNewUser` flag is triggered when a user does `dangerousEmailAccountLinking`)
-    // if (
-    //   session?.user?.createdAt &&
-    //   new Date(session?.user?.createdAt).getTime() > Date.now() - 10000 &&
-    //   path !== '/welcome'
-    // ) {
-    //   return NextResponse.redirect(new URL('/welcome', req.url))
-    // } else
     if (
       !session?.pw &&
       path !== '/settings/password' &&
+      path !== '/settings/password/new' &&
       (path === '/login' || path === '/signup' || path === '/' || path === '/home' || path === '/settings')
     ) {
       return NextResponse.redirect(new URL('/settings/password', req.url))
@@ -45,7 +37,7 @@ export default async function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL('/home', req.url))
     }
 
-    if (session?.pw != null && path === '/settings/password') {
+    if (session?.pw != null && (path === '/settings/password' || path === '/settings/password/new')) {
       return NextResponse.redirect(new URL('/home', req.url))
     }
   }

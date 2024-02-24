@@ -10,6 +10,7 @@ export const PAYMENT_REQUIRED_CODE = 402
 export const FORBIDDEN_CODE = 403
 export const NOT_FOUND_CODE = 404
 export const CONFLICT_CODE = 409
+export const UNPROCESSABLE_ENTITY = 422
 
 // 50X codes
 export const INTERNAL_SERVER_ERROR_CODE = 500
