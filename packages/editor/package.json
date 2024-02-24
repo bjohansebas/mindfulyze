@@ -1,22 +1,8 @@
 {
   "name": "@mindfulyze/editor",
   "version": "0.0.0",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "files": ["dist/**/*"],
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "module": "./dist/index.mjs",
-      "require": "./dist/index.js"
-    }
-  },
-  "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch"
-  },
+  "main": "./src/index.tsx",
+  "types": "./src/index.tsx",
   "peerDependencies": {
     "react": "^18.2.0"
   },
@@ -29,7 +15,6 @@
     "postcss": "8.4.33",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "tsup": "8.0.1",
     "typescript": "5.3.3"
   },
   "dependencies": {

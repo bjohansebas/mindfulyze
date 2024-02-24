@@ -2,10 +2,10 @@ import { BubbleMenu, type BubbleMenuProps, type Editor, isNodeSelection } from '
 import { BoldIcon, CodeIcon, ItalicIcon, StrikethroughIcon, UnderlineIcon } from 'lucide-react'
 import { type FC, useState } from 'react'
 
-import { ColorSelector } from '@editor/components/ColorSelector'
 import { Button } from '@mindfulyze/ui'
 import { cn } from '@mindfulyze/utils'
 import { BackgroundSelector } from '../BackgroundSelector'
+import { ColorSelector } from '../ColorSelector'
 import { NodeSelector } from '../NodeSelector'
 
 export interface BubbleMenuItem {

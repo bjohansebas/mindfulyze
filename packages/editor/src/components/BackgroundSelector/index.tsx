@@ -1,11 +1,10 @@
-import { HIGHLIGHT_COLORS } from '@editor/constants'
-
 import { Button } from '@mindfulyze/ui'
 
 import * as Popover from '@radix-ui/react-popover'
 import type { Editor } from '@tiptap/core'
 import { Check, HighlighterIcon } from 'lucide-react'
 import type { Dispatch, FC, SetStateAction } from 'react'
+import { HIGHLIGHT_COLORS } from '../../constants'
 
 export interface BubbleColorMenuItem {
   name: string
