@@ -1,8 +1,7 @@
 'use client'
 
 import { createTemplate } from '@/app/actions/templates'
-import { Button } from '@/components/ui/button'
-import { toast } from '@mindfulyze/ui'
+import { Button, toast } from '@mindfulyze/ui'
 import { usePathname, useRouter } from 'next/navigation'
 
 export function HeaderTemplate() {

@@ -11,8 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-import { Button } from '@/components/ui/button'
-import { toast } from '@mindfulyze/ui'
+import { Button, toast } from '@mindfulyze/ui'
 import Link from 'next/link'
 
 interface OptionCardTemplate {
@@ -59,7 +58,7 @@ export function OptionsCardTemplate({ id }: OptionCardTemplate) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="z-auto">
-        <Button size="icon" variant="ghost" className="z-auto">
+        <Button shape="circle" variant="ghost" className="z-auto">
           <MoreHorizontalIcon className="w-5 h-5" />
         </Button>
       </DropdownMenuTrigger>

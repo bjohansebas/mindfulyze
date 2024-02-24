@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
 import { deleteAccount } from '@/app/actions/user'
-import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { DeleteAccountSchemaForm } from '@/schemas/user'
 
@@ -19,7 +18,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { toast } from '@mindfulyze/ui'
+import { Button, toast } from '@mindfulyze/ui'
 import { CONFIRM_MESSAGE } from '@mindfulyze/utils'
 import { signOut } from 'next-auth/react'
 import type { z } from 'zod'

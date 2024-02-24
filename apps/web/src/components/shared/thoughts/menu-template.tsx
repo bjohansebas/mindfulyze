@@ -1,6 +1,5 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,7 +14,7 @@ import { createTemplate } from '@/app/actions/templates'
 import { createThought } from '@/app/actions/thoughts'
 import type { Template } from '@/types/template'
 
-import { toast } from '@mindfulyze/ui'
+import { Button, toast } from '@mindfulyze/ui'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 
