@@ -1,9 +1,7 @@
 import Link from 'next/link'
 
 import { Button, MindfulyzeIconWithText } from '@mindfulyze/ui'
-import { Bookmarks } from '@ui/shared/illustrations/bookmarks'
-import { Draw } from '@ui/shared/illustrations/draw'
-import { SecureData } from '@ui/shared/illustrations/secure-data'
+import Image from 'next/image'
 
 export default function Page() {
   return (
@@ -23,40 +21,48 @@ export default function Page() {
           </Button>
         </div>
       </header>
-      <main className=" max-w-lg md:max-w-5xl mx-auto flex flex-col gap-20 mb-20">
-        <section className="flex items-center gap-3 md:flex-row flex-col justify-center">
-          <SecureData className="w-[80%]" />
-          <header className="flex flex-col gap-6 items-center p-5">
-            <h2 className="text-center text-4xl font-bold text-emerald-600">Create your notes super fast</h2>
-            <p className="text-center max-w-3xl mx-auto text-lg">
-              With the help of templates, you will have the ease of starting to write a journal and reflect on the
-              things that matter most.
-            </p>
-          </header>
+      <main className=" max-w-lg md:max-w-6xl mx-auto flex flex-col mb-20">
+        <section className="grid md:grid-cols-5 gap-x-4 mb-4">
+          <article className="col-span-3 flex border gap-3 flex-col pb-3 bg-card rounded-md">
+            <header className="flex flex-col gap-3 items-center p-5 w-full">
+              <h2 className="text-center text-4xl font-bold text-emerald-600 text-balance">
+                All your thoughts in one place
+              </h2>
+              <p className="text-center max-w-3xl mx-auto text-lg text-pretty">
+                Store all your thoughts and reflections in one easy and secure place
+              </p>
+            </header>
+          </article>
+          <article className="col-span-2 flex border gap-3 flex-col pb-3 bg-card rounded-md">
+            <header className="flex flex-col gap-6 items-center p-5 w-full">
+              <h2 className="text-center text-4xl font-bold text-emerald-600 text-balance">Express yourself freely</h2>
+              <p className="text-center max-w-3xl mx-auto text-lg text-pretty">
+                All your thoughts will be encrypted, only you will be able to read them.
+              </p>
+            </header>
+          </article>
         </section>
-        <section className="grid grid-cols-2 gap-3 items-center place-items-center">
-          <header className="flex flex-col gap-6 items-center p-5">
-            <h2 className="text-center text-4xl font-bold text-emerald-600">Write safely</h2>
-            <p className="text-center max-w-3xl mx-auto text-lg">
-              Using AES-256 encryption, your personal diary is securely protected. Only you can decrypt and access them,
-              ensuring that no one else
-            </p>
-          </header>
-          <div className="">
-            <Bookmarks className="h-96 text-[#e6e7e8]" />
-          </div>
-        </section>
-        <section className="grid grid-cols-2 gap-3 items-center place-items-center">
-          <div>
-            <Draw className="h-96" />
-          </div>
-          <header className="flex flex-col gap-6 items-center p-5">
-            <h2 className="text-center text-4xl font-bold text-emerald-600">Write safely</h2>
-            <p className="text-center max-w-3xl mx-auto text-lg">
-              Using AES-256 encryption, your personal diary is securely protected. Only you can decrypt and access them,
-              ensuring that no one else
-            </p>
-          </header>
+        <section className="grid grid-cols-5 gap-x-4 mb-20">
+          <article className="col-span-2 flex border gap-3 flex-col pb-3 bg-card rounded-md">
+            <header className="flex flex-col gap-6 items-center p-5 w-full">
+              <h2 className="text-center text-4xl font-bold text-emerald-600 text-balance">
+                Quickly create reflections
+              </h2>
+              <p className="text-center max-w-3xl mx-auto text-lg text-pretty">
+                Have your own style in all your notes by creating your own templates
+              </p>
+            </header>
+          </article>
+          <article className="col-span-3 flex border gap-3 flex-col pb-3 bg-card rounded-md">
+            <header className="flex flex-col gap-6 items-center p-5 w-full">
+              <h2 className="text-center text-4xl font-bold text-emerald-600 text-balance">
+                Keep your thoughts organized
+              </h2>
+              <p className="text-center max-w-3xl mx-auto text-lg text-pretty">
+                You can easily organize and filter your thoughts by dates and bookmarks
+              </p>
+            </header>
+          </article>
         </section>
         <section className="flex justify-center flex-col items-center gap-3">
           <MindfulyzeIconWithText className="w-auto h-16 text-primary" />
