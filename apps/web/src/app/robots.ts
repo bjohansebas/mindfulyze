@@ -1,14 +1,17 @@
 import type { MetadataRoute } from 'next'
 
-import { HOME_DOMAIN } from '@mindfulyze/utils'
+import { headers } from 'next/headers'
 
 export default function robots(): MetadataRoute.Robots {
+  const headersList = headers()
+  const domain = headersList.get('host') as string
+
   return {
     rules: {
       userAgent: '*',
       disallow: '/api/',
       allow: '/api/og/',
     },
-    sitemap: `${HOME_DOMAIN}/sitemap.xml`,
+    sitemap: `https://${domain}/sitemap.xml`,
   }
 }
