@@ -1,7 +1,6 @@
 'use client'
 
 import { sendFeedback } from '@/app/actions/feedback'
-import Spinner from '@/components/shared/icons/spinner'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Textarea } from '@/components/ui/textarea'
@@ -9,7 +8,7 @@ import { FeedbackSchema } from '@/schemas/feedback'
 import { MessageSquareTextIcon } from 'lucide-react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button, toast } from '@mindfulyze/ui'
+import { Button, LoadingSpinner, toast } from '@mindfulyze/ui'
 import { type Dispatch, type SetStateAction, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import type { z } from 'zod'
@@ -65,7 +64,7 @@ export function ButtonFeedBack({ setOpen }: { setOpen?: Dispatch<SetStateAction<
               )}
             />
             <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting && <Spinner className="mr-2 h-4 w-4 animate-spin" />}
+              {isSubmitting && <LoadingSpinner />}
               Send
             </Button>
           </form>
