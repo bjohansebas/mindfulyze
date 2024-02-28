@@ -1,5 +1,5 @@
 packages:
-  - "website"
+  - "apps/*"
   - "packages/transactional/.react-email"
   - "packages/*"
   - "config"
