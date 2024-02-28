@@ -7,7 +7,6 @@ import { deleteAccount } from '@/app/actions/user'
 import { Input } from '@/components/ui/input'
 import { DeleteAccountSchemaForm } from '@/schemas/user'
 
-import Spinner from '@/components/shared/icons/spinner'
 import {
   Dialog,
   DialogContent,
@@ -18,6 +17,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { LoadingSpinner } from '@mindfulyze/ui'
 import { Button, toast } from '@mindfulyze/ui'
 import { CONFIRM_MESSAGE } from '@mindfulyze/utils'
 import { signOut } from 'next-auth/react'
@@ -103,7 +103,7 @@ export function DeleteAccountForm() {
                 />
                 <DialogFooter>
                   <Button type="submit" disabled={isSubmitting} className="gap-2" variant="destructive">
-                    {isSubmitting ? <Spinner /> : null}
+                    {isSubmitting ? <LoadingSpinner /> : null}
                     Delete Account
                   </Button>
                 </DialogFooter>

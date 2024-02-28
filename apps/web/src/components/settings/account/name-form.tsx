@@ -3,12 +3,11 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
-import { Button, toast } from '@mindfulyze/ui'
+import { Button, LoadingSpinner, toast } from '@mindfulyze/ui'
 import { useSession } from 'next-auth/react'
 import type { z } from 'zod'
 
 import { updateName } from '@/app/actions/user'
-import Spinner from '@/components/shared/icons/spinner'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { NameFormSchema } from '@/schemas/user'
@@ -68,7 +67,7 @@ export function NameForm() {
           disabled={isSubmitting || session?.user?.name === form.getValues().name}
           className="gap-2"
         >
-          {isSubmitting ? <Spinner /> : null}
+          {isSubmitting ? <LoadingSpinner /> : null}
           Save Changes
         </Button>
       </form>
