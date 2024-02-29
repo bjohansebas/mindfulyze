@@ -2,6 +2,7 @@
 
 import { Button, Calendar, Popover, PopoverContent, PopoverTrigger } from '@mindfulyze/ui'
 import { cn } from '@mindfulyze/utils'
+
 import { format } from 'date-fns'
 import dayjs from 'dayjs'
 import { CalendarIcon } from 'lucide-react'
@@ -11,7 +12,7 @@ import type { DateRange } from 'react-day-picker'
 import { useDebouncedCallback } from 'use-debounce'
 
 export function DateRangeThought({ className }: { className?: string }) {
-  const { push, replace } = useRouter()
+  const { replace } = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
@@ -23,7 +24,7 @@ export function DateRangeThought({ className }: { className?: string }) {
     to: dayjs(toDate).isValid() ? dayjs(toDate).toDate() : undefined,
   })
 
-  const handleDateRange = useDebouncedCallback(() => {
+  const handleDateRange = useDebouncedCallback((date: DateRange | undefined) => {
     const params = new URLSearchParams(searchParams)
 
     if (date != null) {
@@ -35,6 +36,13 @@ export function DateRangeThought({ className }: { className?: string }) {
 
       params.delete('page')
     }
+
+    if (date == null) {
+      params.delete('fromDate')
+      params.delete('toDate')
+      params.delete('page')
+    }
+
     replace(`${pathname}?${params.toString()}`)
   }, 400)
 
@@ -68,7 +76,7 @@ export function DateRangeThought({ className }: { className?: string }) {
             defaultMonth={date?.from}
             selected={date}
             onSelect={(e) => {
-              handleDateRange()
+              handleDateRange(e)
               setDate(e)
             }}
             numberOfMonths={1}
