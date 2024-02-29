@@ -39,9 +39,9 @@ export async function getThoughtsByUser({
     orderBy: {
       [sort]: 'desc',
     },
-    take: 10,
+    take: ITEMS_PER_PAGE,
     ...(page && {
-      skip: (page - 1) * 10,
+      skip: (page - 1) * ITEMS_PER_PAGE,
     }),
   })
 }
