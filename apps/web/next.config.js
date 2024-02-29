@@ -8,6 +8,7 @@ const nextConfig = {
     serverActions: {
       bodySizeLimit: '3mb',
     },
+    optimizePackageImports: ['@mindfulyze/ui', '@mindfulyze/editor', '@mindfulyze/utils'],
   },
   logging: {
     fetches: { fullUrl: true },
