@@ -3,9 +3,8 @@ import { Suspense } from 'react'
 
 import UserDropdown from '@ui/app/user-dropdown'
 import { ButtonFeedBack } from '@ui/shared/button-feedback'
-import { Skeleton } from '@ui/skeleton'
 
-import { MindfulyzeIcon, MindfulyzeIconWithText } from '@mindfulyze/ui'
+import { MindfulyzeIcon, MindfulyzeIconWithText, Skeleton } from '@mindfulyze/ui'
 import { LinkNavigation } from './links-navigation'
 
 export default function NavigationApp() {

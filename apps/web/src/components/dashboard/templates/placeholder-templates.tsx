@@ -1,4 +1,4 @@
-import { Skeleton } from '@/components/ui/skeleton'
+import { Skeleton } from '@mindfulyze/ui'
 
 export default function TemplatesPlaceholder() {
   return (

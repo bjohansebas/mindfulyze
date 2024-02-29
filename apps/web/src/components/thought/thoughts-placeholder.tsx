@@ -1,4 +1,4 @@
-import { Skeleton } from '@/components/ui/skeleton'
+import { Skeleton } from '@mindfulyze/ui'
 import { cn } from '@mindfulyze/utils'
 
 export default function ThoughtsPlaceholder() {
