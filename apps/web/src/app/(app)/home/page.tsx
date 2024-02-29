@@ -4,8 +4,8 @@ import { CreateThought } from '@ui/shared/thoughts/create-thoughts'
 import { Skeleton } from '@ui/skeleton'
 import { DateRangeThought } from '@ui/thought/data-range-thoughts'
 
-import Pagination from '@ui/thought/pagination'
 import { ThoughtsList } from '@ui/thought/thoughts-list'
+import Pagination from '@ui/thought/thoughts-pagination'
 import ThoughtsPlaceholder from '@ui/thought/thoughts-placeholder'
 
 import { Suspense } from 'react'
@@ -38,7 +38,7 @@ export default async function Page({
           <ThoughtsList currentPage={currentPage} fromDate={fromDate} toDate={toDate} />
         </Suspense>
       </section>
-      {totalPages.data > 0 ? (
+      {totalPages.data > 1 ? (
         <footer className="flex w-full justify-center">
           <Pagination totalPages={totalPages.data} />
         </footer>

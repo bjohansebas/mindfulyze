@@ -1,6 +1,7 @@
 export * from './Blockquote'
 export * from './Button'
 export * from './Calendar'
+export * from './Pagination'
 export * from './Popover'
 export * from './Select'
 export * from './Skeleton'
