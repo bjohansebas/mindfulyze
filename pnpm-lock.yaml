@@ -110,9 +110,6 @@ importers:
       cloudinary:
         specifier: 1.41.3
         version: 1.41.3
-      clsx:
-        specifier: 2.1.0
-        version: 2.1.0
       contentlayer:
         specifier: 0.3.4
         version: 0.3.4(esbuild@0.19.11)
