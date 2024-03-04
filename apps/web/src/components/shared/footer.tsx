@@ -1,3 +1,4 @@
+import { legal } from '@content'
 import { Button, MindfulyzeIconWithText } from '@mindfulyze/ui'
 import { Separator } from '@ui/separator'
 import { GithubIcon, TwitterIcon } from 'lucide-react'
@@ -6,7 +7,9 @@ import Link from 'next/link'
 
 const navigation = {
   product: [{ name: 'Changelog', href: '/changelog' }],
-  legal: [{ name: 'Privacy', href: '/privacy' }],
+  legal: legal.map(({ title, slug }) => {
+    return { name: title, href: `/legal/${slug}` }
+  }),
 }
 
 export default function Footer() {
