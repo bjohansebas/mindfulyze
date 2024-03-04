@@ -1,4 +1,4 @@
-import { allChangelogPosts, allLegalPosts } from 'contentlayer/generated'
+import { changelog, legal } from '@content'
 import { headers } from 'next/headers'
 
 export default async function Sitemap() {
@@ -24,33 +24,21 @@ export default async function Sitemap() {
       priority: 0.8,
       changeFrequency: 'yearly',
     },
-    // {
-    //   url: `https://${domain}/blog`,
-    //   lastModified: new Date(),
-    // },
-    // ...allBlogPosts.map((post) => ({
-    //   url: `https://${domain}/blog/${post.slug}`,
-    //   lastModified: new Date(post.publishedAt),
-    // })),
-    // ...BLOG_CATEGORIES.map((category) => ({
-    //   url: `https://${domain}/blog/category/${category.slug}`,
-    //   lastModified: new Date(),
-    // })),
     {
       url: `https://${domain}/changelog`,
       lastModified: new Date(),
       priority: 0.8,
       changeFrequency: 'weekly',
     },
-    ...allChangelogPosts.map((post) => ({
+    ...changelog.map((post) => ({
       url: `https://${domain}/changelog/${post.slug}`,
       lastModified: new Date(post.publishedAt),
       priority: 0.6,
       changeFrequency: 'never',
     })),
-    ...allLegalPosts.map((post) => ({
-      url: `https://${domain}/${post.slug}`,
-      lastModified: new Date(post.updatedAt),
+    ...legal.map((post) => ({
+      url: `https://${domain}/legal/${post.slug}`,
+      lastModified: new Date(post.updated),
       priority: 0.8,
       changeFrequency: 'yearly',
     })),

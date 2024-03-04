@@ -1,55 +1,24 @@
 import { cn } from '@mindfulyze/utils'
-import { useMDXComponent } from 'next-contentlayer/hooks'
+import { MDXRemote } from 'next-mdx-remote/rsc'
 import Image from 'next/image'
 import Link from 'next/link'
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-const CustomLink = (props: any) => {
+function CustomLink(props) {
   const href = props.href
+  console.log('het')
 
   if (href.startsWith('/')) {
     return (
-      <Link {...props} href={href}>
+      <Link href={href} {...props} className="text-foreground">
         {props.children}
       </Link>
     )
   }
 
   if (href.startsWith('#')) {
-    return <a {...props} />
+    return <a {...props} className="text-foreground" />
   }
-
-  return <a target="_blank" rel="noopener noreferrer" {...props} />
-}
-
-const components = {
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  h2: (props: any) => <h2 className="text-2xl underline-offset-4 hover:underline text-emerald-400" {...props} />,
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  a: (props: any) => <CustomLink className="font-medium text-emerald-400 underline-offset-4" {...props} />,
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  code: (props: any) => (
-    <code
-      className="rounded-md border border-gray-200 bg-gray-50 px-2 py-1 font-medium text-gray-600 before:hidden after:hidden"
-      {...props}
-    />
-  ),
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  thead: (props: any) => <thead className="text-lg" {...props} />,
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  Note: (props: any) => (
-    <div
-      className={cn(
-        'mt-4 rounded-md border-l-4 border-gray-500 bg-gray-100 px-4 py-1 text-[0.95rem] leading-[1.4rem]',
-        {
-          'border-yellow-500 bg-yellow-100': props.variant === 'warning',
-          'border-blue-500 bg-blue-100': props.variant === 'info',
-          'border-green-500 bg-green-100': props.variant === 'success',
-        },
-      )}
-      {...props}
-    />
-  ),
+  return <a target="_blank" rel="noopener noreferrer" {...props} className="text-primary" />
 }
 
 interface MDXProps {
@@ -58,22 +27,9 @@ interface MDXProps {
 }
 
 export function MDX({ code, className }: MDXProps) {
-  const Component = useMDXComponent(code)
-
   return (
-    <article
-      data-mdx-container
-      className={cn(
-        'prose prose-gray max-w-none transition-all prose-headings:relative prose-headings:scroll-mt-20 prose-headings:font-extrabold',
-        className,
-      )}
-    >
-      <Component
-        components={{
-          ...components,
-          Image,
-        }}
-      />
+    <article className={cn('prose prose-neutral dark:prose-invert max-w-none transition-all', className)}>
+      <MDXRemote source={code} />
     </article>
   )
 }

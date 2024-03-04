@@ -1,4 +1,3 @@
-import { allChangelogPosts } from 'contentlayer/generated'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -8,13 +7,14 @@ import Facebook from '@/components/shared/icons/facebook'
 import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
 import { format } from 'date-fns'
 
+import { changelog } from '@content'
 import { HOME_DOMAIN } from '@mindfulyze/utils'
 import { constructMetadata } from '@mindfulyze/utils'
 import { LinkedinIcon, TwitterIcon } from 'lucide-react'
 import Image from 'next/image'
 
 export async function generateStaticParams() {
-  return allChangelogPosts.map((post) => ({
+  return changelog.map((post) => ({
     slug: post.slug,
   }))
 }
@@ -24,7 +24,7 @@ export async function generateMetadata({
 }: {
   params: { slug: string }
 }): Promise<Metadata | undefined> {
-  const post = allChangelogPosts.find((post) => post.slug === params.slug)
+  const post = changelog.find((post) => post.slug === params.slug)
   if (!post) {
     return
   }
@@ -43,7 +43,7 @@ export default async function ChangelogPost({
 }: {
   params: { slug: string }
 }) {
-  const post = allChangelogPosts.find((post) => post.slug === params.slug)
+  const post = changelog.find((post) => post.slug === params.slug)
   if (!post) {
     notFound()
   }
@@ -109,7 +109,7 @@ export default async function ChangelogPost({
             </Link>
           </div>
         </div>
-        <MDX code={post.body.code} className="mx-5 sm:prose-lg md:mx-0 text-foreground" />
+        <MDX code={post.content} className="mx-5 sm:prose-lg md:mx-0 text-foreground" />
       </div>
     </MaxWidthWrapper>
   )

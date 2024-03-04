@@ -1,9 +1,9 @@
 import { MDX } from '@/components/content/mdx'
 import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
 import { formatDate } from '@/lib/utils'
+import { changelog } from '@content'
 import { constructMetadata } from '@mindfulyze/utils'
 
-import { allChangelogPosts } from 'contentlayer/generated'
 import { Twitter } from 'lucide-react'
 import Image from 'next/image'
 
@@ -37,7 +37,7 @@ export default function Changelog() {
       </div>
 
       <div className="divide-y">
-        {allChangelogPosts
+        {changelog
           .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
           .map(async (post, idx) => (
             <div key={post.title} className="grid py-10 md:grid-cols-4 md:px-5 xl:px-0">
@@ -71,11 +71,11 @@ export default function Changelog() {
                   </time>
                 </Link>
                 <Link href={`/changelog/${post.slug}`} className="mx-5 md:mx-0">
-                  <h2 className="text-3xl font-bold tracking-tight text-emerald-500 hover:underline hover:decoration-1 hover:underline-offset-4 md:text-4xl">
+                  <h2 className="text-3xl font-bold tracking-tight text-primary hover:underline hover:decoration-1 hover:underline-offset-4 md:text-4xl">
                     {post.title}
                   </h2>
                 </Link>
-                <MDX code={post.body.code} className="mx-5 sm:prose-lg md:mx-0 text-foreground" />
+                <MDX code={post.content} className="mx-5 sm:prose-lg md:mx-0 text-foreground" />
               </div>
             </div>
           ))}
