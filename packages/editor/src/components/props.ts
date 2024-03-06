@@ -1,6 +1,6 @@
 import type { EditorProps } from '@tiptap/pm/view'
 
-export const TiptapEditorProps: EditorProps = {
+export const defaultEditorProps: EditorProps = {
   attributes: {
     class: 'prose prose-sm prose-stone dark:prose-invert focus:outline-none max-w-full',
   },

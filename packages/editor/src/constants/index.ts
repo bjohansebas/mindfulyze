@@ -1,4 +1,4 @@
-import type { BubbleColorMenuItem } from '../components/ColorSelector'
+import type { BubbleColorMenuItem } from '../types'
 
 export const TEXT_COLORS: BubbleColorMenuItem[] = [
   {
