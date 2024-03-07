@@ -3,6 +3,7 @@
   "compilerOptions": {
     "resolveJsonModule": true,
     "incremental": false,
+    "moduleResolution": "Bundler"
   },
   "include": ["."],
   "exclude": ["dist", "build", "node_modules"]
