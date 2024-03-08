@@ -41,7 +41,7 @@ export function MenuTemplate({ templates }: { templates: Template[] }) {
   return (
     <DropdownMenu open={openMenu} onOpenChange={setOpenMenu}>
       <DropdownMenuTrigger asChild>
-        <Button className="p-1 rounded-l-none">
+        <Button className="rounded-l-none p-1">
           <ChevronDownIcon className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
@@ -51,7 +51,7 @@ export function MenuTemplate({ templates }: { templates: Template[] }) {
           {templates.length > 0 ? (
             templates.map((data) => (
               <DropdownMenuItem
-                className="flex items-center w-full justify-between"
+                className="flex w-full items-center justify-between"
                 key={data.id}
                 onClick={() => {
                   return handleOpenThought(data.id)
@@ -62,7 +62,7 @@ export function MenuTemplate({ templates }: { templates: Template[] }) {
               </DropdownMenuItem>
             ))
           ) : (
-            <div className="p-5 flex items-center flex-col gap-5">
+            <div className="flex flex-col items-center gap-5 p-5">
               <p className="text-center">Oops, it looks like you don&apos;t have any templates.</p>
               <DropdownMenuItem
                 onClick={async () => {

@@ -50,7 +50,7 @@ export function EditorTemplate({ data: { text, title, id } }: EditorTemplateProp
 
   return (
     <div className="h-full w-full">
-      <div className="flex w-full border-b px-4 py-2 justify-between">
+      <div className="flex w-full justify-between border-b px-4 py-2">
         <div className="flex items-center gap-3">
           <Input
             placeholder="Untitled"
@@ -124,7 +124,6 @@ export function EditorTemplate({ data: { text, title, id } }: EditorTemplateProp
           }
         }}
         text={text}
-        className=""
         debounceDuration={2000}
         onUpdate={(editor) => {
           if (editor != null) {

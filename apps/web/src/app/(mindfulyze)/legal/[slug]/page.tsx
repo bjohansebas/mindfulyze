@@ -38,13 +38,13 @@ export default function LegalPage({ params }: LegalProps) {
   return (
     <div>
       <div className="py-10">
-        <h1 className="mt-5 text-center text-4xl font-extrabold leading-[1.15] text-primary sm:text-6xl">
+        <h1 className="mt-5 text-center font-extrabold text-4xl text-primary leading-[1.15] sm:text-6xl">
           {legal.title}
         </h1>
       </div>
       <MaxWidthWrapper className="flex max-w-screen-md flex-col items-center p-10 sm:pt-20">
         <MDX code={legal.content} className="text-foreground" />
-        <div className="mt-10 w-full border-t border-gray-200 pt-10 text-center">
+        <div className="mt-10 w-full border-gray-200 border-t pt-10 text-center">
           <p>Last updated: {formatDate(legal.updated.toString())}</p>
         </div>
       </MaxWidthWrapper>

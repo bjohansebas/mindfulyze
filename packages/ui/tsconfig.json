@@ -1,7 +1,7 @@
 {
   "extends": "@mindfulyze/config/tsconfig/react-library.json",
   "compilerOptions": {
-    "resolveJsonModule": true,
+    "resolveJsonModule": true
   },
   "include": ["."],
   "exclude": ["dist", "build", "node_modules", "**/*.stories.tsx"]

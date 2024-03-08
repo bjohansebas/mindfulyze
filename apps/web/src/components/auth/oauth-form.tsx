@@ -23,12 +23,12 @@ export function OAuthForm() {
       className="w-full"
       size="lg"
     >
-      <GoogleIcon className="w-5 h-5" />
+      <GoogleIcon className="h-5 w-5" />
       Continue with Google
     </Button>
   )
 }
 
 export function OAuthFormPlaceholder() {
-  return <Skeleton className="w-full h-10" />
+  return <Skeleton className="h-10 w-full" />
 }

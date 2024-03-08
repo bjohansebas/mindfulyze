@@ -16,14 +16,14 @@ export async function ThoughtsList({
 
   return thoughtsData.data != null && thoughtsData.data.length > 0 ? (
     thoughtsData.data.map(({ id, text, createdAt }, index) => (
-      <article key={id} className="flex gap-x-3 max-w-full">
-        <div className="relative last:after:hidden after:absolute after:top-0 after:bottom-0 after:start-3.5 after:w-px after:-translate-x-[0.5px] after:bg-primary   dark:group-hover:after:bg-primary">
+      <article key={id} className="flex max-w-full gap-x-3">
+        <div className="after:-translate-x-[0.5px] relative after:absolute after:start-3.5 after:top-0 after:bottom-0 last:after:hidden after:w-px after:bg-primary dark:group-hover:after:bg-primary">
           <div
-            className={cn('relative z-10 w-7 h-[60px] flex justify-center items-center', {
+            className={cn('relative z-10 flex h-[60px] w-7 items-center justify-center', {
               'h-9': index === 0,
             })}
           >
-            <div className="w-3 h-3 rounded-full bg-primary border-2 border-secondary group-hover:border-primary" />
+            <div className="h-3 w-3 rounded-full border-2 border-secondary bg-primary group-hover:border-primary" />
           </div>
         </div>
         <ThoughtEditor text={text} id={id} createdAt={createdAt} classNameHeader={cn({ 'pt-0': index === 0 })} />

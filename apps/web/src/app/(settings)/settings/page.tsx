@@ -9,10 +9,10 @@ export const metadata = constructMetadata({
 
 export default function Password() {
   return (
-    <div className="space-y-6 w-full">
+    <div className="w-full space-y-6">
       <div>
-        <h3 className="text-lg font-medium">Account</h3>
-        <p className="text-sm text-muted-foreground">Update your account settings.</p>
+        <h3 className="font-medium text-lg">Account</h3>
+        <p className="text-muted-foreground text-sm">Update your account settings.</p>
       </div>
       <Separator />
       <AccountForm />

@@ -15,10 +15,10 @@ export function CardTemplate({ title, id }: CardTemplateProps) {
   const router = useRouter()
 
   return (
-    <div className="font-medium px-6 py-2 w-full bg-card border rounded-lg flex justify-between items-center">
+    <div className="flex w-full items-center justify-between rounded-lg border bg-card px-6 py-2 font-medium">
       <Button
         variant="ghost"
-        className="w-full justify-start hover:bg-transparent px-0"
+        className="w-full justify-start px-0 hover:bg-transparent"
         onClick={async () => {
           toast.message('The thought is being created.')
 

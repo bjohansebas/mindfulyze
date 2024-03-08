@@ -24,7 +24,7 @@ export function LinkNavigation() {
             {
               'text-card-muted': pathname !== link.href,
             },
-            'px-1 p-0',
+            'p-0 px-1',
           )}
         >
           {link.name}

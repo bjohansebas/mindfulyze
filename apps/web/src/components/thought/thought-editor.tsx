@@ -38,9 +38,9 @@ export function ThoughtEditor({ text, createdAt, id, classNameHeader }: ContentT
   const [newDate, setNewDate] = useState(createdAt)
 
   return (
-    <div className="flex flex-col max-w-full w-full">
+    <div className="flex w-full max-w-full flex-col">
       <div className={cn('flex w-full justify-between py-3', classNameHeader)}>
-        <div className="flex gap-3 items-center">
+        <div className="flex items-center gap-3">
           <DropdownMenu>
             <DropdownMenuTrigger disabled={disabled}>{format(newDate, 'LLL dd, y')}</DropdownMenuTrigger>
             <DropdownMenuContent>
@@ -106,7 +106,7 @@ export function ThoughtEditor({ text, createdAt, id, classNameHeader }: ContentT
         }}
         autofocus={false}
         text={text}
-        className="border-primary border rounded-xl"
+        className="rounded-xl border border-primary"
         onDebouncedUpdate={async (editor) => {
           if (editor) {
             const textHTML = editor.getHTML()

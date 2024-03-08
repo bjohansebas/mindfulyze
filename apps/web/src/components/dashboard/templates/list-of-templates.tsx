@@ -6,7 +6,7 @@ export async function ListOfTemplates() {
   const templatesData = await getTemplates()
 
   return (
-    <div className="w-full flex flex-col max-h-full overflow-y-auto gap-3 h-full">
+    <div className="flex h-full max-h-full w-full flex-col gap-3 overflow-y-auto">
       {templatesData.data.length > 0 ? (
         templatesData.data.map(({ id, title }) => <CardTemplate key={id} title={title} id={id} />)
       ) : (

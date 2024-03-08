@@ -59,7 +59,7 @@ export function OptionsCardTemplate({ id }: OptionCardTemplate) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="z-auto">
         <Button shape="circle" variant="ghost" className="z-auto">
-          <MoreHorizontalIcon className="w-5 h-5" />
+          <MoreHorizontalIcon className="h-5 w-5" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuPortal>

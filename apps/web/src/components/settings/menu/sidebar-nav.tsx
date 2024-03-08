@@ -18,7 +18,7 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
   const pathname = usePathname()
 
   return (
-    <nav className={cn('grid  gap-2', className)} {...props}>
+    <nav className={cn('grid gap-2', className)} {...props}>
       {items.map((item) => (
         <Button asChild key={item.href} variant="ghost" className="justify-start">
           <Link

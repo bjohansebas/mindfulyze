@@ -31,7 +31,7 @@ export function ButtonCreateTemplate() {
           await handleCreateTemplate()
         }}
       >
-        <PencilIcon className="w-4 h-4 mr-2" />
+        <PencilIcon className="mr-2 h-4 w-4" />
         Create thought
       </Button>
     </div>

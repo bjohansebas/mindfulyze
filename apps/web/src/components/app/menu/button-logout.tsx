@@ -11,7 +11,7 @@ export function ButtonLogout() {
   return (
     <Button
       variant="ghost"
-      className="justify-start w-full"
+      className="w-full justify-start"
       onClick={async () => {
         trackEvent('logout')
 

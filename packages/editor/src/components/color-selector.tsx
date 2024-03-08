@@ -23,7 +23,7 @@ export const ColorSelector: FC<ColorSelectorProps> = ({ open, onOpenChange }) =>
       <PopoverTrigger asChild>
         <Button variant="ghost" className="px-2">
           <BaselineIcon
-            className="w-5 h-5"
+            className="h-5 w-5"
             style={{
               color: activeColorItem?.color,
             }}
@@ -33,7 +33,7 @@ export const ColorSelector: FC<ColorSelectorProps> = ({ open, onOpenChange }) =>
       <PopoverContent
         sideOffset={5}
         align="start"
-        className="my-1 flex max-h-80 w-48 flex-col overflow-hidden bg-card overflow-y-auto rounded border p-1 shadow-xl animate-in fade-in slide-in-from-top-1"
+        className="fade-in slide-in-from-top-1 my-1 flex max-h-80 w-48 animate-in flex-col overflow-hidden overflow-y-auto rounded border bg-card p-1 shadow-xl"
       >
         {TEXT_COLORS.map(({ name, color }) => (
           <EditorBubbleItem

@@ -28,13 +28,13 @@ export const BackgroundSelector: FC<BackgroundSelectorProps> = ({ open, onOpenCh
             backgroundColor: activeHighlightItem?.color,
           }}
         >
-          <HighlighterIcon className="w-5 h-5" />
+          <HighlighterIcon className="h-5 w-5" />
         </Button>
       </PopoverTrigger>
       <PopoverContent
         sideOffset={5}
         align="start"
-        className="my-1 flex max-h-80 w-48 flex-col overflow-hidden bg-card overflow-y-auto rounded border p-1 shadow-xl"
+        className="my-1 flex max-h-80 w-48 flex-col overflow-hidden overflow-y-auto rounded border bg-card p-1 shadow-xl"
       >
         {HIGHLIGHT_COLORS.map(({ name, color }) => (
           <EditorBubbleItem

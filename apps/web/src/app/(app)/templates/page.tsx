@@ -6,7 +6,7 @@ import { Suspense } from 'react'
 
 export default async function Page() {
   return (
-    <div className="w-full flex flex-col gap-4 p-6 h-screen">
+    <div className="flex h-screen w-full flex-col gap-4 p-6">
       <HeaderTemplate />
       <Suspense fallback={<TemplatesPlaceholder />}>
         <ListOfTemplates />

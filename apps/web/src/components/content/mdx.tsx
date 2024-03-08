@@ -1,6 +1,5 @@
 import { cn } from '@mindfulyze/utils'
 import { MDXRemote } from 'next-mdx-remote/rsc'
-import Image from 'next/image'
 import Link from 'next/link'
 
 function CustomLink(props) {

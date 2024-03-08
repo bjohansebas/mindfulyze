@@ -17,14 +17,14 @@ export const metadata = constructMetadata({
 export default function Changelog() {
   return (
     <MaxWidthWrapper className="px-0">
-      <div className="relative grid border-b border-gray-200 py-20 md:grid-cols-4">
+      <div className="relative grid border-gray-200 border-b py-20 md:grid-cols-4">
         <div className="md:col-span-1" />
         <div className="mx-5 flex flex-col space-y-6 md:col-span-3 md:mx-0">
-          <h1 className="text-4xl font-bold tracking-tight text-emerald-600 md:text-5xl">Changelog</h1>
-          <p className="text-lg text-gray-100">New updates and improvements to Mindfulyze.</p>
+          <h1 className="font-bold text-4xl text-emerald-600 tracking-tight md:text-5xl">Changelog</h1>
+          <p className="text-gray-100 text-lg">New updates and improvements to Mindfulyze.</p>
         </div>
-        <div className="absolute bottom-2 right-0 flex items-center space-x-2">
-          <p className="text-sm text-gray-100">Subscribe to updates →</p>
+        <div className="absolute right-0 bottom-2 flex items-center space-x-2">
+          <p className="text-gray-100 text-sm">Subscribe to updates →</p>
           <Link
             href="https://twitter.com/mindfulyze"
             className="rounded-full p-2 transition-colors"
@@ -65,17 +65,17 @@ export default function Changelog() {
                 <Link href={`/changelog/${post.slug}`} className="group mx-5 flex items-center space-x-3 md:mx-0">
                   <time
                     dateTime={post.publishedAt}
-                    className="text-sm text-gray-200 transition-all group-hover:text-gray-100 md:hidden"
+                    className="text-gray-200 text-sm transition-all md:hidden group-hover:text-gray-100"
                   >
                     {formatDate(post.publishedAt)}
                   </time>
                 </Link>
                 <Link href={`/changelog/${post.slug}`} className="mx-5 md:mx-0">
-                  <h2 className="text-3xl font-bold tracking-tight text-primary hover:underline hover:decoration-1 hover:underline-offset-4 md:text-4xl">
+                  <h2 className="font-bold text-3xl text-primary tracking-tight md:text-4xl hover:underline hover:decoration-1 hover:underline-offset-4">
                     {post.title}
                   </h2>
                 </Link>
-                <MDX code={post.content} className="mx-5 sm:prose-lg md:mx-0 text-foreground" />
+                <MDX code={post.content} className="sm:prose-lg mx-5 text-foreground md:mx-0" />
               </div>
             </div>
           ))}

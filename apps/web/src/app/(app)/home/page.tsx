@@ -26,9 +26,9 @@ export default async function Page({
   const totalPages = await getThoughtsPages({ fromDate, toDate })
 
   return (
-    <div className="px-6 md:px-0 py-6 flex flex-col max-w-3xl mx-auto gap-5">
-      <header className="flex justify-end gap-2 flex-wrap">
-        <Suspense fallback={<Skeleton className="rounded-[8px] w-[161px] h-9" />}>
+    <div className="mx-auto flex max-w-3xl flex-col gap-5 px-6 py-6 md:px-0">
+      <header className="flex flex-wrap justify-end gap-2">
+        <Suspense fallback={<Skeleton className="h-9 w-[161px] rounded-[8px]" />}>
           <CreateThought />
         </Suspense>
         <DateRangeThought />

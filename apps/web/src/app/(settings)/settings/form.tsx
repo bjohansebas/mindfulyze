@@ -5,7 +5,7 @@ import UploadAvatar from '@/components/settings/account/upload-avatar'
 
 export function AccountForm() {
   return (
-    <div className="flex flex-col md:flex-row-reverse gap-8">
+    <div className="flex flex-col gap-8 md:flex-row-reverse">
       <UploadAvatar />
       <div className="w-full space-y-6">
         <NameForm />

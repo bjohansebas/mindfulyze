@@ -7,23 +7,23 @@ import { BookLockIcon, BookmarkIcon, LandPlotIcon, LayoutTemplateIcon } from 'lu
 export default function Page() {
   return (
     <>
-      <header className="max-w-lg md:max-w-3xl mx-auto md:pt-16 pt-10 px-2 md:px-0 mb-20">
-        <h1 className="font-semibold text-[2rem] md:text-6xl text-center text-balance">
+      <header className="mx-auto mb-20 max-w-lg px-2 pt-10 md:max-w-3xl md:px-0 md:pt-16">
+        <h1 className="text-balance text-center font-semibold text-[2rem] md:text-6xl">
           Practice journaling in a <span className="text-primary">safe</span> and{' '}
           <span className="text-primary">simple</span> manner
         </h1>
-        <p className="mt-6 max-w-[26rem] mx-auto md:max-w-xl text-muted-foreground lg:leading-loose text-pretty text-center">
+        <p className="mx-auto mt-6 max-w-[26rem] text-pretty text-center text-muted-foreground md:max-w-xl lg:leading-loose">
           Turn every moment into an opportunity to grow and get to know yourself, exploring your thoughts and ideas in
           one single place.
         </p>
-        <div className="flex justify-center mt-6 sm:mt-10">
+        <div className="mt-6 flex justify-center sm:mt-10">
           <Button shape="rounded" size="lg" asChild>
             <Link href="/signup">Start for Free</Link>
           </Button>
         </div>
       </header>
-      <main className="max-w-lg md:max-w-6xl mx-auto flex flex-col mb-20 gap-20 px-10">
-        <section className="grid grid-cols-[repeat(auto-fit_,minmax(276px,1fr))] gap-4 place-items-center">
+      <main className="mx-auto mb-20 flex max-w-lg flex-col gap-20 px-10 md:max-w-6xl">
+        <section className="grid grid-cols-[repeat(auto-fit_,minmax(276px,1fr))] place-items-center gap-4">
           <CardFeatures
             title="All your thoughts in one place"
             description="Store all your thoughts and reflections in one easy and secure place"
@@ -45,9 +45,9 @@ export default function Page() {
             icon={<BookmarkIcon className="h-16 w-16" />}
           />
         </section>
-        <section className="flex justify-center flex-col items-center gap-3">
-          <MindfulyzeIconWithText className="w-auto h-16 text-primary" />
-          <h2 className="text-4xl md:text-5xl font-semibold md:max-w-md max-w-sm text-center text-balance">
+        <section className="flex flex-col items-center justify-center gap-3">
+          <MindfulyzeIconWithText className="h-16 w-auto text-primary" />
+          <h2 className="max-w-sm text-balance text-center font-semibold text-4xl md:max-w-md md:text-5xl">
             Free your <span className="text-primary">thoughts</span> free your{' '}
             <span className="text-primary">mind</span>
           </h2>

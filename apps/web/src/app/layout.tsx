@@ -25,7 +25,7 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body
         className={cn(
-          'dark:selection:bg-emerald-800 dark:selection:text-foreground antialiased',
+          'antialiased dark:selection:bg-emerald-800 dark:selection:text-foreground',
           GeistSans.className,
           GeistMono.className,
         )}

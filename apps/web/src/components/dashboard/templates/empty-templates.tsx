@@ -8,7 +8,7 @@ export function EmptyTemplate() {
   const router = useRouter()
 
   return (
-    <div className="p-5 flex items-center flex-col gap-5 w-full h-full justify-center text-lg">
+    <div className="flex h-full w-full flex-col items-center justify-center gap-5 p-5 text-lg">
       <p className="text-center">Oops, it looks like you don&apos;t have any templates.</p>
       <Button
         onClick={async () => {

@@ -12,12 +12,12 @@ export const metadata = constructMetadata({
 
 export default function Login() {
   return (
-    <div className="z-10 h-fit w-full max-w-md overflow-hidden border rounded-2xl sm:shadow-xl">
+    <div className="z-10 h-fit w-full max-w-md overflow-hidden rounded-2xl border sm:shadow-xl">
       <div className="flex flex-col items-center justify-center gap-2 border-b bg-background px-4 py-6 pt-8 text-center sm:px-16">
         <Link href="/">
           <MindfulyzeIcon className="h-10 w-10" />
         </Link>
-        <h3 className="mt-4 text-xl font-semibold text-emerald-600 text-balance">Sign in to Mindfulyze</h3>
+        <h3 className="mt-4 text-balance font-semibold text-emerald-600 text-xl">Sign in to Mindfulyze</h3>
         <p className="text-balance text-sm">Start writing about your daily life.</p>
       </div>
       <div className="flex flex-col gap-5 bg-card px-4 py-8 sm:px-16">

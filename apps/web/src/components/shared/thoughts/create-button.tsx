@@ -49,7 +49,7 @@ export function CreateButton({ templates }: { templates: Template[] }) {
         }
       }}
     >
-      <PencilIcon className="w-4 h-4" />
+      <PencilIcon className="h-4 w-4" />
       <span>New thought</span>
     </Button>
   )

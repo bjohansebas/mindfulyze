@@ -6,6 +6,7 @@ import { type ReactNode, useEffect, useRef } from 'react'
 import { motion, useCycle } from 'framer-motion'
 
 import { Button } from '@mindfulyze/ui'
+import { cn } from '@mindfulyze/utils'
 import ButtonNav from './button-nav-mobile'
 import { navItems } from './nav'
 
@@ -38,7 +39,7 @@ export default function MobileNav() {
       initial={false}
       animate={isOpen ? 'open' : 'closed'}
       custom={height}
-      className={`inset-0 z-50 w-full lg:hidden ${isOpen ? 'fixed' : 'absolute pointer-events-none'}`}
+      className={cn('inset-0 z-50 w-full lg:hidden', { fixed: isOpen, 'absolute pointer-events-none': !isOpen })}
       ref={containerRef}
     >
       <motion.div className="absolute inset-0 right-0 w-full bg-card" variants={sidebar} />
@@ -68,7 +69,7 @@ export default function MobileNav() {
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const MenuToggle = ({ toggle }: { toggle: any }) => (
-  <Button onClick={toggle} className="pointer-events-auto absolute right-7 top-6 z-20 p-0" variant="link" size="sm">
+  <Button onClick={toggle} className="pointer-events-auto absolute top-6 right-7 z-20 p-0" variant="link" size="sm">
     <svg width="23" height="23" viewBox="0 0 23 23">
       <Path
         variants={{

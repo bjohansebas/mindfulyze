@@ -62,7 +62,7 @@ export function ButtonFeedBack({ setOpen }: { setOpen?: Dispatch<SetStateAction<
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Textarea placeholder="Your feedback..." className="resize-none h-28" {...field} />
+                    <Textarea placeholder="Your feedback..." className="h-28 resize-none" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

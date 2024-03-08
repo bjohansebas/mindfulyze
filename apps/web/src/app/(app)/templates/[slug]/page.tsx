@@ -10,8 +10,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
   }
 
   return (
-    <div className="w-full flex justify-center p-6 h-screen">
-      <div className="border w-full flex flex-col rounded-2xl bg-card max-h-full overflow-y-auto">
+    <div className="flex h-screen w-full justify-center p-6">
+      <div className="flex max-h-full w-full flex-col overflow-y-auto rounded-2xl border bg-card">
         <EditorTemplate data={template.data} />
       </div>
     </div>

@@ -13,13 +13,10 @@
         "noSvgWithoutTitle": "off"
       },
       "nursery": {
-        "useGroupedTypeImport": "error",
-        "useExportType": "error",
-        "useImportType": "error",
-        "noEmptyTypeParameters": "error",
-        "useShorthandFunctionType": "error"
+        "useSortedClasses": "error"
       },
       "correctness": {
+        "noUnusedImports": "error",
         "useExhaustiveDependencies": "off"
       }
     }

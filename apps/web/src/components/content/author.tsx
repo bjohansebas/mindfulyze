@@ -20,7 +20,7 @@ export default async function Author({
     >
       <div className="flex flex-col">
         <p className="font-semibold text-gray-700">{authors[username].name}</p>
-        <p className="text-sm text-gray-500">@{username}</p>
+        <p className="text-gray-500 text-sm">@{username}</p>
       </div>
     </Link>
   )

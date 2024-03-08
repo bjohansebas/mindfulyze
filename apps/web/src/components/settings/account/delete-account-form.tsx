@@ -54,8 +54,8 @@ export function DeleteAccountForm() {
   return (
     <div className="rounded-lg border border-red-600 bg-card">
       <div className="flex flex-col space-y-3 p-7">
-        <h2 className="text-xl font-medium">Delete Account</h2>
-        <p className="text-sm text-gray-200">
+        <h2 className="font-medium text-xl">Delete Account</h2>
+        <p className="text-gray-200 text-sm">
           Permanently delete your Mindfulyze account and all of your thoughts. This action cannot be undone - please
           proceed with caution.
         </p>
@@ -64,7 +64,7 @@ export function DeleteAccountForm() {
             <Button variant="destructive">Delete Account</Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[446px]">
-            <DialogHeader className="sm:text-center gap-3">
+            <DialogHeader className="gap-3 sm:text-center">
               <DialogTitle>Delete Account</DialogTitle>
               <DialogDescription className="text-gray-200">
                 Warning: This will permanently delete your account and all your thoughts.

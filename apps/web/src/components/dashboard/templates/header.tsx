@@ -9,7 +9,7 @@ export function HeaderTemplate() {
   const pathname = usePathname()
 
   return (
-    <nav className="w-full flex justify-between items-center">
+    <nav className="flex w-full items-center justify-between">
       <h1 className="font-bold">Templates</h1>
       <Button
         onClick={async () => {

@@ -9,22 +9,22 @@ import { LinkNavigation } from './links-navigation'
 
 export default function NavigationApp() {
   return (
-    <nav className="w-full bg-card px-6 sm:px-12 py-2 border-b flex justify-between items-center">
+    <nav className="flex w-full items-center justify-between border-b bg-card px-6 py-2 sm:px-12">
       <div className="flex items-center gap-4">
         <Link href="/home">
           <div className="py-2.5 md:hidden">
-            <MindfulyzeIcon className="text-emerald-600 w-7 h-7" />
+            <MindfulyzeIcon className="h-7 w-7 text-emerald-600" />
           </div>
-          <MindfulyzeIconWithText className="text-emerald-600 w-auto h-12 hidden md:inline" />
+          <MindfulyzeIconWithText className="hidden h-12 w-auto text-emerald-600 md:inline" />
         </Link>
-        <div className="md:flex gap-3 hidden">
+        <div className="hidden gap-3 md:flex">
           <LinkNavigation />
         </div>
       </div>
 
       <div className="flex gap-3">
         <ButtonFeedBack />
-        <Suspense fallback={<Skeleton className="rounded-full w-9 h-9" />}>
+        <Suspense fallback={<Skeleton className="h-9 w-9 rounded-full" />}>
           <UserDropdown />
         </Suspense>
       </div>

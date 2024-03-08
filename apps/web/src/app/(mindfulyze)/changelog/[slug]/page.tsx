@@ -51,7 +51,7 @@ export default async function ChangelogPost({
   return (
     <MaxWidthWrapper className="mt-10 mb-20 grid px-0 md:grid-cols-4">
       <div className="sticky top-16 hidden self-start md:col-span-1 md:block">
-        <Link href="/changelog" className="text-sm text-foreground transition-colors hover:text-emerald-400">
+        <Link href="/changelog" className="text-foreground text-sm transition-colors hover:text-emerald-400">
           ← Back to Changelog
         </Link>
       </div>
@@ -60,15 +60,15 @@ export default async function ChangelogPost({
           <div className="flex flex-col">
             <Link
               href="/changelog"
-              className="my-5 text-sm text-foreground md:hidden hover:text-emerald-400 active:text-emerald-400"
+              className="my-5 text-foreground text-sm md:hidden active:text-emerald-400 hover:text-emerald-400"
             >
               ← Back to Changelog
             </Link>
-            <time dateTime={post.publishedAt} className="flex items-center text-sm text-foreground md:text-base">
+            <time dateTime={post.publishedAt} className="flex items-center text-foreground text-sm md:text-base">
               {format(post.publishedAt, 'LLLL dd, y')}
             </time>
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-emerald-500 sm:text-4xl">{post.title}</h1>
+          <h1 className="font-bold text-3xl text-emerald-500 tracking-tight sm:text-4xl">{post.title}</h1>
         </div>
         {post.image ? (
           <Image
@@ -109,7 +109,7 @@ export default async function ChangelogPost({
             </Link>
           </div>
         </div>
-        <MDX code={post.content} className="mx-5 sm:prose-lg md:mx-0 text-foreground" />
+        <MDX code={post.content} className="sm:prose-lg mx-5 text-foreground md:mx-0" />
       </div>
     </MaxWidthWrapper>
   )

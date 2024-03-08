@@ -69,7 +69,7 @@ export function Editor({
         autofocus={autofocus}
         initialContent={generateJSON(text, extensions)}
         extensions={extensions}
-        className={cn('bg-card relative min-h-[250px] w-full', className)}
+        className={cn('relative min-h-[250px] w-full bg-card', className)}
         editorProps={defaultEditorProps}
         onUpdate={({ editor }) => {
           onUpdate(editor)
@@ -82,7 +82,7 @@ export function Editor({
             <EditorCommandItem
               value={item.title}
               onCommand={(val) => (item.command != null ? item.command(val) : null)}
-              className="flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm hover:bg-accent aria-selected:bg-accent "
+              className="flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm aria-selected:bg-accent hover:bg-accent"
               key={item.title}
             >
               <div className="flex h-10 w-10 items-center justify-center rounded-md border border-muted bg-background">
@@ -90,7 +90,7 @@ export function Editor({
               </div>
               <div>
                 <p className="font-medium">{item.title}</p>
-                <p className="text-xs text-muted-foreground">{item.description}</p>
+                <p className="text-muted-foreground text-xs">{item.description}</p>
               </div>
             </EditorCommandItem>
           ))}
@@ -99,7 +99,7 @@ export function Editor({
           tippyOptions={{
             placement: 'top',
           }}
-          className="bg-card flex w-fit p-1 rounded border gap-1 max-w-[90vw] overflow-x-auto shadow-xl"
+          className="flex w-fit max-w-[90vw] gap-1 overflow-x-auto rounded border bg-card p-1 shadow-xl"
         >
           <NodeSelector open={openNode} onOpenChange={setOpenNode} />
           <TextSelectors />

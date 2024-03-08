@@ -7,7 +7,7 @@ const sidebarNavItems = [
   {
     title: 'Account',
     href: '/settings',
-    icon: <UserRoundIcon className="h-4 w-4 mr-2" />,
+    icon: <UserRoundIcon className="mr-2 h-4 w-4" />,
   },
 ]
 
@@ -17,12 +17,12 @@ export default async function SettingsLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex h-screen flex-col bg-background w-full">
+    <div className="flex h-screen w-full flex-col bg-background">
       <NavigationApp />
 
       <div className="space-y-6 p-10 pb-16">
         <div className="space-y-0.5">
-          <h2 className="text-2xl font-bold tracking-tight">Settings</h2>
+          <h2 className="font-bold text-2xl tracking-tight">Settings</h2>
           <p className="text-muted-foreground">Manage your account settings and set account preferences.</p>
         </div>
         <Separator className="my-6" />

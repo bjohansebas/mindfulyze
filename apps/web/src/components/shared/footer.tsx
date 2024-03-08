@@ -14,8 +14,8 @@ const navigation = {
 
 export default function Footer() {
   return (
-    <footer className="my-10 px-8 max-w-4xl mx-auto flex flex-col md:flex-row justify-between gap-4 md:items-center">
-      <div className="flex item-center justify-between md:flex-col gap-2">
+    <footer className="mx-auto my-10 flex max-w-4xl flex-col justify-between gap-4 px-8 md:flex-row md:items-center">
+      <div className="item-center flex justify-between gap-2 md:flex-col">
         <Link href="/">
           <span className="sr-only">Mindfulyze Logo</span>
           <MindfulyzeIconWithText className="h-12 w-auto" />
@@ -39,7 +39,7 @@ export default function Footer() {
       <div className="grid grid-cols-2 gap-8">
         <div className="md:grid md:grid-cols-2 md:gap-8">
           <div className="mt-10 md:mt-0">
-            <h3 className="text-sm font-semibold">Product</h3>
+            <h3 className="font-semibold text-sm">Product</h3>
             <ul className="mt-4 space-y-4">
               {navigation.product.map((item) => (
                 <li key={item.name}>
@@ -53,7 +53,7 @@ export default function Footer() {
         </div>
         <div className="md:grid md:grid-cols-2 md:gap-8">
           <div className="mt-10 md:mt-0">
-            <h3 className="text-sm font-semibold">Legal</h3>
+            <h3 className="font-semibold text-sm">Legal</h3>
             <ul className="mt-4 space-y-4">
               {navigation.legal.map((item) => (
                 <li key={item.name}>

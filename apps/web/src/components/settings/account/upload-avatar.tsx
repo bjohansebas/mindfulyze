@@ -5,6 +5,7 @@ import { updateImage } from '@/app/actions/user'
 import { UploadCloud } from 'lucide-react'
 
 import { Button, toast } from '@mindfulyze/ui'
+import { cn } from '@mindfulyze/utils'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { useCallback, useEffect, useState } from 'react'
@@ -67,7 +68,7 @@ export default function UploadAvatar() {
       className="space-y-8 md:w-72"
     >
       <div className="space-y-2">
-        <p className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+        <p className="font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
           Your Avatar
         </p>
         <div>
@@ -113,16 +114,23 @@ export default function UploadAvatar() {
               }}
             />
             <div
-              className={`${
-                dragActive ? 'cursor-copy border-2 border-black bg-gray-50 opacity-100' : ''
-              } absolute z-[3] flex h-full w-full flex-col items-center justify-center rounded-full bg-white transition-all ${
-                image ? 'opacity-0 group-hover:opacity-100' : 'group-hover:bg-gray-50'
-              }`}
+              className={cn(
+                'absolute z-[3] flex h-full w-full flex-col items-center justify-center rounded-full bg-white transition-all',
+                {
+                  'cursor-copy border-2 border-black bg-gray-50 opacity-100': dragActive,
+                  'opacity-0 group-hover:opacity-100': image,
+                  'group-hover:bg-gray-50': !image,
+                },
+              )}
             >
               <UploadCloud
-                className={`${
-                  dragActive ? 'scale-110' : 'scale-100'
-                } h-5 w-5 text-gray-500 transition-all duration-75 group-hover:scale-110 group-active:scale-95`}
+                className={cn(
+                  'h-5 w-5 text-gray-500 transition-all duration-75 group-active:scale-95 group-hover:scale-110',
+                  {
+                    'scale-110': dragActive,
+                    'scale-100': !dragActive,
+                  },
+                )}
               />
             </div>
             {image ? (

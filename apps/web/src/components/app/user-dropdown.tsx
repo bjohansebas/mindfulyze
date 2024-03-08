@@ -20,33 +20,33 @@ export default async function UserDropdown() {
           <AvatarFallback>{stringAvatar(`${session?.user.name}`)}</AvatarFallback>
         </Avatar>
       </PopoverTrigger>
-      <PopoverContent className="w-56 drop-shadow-lg p-0" align="end">
+      <PopoverContent className="w-56 p-0 drop-shadow-lg" align="end">
         <div className="flex w-full flex-col space-y-px rounded-md p-3 sm:w-56">
-          <div className="p-2 mb-2">
+          <div className="mb-2 p-2">
             {session?.user?.name && <p className="truncate font-bold">{session?.user?.name}</p>}
             <p className="truncate text-sm">{session?.user?.email}</p>
           </div>
-          <Button variant="ghost" asChild className="justify-start w-[auto] md:hidden">
+          <Button variant="ghost" asChild className="w-auto justify-start md:hidden">
             <Link href="/home">
-              <MessageCircleIcon className="w-4 h-4" />
+              <MessageCircleIcon className="h-4 w-4" />
               Thoughts
             </Link>
           </Button>
-          <Button variant="ghost" asChild className="justify-start w-[auto] md:hidden">
+          <Button variant="ghost" asChild className="w-auto justify-start md:hidden">
             <Link href="/templates">
-              <LayoutTemplateIcon className="w-4 h-4" />
+              <LayoutTemplateIcon className="h-4 w-4" />
               Templates
             </Link>
           </Button>
-          <Button variant="ghost" asChild className="justify-start w-[auto] flex">
+          <Button variant="ghost" asChild className="flex w-auto justify-start">
             <Link href="/settings">
-              <SettingsIcon className="w-4 h-4" />
+              <SettingsIcon className="h-4 w-4" />
               Settings
             </Link>
           </Button>
-          <Button variant="ghost" asChild className="justify-start w-[auto] flex">
+          <Button variant="ghost" asChild className="flex w-auto justify-start">
             <Link href="/changelog" target="_blank">
-              <PenLineIcon className="w-4 h-4" />
+              <PenLineIcon className="h-4 w-4" />
               Changelog
             </Link>
           </Button>
