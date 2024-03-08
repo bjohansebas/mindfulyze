@@ -23,7 +23,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className={cn('dark:selection:bg-emerald-800 antialiased', GeistSans.className, GeistMono.className)}>
+      <body
+        className={cn(
+          'dark:selection:bg-emerald-800 dark:selection:text-foreground antialiased',
+          GeistSans.className,
+          GeistMono.className,
+        )}
+      >
         <AptabaseProvider appKey={APTABASE_APP_KEY}>
           <Provider>{children}</Provider>
         </AptabaseProvider>
