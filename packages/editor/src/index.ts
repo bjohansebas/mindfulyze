@@ -1,5 +1,3 @@
-import './styles/index.css'
-
 export { Editor } from './components/editor'
 
 export { extensions } from './extensions'

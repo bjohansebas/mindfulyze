@@ -107,7 +107,7 @@ export function ThoughtEditor({ text, createdAt, id, classNameHeader }: ContentT
         autofocus={false}
         text={text}
         editable={disabled}
-        className="bg-background border-primary border rounded-xl"
+        className="border-primary border rounded-xl"
         onDebouncedUpdate={async (editor) => {
           if (editor) {
             const textHTML = editor.getHTML()
