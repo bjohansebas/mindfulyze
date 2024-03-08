@@ -106,7 +106,6 @@ export function ThoughtEditor({ text, createdAt, id, classNameHeader }: ContentT
         }}
         autofocus={false}
         text={text}
-        editable={disabled}
         className="border-primary border rounded-xl"
         onDebouncedUpdate={async (editor) => {
           if (editor) {

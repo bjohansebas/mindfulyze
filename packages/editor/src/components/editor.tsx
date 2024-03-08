@@ -45,7 +45,6 @@ export interface EditorProps {
    */
   className?: string
   autofocus?: FocusPosition
-  editable?: boolean
 }
 
 export function Editor({
@@ -55,7 +54,6 @@ export function Editor({
   autofocus = 'end',
   onUpdate = () => {},
   onDebouncedUpdate = () => {},
-  editable,
 }: EditorProps) {
   const [openNode, setOpenNode] = useState(false)
   const [openColor, setOpenColor] = useState(false)
@@ -68,7 +66,6 @@ export function Editor({
   return (
     <EditorRoot>
       <EditorContent
-        editable={editable}
         autofocus={autofocus}
         initialContent={generateJSON(text, extensions)}
         extensions={extensions}
