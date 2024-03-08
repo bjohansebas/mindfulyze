@@ -2,6 +2,7 @@
 
 import { createThought } from '@/app/actions/thoughts'
 import type { Template } from '@/types/template'
+import { useAptabase } from '@aptabase/react'
 import { Button, toast } from '@mindfulyze/ui'
 import { PencilIcon } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
@@ -14,15 +15,20 @@ export async function handleCreateThought(templateSelect?: Template) {
 
     if (response.status === 201) {
       toast.success('Thought was created.')
-    } else {
-      toast.error("The thought couldn't be created, try again anew.")
+      return true
     }
+
+    toast.error("The thought couldn't be created, try again anew.")
   } catch (e) {
     toast.error("The thought couldn't be created, try again anew.")
   }
+
+  return false
 }
 
 export function CreateButton({ templates }: { templates: Template[] }) {
+  const { trackEvent } = useAptabase()
+
   const { replace } = useRouter()
   const searchParams = useSearchParams()
   const pathname = usePathname()
@@ -30,13 +36,17 @@ export function CreateButton({ templates }: { templates: Template[] }) {
     <Button
       className="w-full rounded-r-none px-3"
       onClick={async () => {
-        await handleCreateThought(templates?.find((value) => value.default) || undefined)
+        const action = await handleCreateThought(templates?.find((value) => value.default) || undefined)
 
-        const params = new URLSearchParams(searchParams)
+        if (action) {
+          trackEvent('create thought')
 
-        params.set('page', '1')
+          const params = new URLSearchParams(searchParams)
 
-        replace(`${pathname}?${params.toString()}`)
+          params.set('page', '1')
+
+          replace(`${pathname}?${params.toString()}`)
+        }
       }}
     >
       <PencilIcon className="w-4 h-4" />

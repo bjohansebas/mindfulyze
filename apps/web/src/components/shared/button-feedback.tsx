@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { FeedbackSchema } from '@/schemas/feedback'
 import { MessageSquareTextIcon } from 'lucide-react'
 
+import { useAptabase } from '@aptabase/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, LoadingSpinner, toast } from '@mindfulyze/ui'
 import { type Dispatch, type SetStateAction, useState } from 'react'
@@ -14,6 +15,8 @@ import { useForm } from 'react-hook-form'
 import type { z } from 'zod'
 
 export function ButtonFeedBack({ setOpen }: { setOpen?: Dispatch<SetStateAction<boolean>> }) {
+  const { trackEvent } = useAptabase()
+
   const form = useForm<z.infer<typeof FeedbackSchema>>({
     resolver: zodResolver(FeedbackSchema),
   })
@@ -29,6 +32,8 @@ export function ButtonFeedBack({ setOpen }: { setOpen?: Dispatch<SetStateAction<
       }
 
       if (res.status === 201) {
+        trackEvent('send feedback')
+
         toast.success('Your feedback has been received! Thank you for your help.')
       } else {
         toast.success("Oops, your feedback couldn't be sent, please try again.")
