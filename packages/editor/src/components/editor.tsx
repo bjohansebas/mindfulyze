@@ -1,3 +1,6 @@
+import '../styles/index.css'
+import '../styles/prosemirror.css'
+
 import { cn } from '@mindfulyze/utils'
 
 import type { Editor as EditorClass, FocusPosition } from '@tiptap/core'
