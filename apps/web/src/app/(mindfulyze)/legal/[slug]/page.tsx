@@ -1,8 +1,10 @@
-import { legal } from '@content'
-import { formatDate } from '@lib/utils'
 import { constructMetadata } from '@mindfulyze/utils'
+
+import { legal } from '@content'
 import { MDX } from '@ui/content/mdx'
 import MaxWidthWrapper from '@ui/shared/max-width-wrapper'
+
+import { format } from 'date-fns'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
@@ -45,7 +47,7 @@ export default function LegalPage({ params }: LegalProps) {
       <MaxWidthWrapper className="flex max-w-screen-md flex-col items-center p-10 sm:pt-20">
         <MDX code={legal.content} className="text-foreground" />
         <div className="mt-10 w-full border-gray-200 border-t pt-10 text-center">
-          <p>Last updated: {formatDate(legal.updated.toString())}</p>
+          <p>Last updated: {format(legal.updated.toString(), 'LLLL d, yyyy')}</p>
         </div>
       </MaxWidthWrapper>
     </div>

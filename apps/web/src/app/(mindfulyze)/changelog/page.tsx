@@ -1,8 +1,8 @@
 import { MDX } from '@/components/content/mdx'
 import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
-import { formatDate } from '@/lib/utils'
 import { changelog } from '@content'
 import { constructMetadata } from '@mindfulyze/utils'
+import { format } from 'date-fns'
 
 import { Twitter } from 'lucide-react'
 import Image from 'next/image'
@@ -44,7 +44,7 @@ export default function Changelog() {
               <div className="sticky top-20 hidden self-start md:col-span-1 md:block">
                 <Link href={`/changelog/${post.slug}`}>
                   <time dateTime={post.publishedAt} className="text-gray-200 transition-colors hover:text-gray-100">
-                    {formatDate(post.publishedAt)}
+                    {format(post.publishedAt, 'LLLL d, yyyy')}
                   </time>
                 </Link>
               </div>
@@ -67,7 +67,7 @@ export default function Changelog() {
                     dateTime={post.publishedAt}
                     className="text-gray-200 text-sm transition-all md:hidden group-hover:text-gray-100"
                   >
-                    {formatDate(post.publishedAt)}
+                    {format(post.publishedAt, 'LLLL d, yyyy')}
                   </time>
                 </Link>
                 <Link href={`/changelog/${post.slug}`} className="mx-5 md:mx-0">
