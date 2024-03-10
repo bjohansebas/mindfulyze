@@ -1,11 +1,11 @@
 import { PRIVATE_APP_ROUTES } from '@mindfulyze/utils'
+import { parseUrl } from '@mindfulyze/utils'
 import { getToken } from 'next-auth/jwt'
 import { type NextRequest, NextResponse } from 'next/server'
-import { parse } from './lib/middleware/utils'
 import type { User } from './types/user'
 
 export default async function middleware(req: NextRequest) {
-  const { key, path } = parse(req)
+  const { key, path } = parseUrl(req)
 
   const session = (await getToken({
     req,

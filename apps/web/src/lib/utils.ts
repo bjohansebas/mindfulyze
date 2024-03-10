@@ -3,11 +3,6 @@ import dayjs from 'dayjs'
 import timezone from 'dayjs/plugin/timezone.js'
 import utc from 'dayjs/plugin/utc.js'
 
-export function capitalize(str: string) {
-  if (!str || typeof str !== 'string') return str
-  return str.charAt(0).toUpperCase() + str.slice(1)
-}
-
 /**
  * Takes a name as input and returns the initials of the name as a string.
  * If the name is empty or only contains whitespace, it returns 'SB'.
