@@ -7,7 +7,7 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@ui/*": ["src/components/ui/*", "src/components/*"],
+      "@ui/*": ["src/components/*"],
       "@lib/*": ["src/lib/*"],
       "@/*": ["src/*"],
       "@content": [".velite"]

@@ -1,17 +1,18 @@
 'use client'
 
-import { FilesIcon, FlagIcon, MoreHorizontalIcon, SquarePenIcon, TrashIcon } from 'lucide-react'
-
-import { deleteTemplate, duplicateTemplate, setDefaultTemplate } from '@/app/actions/templates'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuPortal,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-
+} from '@mindfulyze/ui'
 import { Button, toast } from '@mindfulyze/ui'
+
+import { FilesIcon, FlagIcon, MoreHorizontalIcon, SquarePenIcon, TrashIcon } from 'lucide-react'
+
+import { deleteTemplate, duplicateTemplate, setDefaultTemplate } from '@/app/actions/templates'
+
 import Link from 'next/link'
 
 interface OptionCardTemplate {

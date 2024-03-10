@@ -7,14 +7,14 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { ChevronDownIcon } from 'lucide-react'
+} from '@mindfulyze/ui'
+import { Button, toast } from '@mindfulyze/ui'
 
 import { createTemplate } from '@/app/actions/templates'
 import { createThought } from '@/app/actions/thoughts'
 import type { Template } from '@/types/template'
 
-import { Button, toast } from '@mindfulyze/ui'
+import { ChevronDownIcon } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 

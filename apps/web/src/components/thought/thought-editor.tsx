@@ -13,12 +13,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@mindfulyze/ui'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@mindfulyze/ui'
 import { cn } from '@mindfulyze/utils'
 
 import { deleteThought, updateDateThought, updateThought } from '@/app/actions/thoughts'
 import { format } from 'date-fns'
-
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 
 import { TrashIcon } from 'lucide-react'
 import { useState } from 'react'
