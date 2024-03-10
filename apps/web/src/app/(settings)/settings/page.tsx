@@ -1,7 +1,7 @@
+import { Separator } from '@mindfulyze/ui'
 import { constructMetadata } from '@mindfulyze/utils'
 
 import { AccountForm } from '@/app/(settings)/settings/form'
-import { Separator } from '@/components/ui/separator'
 
 export const metadata = constructMetadata({
   title: 'Account settings | Mindfulyze',

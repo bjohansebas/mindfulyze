@@ -1,5 +1,6 @@
+import { Separator } from '@mindfulyze/ui'
+
 import NavigationApp from '@ui/app/navigation'
-import { Separator } from '@ui/separator'
 import { SidebarNav } from '@ui/settings/menu/sidebar-nav'
 import { UserRoundIcon } from 'lucide-react'
 

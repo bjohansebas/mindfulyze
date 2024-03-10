@@ -1,6 +1,5 @@
 import { legal } from '@content'
-import { Button, MindfulyzeIconWithText } from '@mindfulyze/ui'
-import { Separator } from '@ui/separator'
+import { Button, MindfulyzeIconWithText, Separator } from '@mindfulyze/ui'
 import { GithubIcon, TwitterIcon } from 'lucide-react'
 
 import Link from 'next/link'
