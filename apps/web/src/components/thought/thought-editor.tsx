@@ -1,7 +1,7 @@
 'use client'
 
 import { Editor } from '@mindfulyze/editor'
-import { Button } from '@mindfulyze/ui'
+import { Button, Calendar } from '@mindfulyze/ui'
 
 import { deleteThought, updateDateThought, updateThought } from '@/app/actions/thoughts'
 import { format } from 'date-fns'
@@ -17,7 +17,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
-import { Calendar } from '@/components/ui/calendar'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 
 import { toast } from '@mindfulyze/ui'

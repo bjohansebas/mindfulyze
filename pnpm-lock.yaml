@@ -89,9 +89,6 @@ importers:
       bcrypt:
         specifier: 5.1.1
         version: 5.1.1
-      class-variance-authority:
-        specifier: 0.7.0
-        version: 0.7.0
       cloudinary:
         specifier: 2.0.2
         version: 2.0.2
@@ -312,9 +309,6 @@ importers:
       class-variance-authority:
         specifier: 0.7.0
         version: 0.7.0
-      date-fns:
-        specifier: 3.3.1
-        version: 3.3.1
       lucide-react:
         specifier: 0.344.0
         version: 0.344.0(react@18.2.0)
