@@ -1,11 +1,5 @@
 'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-
-import { deleteAccount } from '@/app/actions/user'
-import { DeleteAccountSchemaForm } from '@/schemas/user'
-
 import {
   Dialog,
   DialogContent,
@@ -14,11 +8,18 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog'
+} from '@mindfulyze/ui'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@mindfulyze/ui'
 import { LoadingSpinner } from '@mindfulyze/ui'
 import { Button, Input, toast } from '@mindfulyze/ui'
 import { CONFIRM_MESSAGE } from '@mindfulyze/utils'
+
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+
+import { deleteAccount } from '@/app/actions/user'
+import { DeleteAccountSchemaForm } from '@/schemas/user'
+
 import { signOut } from 'next-auth/react'
 import type { z } from 'zod'
 
