@@ -16,6 +16,7 @@
     "typescript": "5.3.3"
   },
   "dependencies": {
+    "@paralleldrive/cuid2": "2.2.2",
     "clsx": "2.1.0",
     "tailwind-merge": "2.2.1",
     "zod": "3.22.4"

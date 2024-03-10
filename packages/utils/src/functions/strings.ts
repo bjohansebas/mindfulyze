@@ -1,3 +1,5 @@
+import { init } from '@paralleldrive/cuid2'
+
 export function stringAvatar(name: string): string {
   const nameDivided = name.split(' ')
   let result = ''
@@ -14,3 +16,8 @@ export function stringAvatar(name: string): string {
 
   return result
 }
+
+export const generateCUID = init({
+  // the length of the id
+  length: 26,
+})

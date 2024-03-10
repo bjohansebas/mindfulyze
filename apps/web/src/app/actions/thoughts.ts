@@ -1,16 +1,16 @@
 'use server'
 
-import { authOptions } from '@/lib/auth'
-import { createFile, deleteFile, downloadFile, updateFile } from '@/lib/supabase'
-import { createId } from '@/lib/utils'
+import { prisma } from '@mindfulyze/database'
+import { NEXTAUTH_SECRET } from '@mindfulyze/utils'
+import { SUPABASE_BUCKET_THOUGHTS, generateCUID } from '@mindfulyze/utils'
+
 import type { ThoughtSchema } from '@/schemas/thought'
 import { validatePartialThought } from '@/schemas/thought'
 import type { Thought } from '@/types/thought'
+import { authOptions } from '@lib/auth'
 import { decryptData, encryptData } from '@lib/encryption'
+import { createFile, deleteFile, downloadFile, updateFile } from '@lib/supabase'
 
-import { prisma } from '@mindfulyze/database'
-import { NEXTAUTH_SECRET } from '@mindfulyze/utils'
-import { SUPABASE_BUCKET_THOUGHTS } from '@mindfulyze/utils'
 import { getTemplateById, getTemplateDefault } from './templates'
 
 import { getServerSession } from 'next-auth'
@@ -111,7 +111,7 @@ export async function createThought(idTemplate?: string) {
     const password = decryptData({ key: NEXTAUTH_SECRET, data: session.user.pw })
     const textEncrypt = encryptData({ key: password, data: textForThought })
 
-    const uid = createId()
+    const uid = generateCUID()
     const file = await createFile({ name: `${uid}.html`, text: textEncrypt, bucket: SUPABASE_BUCKET_THOUGHTS })
 
     if (!file.data?.path) {

@@ -10,9 +10,9 @@ import { SUPABASE_BUCKET_TEMPLATES } from '@mindfulyze/utils'
 import { getTemplatesByDefault, getTemplatesByUser } from '@/lib/api/utils'
 import { authOptions } from '@/lib/auth'
 import { createFile, deleteFile, downloadFile, updateFile } from '@/lib/supabase'
-import { createId } from '@/lib/utils'
 import { type TemplateSchema, validatePartialTemplate, validateTemplate } from '@/schemas/template'
 import type { Template } from '@/types/template'
+import { generateCUID } from '@mindfulyze/utils'
 
 export interface TemplateResponse {
   data: Template[]
@@ -138,7 +138,7 @@ export async function createTemplate(data: z.infer<typeof TemplateSchema>, page?
   // }
 
   try {
-    const uid = createId()
+    const uid = generateCUID()
     const file = await createFile({
       name: `${uid}.html`,
       text: data.textWithFormat,
