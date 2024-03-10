@@ -1,11 +1,7 @@
 'use client'
 
 import { Editor } from '@mindfulyze/editor'
-import { Button, Calendar } from '@mindfulyze/ui'
-
-import { deleteThought, updateDateThought, updateThought } from '@/app/actions/thoughts'
-import { format } from 'date-fns'
-
+import { Button, Calendar, toast } from '@mindfulyze/ui'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,11 +12,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@/components/ui/alert-dialog'
+} from '@mindfulyze/ui'
+import { cn } from '@mindfulyze/utils'
+
+import { deleteThought, updateDateThought, updateThought } from '@/app/actions/thoughts'
+import { format } from 'date-fns'
+
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 
-import { toast } from '@mindfulyze/ui'
-import { cn } from '@mindfulyze/utils'
 import { TrashIcon } from 'lucide-react'
 import { useState } from 'react'
 

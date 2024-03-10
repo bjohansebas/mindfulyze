@@ -1,11 +1,7 @@
 'use client'
 
-import { Button, Input, toast } from '@mindfulyze/ui'
-
 import { Editor } from '@mindfulyze/editor'
-import { useState } from 'react'
-
-import { deleteTemplate, updateTemplate, updateTitleTemplate } from '@/app/actions/templates'
+import { Button, Input, toast } from '@mindfulyze/ui'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,8 +12,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@/components/ui/alert-dialog'
+} from '@mindfulyze/ui'
+
+import { useState } from 'react'
+
+import { deleteTemplate, updateTemplate, updateTitleTemplate } from '@/app/actions/templates'
 import type { Template } from '@/types/template'
+
 import { TrashIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce'
