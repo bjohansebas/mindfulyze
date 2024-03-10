@@ -1,17 +1,17 @@
+import { FacebookIcon } from '@mindfulyze/ui'
+import { HOME_DOMAIN } from '@mindfulyze/utils'
+import { constructMetadata } from '@mindfulyze/utils'
+
+import { format } from 'date-fns'
+import { LinkedinIcon, TwitterIcon } from 'lucide-react'
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import { MDX } from '@/components/content/mdx'
-import Facebook from '@/components/shared/icons/facebook'
 import MaxWidthWrapper from '@/components/shared/max-width-wrapper'
-import { format } from 'date-fns'
-
 import { changelog } from '@content'
-import { HOME_DOMAIN } from '@mindfulyze/utils'
-import { constructMetadata } from '@mindfulyze/utils'
-import { LinkedinIcon, TwitterIcon } from 'lucide-react'
-import Image from 'next/image'
 
 export async function generateStaticParams() {
   return changelog.map((post) => ({
@@ -97,7 +97,7 @@ export default async function ChangelogPost({
               rel="noopener noreferrer"
               className="transition-all hover:scale-110"
             >
-              <Facebook className="h-6 w-6" />
+              <FacebookIcon className="h-6 w-6" />
             </Link>
             <Link
               href={` http://www.linkedin.com/shareArticle?mini=true&url=${HOME_DOMAIN}/changelog/${post.slug}`}

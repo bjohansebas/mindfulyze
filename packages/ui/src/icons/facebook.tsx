@@ -1,4 +1,4 @@
-export default function FacebookLogoIcon({
+export function FacebookIcon({
   className,
 }: {
   className?: string
