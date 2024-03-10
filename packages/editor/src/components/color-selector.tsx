@@ -1,6 +1,5 @@
-import { Button } from '@mindfulyze/ui'
+import { Button, Popover, PopoverContent, PopoverTrigger } from '@mindfulyze/ui'
 
-import { Popover, PopoverContent, PopoverTrigger } from '@mindfulyze/ui'
 import { BaselineIcon, Check } from 'lucide-react'
 import { EditorBubbleItem, useEditor } from 'novel'
 import type { FC } from 'react'

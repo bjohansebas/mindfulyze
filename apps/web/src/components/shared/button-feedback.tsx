@@ -1,15 +1,17 @@
 'use client'
 
+import { Popover, PopoverContent, PopoverTrigger } from '@mindfulyze/ui'
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@mindfulyze/ui'
+import { Button, LoadingSpinner, toast } from '@mindfulyze/ui'
+
 import { sendFeedback } from '@/app/actions/feedback'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Textarea } from '@/components/ui/textarea'
 import { FeedbackSchema } from '@/schemas/feedback'
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@mindfulyze/ui'
+
 import { MessageSquareTextIcon } from 'lucide-react'
 
 import { useAptabase } from '@aptabase/react'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button, LoadingSpinner, toast } from '@mindfulyze/ui'
 import { type Dispatch, type SetStateAction, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import type { z } from 'zod'

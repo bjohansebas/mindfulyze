@@ -1,8 +1,8 @@
+import { Button, Popover, PopoverContent, PopoverTrigger } from '@mindfulyze/ui'
+
 import { authOptions } from '@/lib/auth'
 import { stringAvatar } from '@/lib/utils'
-import { Button } from '@mindfulyze/ui'
 import { Avatar, AvatarFallback, AvatarImage } from '@ui/avatar'
-import { Popover, PopoverContent, PopoverTrigger } from '@ui/popover'
 import { LayoutTemplateIcon, MessageCircleIcon, PenLineIcon, SettingsIcon } from 'lucide-react'
 import { getServerSession } from 'next-auth'
 
