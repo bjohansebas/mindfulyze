@@ -16,7 +16,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@mindfulyze/ui'
 import { LoadingSpinner } from '@mindfulyze/ui'
 import { Button, toast } from '@mindfulyze/ui'
 import { CONFIRM_MESSAGE } from '@mindfulyze/utils'

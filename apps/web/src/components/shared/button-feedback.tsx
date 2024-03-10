@@ -1,10 +1,10 @@
 'use client'
 
 import { sendFeedback } from '@/app/actions/feedback'
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Textarea } from '@/components/ui/textarea'
 import { FeedbackSchema } from '@/schemas/feedback'
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@mindfulyze/ui'
 import { MessageSquareTextIcon } from 'lucide-react'
 
 import { useAptabase } from '@aptabase/react'
