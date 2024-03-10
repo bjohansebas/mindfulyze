@@ -2,7 +2,7 @@
 
 import { authOptions } from '@/lib/auth'
 import { createFile, deleteFile, downloadFile, updateFile } from '@/lib/supabase'
-import { createId, parseDate } from '@/lib/utils'
+import { createId } from '@/lib/utils'
 import type { ThoughtSchema } from '@/schemas/thought'
 import { validatePartialThought } from '@/schemas/thought'
 import type { Thought } from '@/types/thought'
@@ -16,7 +16,7 @@ import { getTemplateById, getTemplateDefault } from './templates'
 import { getServerSession } from 'next-auth'
 import { revalidatePath } from 'next/cache'
 
-import dayjs from 'dayjs'
+import { compareAsc } from 'date-fns'
 import type { z } from 'zod'
 
 export async function getThoughtById(id: string) {
@@ -38,7 +38,7 @@ export async function getThoughtById(id: string) {
       },
     })
 
-    const dataThought = await downloadFile({ name: `${url}?bust=${dayjs(new Date()).valueOf()}`, bucket })
+    const dataThought = await downloadFile({ name: `${url}?bust=${new Date().valueOf()}`, bucket })
 
     if (dataThought.data == null) {
       return {
@@ -179,7 +179,7 @@ export async function updateThought(id: string, data: z.infer<typeof ThoughtSche
       }
     }
 
-    if (parseDate(data.created) !== parseDate(thought.data.createdAt)) {
+    if (compareAsc(data.created, thought.data.createdAt) === 0) {
       await prisma.thought.update({
         data: {
           createdAt: data.created,
@@ -211,7 +211,7 @@ export async function updateDateThought(id: string, date: Date) {
   }
 
   try {
-    if (parseDate(date) !== parseDate(thought.data.createdAt)) {
+    if (compareAsc(date, thought.data.createdAt) === 0) {
       await prisma.thought.update({
         data: {
           createdAt: date,

@@ -23,7 +23,6 @@
     "bcrypt": "5.1.1",
     "cloudinary": "2.0.2",
     "date-fns": "3.3.1",
-    "dayjs": "1.11.10",
     "framer-motion": "11.0.8",
     "geist": "1.2.2",
     "lucide-react": "0.344.0",

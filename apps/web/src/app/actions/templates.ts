@@ -1,6 +1,5 @@
 'use server'
 
-import dayjs from 'dayjs'
 import { getServerSession } from 'next-auth'
 import { revalidatePath } from 'next/cache'
 import type { z } from 'zod'
@@ -36,7 +35,7 @@ export async function getTemplates(): Promise<TemplateResponse> {
 
     const template = await Promise.all(
       response.map(async ({ url, bucket, ...res }) => {
-        const data = await downloadFile({ name: `${url}?bust=${dayjs(new Date()).valueOf()}`, bucket })
+        const data = await downloadFile({ name: `${url}?bust=${new Date().valueOf()}`, bucket })
         const text = await data.data?.text()
 
         if (!text) return { text: '', ...res }
@@ -68,7 +67,7 @@ export async function getTemplateDefault() {
     }
 
     const data = await downloadFile({
-      name: `${response.url}?bust=${dayjs(new Date()).valueOf()}`,
+      name: `${response.url}?bust=${new Date().valueOf()}`,
       bucket: response.bucket,
     })
 
@@ -100,7 +99,7 @@ export async function getTemplateById(id: string) {
       },
     })
 
-    const dataTemplate = await downloadFile({ name: `${url}?bust=${dayjs(new Date()).valueOf()}`, bucket })
+    const dataTemplate = await downloadFile({ name: `${url}?bust=${new Date().valueOf()}`, bucket })
 
     if (dataTemplate.data == null) {
       return {

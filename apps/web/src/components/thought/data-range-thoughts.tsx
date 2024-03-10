@@ -3,8 +3,7 @@
 import { Button, Calendar, Popover, PopoverContent, PopoverTrigger } from '@mindfulyze/ui'
 import { cn } from '@mindfulyze/utils'
 
-import { format } from 'date-fns'
-import dayjs from 'dayjs'
+import { format, isValid, set, toDate as toDateFormat } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
@@ -20,8 +19,8 @@ export function DateRangeThought({ className }: { className?: string }) {
   const toDate = searchParams.get('toDate')
 
   const [date, setDate] = useState<DateRange | undefined>({
-    from: dayjs(fromDate).isValid() ? dayjs(fromDate).toDate() : undefined,
-    to: dayjs(toDate).isValid() ? dayjs(toDate).toDate() : undefined,
+    from: fromDate != null && isValid(new Date(fromDate)) ? toDateFormat(fromDate) : undefined,
+    to: toDate != null && isValid(new Date(toDate)) ? toDateFormat(toDate) : undefined,
   })
 
   const handleDateRange = useDebouncedCallback((date: DateRange | undefined) => {
@@ -31,7 +30,7 @@ export function DateRangeThought({ className }: { className?: string }) {
       date.from ? params.set('fromDate', date.from.toISOString() || '') : params.delete('fromDate')
 
       date.to
-        ? params.set('toDate', dayjs(date.to).set('hour', 24).set('hour', 59).set('second', 59).toISOString() || '')
+        ? params.set('toDate', set(date.to, { hours: 23, minutes: 59, seconds: 59 }).toISOString() || '')
         : params.delete('toDate')
 
       params.delete('page')

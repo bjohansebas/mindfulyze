@@ -7,13 +7,13 @@ import { prisma } from '@mindfulyze/database'
 import { NEXTAUTH_SECRET, NOT_FOUND_CODE, NOT_FOUND_THOUGHTS, OK_CODE, UNAUTHORIZED_CODE } from '@mindfulyze/utils'
 import { ERROR_LOGIN_REQUIRED } from '@mindfulyze/utils'
 
-import dayjs from 'dayjs'
 import { getServerSession } from 'next-auth'
 
 import type { ActionResponse } from '@/types'
 import type { Thought } from '@/types/thought'
 import { authOptions } from '@lib/auth'
 import { downloadFile } from '@lib/supabase'
+import { isValid } from 'date-fns'
 
 export async function getThoughtsByUser({
   sort = 'createdAt',
@@ -32,8 +32,8 @@ export async function getThoughtsByUser({
     where: {
       userId,
       createdAt: {
-        gte: dayjs(fromDate).isValid() && fromDate != null ? fromDate : undefined, // Start of date range
-        lte: dayjs(toDate).isValid() && toDate != null ? toDate : undefined, // End of date range
+        gte: fromDate != null && isValid(new Date(fromDate)) ? fromDate : undefined, // Start of date range
+        lte: toDate != null && isValid(new Date(toDate)) ? toDate : undefined, // End of date range
       },
     },
     orderBy: {
@@ -69,7 +69,7 @@ export async function getThoughts({
 
     const thoughts = await Promise.all(
       response.map(async ({ url, bucket, updatedAt, ...res }) => {
-        const data = await downloadFile({ name: `${url}?bust=${dayjs(new Date()).valueOf()}`, bucket })
+        const data = await downloadFile({ name: `${url}?bust=${new Date().valueOf()}`, bucket })
         const textEncrypt = await data.data?.text()
 
         if (!textEncrypt) return { text: '', ...res, updatedAt }
@@ -100,8 +100,8 @@ export async function getThoughtsPages({ toDate, fromDate }: { toDate?: string; 
       where: {
         userId: session.user.id,
         createdAt: {
-          gte: dayjs(fromDate).isValid() && fromDate != null ? fromDate : undefined, // Start of date range
-          lte: dayjs(toDate).isValid() && toDate != null ? toDate : undefined, // End of date range
+          gte: fromDate != null && isValid(new Date(fromDate)) ? fromDate : undefined, // Start of date range
+          lte: toDate != null && isValid(new Date(toDate)) ? toDate : undefined, // End of date range
         },
       },
     })
