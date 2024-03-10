@@ -6,11 +6,10 @@ import type { z } from 'zod'
 
 import { encryptPassword } from '@/app/actions/password'
 import { verifyPassword } from '@/app/actions/user'
-import { Input } from '@/components/ui/input'
 import usePassword from '@/lib/hooks/usePassword'
 import { SetPasswordSchema } from '@/schemas/password'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@mindfulyze/ui'
-import { Button, toast } from '@mindfulyze/ui'
+import { Button, Input, toast } from '@mindfulyze/ui'
 import { useRouter } from 'next/navigation'
 
 export function SetPasswordForm() {

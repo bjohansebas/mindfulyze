@@ -3,12 +3,11 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
-import { Button, LoadingSpinner, toast } from '@mindfulyze/ui'
+import { Button, Input, LoadingSpinner, toast } from '@mindfulyze/ui'
 import { useSession } from 'next-auth/react'
 import type { z } from 'zod'
 
 import { updateName } from '@/app/actions/user'
-import { Input } from '@/components/ui/input'
 import { NameFormSchema } from '@/schemas/user'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@mindfulyze/ui'
 

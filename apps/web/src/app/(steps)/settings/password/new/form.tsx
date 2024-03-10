@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, toast } from '@mindfulyze/ui'
+import { Button, Input, toast } from '@mindfulyze/ui'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@mindfulyze/ui'
 import { CREATED_CODE } from '@mindfulyze/utils'
 
@@ -10,7 +10,6 @@ import { useForm } from 'react-hook-form'
 import type { z } from 'zod'
 
 import { createPassword } from '@/app/actions/password'
-import { Input } from '@/components/ui/input'
 import { NewPasswordSchema } from '@/schemas/password'
 import usePassword from '@lib/hooks/usePassword'
 

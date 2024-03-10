@@ -4,11 +4,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
 import { updateEmail } from '@/app/actions/user'
-import { Input } from '@/components/ui/input'
 import { EmailFormSchema } from '@/schemas/user'
 
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@mindfulyze/ui'
-import { Button, LoadingSpinner, toast } from '@mindfulyze/ui'
+import { Button, Input, LoadingSpinner, toast } from '@mindfulyze/ui'
 
 import { useSession } from 'next-auth/react'
 import type { z } from 'zod'

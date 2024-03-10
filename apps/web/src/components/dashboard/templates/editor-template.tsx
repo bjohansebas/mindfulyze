@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, toast } from '@mindfulyze/ui'
+import { Button, Input, toast } from '@mindfulyze/ui'
 
 import { Editor } from '@mindfulyze/editor'
 import { useState } from 'react'
@@ -17,7 +17,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
-import { Input } from '@/components/ui/input'
 import type { Template } from '@/types/template'
 import { TrashIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
