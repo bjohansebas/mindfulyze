@@ -24,6 +24,9 @@
     "db:push": {
       "cache": false,
       "dotEnv": [".env"]
+    },
+    "db:deploy": {
+      "cache": false
     }
   }
 }

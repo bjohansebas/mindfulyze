@@ -8,6 +8,7 @@
     "dev": "turbo dev",
     "db:generate": "turbo db:generate",
     "db:push": "turbo db:push",
+    "migrate": "turbo db:migrate",
     "lint": "biome check . && turbo lint",
     "prepare": "husky"
   },
