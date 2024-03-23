@@ -3,8 +3,6 @@ import { build } from 'velite'
 /** @type {import('next').NextConfig} */
 export default {
   experimental: {
-    useDeploymentId: true,
-    useDeploymentIdServerActions: true,
     serverActions: {
       bodySizeLimit: '3mb',
     },

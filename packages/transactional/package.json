@@ -12,9 +12,9 @@
   "devDependencies": {
     "@mindfulyze/config": "workspace:*",
     "@mindfulyze/utils": "workspace:*",
-    "@types/react": "18.2.61",
+    "@types/react": "18.2.69",
     "react": "18.2.0",
-    "typescript": "5.3.3"
+    "typescript": "5.2.2"
   },
   "dependencies": {
     "@react-email/components": "0.0.15",

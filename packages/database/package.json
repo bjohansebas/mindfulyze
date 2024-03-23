@@ -9,12 +9,12 @@
     "dev": "prisma studio --browser none"
   },
   "dependencies": {
-    "@prisma/client": "5.10.2"
+    "@prisma/client": "5.11.0"
   },
   "devDependencies": {
     "@mindfulyze/config": "workspace:*",
-    "@types/node": "20.11.24",
-    "prisma": "5.10.2",
-    "typescript": "5.3.3"
+    "@types/node": "20.11.30",
+    "prisma": "5.11.0",
+    "typescript": "5.2.2"
   }
 }
