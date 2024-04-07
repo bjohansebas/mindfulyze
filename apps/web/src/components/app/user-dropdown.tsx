@@ -2,15 +2,14 @@ import { Button, Popover, PopoverContent, PopoverTrigger } from '@mindfulyze/ui'
 import { Avatar, AvatarFallback, AvatarImage } from '@mindfulyze/ui'
 import { stringAvatar } from '@mindfulyze/utils'
 
-import { authOptions } from '@lib/auth'
+import { auth } from '@lib/auth'
 import { LayoutTemplateIcon, MessageCircleIcon, PenLineIcon, SettingsIcon } from 'lucide-react'
-import { getServerSession } from 'next-auth'
 
 import Link from 'next/link'
 import { ButtonLogout } from './menu/button-logout'
 
 export default async function UserDropdown() {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   return (
     <Popover>

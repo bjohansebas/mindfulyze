@@ -7,7 +7,8 @@ import { motion, useCycle } from 'framer-motion'
 
 import { Button } from '@mindfulyze/ui'
 import { cn } from '@mindfulyze/utils'
-import ButtonNav from './button-nav-mobile'
+import type { Session } from 'next-auth'
+import { ButtonsNavMobile } from './button-nav-mobile'
 import { navItems } from './nav'
 
 const sidebar = {
@@ -29,7 +30,7 @@ const sidebar = {
   },
 }
 
-export default function MobileNav() {
+export default function MobileNav({ session }: { session: Session | null }) {
   const [isOpen, toggleOpen] = useCycle(false, true)
   const containerRef = useRef(null)
   const { height } = useDimensions(containerRef)
@@ -39,7 +40,7 @@ export default function MobileNav() {
       initial={false}
       animate={isOpen ? 'open' : 'closed'}
       custom={height}
-      className={cn('inset-0 z-50 w-full lg:hidden', { fixed: isOpen, 'absolute pointer-events-none': !isOpen })}
+      className={cn('inset-0 z-50 w-full lg:hidden', { fixed: isOpen, 'pointer-events-none absolute': !isOpen })}
       ref={containerRef}
     >
       <motion.div className="absolute inset-0 right-0 w-full bg-card" variants={sidebar} />
@@ -60,7 +61,7 @@ export default function MobileNav() {
             </div>
           )
         })}
-        <ButtonNav />
+        <ButtonsNavMobile session={session} />
       </motion.ul>
       <MenuToggle toggle={toggleOpen} />
     </motion.nav>

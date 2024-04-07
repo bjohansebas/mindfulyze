@@ -1,26 +1,25 @@
-import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 
+import { signIn } from '@lib/actions/auth'
+import { auth } from '@lib/auth'
 import { Button } from '@mindfulyze/ui'
 
-import { authOptions } from '@lib/auth'
-
 export async function ButtonNav() {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   return session ? (
     <Button asChild variant="surface" shape="rounded">
       <Link href="/home">Dashboard</Link>
     </Button>
   ) : (
-    <>
-      <Button variant="link" shape="rounded" asChild className="text-foreground hover:text-primary">
-        <Link href="/login">Log in</Link>
+    <form action={signIn}>
+      <Button variant="link" shape="rounded" className="text-foreground hover:text-primary" type="submit">
+        Log in
       </Button>
-      <Button variant="surface" shape="rounded" asChild>
+      <Button variant="surface" shape="rounded" type="submit">
         <Link href="/signup">Sign Up</Link>
       </Button>
-    </>
+    </form>
   )
 }
 

@@ -1,5 +1,6 @@
 import { MindfulyzeIconWithText } from '@mindfulyze/ui'
 
+import { auth } from '@lib/auth'
 import Link from 'next/link'
 import ButtonNav from './button-nav'
 import MobileNav from './nav-mobile'
@@ -11,7 +12,9 @@ export const navItems = [
   },
 ]
 
-export default function Navigation() {
+export default async function Navigation() {
+  const session = await auth()
+
   return (
     <nav className="item-center mx-auto flex h-20 w-full max-w-5xl justify-between px-8 lg:h-24">
       <div className="flex items-center gap-4">
@@ -36,7 +39,7 @@ export default function Navigation() {
       <div className="hidden items-center gap-2 lg:flex">
         <ButtonNav />
       </div>
-      <MobileNav />
+      <MobileNav session={session} />
     </nav>
   )
 }

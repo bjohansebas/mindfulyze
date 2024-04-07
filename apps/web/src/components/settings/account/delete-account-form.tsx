@@ -14,13 +14,14 @@ import { LoadingSpinner } from '@mindfulyze/ui'
 import { Button, Input, toast } from '@mindfulyze/ui'
 import { CONFIRM_MESSAGE } from '@mindfulyze/utils'
 
+import { signOut } from '@actions/auth'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
 import { deleteAccount } from '@/app/actions/user'
 import { DeleteAccountSchemaForm } from '@/schemas/user'
 
-import { signOut } from 'next-auth/react'
 import type { z } from 'zod'
 
 export function DeleteAccountForm() {
@@ -38,9 +39,7 @@ export function DeleteAccountForm() {
     try {
       const res = await deleteAccount(data)
       if (res) {
-        signOut({
-          callbackUrl: '/login',
-        })
+        await signOut()
       } else {
         toast.error('Something went wrong')
       }

@@ -5,6 +5,9 @@ import cloudinary from 'cloudinary'
 import type { z } from 'zod'
 
 import type { SetPasswordSchema } from '@/schemas/password'
+import { auth } from '@lib/auth'
+import { prisma } from '@mindfulyze/database'
+import { USER_NOT_FOUND_ERROR } from '@mindfulyze/utils'
 import {
   type DeleteAccountSchemaForm,
   type EmailFormSchema,
@@ -12,10 +15,7 @@ import {
   validateDeleteAccount,
   validateEmail,
   validateName,
-} from '@/schemas/user'
-import { auth } from '@lib/auth'
-import { prisma } from '@mindfulyze/database'
-import { USER_NOT_FOUND_ERROR } from '@mindfulyze/utils'
+} from '@schemas/user'
 import { deleteAllTemplates } from './templates'
 import { deleteAllThoughts } from './thoughts'
 

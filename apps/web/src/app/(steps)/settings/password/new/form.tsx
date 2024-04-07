@@ -5,17 +5,15 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { CREATED_CODE } from '@mindfulyze/utils'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import type { z } from 'zod'
 
 import { createPassword } from '@/app/actions/password'
 import { NewPasswordSchema } from '@/schemas/password'
+import { redirect } from '@actions/utils'
 import usePassword from '@lib/hooks/usePassword'
 
 export function NewPasswordForm() {
-  const router = useRouter()
-
   const form = useForm<z.infer<typeof NewPasswordSchema>>({
     resolver: zodResolver(NewPasswordSchema),
     defaultValues: {
@@ -33,11 +31,13 @@ export function NewPasswordForm() {
       const res = await createPassword(data)
 
       if (res.status === CREATED_CODE && res.data != null) {
-        await updatePassword(res.data)
+        const session = await updatePassword(res.data)
 
-        toast.success('The password was created, we will redirect you in a moment.')
+        if (session?.user.pw) {
+          toast.success('The password was created, we will redirect you in a moment.')
 
-        router.push('/home')
+          redirect('/home')
+        }
       } else {
         toast.error('The password could not be created, please try again.')
       }

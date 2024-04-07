@@ -1,18 +1,12 @@
-'use client'
-
-import { signIn, useSession } from 'next-auth/react'
 import Link from 'next/link'
 
-import { useAptabase } from '@aptabase/react'
-
+import { signIn } from '@lib/actions/auth'
 import { Button } from '@mindfulyze/ui'
+import type { Session } from 'next-auth'
 import { MenuItem } from './nav-mobile'
 
-export function ButtonNav() {
-  const { status } = useSession()
-  const { trackEvent } = useAptabase()
-
-  return status === 'authenticated' ? (
+export function ButtonsNavMobile({ session }: { session: Session | null }) {
+  return session?.user != null ? (
     <MenuItem key="Dashboard">
       <Link href="/home" className="flex w-full font-semibold capitalize">
         Dashboard
@@ -25,8 +19,7 @@ export function ButtonNav() {
           className="h-6 w-full justify-normal p-0 font-semibold text-base text-white capitalize hover:text-emerald-600 hover:no-underline"
           variant="link"
           onClick={() => {
-            trackEvent('sign in mobile')
-            signIn('google', { callbackUrl: '/home' })
+            signIn()
           }}
         >
           Log in
@@ -38,8 +31,7 @@ export function ButtonNav() {
           className="h-6 w-full justify-normal p-0 font-semibold text-base text-white capitalize hover:text-emerald-600 hover:no-underline"
           variant="link"
           onClick={() => {
-            trackEvent('sign up mobile')
-            signIn('google', { callbackUrl: '/home' })
+            signIn()
           }}
         >
           Sign Up
@@ -49,4 +41,4 @@ export function ButtonNav() {
   )
 }
 
-export default ButtonNav
+export default ButtonsNavMobile

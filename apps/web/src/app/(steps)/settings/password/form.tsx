@@ -8,13 +8,11 @@ import { encryptPassword } from '@/app/actions/password'
 import { verifyPassword } from '@/app/actions/user'
 import usePassword from '@/lib/hooks/usePassword'
 import { SetPasswordSchema } from '@/schemas/password'
+import { redirect } from '@actions/utils'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@mindfulyze/ui'
 import { Button, Input, toast } from '@mindfulyze/ui'
-import { useRouter } from 'next/navigation'
 
 export function SetPasswordForm() {
-  const router = useRouter()
-
   const form = useForm<z.infer<typeof SetPasswordSchema>>({
     resolver: zodResolver(SetPasswordSchema),
     defaultValues: {
@@ -33,11 +31,13 @@ export function SetPasswordForm() {
       if (res) {
         const pwHash = await encryptPassword(data.password)
 
-        await updatePassword(pwHash)
+        const session = await updatePassword(pwHash)
 
-        toast.success('The password is correct, we will redirect you in a moment.')
+        if (session?.user.pw) {
+          toast.success('The password is correct, we will redirect you in a moment.')
 
-        router.push('/home')
+          redirect('/home')
+        }
       } else {
         toast.error('The password is incorrect, please try again.')
       }
