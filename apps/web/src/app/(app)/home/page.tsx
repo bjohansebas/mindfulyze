@@ -10,6 +10,8 @@ import ThoughtsPlaceholder from '@ui/thought/thoughts-placeholder'
 
 import { Suspense } from 'react'
 
+export const runtime = 'nodejs'
+
 export default async function Page({
   searchParams,
 }: {

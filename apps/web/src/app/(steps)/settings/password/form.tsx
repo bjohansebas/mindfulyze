@@ -13,7 +13,8 @@ import { Button, Input, toast } from '@mindfulyze/ui'
 import { useRouter } from 'next/navigation'
 
 export function SetPasswordForm() {
-  const { push, prefetch } = useRouter()
+  const { refresh, prefetch } = useRouter()
+
   const form = useForm<z.infer<typeof SetPasswordSchema>>({
     resolver: zodResolver(SetPasswordSchema),
     defaultValues: {
@@ -39,7 +40,7 @@ export function SetPasswordForm() {
         if (session?.user.pw) {
           toast.success('The password is correct, we will redirect you in a moment.')
 
-          push('/home')
+          refresh()
         }
       } else {
         toast.error('The password is incorrect, please try again.')

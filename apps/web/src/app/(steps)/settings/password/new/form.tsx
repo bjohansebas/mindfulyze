@@ -14,7 +14,7 @@ import usePassword from '@lib/hooks/usePassword'
 import { useRouter } from 'next/navigation'
 
 export function NewPasswordForm() {
-  const { prefetch, push } = useRouter()
+  const { prefetch, refresh } = useRouter()
   const form = useForm<z.infer<typeof NewPasswordSchema>>({
     resolver: zodResolver(NewPasswordSchema),
     defaultValues: {
@@ -39,7 +39,7 @@ export function NewPasswordForm() {
         if (session?.user.pw) {
           toast.success('The password was created, we will redirect you in a moment.')
 
-          push('/home')
+          refresh()
         }
       } else {
         toast.error('The password could not be created, please try again.')
