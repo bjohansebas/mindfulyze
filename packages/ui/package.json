@@ -10,7 +10,7 @@
   "devDependencies": {
     "@mindfulyze/config": "workspace:*",
     "@mindfulyze/utils": "workspace:*",
-    "@types/react": "18.2.69",
+    "@types/react": "18.2.74",
     "autoprefixer": "10.4.19",
     "next": "14.1.4",
     "postcss": "8.4.38",
@@ -30,11 +30,11 @@
     "@radix-ui/react-separator": "1.0.3",
     "@radix-ui/react-slot": "1.0.2",
     "class-variance-authority": "0.7.0",
-    "lucide-react": "0.363.0",
+    "lucide-react": "0.365.0",
     "next-themes": "0.3.0",
     "react-day-picker": "8.10.0",
-    "react-hook-form": "7.51.1",
+    "react-hook-form": "7.51.2",
     "sonner": "1.4.41",
-    "tailwindcss": "3.4.1"
+    "tailwindcss": "3.4.3"
   }
 }

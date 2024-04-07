@@ -15,7 +15,6 @@ export default {
   logging: {
     fetches: { fullUrl: true },
   },
-  transpilePackages: ['@mindfulyze/ui', '@mindfulyze/editor', '@mindfulyze/utils'],
   images: {
     remotePatterns: [
       {
