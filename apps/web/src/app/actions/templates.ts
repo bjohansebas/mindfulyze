@@ -24,7 +24,7 @@ export interface TemplateResponse {
 export async function getTemplates(): Promise<TemplateResponse> {
   const session = await getServerSession(authOptions)
 
-  if (!session?.user.id || !session.user.pw) {
+  if (!session?.user.id) {
     return { message: 'You must be logged in.', status: 401, data: [] }
   }
 
@@ -53,7 +53,7 @@ export async function getTemplates(): Promise<TemplateResponse> {
 export async function getTemplateDefault() {
   const session = await getServerSession(authOptions)
 
-  if (!session?.user.id || !session.user.pw) {
+  if (!session?.user.id) {
     return { message: 'You must be logged in.', status: 401, data: null }
   }
 
@@ -83,7 +83,7 @@ export async function getTemplateDefault() {
 export async function getTemplateById(id: string) {
   const session = await getServerSession(authOptions)
 
-  if (!session?.user.id || !session.user.pw) {
+  if (!session?.user.id) {
     return { message: 'You must be logged in.', status: 401, data: null }
   }
 
@@ -121,7 +121,7 @@ export async function getTemplateById(id: string) {
 export async function createTemplate(data: z.infer<typeof TemplateSchema>, page?: string) {
   const session = await getServerSession(authOptions)
 
-  if (!session?.user || !session.user.pw) {
+  if (!session?.user.id) {
     return { message: 'You must be logged in.', status: 401, data: null }
   }
 
@@ -172,7 +172,7 @@ export async function createTemplate(data: z.infer<typeof TemplateSchema>, page?
 export async function updateTemplate(id: string, data: z.infer<typeof TemplateSchema>, page?: string) {
   const session = await getServerSession(authOptions)
 
-  if (!session?.user || !session.user.pw) {
+  if (!session?.user.id) {
     return { message: 'You must be logged in.', status: 401, data: false }
   }
 
@@ -224,7 +224,7 @@ export async function updateTemplate(id: string, data: z.infer<typeof TemplateSc
 export async function updateTitleTemplate(id: string, title: string, page?: string) {
   const session = await getServerSession(authOptions)
 
-  if (!session?.user || !session.user.pw) {
+  if (!session?.user.id) {
     return { message: 'You must be logged in.', status: 401, data: false }
   }
 
@@ -258,7 +258,7 @@ export async function updateTitleTemplate(id: string, title: string, page?: stri
 export async function duplicateTemplate(id: string) {
   const session = await getServerSession(authOptions)
 
-  if (!session?.user || !session.user.pw) {
+  if (!session?.user.id) {
     return { message: 'You must be logged in.', status: 401, data: null }
   }
 
@@ -294,7 +294,7 @@ export async function duplicateTemplate(id: string) {
 export async function setDefaultTemplate(id: string, page?: string) {
   const session = await getServerSession(authOptions)
 
-  if (!session?.user || !session.user.pw) {
+  if (!session?.user) {
     return { message: 'You must be logged in.', status: 401, data: false }
   }
 
@@ -348,7 +348,7 @@ export async function setDefaultTemplate(id: string, page?: string) {
 export async function deleteTemplate(id: string, page?: string) {
   const session = await getServerSession(authOptions)
 
-  if (!session?.user || !session.user.pw) {
+  if (!session?.user.id) {
     return { message: 'You must be logged in.', status: 401, data: false }
   }
 
@@ -387,7 +387,7 @@ export async function deleteTemplate(id: string, page?: string) {
 export async function deleteAllTemplates() {
   const session = await getServerSession(authOptions)
 
-  if (!session?.user || !session.user.pw) {
+  if (!session?.user.id) {
     return { message: 'You must be logged in.', status: 401, data: false }
   }
 
