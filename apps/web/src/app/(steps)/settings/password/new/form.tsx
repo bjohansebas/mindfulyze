@@ -5,16 +5,17 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { CREATED_CODE } from '@mindfulyze/utils'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import type { z } from 'zod'
 
-import { createPassword } from '@/app/actions/password'
-import { NewPasswordSchema } from '@/schemas/password'
+import { createPassword } from '@actions/password'
 import usePassword from '@lib/hooks/usePassword'
-import { useRouter } from 'next/navigation'
+import { NewPasswordSchema } from '@schemas/password'
 
 export function NewPasswordForm() {
   const { prefetch, refresh } = useRouter()
+
   const form = useForm<z.infer<typeof NewPasswordSchema>>({
     resolver: zodResolver(NewPasswordSchema),
     defaultValues: {

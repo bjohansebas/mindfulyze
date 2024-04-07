@@ -4,10 +4,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import type { z } from 'zod'
 
-import { encryptPassword } from '@/app/actions/password'
 import { verifyPassword } from '@/app/actions/user'
 import usePassword from '@/lib/hooks/usePassword'
 import { SetPasswordSchema } from '@/schemas/password'
+import { encryptPasswordSession } from '@actions/password'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@mindfulyze/ui'
 import { Button, Input, toast } from '@mindfulyze/ui'
 import { useRouter } from 'next/navigation'
@@ -33,7 +33,7 @@ export function SetPasswordForm() {
       if (res) {
         prefetch('/home')
 
-        const pwHash = await encryptPassword(data.password)
+        const pwHash = await encryptPasswordSession(data.password)
 
         const session = await updatePassword(pwHash)
 
