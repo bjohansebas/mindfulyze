@@ -40,7 +40,7 @@ export default async function Page({
           <ThoughtsList currentPage={currentPage} fromDate={fromDate} toDate={toDate} />
         </Suspense>
       </section>
-      {totalPages.data > 1 ? (
+      {totalPages.data != null && totalPages.data > 1 ? (
         <footer className="flex w-full justify-center">
           <Pagination totalPages={totalPages.data} />
         </footer>

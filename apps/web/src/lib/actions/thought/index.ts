@@ -1,62 +1,32 @@
 'use server'
 
-import type { Thought as ThoughtProps } from '@prisma/client'
-
-import { decryptData } from '@lib/encryption'
 import { prisma } from '@mindfulyze/database'
-import { NEXTAUTH_SECRET, NOT_FOUND_CODE, NOT_FOUND_THOUGHTS, OK_CODE, UNAUTHORIZED_CODE } from '@mindfulyze/utils'
-import { ERROR_LOGIN_REQUIRED } from '@mindfulyze/utils'
+import { NEXTAUTH_SECRET, NOT_FOUND_CODE, NOT_FOUND_THOUGHTS, OK_CODE } from '@mindfulyze/utils'
 
-import type { ActionResponse } from '@/types'
-import type { Thought } from '@/types/thought'
-import { auth } from '@lib/auth'
-import { downloadFile } from '@lib/supabase'
 import { isValid } from 'date-fns'
 
-export async function getThoughtsByUser({
-  sort = 'createdAt',
-  page,
-  userId,
-  fromDate,
-  toDate,
-}: {
-  sort?: 'createdAt'
-  toDate?: string
-  fromDate?: string
-  page: number | null
-  userId: string
-}): Promise<ThoughtProps[]> {
-  return await prisma.thought.findMany({
-    where: {
-      userId,
-      createdAt: {
-        gte: fromDate != null && isValid(new Date(fromDate)) ? fromDate : undefined, // Start of date range
-        lte: toDate != null && isValid(new Date(toDate)) ? toDate : undefined, // End of date range
-      },
-    },
-    orderBy: {
-      [sort]: 'desc',
-    },
-    take: ITEMS_PER_PAGE,
-    ...(page && {
-      skip: (page - 1) * ITEMS_PER_PAGE,
-    }),
-  })
-}
+import { withActionSession } from '@lib/auth/utils'
+import { decryptData } from '@lib/encryption'
+import { downloadFile } from '@lib/supabase'
+import { GetThoughtsPagesSchema, GetThoughtsSchema } from '@schemas/thought'
+import type { ActionResponse } from 'types/index'
+import type { Thought } from 'types/thought'
+import type { z } from 'zod'
+import { THOUGHTS_PER_PAGE, getFilterThoughtsByUser } from './utils'
 
-export async function getThoughts({
-  page,
-  fromDate,
-  toDate,
-}: { page: number; toDate?: string; fromDate?: string }): Promise<ActionResponse<Thought[]>> {
-  const session = await auth()
+export async function getThoughts(input: z.infer<typeof GetThoughtsSchema>): Promise<ActionResponse<Thought[]>> {
+  const { data: response, status, message } = await withActionSession(GetThoughtsSchema, input)
 
-  if (!session?.user.id || !session.user.pw) {
-    return { message: ERROR_LOGIN_REQUIRED, status: UNAUTHORIZED_CODE, data: [] }
-  }
+  if (response == null) return { data: response, status, message }
+  const {
+    session,
+    data: { page, fromDate, toDate },
+  } = response
+
+  if (session.user.pw == null) return { data: null, status, message }
 
   try {
-    const response = await getThoughtsByUser({
+    const response = await getFilterThoughtsByUser({
       page,
       fromDate,
       toDate,
@@ -80,18 +50,18 @@ export async function getThoughts({
 
     return { data: thoughts, status: OK_CODE }
   } catch (e) {
-    return { message: NOT_FOUND_THOUGHTS, status: NOT_FOUND_CODE, data: [] }
+    return { message: NOT_FOUND_THOUGHTS, status: NOT_FOUND_CODE, data: null }
   }
 }
 
-const ITEMS_PER_PAGE = 10
+export async function getThoughtsPages(input: z.infer<typeof GetThoughtsPagesSchema>): Promise<ActionResponse<number>> {
+  const { data: response, status, message } = await withActionSession(GetThoughtsPagesSchema, input)
 
-export async function getThoughtsPages({ toDate, fromDate }: { toDate?: string; fromDate?: string }) {
-  const session = await auth()
-
-  if (!session?.user.id || !session.user.pw) {
-    return { message: ERROR_LOGIN_REQUIRED, status: UNAUTHORIZED_CODE, data: 0 }
-  }
+  if (response == null) return { data: response, status, message }
+  const {
+    session,
+    data: { fromDate, toDate },
+  } = response
 
   try {
     const response = await prisma.thought.count({
@@ -104,8 +74,8 @@ export async function getThoughtsPages({ toDate, fromDate }: { toDate?: string; 
       },
     })
 
-    return { data: Math.ceil(response / ITEMS_PER_PAGE), status: 200 }
+    return { data: Math.ceil(response / THOUGHTS_PER_PAGE), status: OK_CODE }
   } catch (e) {
-    return { message: NOT_FOUND_THOUGHTS, status: NOT_FOUND_CODE, data: 0 }
+    return { message: NOT_FOUND_THOUGHTS, status: NOT_FOUND_CODE, data: null }
   }
 }
