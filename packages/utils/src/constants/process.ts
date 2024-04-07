@@ -1,8 +1,8 @@
 // Next Auth environment variables
 
-export const NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET as string
+export const NEXTAUTH_SECRET = process.env.AUTH_SECRET as string
 
-export const NEXTAUTH_URL = process.env.NEXTAUTH_URL as string
+export const NEXTAUTH_URL = process.env.AUTH_URL as string
 
 // Google Auth
 

@@ -1,6 +1,5 @@
 'use server'
 
-import { getServerSession } from 'next-auth'
 import { revalidatePath } from 'next/cache'
 import type { z } from 'zod'
 
@@ -8,7 +7,7 @@ import { prisma } from '@mindfulyze/database'
 import { SUPABASE_BUCKET_TEMPLATES } from '@mindfulyze/utils'
 
 import { getTemplatesByDefault, getTemplatesByUser } from '@/lib/api/utils'
-import { authOptions } from '@/lib/auth'
+import { auth } from '@/lib/auth'
 import { createFile, deleteFile, downloadFile, updateFile } from '@/lib/supabase'
 import { type TemplateSchema, validatePartialTemplate, validateTemplate } from '@/schemas/template'
 import type { Template } from '@/types/template'
@@ -22,7 +21,7 @@ export interface TemplateResponse {
 
 // Get template of user
 export async function getTemplates(): Promise<TemplateResponse> {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   if (!session?.user.id) {
     return { message: 'You must be logged in.', status: 401, data: [] }
@@ -51,7 +50,7 @@ export async function getTemplates(): Promise<TemplateResponse> {
 }
 
 export async function getTemplateDefault() {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   if (!session?.user.id) {
     return { message: 'You must be logged in.', status: 401, data: null }
@@ -81,7 +80,7 @@ export async function getTemplateDefault() {
 
 // Get template of user
 export async function getTemplateById(id: string) {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   if (!session?.user.id) {
     return { message: 'You must be logged in.', status: 401, data: null }
@@ -119,7 +118,7 @@ export async function getTemplateById(id: string) {
 
 // Create new template for user
 export async function createTemplate(data: z.infer<typeof TemplateSchema>, page?: string) {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   if (!session?.user.id) {
     return { message: 'You must be logged in.', status: 401, data: null }
@@ -170,7 +169,7 @@ export async function createTemplate(data: z.infer<typeof TemplateSchema>, page?
 
 // Create new template for user
 export async function updateTemplate(id: string, data: z.infer<typeof TemplateSchema>, page?: string) {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   if (!session?.user.id) {
     return { message: 'You must be logged in.', status: 401, data: false }
@@ -222,7 +221,7 @@ export async function updateTemplate(id: string, data: z.infer<typeof TemplateSc
 
 // Create new template for user
 export async function updateTitleTemplate(id: string, title: string, page?: string) {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   if (!session?.user.id) {
     return { message: 'You must be logged in.', status: 401, data: false }
@@ -256,7 +255,7 @@ export async function updateTitleTemplate(id: string, title: string, page?: stri
 
 // Create new template for user
 export async function duplicateTemplate(id: string) {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   if (!session?.user.id) {
     return { message: 'You must be logged in.', status: 401, data: null }
@@ -292,7 +291,7 @@ export async function duplicateTemplate(id: string) {
 }
 
 export async function setDefaultTemplate(id: string, page?: string) {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   if (!session?.user) {
     return { message: 'You must be logged in.', status: 401, data: false }
@@ -346,7 +345,7 @@ export async function setDefaultTemplate(id: string, page?: string) {
 }
 
 export async function deleteTemplate(id: string, page?: string) {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   if (!session?.user.id) {
     return { message: 'You must be logged in.', status: 401, data: false }
@@ -385,7 +384,7 @@ export async function deleteTemplate(id: string, page?: string) {
 
 // Create new thought for user
 export async function deleteAllTemplates() {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   if (!session?.user.id) {
     return { message: 'You must be logged in.', status: 401, data: false }

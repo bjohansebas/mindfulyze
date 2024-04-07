@@ -7,11 +7,9 @@ import { prisma } from '@mindfulyze/database'
 import { NEXTAUTH_SECRET, NOT_FOUND_CODE, NOT_FOUND_THOUGHTS, OK_CODE, UNAUTHORIZED_CODE } from '@mindfulyze/utils'
 import { ERROR_LOGIN_REQUIRED } from '@mindfulyze/utils'
 
-import { getServerSession } from 'next-auth'
-
 import type { ActionResponse } from '@/types'
 import type { Thought } from '@/types/thought'
-import { authOptions } from '@lib/auth'
+import { auth } from '@lib/auth'
 import { downloadFile } from '@lib/supabase'
 import { isValid } from 'date-fns'
 
@@ -51,7 +49,7 @@ export async function getThoughts({
   fromDate,
   toDate,
 }: { page: number; toDate?: string; fromDate?: string }): Promise<ActionResponse<Thought[]>> {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   if (!session?.user.id || !session.user.pw) {
     return { message: ERROR_LOGIN_REQUIRED, status: UNAUTHORIZED_CODE, data: [] }
@@ -89,7 +87,7 @@ export async function getThoughts({
 const ITEMS_PER_PAGE = 10
 
 export async function getThoughtsPages({ toDate, fromDate }: { toDate?: string; fromDate?: string }) {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   if (!session?.user.id || !session.user.pw) {
     return { message: ERROR_LOGIN_REQUIRED, status: UNAUTHORIZED_CODE, data: 0 }

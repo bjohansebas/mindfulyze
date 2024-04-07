@@ -1,14 +1,15 @@
 import { prisma } from '@mindfulyze/database'
 import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from '@mindfulyze/utils'
 
-import { PrismaAdapter } from '@next-auth/prisma-adapter'
+import type { NextAuthConfig } from 'next-auth'
+import NextAuth from 'next-auth'
 
-import type { AuthOptions } from 'next-auth'
+import { PrismaAdapter } from '@auth/prisma-adapter'
 import GoogleProvider from 'next-auth/providers/google'
 
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL
 
-export const authOptions: AuthOptions = {
+const config: NextAuthConfig = {
   session: {
     strategy: 'jwt',
   },
@@ -85,3 +86,5 @@ export const authOptions: AuthOptions = {
     },
   },
 }
+
+export const { handlers, auth, signIn, signOut, unstable_update: update } = NextAuth(config)

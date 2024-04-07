@@ -7,20 +7,19 @@ import { SUPABASE_BUCKET_THOUGHTS, generateCUID } from '@mindfulyze/utils'
 import type { ThoughtSchema } from '@/schemas/thought'
 import { validatePartialThought } from '@/schemas/thought'
 import type { Thought } from '@/types/thought'
-import { authOptions } from '@lib/auth'
+import { auth } from '@lib/auth'
 import { decryptData, encryptData } from '@lib/encryption'
 import { createFile, deleteFile, downloadFile, updateFile } from '@lib/supabase'
 
 import { getTemplateById, getTemplateDefault } from './templates'
 
-import { getServerSession } from 'next-auth'
 import { revalidatePath } from 'next/cache'
 
 import { compareAsc } from 'date-fns'
 import type { z } from 'zod'
 
 export async function getThoughtById(id: string) {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   if (!session?.user.id || !session.user.pw) {
     return { message: 'You must be logged in.', status: 401, data: null }
@@ -59,7 +58,7 @@ export async function getThoughtById(id: string) {
 }
 
 export async function getThoughtByIdWithOutText(id: string) {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   if (!session?.user.id || !session.user.pw) {
     return { message: 'You must be logged in.', status: 401, data: null }
@@ -85,7 +84,7 @@ export async function getThoughtByIdWithOutText(id: string) {
 
 // Create new thought for user
 export async function createThought(idTemplate?: string) {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   if (!session?.user || !session.user.pw) {
     return { message: 'You must be logged in.', status: 401, data: null }
@@ -143,7 +142,7 @@ export interface ThoughtResponse {
 
 // Create new thought for user
 export async function updateThought(id: string, data: z.infer<typeof ThoughtSchema>) {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
   if (!session?.user || !session.user.pw) {
     return { message: 'You must be logged in.', status: 401, data: null }
   }
@@ -199,7 +198,7 @@ export async function updateThought(id: string, data: z.infer<typeof ThoughtSche
 }
 
 export async function updateDateThought(id: string, date: Date) {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
   if (!session?.user || !session.user.pw) {
     return { message: 'You must be logged in.', status: 401, data: null }
   }
@@ -230,9 +229,9 @@ export async function updateDateThought(id: string, date: Date) {
 
 // Create new thought for user
 export async function deleteThought(id: string) {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
-  if (!session?.user || !session.user.pw) {
+  if (!session?.user) {
     return { message: 'You must be logged in.', status: 401, data: false }
   }
 
@@ -261,9 +260,9 @@ export async function deleteThought(id: string) {
 
 // Create new thought for user
 export async function deleteAllThoughts() {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
-  if (!session?.user || !session.user.pw) {
+  if (!session?.user) {
     return { message: 'You must be logged in.', status: 401, data: false }
   }
 

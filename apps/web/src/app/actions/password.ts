@@ -1,7 +1,6 @@
 'use server'
 
 import bcrypt from 'bcrypt'
-import { getServerSession } from 'next-auth'
 import type { z } from 'zod'
 
 import { prisma } from '@mindfulyze/database'
@@ -17,12 +16,12 @@ import {
 
 import { NewPasswordSchema } from '@/schemas/password'
 import type { ActionResponse } from '@/types'
-import { authOptions } from '@lib/auth'
+import { auth } from '@lib/auth'
 import { encryptData } from '@lib/encryption'
 import { getUser } from './user'
 
 export async function createPassword(data: z.infer<typeof NewPasswordSchema>): Promise<ActionResponse<string>> {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   if (!session?.user) {
     return { message: 'You must be logged in.', status: UNAUTHORIZED_CODE, data: null }

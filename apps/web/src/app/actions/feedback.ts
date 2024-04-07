@@ -1,14 +1,13 @@
 'use server'
 
-import { authOptions } from '@/lib/auth'
-import { getServerSession } from 'next-auth'
+import { auth } from '@/lib/auth'
 import type { z } from 'zod'
 
 import { type FeedbackSchema, validateFeedback } from '@/schemas/feedback'
 import { FeedbackEmail, sendEmail } from '@mindfulyze/emails'
 
 export async function sendFeedback(data: z.infer<typeof FeedbackSchema>) {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   if (!session?.user || !session?.user.email) {
     return { message: 'You must be logged in.', status: 401 }

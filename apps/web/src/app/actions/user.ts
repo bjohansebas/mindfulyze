@@ -2,10 +2,8 @@
 
 import bcrypt from 'bcrypt'
 import cloudinary from 'cloudinary'
-import { getServerSession } from 'next-auth'
 import type { z } from 'zod'
 
-import { authOptions } from '@/lib/auth'
 import type { SetPasswordSchema } from '@/schemas/password'
 import {
   type DeleteAccountSchemaForm,
@@ -15,13 +13,14 @@ import {
   validateEmail,
   validateName,
 } from '@/schemas/user'
+import { auth } from '@lib/auth'
 import { prisma } from '@mindfulyze/database'
 import { USER_NOT_FOUND_ERROR } from '@mindfulyze/utils'
 import { deleteAllTemplates } from './templates'
 import { deleteAllThoughts } from './thoughts'
 
 export async function getUser() {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   if (!session?.user) {
     return { message: 'You must be logged in.', status: 401, data: null }
@@ -41,7 +40,7 @@ export async function getUser() {
 }
 
 export async function verifyPassword(data: z.infer<typeof SetPasswordSchema>) {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   if (!session?.user) {
     return false
@@ -65,7 +64,7 @@ export async function verifyPassword(data: z.infer<typeof SetPasswordSchema>) {
 }
 
 export async function updateName(data: z.infer<typeof NameFormSchema>) {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   if (!session?.user) {
     return false
@@ -94,7 +93,7 @@ export async function updateName(data: z.infer<typeof NameFormSchema>) {
 }
 
 export async function updateEmail(data: z.infer<typeof EmailFormSchema>) {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   if (!session?.user) {
     return false
@@ -123,7 +122,7 @@ export async function updateEmail(data: z.infer<typeof EmailFormSchema>) {
 }
 
 export async function updateImage(data: string | undefined | null) {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   if (!session?.user) {
     return { data: null }
@@ -157,7 +156,7 @@ export async function updateImage(data: string | undefined | null) {
 }
 
 export async function deleteAccount(data: z.infer<typeof DeleteAccountSchemaForm>) {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   if (!session?.user) {
     return { data: false }
