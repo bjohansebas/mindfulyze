@@ -7,13 +7,13 @@ import { prisma } from '@mindfulyze/database'
 import { BAD_REQUEST_CODE, CONFLICT_CODE, CREATED_CODE, DEFAULT_COST_SALT, NEXTAUTH_SECRET } from '@mindfulyze/utils'
 
 import { getUser } from '@/app/actions/user'
-import { withActionSession } from '@lib/auth/utils'
+import { withActionSessionAndSchema } from '@lib/auth/utils'
 import { encryptData } from '@lib/encryption'
 import { NewPasswordSchema } from '@schemas/password'
 import type { ActionResponse } from 'types/index'
 
 export async function createPassword(input: z.infer<typeof NewPasswordSchema>): Promise<ActionResponse<string>> {
-  const { data: response, status, message } = await withActionSession(NewPasswordSchema, input)
+  const { data: response, status, message } = await withActionSessionAndSchema(NewPasswordSchema, input)
 
   if (response == null) return { data: response, status, message }
   const { session, data } = response

@@ -14,15 +14,13 @@ import { LoadingSpinner } from '@mindfulyze/ui'
 import { Button, Input, toast } from '@mindfulyze/ui'
 import { CONFIRM_MESSAGE } from '@mindfulyze/utils'
 
-import { signOut } from '@actions/auth'
-
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-
-import { deleteAccount } from '@/app/actions/user'
-import { DeleteAccountSchemaForm } from '@/schemas/user'
-
 import type { z } from 'zod'
+
+import { signOut } from '@actions/auth'
+import { deleteAccount } from '@actions/user'
+import { DeleteAccountSchemaForm } from '@schemas/user'
 
 export function DeleteAccountForm() {
   const form = useForm<z.infer<typeof DeleteAccountSchemaForm>>({

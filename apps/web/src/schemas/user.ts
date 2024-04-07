@@ -41,7 +41,3 @@ export const DeleteAccountSchemaForm = z
     message: `The text you entered did not match "${CONFIRM_MESSAGE}".`,
     path: ['confirm_text'],
   })
-
-export function validateDeleteAccount(input: z.infer<typeof DeleteAccountSchemaForm>) {
-  return DeleteAccountSchemaForm.safeParse(input)
-}

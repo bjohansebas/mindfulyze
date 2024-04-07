@@ -9,53 +9,15 @@ import { validatePartialThought } from '@/schemas/thought'
 import type { Thought } from '@/types/thought'
 import { auth } from '@lib/auth'
 import { decryptData, encryptData } from '@lib/encryption'
-import { createFile, deleteFile, downloadFile, updateFile } from '@lib/supabase'
+import { createFile, deleteFile, updateFile } from '@lib/supabase'
 
 import { getTemplateById, getTemplateDefault } from './templates'
 
 import { revalidatePath } from 'next/cache'
 
+import { getThoughtById } from '@actions/thought'
 import { compareAsc } from 'date-fns'
 import type { z } from 'zod'
-
-export async function getThoughtById(id: string) {
-  const session = await auth()
-
-  if (!session?.user.id || !session.user.pw) {
-    return { message: 'You must be logged in.', status: 401, data: null }
-  }
-
-  if (id === '') {
-    return { message: 'The ID is empty.', status: 400, data: null }
-  }
-
-  try {
-    const { url, bucket, updatedAt, ...res } = await prisma.thought.findUniqueOrThrow({
-      where: {
-        id: id,
-        userId: session.user.id,
-      },
-    })
-
-    const dataThought = await downloadFile({ name: `${url}?bust=${new Date().valueOf()}`, bucket })
-
-    if (dataThought.data == null) {
-      return {
-        message: 'The thought was not found.',
-        data: null,
-        status: 404,
-      }
-    }
-
-    const text = await dataThought.data.text()
-    const password = decryptData({ key: NEXTAUTH_SECRET, data: session.user.pw })
-    const textDecrypt = decryptData({ key: password, data: text })
-
-    return { data: { text: textDecrypt, updatedAt, ...res, url, bucket }, status: 200 }
-  } catch (e) {
-    return { message: 'Not found template', status: 404, data: null }
-  }
-}
 
 export async function getThoughtByIdWithOutText(id: string) {
   const session = await auth()
@@ -156,7 +118,7 @@ export async function updateThought(id: string, data: z.infer<typeof ThoughtSche
     return { message: result.error.message, status: 422 }
   }
 
-  const thought = await getThoughtById(id)
+  const thought = await getThoughtById({ id })
 
   if (thought.status !== 200 || thought.data == null) {
     return { ...thought, data: false }
@@ -203,7 +165,7 @@ export async function updateDateThought(id: string, date: Date) {
     return { message: 'You must be logged in.', status: 401, data: null }
   }
 
-  const thought = await getThoughtById(id)
+  const thought = await getThoughtById({ id })
 
   if (thought.status !== 200 || thought.data == null) {
     return { ...thought, data: false }
@@ -236,7 +198,7 @@ export async function deleteThought(id: string) {
   }
 
   try {
-    const thought = await getThoughtById(id)
+    const thought = await getThoughtById({ id })
 
     if (!thought.data) {
       return { message: "The thought couldn't be deleted, try again anew.", status: 400, data: false }
@@ -255,38 +217,5 @@ export async function deleteThought(id: string) {
     return { data: true, status: 201 }
   } catch (e) {
     return { message: "The thought couldn't be deleted, try again anew.", status: 400, data: false }
-  }
-}
-
-// Create new thought for user
-export async function deleteAllThoughts() {
-  const session = await auth()
-
-  if (!session?.user) {
-    return { message: 'You must be logged in.', status: 401, data: false }
-  }
-
-  try {
-    const thoughts = await prisma.thought.findMany({ where: { userId: session.user.id } })
-
-    if (thoughts.length === 0) {
-      return { message: "The thoughts couldn't be deleted, try again anew.", status: 400, data: false }
-    }
-
-    await Promise.allSettled(
-      thoughts.map(async ({ url, bucket }) => {
-        await deleteFile({ name: url, bucket })
-      }),
-    )
-
-    await prisma.thought.deleteMany({
-      where: {
-        userId: session.user.id,
-      },
-    })
-
-    return { data: true, status: 201 }
-  } catch (e) {
-    return { message: "The thoughts couldn't be deleted, try again anew.", status: 400, data: false }
   }
 }

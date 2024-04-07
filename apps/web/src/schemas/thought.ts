@@ -1,5 +1,9 @@
 import z from 'zod'
 
+export const GetThoughtByIdSchema = z.object({
+  id: z.string().cuid2(),
+})
+
 export const GetThoughtsSchema = z.object({
   page: z.number(),
   toDate: z.string().optional(),
