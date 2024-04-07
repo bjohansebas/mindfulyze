@@ -5,7 +5,7 @@ import type { Schema } from 'zod'
 export async function withActionSession<S extends Schema, D extends Zod.infer<Schema>>(schema: S, data: D) {
   const session = await auth()
 
-  if (!session?.user) {
+  if (!session?.user || !session.user.email) {
     return { message: 'You must be logged in.', status: UNAUTHORIZED_CODE, data: null }
   }
 

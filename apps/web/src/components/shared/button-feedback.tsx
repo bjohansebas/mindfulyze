@@ -4,8 +4,8 @@ import { Popover, PopoverContent, PopoverTrigger } from '@mindfulyze/ui'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@mindfulyze/ui'
 import { Button, LoadingSpinner, Textarea, toast } from '@mindfulyze/ui'
 
-import { sendFeedback } from '@/app/actions/feedback'
-import { FeedbackSchema } from '@/schemas/feedback'
+import { sendFeedback } from '@actions/feedback'
+import { FeedbackSchema } from '@schemas/feedback'
 
 import { MessageSquareTextIcon } from 'lucide-react'
 
