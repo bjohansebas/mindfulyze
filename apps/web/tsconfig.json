@@ -10,7 +10,8 @@
       "@ui/*": ["src/components/*"],
       "@lib/*": ["src/lib/*"],
       "@/*": ["src/*"],
-      "@content": [".velite"]
+      "@content": [".velite"],
+      "types/*": ["src/types/*"]
     },
     "downlevelIteration": true,
     "forceConsistentCasingInFileNames": true,
