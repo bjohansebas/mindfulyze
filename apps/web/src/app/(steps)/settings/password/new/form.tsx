@@ -10,10 +10,11 @@ import type { z } from 'zod'
 
 import { createPassword } from '@/app/actions/password'
 import { NewPasswordSchema } from '@/schemas/password'
-import { redirect } from '@actions/utils'
 import usePassword from '@lib/hooks/usePassword'
+import { useRouter } from 'next/navigation'
 
 export function NewPasswordForm() {
+  const { prefetch, push } = useRouter()
   const form = useForm<z.infer<typeof NewPasswordSchema>>({
     resolver: zodResolver(NewPasswordSchema),
     defaultValues: {
@@ -31,12 +32,14 @@ export function NewPasswordForm() {
       const res = await createPassword(data)
 
       if (res.status === CREATED_CODE && res.data != null) {
+        prefetch('/home')
+
         const session = await updatePassword(res.data)
 
         if (session?.user.pw) {
           toast.success('The password was created, we will redirect you in a moment.')
 
-          redirect('/home')
+          push('/home')
         }
       } else {
         toast.error('The password could not be created, please try again.')
