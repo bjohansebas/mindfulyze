@@ -15,7 +15,7 @@ import { isValid } from 'date-fns'
 import { withActionSessionAndSchema } from '@lib/auth/utils'
 import { decryptData } from '@lib/encryption'
 import { downloadFile } from '@lib/supabase'
-import { type GetThoughtByIdSchema, GetThoughtsPagesSchema, GetThoughtsSchema } from '@schemas/thought'
+import { GetThoughtByIdSchema, GetThoughtsPagesSchema, GetThoughtsSchema } from '@schemas/thought'
 import type { ActionResponse } from 'types/index'
 import type { Thought } from 'types/thought'
 import type { z } from 'zod'
@@ -88,7 +88,7 @@ export async function getThoughtsPages(input: z.infer<typeof GetThoughtsPagesSch
 }
 
 export async function getThoughtById(input: z.infer<typeof GetThoughtByIdSchema>) {
-  const { data: response, status, message } = await withActionSessionAndSchema(GetThoughtsSchema, input)
+  const { data: response, status, message } = await withActionSessionAndSchema(GetThoughtByIdSchema, input)
 
   if (response == null) return { data: response, status, message }
   const {
@@ -120,7 +120,7 @@ export async function getThoughtById(input: z.infer<typeof GetThoughtByIdSchema>
     const password = decryptData({ key: NEXTAUTH_SECRET, data: session.user.pw })
     const textDecrypt = decryptData({ key: password, data: text })
 
-    return { data: { text: textDecrypt, updatedAt, ...res, url, bucket }, status: 200 }
+    return { data: { text: textDecrypt, updatedAt, ...res, url, bucket }, status: OK_CODE }
   } catch (e) {
     return { message: 'Not found template', status: NOT_FOUND_CODE, data: null }
   }
