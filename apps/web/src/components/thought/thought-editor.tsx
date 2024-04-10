@@ -20,8 +20,7 @@ import { format } from 'date-fns'
 import { TrashIcon } from 'lucide-react'
 import { useState } from 'react'
 
-import { deleteThought } from '@/app/actions/thoughts'
-import { updateDateThought, updateTextThought } from '@actions/thought'
+import { deleteThought, updateDateThought, updateTextThought } from '@actions/thought'
 
 export interface ContentThoughtsProps {
   text: string
@@ -76,7 +75,7 @@ export function ThoughtEditor({ text, createdAt, id, classNameHeader }: ContentT
                   onClick={async () => {
                     setDisabled(true)
                     toast.message('The thought is being erased, please wait a moment.')
-                    const res = await deleteThought(id)
+                    const res = await deleteThought({ id })
                     if (!res.data) {
                       toast.error(res.message)
                     } else {

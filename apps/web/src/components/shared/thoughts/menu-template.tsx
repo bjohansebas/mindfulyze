@@ -9,14 +9,15 @@ import {
   DropdownMenuTrigger,
 } from '@mindfulyze/ui'
 import { Button, toast } from '@mindfulyze/ui'
-
-import { createTemplate } from '@/app/actions/templates'
-import { createThought } from '@/app/actions/thoughts'
-import type { Template } from '@/types/template'
+import { CREATED_CODE } from '@mindfulyze/utils'
 
 import { ChevronDownIcon } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
+
+import { createTemplate } from '@/app/actions/templates'
+import { createThought } from '@actions/thought'
+import type { Template } from 'types/template'
 
 export function MenuTemplate({ templates }: { templates: Template[] }) {
   const router = useRouter()
@@ -29,8 +30,8 @@ export function MenuTemplate({ templates }: { templates: Template[] }) {
 
     toast.message('The thought is being created.')
 
-    const response = await createThought(id)
-    if (response.status === 201 && response.data != null) {
+    const response = await createThought({ template: id })
+    if (response.status === CREATED_CODE && response.data != null) {
       router.push('/home')
       toast.success('Thought was created.')
     } else {

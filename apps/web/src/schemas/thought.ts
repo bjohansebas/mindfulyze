@@ -24,3 +24,11 @@ export const UpdateDateThoughtSchema = z.object({
   id: z.string(),
   created: z.date(),
 })
+
+export const DeleteThoughtByIdSchema = z.object({
+  id: z.string().cuid2(),
+})
+
+export const CreateThoughtSchema = z.object({
+  template: z.string().cuid2().optional(),
+})

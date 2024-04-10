@@ -1,9 +1,11 @@
 'use client'
 
+import { Button, toast } from '@mindfulyze/ui'
+import { CREATED_CODE } from '@mindfulyze/utils'
+
 import { useRouter } from 'next/navigation'
 
-import { createThought } from '@/app/actions/thoughts'
-import { Button, toast } from '@mindfulyze/ui'
+import { createThought } from '@actions/thought'
 import { OptionsCardTemplate } from './options-card-template'
 
 export interface CardTemplateProps {
@@ -22,8 +24,8 @@ export function CardTemplate({ title, id }: CardTemplateProps) {
         onClick={async () => {
           toast.message('The thought is being created.')
 
-          const response = await createThought(id)
-          if (response.status === 201 && response.data != null) {
+          const response = await createThought({ template: id })
+          if (response.status === CREATED_CODE && response.data != null) {
             router.push('/home')
             toast.success('Thought was created.')
           } else {

@@ -1,17 +1,19 @@
 'use client'
 
-import { createThought } from '@/app/actions/thoughts'
-import type { Template } from '@/types/template'
-import { useAptabase } from '@aptabase/react'
 import { Button, toast } from '@mindfulyze/ui'
+
+import { useAptabase } from '@aptabase/react'
 import { PencilIcon } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+
+import { createThought } from '@actions/thought'
+import type { Template } from 'types/template'
 
 export async function handleCreateThought(templateSelect?: Template) {
   try {
     toast.message('The thought is being created.')
 
-    const response = await createThought(templateSelect?.id)
+    const response = await createThought({ template: templateSelect?.id })
 
     if (response.status === 201) {
       toast.success('Thought was created.')
