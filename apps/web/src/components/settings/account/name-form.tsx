@@ -1,15 +1,15 @@
 'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-
 import { Button, Input, LoadingSpinner, toast } from '@mindfulyze/ui'
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@mindfulyze/ui'
+
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useSession } from 'next-auth/react'
+import { useForm } from 'react-hook-form'
 import type { z } from 'zod'
 
 import { updateName } from '@/app/actions/user'
-import { NameFormSchema } from '@/schemas/user'
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@mindfulyze/ui'
+import { NameFormSchema } from '@schemas/user'
 
 export function NameForm() {
   const { data: session, update } = useSession()

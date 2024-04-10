@@ -1,16 +1,17 @@
 'use client'
 
+import { Button, Input, toast } from '@mindfulyze/ui'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@mindfulyze/ui'
+
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import type { z } from 'zod'
 
 import { verifyPassword } from '@/app/actions/user'
-import usePassword from '@/lib/hooks/usePassword'
-import { SetPasswordSchema } from '@/schemas/password'
 import { encryptPasswordSession } from '@actions/password'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@mindfulyze/ui'
-import { Button, Input, toast } from '@mindfulyze/ui'
-import { useRouter } from 'next/navigation'
+import usePassword from '@lib/hooks/usePassword'
+import { SetPasswordSchema } from '@schemas/password'
 
 export function SetPasswordForm() {
   const { refresh, prefetch } = useRouter()

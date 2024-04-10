@@ -1,14 +1,15 @@
 'use server'
 
+import { prisma } from '@mindfulyze/database'
+import { USER_NOT_FOUND_ERROR } from '@mindfulyze/utils'
+
 import bcrypt from 'bcrypt'
 import cloudinary from 'cloudinary'
 import type { z } from 'zod'
 
-import type { SetPasswordSchema } from '@/schemas/password'
 import { auth } from '@lib/auth'
-import { prisma } from '@mindfulyze/database'
-import { USER_NOT_FOUND_ERROR } from '@mindfulyze/utils'
-import { type EmailFormSchema, type NameFormSchema, validateEmail, validateName } from '@schemas/user'
+import type { SetPasswordSchema } from '@lib/schemas/password'
+import { type EmailFormSchema, type NameFormSchema, validateEmail, validateName } from '@lib/schemas/user'
 
 export async function getUser() {
   const session = await auth()

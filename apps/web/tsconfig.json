@@ -9,7 +9,7 @@
     "paths": {
       "@ui/*": ["src/components/*"],
       "@actions/*": ["src/lib/actions/*"],
-      "@schemas/*": ["src/schemas/*"],
+      "@schemas/*": ["src/lib/schemas/*"],
       "@lib/*": ["src/lib/*"],
       "@content": [".velite"],
       "types/*": ["src/types/*"],

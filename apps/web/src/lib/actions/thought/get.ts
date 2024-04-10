@@ -11,14 +11,14 @@ import {
 } from '@mindfulyze/utils'
 
 import { isValid } from 'date-fns'
+import type { z } from 'zod'
 
 import { withActionSessionAndSchema } from '@lib/auth/utils'
 import { decryptData } from '@lib/encryption'
+import { GetThoughtByIdSchema, GetThoughtsPagesSchema, GetThoughtsSchema } from '@lib/schemas/thought'
 import { downloadFile } from '@lib/supabase'
-import { GetThoughtByIdSchema, GetThoughtsPagesSchema, GetThoughtsSchema } from '@schemas/thought'
 import type { ActionResponse } from 'types/index'
 import type { Thought } from 'types/thought'
-import type { z } from 'zod'
 import { THOUGHTS_PER_PAGE, getFilterThoughtsByUser } from './utils'
 
 export async function getThoughts(input: z.infer<typeof GetThoughtsSchema>): Promise<ActionResponse<Thought[]>> {

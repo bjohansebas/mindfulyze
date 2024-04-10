@@ -1,16 +1,15 @@
 'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-
-import { updateEmail } from '@/app/actions/user'
-import { EmailFormSchema } from '@/schemas/user'
-
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@mindfulyze/ui'
 import { Button, Input, LoadingSpinner, toast } from '@mindfulyze/ui'
 
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useSession } from 'next-auth/react'
+import { useForm } from 'react-hook-form'
 import type { z } from 'zod'
+
+import { updateEmail } from '@/app/actions/user'
+import { EmailFormSchema } from '@schemas/user'
 
 export function EmailForm() {
   const { data: session, update } = useSession()

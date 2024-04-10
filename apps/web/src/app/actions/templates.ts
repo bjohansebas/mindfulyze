@@ -5,13 +5,13 @@ import type { z } from 'zod'
 
 import { prisma } from '@mindfulyze/database'
 import { SUPABASE_BUCKET_TEMPLATES } from '@mindfulyze/utils'
-
-import { getTemplatesByDefault, getTemplatesByUser } from '@/lib/api/utils'
-import { auth } from '@/lib/auth'
-import { createFile, deleteFile, downloadFile, updateFile } from '@/lib/supabase'
-import { type TemplateSchema, validatePartialTemplate, validateTemplate } from '@/schemas/template'
-import type { Template } from '@/types/template'
 import { generateCUID } from '@mindfulyze/utils'
+
+import { getTemplatesByDefault, getTemplatesByUser } from '@lib/api/utils'
+import { auth } from '@lib/auth'
+import { createFile, deleteFile, downloadFile, updateFile } from '@lib/supabase'
+import { type TemplateSchema, validatePartialTemplate, validateTemplate } from '@schemas/template'
+import type { Template } from 'types/template'
 
 export interface TemplateResponse {
   data: Template[]

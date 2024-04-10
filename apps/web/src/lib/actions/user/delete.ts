@@ -1,6 +1,7 @@
 'use server'
 
 import { prisma } from '@mindfulyze/database'
+import { BAD_REQUEST_CODE, OK_CODE } from '@mindfulyze/utils'
 
 import cloudinary from 'cloudinary'
 import type { z } from 'zod'
@@ -9,7 +10,6 @@ import { deleteAllTemplates } from '@/app/actions/templates'
 import { verifyPassword } from '@/app/actions/user'
 import { deleteAllThoughts } from '@actions/thought'
 import { withActionSessionAndSchema } from '@lib/auth/utils'
-import { BAD_REQUEST_CODE, OK_CODE } from '@mindfulyze/utils'
 import { DeleteAccountSchemaForm } from '@schemas/user'
 import type { ActionResponse } from 'types/index'
 

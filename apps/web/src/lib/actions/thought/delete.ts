@@ -3,12 +3,13 @@
 import { prisma } from '@mindfulyze/database'
 import { BAD_REQUEST_CODE, CREATED_CODE } from '@mindfulyze/utils'
 
+import { revalidatePath } from 'next/cache'
+import type { z } from 'zod'
+
 import { withActionSession, withActionSessionAndSchema } from '@lib/auth/utils'
 import { deleteFile } from '@lib/supabase'
 import { DeleteThoughtByIdSchema } from '@schemas/thought'
-import { revalidatePath } from 'next/cache'
 import type { ActionResponse } from 'types/index'
-import type { z } from 'zod'
 import { getThoughtById } from './get'
 
 export async function deleteAllThoughts(): Promise<ActionResponse<boolean>> {

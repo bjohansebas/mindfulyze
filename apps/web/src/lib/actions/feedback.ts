@@ -4,7 +4,7 @@ import { FeedbackEmail, sendEmail } from '@mindfulyze/emails'
 import { BAD_REQUEST_CODE, CREATED_CODE } from '@mindfulyze/utils'
 
 import { withActionSessionAndSchema } from '@lib/auth/utils'
-import { FeedbackSchema } from '@schemas/feedback'
+import { FeedbackSchema } from '@lib/schemas/feedback'
 
 import type { z } from 'zod'
 
