@@ -4,20 +4,13 @@ import { prisma } from '@mindfulyze/database'
 import { NEXTAUTH_SECRET } from '@mindfulyze/utils'
 import { SUPABASE_BUCKET_THOUGHTS, generateCUID } from '@mindfulyze/utils'
 
-import type { ThoughtSchema } from '@/schemas/thought'
-import { validatePartialThought } from '@/schemas/thought'
-import type { Thought } from '@/types/thought'
-import { auth } from '@lib/auth'
-import { decryptData, encryptData } from '@lib/encryption'
-import { createFile, deleteFile, updateFile } from '@lib/supabase'
-
-import { getTemplateById, getTemplateDefault } from './templates'
-
 import { revalidatePath } from 'next/cache'
 
 import { getThoughtById } from '@actions/thought'
-import { compareAsc } from 'date-fns'
-import type { z } from 'zod'
+import { auth } from '@lib/auth'
+import { decryptData, encryptData } from '@lib/encryption'
+import { createFile, deleteFile } from '@lib/supabase'
+import { getTemplateById, getTemplateDefault } from './templates'
 
 export async function getThoughtByIdWithOutText(id: string) {
   const session = await auth()
@@ -93,99 +86,6 @@ export async function createThought(idTemplate?: string) {
     return { data: response, status: 201 }
   } catch (e) {
     return { message: "The thought couldn't be created, try again anew.", status: 400, data: null }
-  }
-}
-
-export interface ThoughtResponse {
-  data: Thought[]
-  message?: string
-  status: number
-}
-
-// Create new thought for user
-export async function updateThought(id: string, data: z.infer<typeof ThoughtSchema>) {
-  const session = await auth()
-  if (!session?.user || !session.user.pw) {
-    return { message: 'You must be logged in.', status: 401, data: null }
-  }
-
-  const result = validatePartialThought({
-    created: data.created,
-    textWithFormat: data.textWithFormat,
-  })
-
-  if (!result.success) {
-    return { message: result.error.message, status: 422 }
-  }
-
-  const thought = await getThoughtById({ id })
-
-  if (thought.status !== 200 || thought.data == null) {
-    return { ...thought, data: false }
-  }
-
-  try {
-    if (data.textWithFormat !== thought.data?.text) {
-      const password = decryptData({ key: NEXTAUTH_SECRET, data: session.user.pw })
-      const textEncrypt = encryptData({ key: password, data: data.textWithFormat })
-
-      const file = await updateFile({
-        name: `${thought.data?.id}.html`,
-        text: textEncrypt,
-        bucket: thought.data.bucket,
-      })
-
-      if (!file.data?.path) {
-        return { message: "The thought couldn't be updated, try again anew.", status: 400, data: false }
-      }
-    }
-
-    if (compareAsc(data.created, thought.data.createdAt) === 0) {
-      await prisma.thought.update({
-        data: {
-          createdAt: data.created,
-        },
-        where: {
-          id: thought.data.id,
-        },
-      })
-    }
-
-    revalidatePath('/home')
-
-    return { data: true, status: 201 }
-  } catch (e) {
-    return { message: "The template couldn't be updated, try again anew.", status: 400, data: false }
-  }
-}
-
-export async function updateDateThought(id: string, date: Date) {
-  const session = await auth()
-  if (!session?.user || !session.user.pw) {
-    return { message: 'You must be logged in.', status: 401, data: null }
-  }
-
-  const thought = await getThoughtById({ id })
-
-  if (thought.status !== 200 || thought.data == null) {
-    return { ...thought, data: false }
-  }
-
-  try {
-    if (compareAsc(date, thought.data.createdAt) === 0) {
-      await prisma.thought.update({
-        data: {
-          createdAt: date,
-        },
-        where: {
-          id: thought.data.id,
-        },
-      })
-    }
-
-    return { data: true, status: 201 }
-  } catch (e) {
-    return { message: "The template couldn't be updated, try again anew.", status: 400, data: false }
   }
 }
 

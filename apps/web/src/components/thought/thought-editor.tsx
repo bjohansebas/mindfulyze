@@ -16,11 +16,12 @@ import {
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@mindfulyze/ui'
 import { cn } from '@mindfulyze/utils'
 
-import { deleteThought, updateDateThought, updateThought } from '@/app/actions/thoughts'
 import { format } from 'date-fns'
-
 import { TrashIcon } from 'lucide-react'
 import { useState } from 'react'
+
+import { deleteThought } from '@/app/actions/thoughts'
+import { updateDateThought, updateTextThought } from '@actions/thought'
 
 export interface ContentThoughtsProps {
   text: string
@@ -46,7 +47,7 @@ export function ThoughtEditor({ text, createdAt, id, classNameHeader }: ContentT
                 selected={newDate}
                 onSelect={async (date) => {
                   setNewDate(date || createdAt)
-                  await updateDateThought(id, date || createdAt)
+                  await updateDateThought({ id, created: date || createdAt })
                 }}
                 disabled={(date) => date > new Date() || date < new Date('1900-01-01')}
                 initialFocus
@@ -110,7 +111,7 @@ export function ThoughtEditor({ text, createdAt, id, classNameHeader }: ContentT
             if (text !== textHTML) {
               try {
                 setSaveStatus('Saving...')
-                const response = await updateThought(id, { created: newDate, textWithFormat: textHTML })
+                const response = await updateTextThought({ id, text: textHTML })
 
                 if (response.data) {
                   setSaveStatus('')

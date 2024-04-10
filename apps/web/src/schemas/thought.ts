@@ -15,11 +15,12 @@ export const GetThoughtsPagesSchema = z.object({
   fromDate: z.string().optional(),
 })
 
-export const ThoughtSchema = z.object({
-  textWithFormat: z.string(),
-  created: z.date().default(new Date()),
+export const UpdateTextThoughtSchema = z.object({
+  id: z.string(),
+  text: z.string(),
 })
 
-export function validatePartialThought(input: z.infer<typeof ThoughtSchema>) {
-  return ThoughtSchema.partial().safeParse(input)
-}
+export const UpdateDateThoughtSchema = z.object({
+  id: z.string(),
+  created: z.date(),
+})
