@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --gradient: #00cf76;
+    --gradient: #049155;
     --background: 0 0% 6%;
     --foreground: 164 10% 97.05%;
     --muted: 164 50% 12.299999999999999%;
@@ -21,8 +21,8 @@
     --secondary-foreground: 164 10% 97.05%;
     --accent: 164 50% 12.299999999999999%;
     --accent-foreground: 164 10% 97.05%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 164 10% 97.05%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
     --ring: 164 100% 41%;
     --radius: 0.5rem;
   }
@@ -45,8 +45,6 @@
     --secondary-foreground: 164 9.5% 96.45%;
     --accent: 164 47.5% 8.7%;
     --accent-foreground: 164 9.5% 96.45%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 164 9.5% 96.45%;
     --ring: 164 95% 29%;
   }
 }
