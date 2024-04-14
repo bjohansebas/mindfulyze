@@ -12,13 +12,13 @@
   "devDependencies": {
     "@mindfulyze/config": "workspace:*",
     "@mindfulyze/utils": "workspace:*",
-    "@types/react": "18.2.74",
+    "@types/react": "18.2.78",
     "react": "18.2.0",
     "typescript": "5.2.2"
   },
   "dependencies": {
     "@react-email/components": "0.0.16",
-    "nanoid": "5.0.6",
+    "nanoid": "5.0.7",
     "react-email": "2.1.1",
     "resend": "3.2.0"
   }

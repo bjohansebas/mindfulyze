@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "@mindfulyze/config": "workspace:*",
-    "@types/node": "20.12.5",
+    "@types/node": "20.12.7",
     "prisma": "5.12.1",
     "typescript": "5.2.2"
   }
