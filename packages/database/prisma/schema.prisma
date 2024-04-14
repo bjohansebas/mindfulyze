@@ -52,6 +52,7 @@ model User {
   sessions      Session[]
   template      Template[]
   Thought       Thought[]
+  bookmarks     Bookmark[]
 
   @@map("users")
 }
@@ -68,14 +69,15 @@ model VerificationToken {
 }
 
 model Thought {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  id        String             @id @default(cuid())
+  createdAt DateTime           @default(now()) @map("created_at")
+  updatedAt DateTime           @updatedAt @map("updated_at")
   userId    String
   url       String
-  bucket    String   @default("thoughts")
-  create    DateTime @default(now()) @map("create")
-  user      User     @relation(fields: [userId], references: [id])
+  bucket    String             @default("thoughts")
+  create    DateTime           @default(now()) @map("create")
+  user      User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bookmarks BookmarkThoughts[]
 
   @@map("thoughts")
 }
@@ -89,7 +91,34 @@ model Template {
   userId    String
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("templates")
+}
+
+model BookmarkThoughts {
+  id         String @id @default(cuid())
+  thoughtId  String
+  bookmarkId String
+
+  thought  Thought  @relation(fields: [thoughtId], references: [id], onDelete: Cascade)
+  bookmark Bookmark @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("bookmark_thoughts")
+}
+
+model Bookmark {
+  id     String @id @default(cuid())
+  name   String
+  userId String
+
+  createdAt DateTime           @default(now()) @map("created_at")
+  updatedAt DateTime           @updatedAt @map("updated_at")
+  user      User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  thoughts  BookmarkThoughts[]
+
+  @@map("bookmarks")
 }
