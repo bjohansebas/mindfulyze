@@ -1,17 +1,15 @@
 'use client'
 
-import { updateImage } from '@/app/actions/user'
-
-import { UploadCloud } from 'lucide-react'
-
 import { Button, toast } from '@mindfulyze/ui'
 import { cn } from '@mindfulyze/utils'
+
+import { UploadCloud } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { useCallback, useEffect, useState } from 'react'
 
 export default function UploadAvatar() {
-  const { data: session, update } = useSession()
+  const { data: session } = useSession()
 
   const [image, setImage] = useState<string | null>()
 
@@ -53,13 +51,21 @@ export default function UploadAvatar() {
 
         e.preventDefault()
 
-        const res = await updateImage(image)
+        const res = await fetch('/api/user/avatar', {
+          method: 'PUT',
+          body: JSON.stringify({ data: image }),
+        })
+
         setUploading(false)
 
-        if (res.data != null) {
-          console.log(res.data)
-          const s = await update({ image: res.data, picture: res.data })
-          console.log(s)
+        if (!res.ok) {
+          toast.error('Something went wrong')
+          return
+        }
+
+        const { data } = (await res.json()) as { data: string }
+
+        if (data != null) {
           toast.success('Successfully updated your profile picture!')
         } else {
           toast.error('Something went wrong')

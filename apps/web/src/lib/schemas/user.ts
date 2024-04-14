@@ -12,6 +12,10 @@ export const NameFormSchema = z.object({
     }),
 })
 
+export const UpdateAvatarSchema = z.object({
+  data: z.string().min(3),
+})
+
 export function validateName(input: z.infer<typeof NameFormSchema>) {
   return NameFormSchema.safeParse(input)
 }
@@ -22,14 +26,6 @@ export const EmailFormSchema = z.object({
 
 export function validateEmail(input: z.infer<typeof EmailFormSchema>) {
   return EmailFormSchema.safeParse(input)
-}
-
-export const AvatarFormSchema = z.object({
-  avatar: z.string().email(),
-})
-
-export function validateAvatar(input: z.infer<typeof AvatarFormSchema>) {
-  return AvatarFormSchema.safeParse(input)
 }
 
 export const DeleteAccountSchemaForm = z

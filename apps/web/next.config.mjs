@@ -3,9 +3,6 @@ import { build } from 'velite'
 /** @type {import('next').NextConfig} */
 export default {
   experimental: {
-    serverActions: {
-      bodySizeLimit: '3mb',
-    },
     optimizePackageImports: ['@mindfulyze/ui', '@mindfulyze/editor', '@mindfulyze/utils'],
   },
   webpack: (config) => {

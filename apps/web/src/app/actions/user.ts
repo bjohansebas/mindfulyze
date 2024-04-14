@@ -4,7 +4,6 @@ import { prisma } from '@mindfulyze/database'
 import { USER_NOT_FOUND_ERROR } from '@mindfulyze/utils'
 
 import bcrypt from 'bcrypt'
-import cloudinary from 'cloudinary'
 import type { z } from 'zod'
 
 import { auth } from '@lib/auth'
@@ -110,39 +109,5 @@ export async function updateEmail(data: z.infer<typeof EmailFormSchema>) {
     return true
   } catch (e) {
     return false
-  }
-}
-
-export async function updateImage(data: string | undefined | null) {
-  const session = await auth()
-
-  if (!session?.user) {
-    return { data: null }
-  }
-
-  if (data == null || data.trim() === '') {
-    return { data: null }
-  }
-
-  try {
-    const { secure_url } = await cloudinary.v2.uploader.upload(data, {
-      public_id: session.user.id,
-      folder: 'avatars',
-      overwrite: true,
-      invalidate: true,
-    })
-
-    await prisma.user.update({
-      where: {
-        id: session.user.id,
-      },
-      data: {
-        image: secure_url,
-      },
-    })
-
-    return { data: secure_url }
-  } catch (e) {
-    return { data: null }
   }
 }
