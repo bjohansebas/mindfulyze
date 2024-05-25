@@ -19,6 +19,7 @@ import { cn } from '@mindfulyze/utils'
 
 import { addThoughtToBookmark } from '@actions/bookmarks'
 import { deleteThought, updateDateThought, updateTextThought } from '@actions/thought'
+import { CreateCollection } from './bookmark/create-collection'
 
 import { format } from 'date-fns'
 import { BookmarkIcon, TrashIcon } from 'lucide-react'
@@ -88,18 +89,20 @@ export function ThoughtEditor({
                   New collection
                 </Button>
               </header>
-              {newCollection ? null : (
+              {newCollection ? (
+                <CreateCollection />
+              ) : (
                 <ul className="flex flex-col gap-2">
                   {userBookmarks.map(({ name, ...res }) => {
-                    const mathThoguht = thoughtBookmarks.findIndex(({ bookmarkId }) => bookmarkId === res.id)
-                    console.log(mathThoguht)
+                    const hasThoughtBookmark = thoughtBookmarks.findIndex(({ bookmarkId }) => bookmarkId === res.id)
+
                     return (
                       <Button
                         key={res.id}
                         className="w-full justify-start"
-                        variant={mathThoguht >= 0 ? 'surface' : 'outline'}
+                        variant={hasThoughtBookmark >= 0 ? 'surface' : 'outline'}
                         onClick={async () => {
-                          if (mathThoguht < 0) await addThoughtToBookmark({ bookmarkId: res.id, thoughtId: id })
+                          if (hasThoughtBookmark < 0) await addThoughtToBookmark({ bookmarkId: res.id, thoughtId: id })
                         }}
                       >
                         {name}
