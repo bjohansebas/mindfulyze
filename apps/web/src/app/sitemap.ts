@@ -1,4 +1,4 @@
-import { changelog, legal } from '@content'
+import { legal } from '@content'
 import { headers } from 'next/headers'
 
 export default async function Sitemap() {
@@ -24,18 +24,6 @@ export default async function Sitemap() {
       priority: 0.8,
       changeFrequency: 'yearly',
     },
-    {
-      url: `https://${domain}/changelog`,
-      lastModified: new Date(),
-      priority: 0.8,
-      changeFrequency: 'weekly',
-    },
-    ...changelog.map((post) => ({
-      url: `https://${domain}/changelog/${post.slug}`,
-      lastModified: new Date(post.publishedAt),
-      priority: 0.6,
-      changeFrequency: 'never',
-    })),
     ...legal.map((post) => ({
       url: `https://${domain}/legal/${post.slug}`,
       lastModified: new Date(post.updated),

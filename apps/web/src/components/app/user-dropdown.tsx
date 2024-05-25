@@ -3,7 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@mindfulyze/ui'
 import { stringAvatar } from '@mindfulyze/utils'
 
 import { auth } from '@lib/auth'
-import { LayoutTemplateIcon, MessageCircleIcon, PenLineIcon, SettingsIcon } from 'lucide-react'
+import { LayoutTemplateIcon, MessageCircleIcon, SettingsIcon } from 'lucide-react'
 
 import Link from 'next/link'
 import { ButtonLogout } from './menu/button-logout'
@@ -41,12 +41,6 @@ export default async function UserDropdown() {
             <Link href="/settings">
               <SettingsIcon className="h-4 w-4" />
               Settings
-            </Link>
-          </Button>
-          <Button variant="ghost" asChild className="flex w-auto justify-start">
-            <Link href="/changelog" target="_blank">
-              <PenLineIcon className="h-4 w-4" />
-              Changelog
             </Link>
           </Button>
           <ButtonLogout />

@@ -5,12 +5,7 @@ import Link from 'next/link'
 import ButtonNav from './button-nav'
 import MobileNav from './nav-mobile'
 
-export const navItems = [
-  {
-    name: 'Changelog',
-    slug: 'changelog',
-  },
-]
+export const navItems = []
 
 export default async function Navigation() {
   const session = await auth()

@@ -5,7 +5,6 @@ import { GithubIcon, TwitterIcon } from 'lucide-react'
 import Link from 'next/link'
 
 const navigation = {
-  product: [{ name: 'Changelog', href: '/changelog' }],
   legal: legal.map(({ title, slug }) => {
     return { name: title, href: `/legal/${slug}` }
   }),
@@ -36,20 +35,6 @@ export default function Footer() {
         </div>
       </div>
       <div className="grid grid-cols-2 gap-8">
-        <div className="md:grid md:grid-cols-2 md:gap-8">
-          <div className="mt-10 md:mt-0">
-            <h3 className="font-semibold text-sm">Product</h3>
-            <ul className="mt-4 space-y-4">
-              {navigation.product.map((item) => (
-                <li key={item.name}>
-                  <Link href={item.href} className="text-muted-foreground text-sm hover:text-emerald-400">
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
         <div className="md:grid md:grid-cols-2 md:gap-8">
           <div className="mt-10 md:mt-0">
             <h3 className="font-semibold text-sm">Legal</h3>
