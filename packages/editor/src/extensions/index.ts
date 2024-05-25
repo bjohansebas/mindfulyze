@@ -3,6 +3,8 @@ import { cn } from '@mindfulyze/utils'
 
 import Typography from '@tiptap/extension-typography'
 import { HorizontalRule, Placeholder, StarterKit, TaskItem, TaskList } from 'novel/extensions'
+import AutoJoiner from 'tiptap-extension-auto-joiner'
+import GlobalDragHandle from 'tiptap-extension-global-drag-handle'
 import { slashCommand } from './slash-command'
 
 const taskList = TaskList.configure({
@@ -26,6 +28,15 @@ const horizontalRule = HorizontalRule.configure({
 const placeholder = Placeholder
 
 const typography = Typography
+
+const dragHandle = GlobalDragHandle.configure({
+  dragHandleWidth: 20,
+  scrollTreshold: 100,
+})
+
+const autoJoiner = AutoJoiner.configure({
+  elementsToJoin: ['bulletList', 'orderedList'],
+})
 
 const starterKit = StarterKit.configure({
   bulletList: {
@@ -67,4 +78,14 @@ const starterKit = StarterKit.configure({
   gapcursor: false,
 })
 
-export const extensions = [taskList, taskItem, horizontalRule, starterKit, placeholder, slashCommand, typography]
+export const extensions = [
+  dragHandle,
+  autoJoiner,
+  taskList,
+  taskItem,
+  horizontalRule,
+  starterKit,
+  placeholder,
+  slashCommand,
+  typography,
+]
