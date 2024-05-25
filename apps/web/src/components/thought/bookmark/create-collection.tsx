@@ -4,10 +4,12 @@ import { createBookmark } from '@actions/bookmarks'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, toast } from '@mindfulyze/ui'
 import { CreateBookmarkSchema } from '@schemas/bookmark'
+import type { Dispatch, SetStateAction } from 'react'
+
 import { useForm } from 'react-hook-form'
 import type { z } from 'zod'
 
-export function CreateCollection() {
+export function CreateCollection({ setOpen }: { setOpen: Dispatch<SetStateAction<boolean>> }) {
   const form = useForm<z.infer<typeof CreateBookmarkSchema>>({
     resolver: zodResolver(CreateBookmarkSchema),
     defaultValues: {
@@ -28,6 +30,8 @@ export function CreateCollection() {
       } else {
         toast.error("The collection couldn't be created, try again anew.")
       }
+
+      setOpen(false)
     } catch (e) {
       toast.error("The collection couldn't be created, try again anew.")
     }

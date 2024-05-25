@@ -17,12 +17,12 @@ import {
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@mindfulyze/ui'
 import { cn } from '@mindfulyze/utils'
 
-import { addThoughtToBookmark } from '@actions/bookmarks'
+import { addThoughtToBookmark, removeBookmarkFromThought } from '@actions/bookmarks'
 import { deleteThought, updateDateThought, updateTextThought } from '@actions/thought'
 import { CreateCollection } from './bookmark/create-collection'
 
 import { format } from 'date-fns'
-import { BookmarkIcon, TrashIcon } from 'lucide-react'
+import { BookmarkIcon, CheckIcon, TrashIcon } from 'lucide-react'
 import { useState } from 'react'
 
 export interface ContentThoughtsProps {
@@ -45,6 +45,8 @@ export function ThoughtEditor({
   const [saveStatus, setSaveStatus] = useState('')
   const [disabled, setDisabled] = useState(false)
   const [newCollection, setNewCollection] = useState(false)
+  const [loadingId, setLoadingId] = useState('')
+  const [openMenu, setOpenMenu] = useState(false)
 
   const [newDate, setNewDate] = useState(createdAt)
 
@@ -70,7 +72,7 @@ export function ThoughtEditor({
           <span className="text-sm">{`${saveStatus}`}</span>
         </div>
         <div className="flex gap-2">
-          <Popover>
+          <Popover open={openMenu} onOpenChange={setOpenMenu}>
             <PopoverTrigger asChild>
               <Button variant="ghost" className="px-2" disabled={disabled}>
                 <BookmarkIcon className="size-5" />
@@ -90,7 +92,7 @@ export function ThoughtEditor({
                 </Button>
               </header>
               {newCollection ? (
-                <CreateCollection />
+                <CreateCollection setOpen={setOpenMenu} />
               ) : (
                 <ul className="flex flex-col gap-2">
                   {userBookmarks.map(({ name, ...res }) => {
@@ -99,13 +101,25 @@ export function ThoughtEditor({
                     return (
                       <Button
                         key={res.id}
-                        className="w-full justify-start"
+                        className="w-full justify-between"
                         variant={hasThoughtBookmark >= 0 ? 'surface' : 'outline'}
+                        disabled={loadingId === res.id}
                         onClick={async () => {
-                          if (hasThoughtBookmark < 0) await addThoughtToBookmark({ bookmarkId: res.id, thoughtId: id })
+                          try {
+                            setLoadingId(res.id)
+                            if (hasThoughtBookmark < 0) {
+                              await addThoughtToBookmark({ bookmarkId: res.id, thoughtId: id })
+                            } else {
+                              await removeBookmarkFromThought({ id: thoughtBookmarks[hasThoughtBookmark].id })
+                            }
+                          } catch (e) {
+                          } finally {
+                            setLoadingId('')
+                          }
                         }}
                       >
                         {name}
+                        {hasThoughtBookmark >= 0 ? <CheckIcon className="size-4" /> : null}
                       </Button>
                     )
                   })}

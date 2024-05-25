@@ -11,3 +11,7 @@ export const AddThoughtToBookmarkSchema = z.object({
   thoughtId: z.string().min(1),
   bookmarkId: z.string().min(1),
 })
+
+export const DeleteThoughtFromBookmarkSchema = z.object({
+  id: z.string().min(1),
+})
