@@ -1,8 +1,9 @@
 'use server'
 
-import { withActionSession } from '@lib/auth/utils'
 import { type Bookmark, prisma } from '@mindfulyze/database'
 import { NOT_FOUND_CODE, OK_CODE } from '@mindfulyze/utils'
+
+import { withActionSession } from '@lib/auth/utils'
 import type { ActionResponse } from 'types/index'
 
 export async function getBookmarks(): Promise<ActionResponse<Bookmark[]>> {
@@ -12,7 +13,12 @@ export async function getBookmarks(): Promise<ActionResponse<Bookmark[]>> {
   const { session } = response
 
   try {
-    const bookmarks = await prisma.bookmark.findMany({ where: { userId: session.user.id } })
+    const bookmarks = await prisma.bookmark.findMany({
+      where: { userId: session.user.id },
+      include: {
+        thoughts: true,
+      },
+    })
 
     return { data: bookmarks, status: OK_CODE }
   } catch (e) {

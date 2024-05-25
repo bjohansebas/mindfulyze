@@ -1,6 +1,4 @@
 import { prisma } from '@mindfulyze/database'
-
-import type { Thought as ThoughtProps } from '@prisma/client'
 import { isValid } from 'date-fns'
 
 export const THOUGHTS_PER_PAGE = 10
@@ -17,7 +15,7 @@ export async function getFilterThoughtsByUser({
   fromDate?: string
   page: number | null
   userId: string
-}): Promise<ThoughtProps[]> {
+}) {
   return await prisma.thought.findMany({
     where: {
       userId,
@@ -28,6 +26,9 @@ export async function getFilterThoughtsByUser({
     },
     orderBy: {
       [sort]: 'desc',
+    },
+    include: {
+      bookmarks: true,
     },
     take: THOUGHTS_PER_PAGE,
     ...(page && {

@@ -43,7 +43,7 @@ export async function getThoughts(input: z.infer<typeof GetThoughtsSchema>): Pro
     const password = decryptData({ key: NEXTAUTH_SECRET, data: session.user.pw })
 
     const thoughts = await Promise.all(
-      response.map(async ({ url, bucket, updatedAt, ...res }) => {
+      response.map(async ({ url, bucket, updatedAt, bookmarks, ...res }) => {
         const data = await downloadFile({ name: `${url}?bust=${new Date().valueOf()}`, bucket })
         const textEncrypt = await data.data?.text()
 
@@ -51,7 +51,7 @@ export async function getThoughts(input: z.infer<typeof GetThoughtsSchema>): Pro
 
         const textDecrypt = decryptData({ key: password, data: textEncrypt })
 
-        return { text: textDecrypt, updatedAt, ...res }
+        return { text: textDecrypt, updatedAt, bookmarks: bookmarks || [], ...res }
       }),
     )
 

@@ -1,7 +1,8 @@
 'use client'
 
+import type { Bookmark, BookmarkThoughts } from '@mindfulyze/database'
 import { Editor } from '@mindfulyze/editor'
-import { Button, Calendar, toast } from '@mindfulyze/ui'
+import { Button, Calendar, Popover, PopoverContent, PopoverTrigger, toast } from '@mindfulyze/ui'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,21 +17,33 @@ import {
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@mindfulyze/ui'
 import { cn } from '@mindfulyze/utils'
 
-import { format } from 'date-fns'
-import { TrashIcon } from 'lucide-react'
-import { useState } from 'react'
-
+import { addThoughtToBookmark } from '@actions/bookmarks'
 import { deleteThought, updateDateThought, updateTextThought } from '@actions/thought'
+
+import { format } from 'date-fns'
+import { BookmarkIcon, TrashIcon } from 'lucide-react'
+import { useState } from 'react'
 
 export interface ContentThoughtsProps {
   text: string
   createdAt: Date
   id: string
   classNameHeader?: string
+  userBookmarks: Bookmark[]
+  thoughtBookmarks: BookmarkThoughts[]
 }
-export function ThoughtEditor({ text, createdAt, id, classNameHeader }: ContentThoughtsProps) {
+
+export function ThoughtEditor({
+  text,
+  createdAt,
+  id,
+  classNameHeader,
+  userBookmarks,
+  thoughtBookmarks,
+}: ContentThoughtsProps) {
   const [saveStatus, setSaveStatus] = useState('')
   const [disabled, setDisabled] = useState(false)
+  const [newCollection, setNewCollection] = useState(false)
 
   const [newDate, setNewDate] = useState(createdAt)
 
@@ -55,41 +68,84 @@ export function ThoughtEditor({ text, createdAt, id, classNameHeader }: ContentT
           </DropdownMenu>
           <span className="text-sm">{`${saveStatus}`}</span>
         </div>
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <Button className="hover:text-red-500" variant="ghost" disabled={disabled}>
-              <TrashIcon className="h-5 w-5" />
-            </Button>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-              <AlertDialogDescription>
-                This action cannot be undone. It will permanently delete the thought and remove it from our servers.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction asChild>
+        <div className="flex gap-2">
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="ghost" className="px-2" disabled={disabled}>
+                <BookmarkIcon className="size-5" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent align="end">
+              <header className="mb-3 flex justify-between">
+                <h2 className="font-semibold text-sm">Collections</h2>
                 <Button
+                  variant="link"
+                  className="h-fit p-0"
                   onClick={async () => {
-                    setDisabled(true)
-                    toast.message('The thought is being erased, please wait a moment.')
-                    const res = await deleteThought({ id })
-                    if (!res.data) {
-                      toast.error(res.message)
-                    } else {
-                      toast.success('The thought has been successfully deleted.')
-                    }
+                    setNewCollection((val) => !val)
                   }}
-                  variant="destructive"
                 >
-                  Delete
+                  New collection
                 </Button>
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+              </header>
+              {newCollection ? null : (
+                <ul className="flex flex-col gap-2">
+                  {userBookmarks.map(({ name, ...res }) => {
+                    const mathThoguht = thoughtBookmarks.findIndex(({ bookmarkId }) => bookmarkId === res.id)
+                    console.log(mathThoguht)
+                    return (
+                      <Button
+                        key={res.id}
+                        className="w-full justify-start"
+                        variant={mathThoguht >= 0 ? 'surface' : 'outline'}
+                        onClick={async () => {
+                          if (mathThoguht < 0) await addThoughtToBookmark({ bookmarkId: res.id, thoughtId: id })
+                        }}
+                      >
+                        {name}
+                      </Button>
+                    )
+                  })}
+                </ul>
+              )}
+            </PopoverContent>
+          </Popover>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button className="px-2 hover:text-destructive" variant="ghost" disabled={disabled}>
+                <TrashIcon className="size-5" />
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. It will permanently delete the thought and remove it from our servers.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction asChild>
+                  <Button
+                    onClick={async () => {
+                      setDisabled(true)
+                      toast.message('The thought is being erased, please wait a moment.')
+                      const res = await deleteThought({ id })
+                      if (!res.data) {
+                        toast.error(res.message)
+                      } else {
+                        toast.success('The thought has been successfully deleted.')
+                      }
+                    }}
+                    variant="destructive"
+                  >
+                    Delete
+                  </Button>
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </div>
       </div>
       <Editor
         onUpdate={(editor) => {
