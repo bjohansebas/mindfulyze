@@ -53,8 +53,7 @@
     "@mindfulyze/ui": "workspace:*"
   },
   "engines": {
-    "node": "18.x || 20.x",
-    "pnpm": ">=9.0.0"
-  },
-  "packageManager": "pnpm@9.0.6"
+    "node": "18.x || 20.x || 22.x",
+    "pnpm": ">=9.1.0"
+  }
 }

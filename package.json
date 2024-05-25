@@ -21,5 +21,8 @@
     "lint-staged": "15.2.2",
     "turbo": "1.13.3"
   },
-  "packageManager": "pnpm@9.0.6"
+  "engines": {
+    "node": "18.x || 20.x || 22.x",
+    "pnpm": ">=9.1.0"
+  }
 }
