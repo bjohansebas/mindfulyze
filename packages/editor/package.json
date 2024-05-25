@@ -10,7 +10,7 @@
     "@mindfulyze/config": "workspace:*",
     "@mindfulyze/ui": "workspace:*",
     "@mindfulyze/utils": "workspace:*",
-    "@types/react": "18.3.1",
+    "@types/react": "18.3.3",
     "autoprefixer": "10.4.19",
     "postcss": "8.4.38",
     "react": "18.3.1",
@@ -18,12 +18,12 @@
     "typescript": "5.3.3"
   },
   "dependencies": {
-    "@tiptap/core": "2.3.1",
-    "@tiptap/extension-typography": "2.3.1",
-    "@tiptap/html": "2.3.1",
-    "@tiptap/pm": "2.3.1",
-    "lucide-react": "0.378.0",
-    "novel": "0.3.1",
+    "@tiptap/core": "2.4.0",
+    "@tiptap/extension-typography": "2.4.0",
+    "@tiptap/html": "2.4.0",
+    "@tiptap/pm": "2.4.0",
+    "lucide-react": "0.379.0",
+    "novel": "0.4.2",
     "tailwindcss": "3.4.3",
     "use-debounce": "10.0.0"
   }
