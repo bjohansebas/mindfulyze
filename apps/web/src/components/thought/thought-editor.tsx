@@ -75,7 +75,7 @@ export function ThoughtEditor({
           <Popover open={openMenu} onOpenChange={setOpenMenu}>
             <PopoverTrigger asChild>
               <Button variant="ghost" className="px-2" disabled={disabled}>
-                <BookmarkIcon className="size-5" />
+                <BookmarkIcon className={cn('size-5', { 'fill-slate-50': thoughtBookmarks.length >= 1 })} />
               </Button>
             </PopoverTrigger>
             <PopoverContent align="end">
