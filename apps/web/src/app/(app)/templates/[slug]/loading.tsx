@@ -1,4 +1,4 @@
-import EditorTemplatesPlaceholder from '@/components/dashboard/templates/placeholder-editor-templates'
+import EditorTemplatesPlaceholder from '@ui/dashboard/templates/placeholder-editor-templates'
 
 export default function Loading() {
   return (
