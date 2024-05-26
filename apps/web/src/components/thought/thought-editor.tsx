@@ -95,7 +95,7 @@ export function ThoughtEditor({
                 <CreateCollection setOpen={setOpenMenu} />
               ) : (
                 <ul className="flex flex-col gap-2">
-                  {userBookmarks.length < 0 ? (
+                  {userBookmarks.length > 0 ? (
                     userBookmarks.map(({ name, ...res }) => {
                       const hasThoughtBookmark = thoughtBookmarks.findIndex(({ bookmarkId }) => bookmarkId === res.id)
 
