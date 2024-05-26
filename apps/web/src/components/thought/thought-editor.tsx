@@ -78,7 +78,7 @@ export function ThoughtEditor({
                 <BookmarkIcon className={cn('size-5', { 'fill-slate-50': thoughtBookmarks.length >= 1 })} />
               </Button>
             </PopoverTrigger>
-            <PopoverContent align="end">
+            <PopoverContent align="end" className="w-[300px]">
               <header className="mb-3 flex justify-between">
                 <h2 className="font-semibold text-sm">Collections</h2>
                 <Button
@@ -95,34 +95,48 @@ export function ThoughtEditor({
                 <CreateCollection setOpen={setOpenMenu} />
               ) : (
                 <ul className="flex flex-col gap-2">
-                  {userBookmarks.map(({ name, ...res }) => {
-                    const hasThoughtBookmark = thoughtBookmarks.findIndex(({ bookmarkId }) => bookmarkId === res.id)
+                  {userBookmarks.length < 0 ? (
+                    userBookmarks.map(({ name, ...res }) => {
+                      const hasThoughtBookmark = thoughtBookmarks.findIndex(({ bookmarkId }) => bookmarkId === res.id)
 
-                    return (
-                      <Button
-                        key={res.id}
-                        className="w-full justify-between"
-                        variant={hasThoughtBookmark >= 0 ? 'surface' : 'outline'}
-                        disabled={loadingId === res.id}
-                        onClick={async () => {
-                          try {
-                            setLoadingId(res.id)
-                            if (hasThoughtBookmark < 0) {
-                              await addThoughtToBookmark({ bookmarkId: res.id, thoughtId: id })
-                            } else {
-                              await removeBookmarkFromThought({ id: thoughtBookmarks[hasThoughtBookmark].id })
+                      return (
+                        <Button
+                          key={res.id}
+                          className="w-full justify-between"
+                          variant={hasThoughtBookmark >= 0 ? 'surface' : 'outline'}
+                          disabled={loadingId === res.id}
+                          onClick={async () => {
+                            try {
+                              setLoadingId(res.id)
+                              if (hasThoughtBookmark < 0) {
+                                await addThoughtToBookmark({ bookmarkId: res.id, thoughtId: id })
+                              } else {
+                                await removeBookmarkFromThought({ id: thoughtBookmarks[hasThoughtBookmark].id })
+                              }
+                            } catch (e) {
+                            } finally {
+                              setLoadingId('')
                             }
-                          } catch (e) {
-                          } finally {
-                            setLoadingId('')
-                          }
+                          }}
+                        >
+                          {name}
+                          {hasThoughtBookmark >= 0 ? <CheckIcon className="size-4" /> : null}
+                        </Button>
+                      )
+                    })
+                  ) : (
+                    <div className="flex flex-col items-center gap-5 p-5">
+                      <p className="text-center">Oops, it looks like there are no collections available</p>
+                      <Button
+                        className="h-fit"
+                        onClick={async () => {
+                          setNewCollection((val) => !val)
                         }}
                       >
-                        {name}
-                        {hasThoughtBookmark >= 0 ? <CheckIcon className="size-4" /> : null}
+                        Create your first collection
                       </Button>
-                    )
-                  })}
+                    </div>
+                  )}
                 </ul>
               )}
             </PopoverContent>
