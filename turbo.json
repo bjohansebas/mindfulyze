@@ -5,13 +5,13 @@
     "build": {
       "dependsOn": ["^db:generate", "^build"],
       "outputs": ["!.next/cache/**", ".next/**", "dist/**"],
-      "dotEnv": [".env"]
+      "inputs": [".env"]
     },
     "dev": {
       "dependsOn": ["^db:generate"],
       "cache": false,
       "persistent": true,
-      "dotEnv": [".env"]
+      "inputs": [".env"]
     },
     "clean": {
       "cache": false
@@ -19,11 +19,11 @@
     "lint": {},
     "db:generate": {
       "cache": false,
-      "dotEnv": [".env"]
+      "inputs": [".env"]
     },
     "db:push": {
       "cache": false,
-      "dotEnv": [".env"]
+      "inputs": [".env"]
     },
     "db:deploy": {
       "cache": false
