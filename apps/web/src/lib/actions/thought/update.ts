@@ -75,7 +75,7 @@ export async function updateDateThought(
   }
 
   try {
-    if (compareAsc(created, thought.data.createdAt) === 0) {
+    if (compareAsc(created, thought.data.createdAt) !== 0) {
       await prisma.thought.update({
         data: {
           createdAt: created,
