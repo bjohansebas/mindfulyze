@@ -15,13 +15,14 @@ import {
   AlertDialogTrigger,
 } from '@mindfulyze/ui'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@mindfulyze/ui'
-import { cn } from '@mindfulyze/utils'
+import { CREATED_CODE, cn } from '@mindfulyze/utils'
 
 import { addThoughtToBookmark, removeBookmarkFromThought } from '@actions/bookmarks'
 import { deleteThought, updateDateThought, updateTextThought } from '@actions/thought'
 import { CreateCollection } from './bookmark/create-collection'
 
-import { format } from 'date-fns'
+import { useAptabase } from '@aptabase/react'
+import { compareAsc, format } from 'date-fns'
 import { BookmarkIcon, CheckIcon, TrashIcon } from 'lucide-react'
 import { useState } from 'react'
 
@@ -42,6 +43,7 @@ export function ThoughtEditor({
   userBookmarks,
   thoughtBookmarks,
 }: ContentThoughtsProps) {
+  const { trackEvent } = useAptabase()
   const [saveStatus, setSaveStatus] = useState('')
   const [disabled, setDisabled] = useState(false)
   const [newCollection, setNewCollection] = useState(false)
@@ -61,8 +63,14 @@ export function ThoughtEditor({
                 mode="single"
                 selected={newDate}
                 onSelect={async (date) => {
+                  if (date != null && compareAsc(date, newDate) !== 0) {
+                    const response = await updateDateThought({ id, created: date || createdAt })
+
+                    if (response.status === CREATED_CODE) {
+                      trackEvent('Update date of thought')
+                    }
+                  }
                   setNewDate(date || createdAt)
-                  await updateDateThought({ id, created: date || createdAt })
                 }}
                 disabled={(date) => date > new Date() || date < new Date('1900-01-01')}
                 initialFocus
@@ -109,9 +117,18 @@ export function ThoughtEditor({
                             try {
                               setLoadingId(res.id)
                               if (hasThoughtBookmark < 0) {
-                                await addThoughtToBookmark({ bookmarkId: res.id, thoughtId: id })
+                                const response = await addThoughtToBookmark({ bookmarkId: res.id, thoughtId: id })
+                                if (response.status === CREATED_CODE) {
+                                  trackEvent('add thought to bookmark')
+                                }
                               } else {
-                                await removeBookmarkFromThought({ id: thoughtBookmarks[hasThoughtBookmark].id })
+                                const response = await removeBookmarkFromThought({
+                                  id: thoughtBookmarks[hasThoughtBookmark].id,
+                                })
+
+                                if (response.status === CREATED_CODE) {
+                                  trackEvent('remove thought from bookmark')
+                                }
                               }
                             } catch (e) {
                             } finally {
@@ -165,6 +182,8 @@ export function ThoughtEditor({
                       if (!res.data) {
                         toast.error(res.message)
                       } else {
+                        trackEvent('delete thought')
+
                         toast.success('The thought has been successfully deleted.')
                       }
                     }}
