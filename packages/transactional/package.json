@@ -17,9 +17,9 @@
     "typescript": "5.3.3"
   },
   "dependencies": {
-    "@react-email/components": "0.0.19",
+    "@react-email/components": "0.0.22",
     "nanoid": "5.0.7",
-    "react-email": "2.1.4",
-    "resend": "3.2.0"
+    "react-email": "2.1.6",
+    "resend": "3.5.0"
   }
 }
